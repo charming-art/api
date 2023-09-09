@@ -1,2 +1,3 @@
-export { circle } from "./shape.js";
-export { app } from "./app.js";
+export { app } from "./app/index.js";
+export { circle } from "./shapes/circle.js";
+export { rgb } from "./color.js";

@@ -7,7 +7,10 @@ The data-driven JavaScript renderer.
 ```js
 import * as cm from "@charming-art/app";
 
-const app = cm.app();
+const app = cm.app({
+  width: 640,
+  height: 640,
+});
 
 app
   .data(Array.from({ length: 240 }, (_, i) => i))
@@ -27,5 +30,5 @@ app
     },
   });
 
-document.body.appendChild(app.render().node());
+document.body.appendChild(app.render());
 ```

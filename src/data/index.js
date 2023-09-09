@@ -1,20 +1,6 @@
-function data$map(callback) {
-  this._maps.push(callback);
-  return this;
-}
-
-function data$shape(render, options) {
-  this._shapes.push({ render, options });
-  return this;
-}
-
-function data$value() {
-  return {
-    maps: this._maps,
-    shapes: this._shapes,
-    data: this._data,
-  };
-}
+import { data$shape } from "./shape.js";
+import { data$map } from "./map.js";
+import { data$value } from "./value.js";
 
 export function Data(data) {
   Object.defineProperties(this, {

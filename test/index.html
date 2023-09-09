@@ -1,25 +1,51 @@
 <script type="module">
-  import * as cm from "../src/index.js";
+  import * as apps from "./apps/index.js";
 
-  const app = cm.app();
+  // UI
+  const select = createSelect(() => {
+    const { value } = select;
+    history.pushState({ value }, "", `?name=${value}`);
+    render();
+  });
+  const options = Object.keys(apps).map(createOption);
+  document.body.append(select);
+  select.append(...options);
 
-  app
-    .data(Array.from({ length: 240 }, (_, i) => i))
-    .map((_, i, data) => (i * Math.PI * 2) / data.length)
-    .shape(cm.circle, {
-      x: {
-        value: (t) => Math.cos(t) * Math.cos(t * 3),
-        range: [15, app.width() - 30],
-      },
-      y: {
-        value: (t) => Math.sin(t) * Math.cos(t * 3),
-        range: [15, app.height() - 30],
-      },
-      r: {
-        value: (_, i) => i,
-        range: [1, 15],
-      },
-    });
+  // Init app name.
+  const initialValue = new URL(location).searchParams.get("name");
+  if (apps[initialValue]) select.value = initialValue;
 
-  document.body.appendChild(app.render().node());
+  let preClear = null;
+  let preNode = null;
+  render();
+
+  function createSelect(onchange) {
+    const select = document.createElement("select");
+    select.style.margin = "1em";
+    select.onchange = onchange;
+    select.style.display = "block";
+    return select;
+  }
+
+  function createOption(key) {
+    const option = document.createElement("option");
+    option.value = key;
+    option.textContent = key;
+    return option;
+  }
+
+  async function render() {
+    if (typeof preClear === "function") preClear();
+    if (isNode(preNode)) preNode.remove();
+    const fn = apps[select.value];
+    preNode = await fn();
+    if (isNode(preNode)) {
+      document.body.appendChild(preNode);
+      preClear = preNode.clear;
+    }
+  }
+
+  function isNode(node) {
+    return node instanceof HTMLElement || node instanceof SVGElement;
+  }
 </script>
