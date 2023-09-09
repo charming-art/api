@@ -1,4 +1,5 @@
 import * as cm from "./charming.js";
+import { frame } from "./_frame.js";
 
 export function vectorCircleBouncing() {
   const app = cm.app({
@@ -25,9 +26,5 @@ export function vectorCircleBouncing() {
       });
     });
 
-  return app
-    .call((app) => {
-      app.node().style.border = "solid #000 1px";
-    })
-    .start();
+  return app.call(frame).start();
 }
