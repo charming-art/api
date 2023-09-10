@@ -1,5 +1,5 @@
 export function circle(context, I, value) {
-  const { x: X, y: Y, fill: F = [], r: R, stroke: S = [] } = value;
+  const { x: X, y: Y, r: R, fill: F = [], stroke: S = [] } = value;
   for (const i of I) {
     const stroke = S[i];
     context.beginPath();

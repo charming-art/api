@@ -26,15 +26,14 @@ function scaleLinear(domain, range) {
 
 export function app$render() {
   for (const stream of this._data) {
-    const { maps, shapes, data } = stream.value();
-    const mapped = maps.reduce((data, map) => data.map(map), data);
-    const I = mapped.map((_, i) => i);
+    const { shapes, data } = stream.value();
+    const I = data.map((_, i) => i);
     for (const shape of shapes) {
       const { render, options } = shape;
       const normalized = normalizeOptions(options);
       const values = normalized.map(([key, property]) => {
         const { value, range } = property;
-        const V = mapped.map(value);
+        const V = data.map(value);
         if (!range) return [key, V];
         const domain = extent(V);
         const scale = scaleLinear(domain, range);
