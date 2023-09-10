@@ -11,12 +11,16 @@ export function vectorMoveLink() {
     const center = cm.vec(app.width() / 2, app.height() / 2);
     const mouse = cm.vec(app.mouseX(), app.mouseY());
     const dir = cm.vecSub(mouse, center);
-    app.background(cm.rgb(255)).shape(cm.link, {
-      x: center.x,
-      y: center.y,
-      x1: center.x + dir.x,
-      y1: center.y + dir.y,
-    });
+    app
+      .shape(cm.background, {
+        fill: cm.rgb(255),
+      })
+      .shape(cm.link, {
+        x: center.x,
+        y: center.y,
+        x1: center.x + dir.x,
+        y1: center.y + dir.y,
+      });
   });
 
   return app.call(frame).start();
