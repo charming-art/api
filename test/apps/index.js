@@ -1,4 +1,5 @@
-export { circleClover } from "./circle-clover";
-export { vectorCircleBouncing } from "./vector-circle-bouncing";
-export { vectorMoveLink } from "./vector-move-link";
-export { vectorFollowMe } from "./vector-follow-me";
+export { circleClover } from "./circle-clover.js";
+export { vectorCircleBouncing } from "./vector-circle-bouncing.js";
+export { vectorMoveLink } from "./vector-move-link.js";
+export { vectorFollowMe } from "./vector-follow-me.js";
+export { forceDancing } from "./force-dancing.js";

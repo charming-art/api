@@ -3,10 +3,11 @@ import { data$map } from "./map.js";
 import { data$value } from "./value.js";
 import { data$each } from "./each.js";
 
-export function Data(data) {
+export function Data(data, app) {
   Object.defineProperties(this, {
     _shapes: { value: [] },
     _data: { value: data, writable: true },
+    _app: { value: app },
   });
 }
 
