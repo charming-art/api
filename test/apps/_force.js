@@ -3,6 +3,7 @@ import * as cm from "./_cm.js";
 export function applyForce(d, i, data, app, force, ...rest) {
   const callback = typeof force === "function" ? force : () => force;
   const f = callback(d, i, data, app, ...rest);
+  if (f === undefined || f === null) return;
   const a = cm.vecDiv(f, d.mass);
   d.acceleration.add(a);
 }
