@@ -7,27 +7,29 @@ import {
   collisionY,
 } from "./_force.js";
 
-export function forceDancing() {
+export function forceFalling() {
   const app = cm.app({
     width: 600,
     height: 200,
   });
 
   const movers = Array.from({ length: 25 }, () => ({
-    location: cm.vec(),
+    location: cm.vec(cm.random(0, app.width()), 0),
     velocity: cm.vec(),
     acceleration: cm.vec(),
-    mass: cm.random(0.1, 5),
+    mass: cm.random(1, 5),
   }));
 
-  const gravity = cm.vec(0, 0.2);
-  const wind = cm.vec(0.02, 0);
+  const gravity = (d) => cm.vec(0, 0.1).mult(d.mass);
+  const friction = (d) => cm.vecNeg(d.velocity).mag(0.05);
+  const wind = cm.vec(0.001, 0);
 
   app
     .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .data(movers)
+        .each(applyForce, friction)
         .each(applyForce, gravity)
         .each(applyForce, wind)
         .each(updateLocation)
