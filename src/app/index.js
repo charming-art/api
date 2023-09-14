@@ -1,4 +1,5 @@
 import { app$data } from "./data.js";
+import { app$datum } from "./datum.js";
 import { app$frame } from "./frame.js";
 import { app$height } from "./height.js";
 import { app$node } from "./node.js";
@@ -64,6 +65,7 @@ function App({
 
 Object.defineProperties(App.prototype, {
   data: { value: app$data },
+  datum: { value: app$datum },
   node: { value: app$node },
   width: { value: app$width },
   height: { value: app$height },
