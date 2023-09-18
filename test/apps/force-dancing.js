@@ -1,11 +1,6 @@
 import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
-import {
-  applyForce,
-  updateLocation,
-  collisionX,
-  collisionY,
-} from "./_force.js";
+import { force, location, collision, object } from "./_force.js";
 
 export function forceDancing() {
   const app = cm.app({
@@ -13,26 +8,29 @@ export function forceDancing() {
     height: 200,
   });
 
-  const movers = Array.from({ length: 25 }, () => ({
-    location: cm.vec(),
-    velocity: cm.vec(),
-    acceleration: cm.vec(),
-    mass: cm.random(0.1, 5),
-  }));
+  const movers = Array.from({ length: 25 }, () =>
+    object({
+      location: cm.vec(),
+      velocity: cm.vec(),
+      acceleration: cm.vec(),
+      mass: cm.random(0.1, 5),
+    })
+  );
 
-  const gravity = cm.vec(0, 0.2);
-  const wind = cm.vec(0.02, 0);
+  const applyGravity = force(cm.vec(0, 0.2));
+  const applyWind = force(cm.vec(0.02, 0));
+  const update = location();
+  const detect = collision();
 
   app
     .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .data(movers)
-        .each(applyForce, gravity)
-        .each(applyForce, wind)
-        .each(updateLocation)
-        .each(collisionX)
-        .each(collisionY)
+        .each(applyGravity)
+        .each(applyWind)
+        .each(update)
+        .each(detect)
         .shape(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

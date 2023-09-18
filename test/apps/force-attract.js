@@ -1,6 +1,6 @@
 import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
-import { applyForce, updateLocation, attraction } from "./_force.js";
+import { attraction, object, location } from "./_force.js";
 
 export function forceAttract() {
   const app = cm.app({
@@ -11,26 +11,29 @@ export function forceAttract() {
   const centerX = app.width() / 2;
   const centerY = app.height() / 2;
 
-  const attractor = {
+  const attractor = object({
     mass: 20,
     G: 1,
     location: cm.vec(centerX, centerY),
-  };
+  });
 
-  const mover = {
+  const mover = object({
     location: cm.vec(centerX, centerY - 50),
     velocity: cm.vec(1, 0),
     acceleration: cm.vec(),
     mass: 5,
-  };
+  });
+
+  const update = location();
+  const applyAttraction = attraction(attractor);
 
   app
     .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .datum(mover)
-        .each(applyForce, attraction, attractor)
-        .each(updateLocation)
+        .each(applyAttraction)
+        .each(update)
         .shape(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

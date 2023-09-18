@@ -1,11 +1,6 @@
 import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
-import {
-  applyForce,
-  updateLocation,
-  collisionX,
-  collisionY,
-} from "./_force.js";
+import { force, location, collision, object } from "./_force.js";
 
 export function forceLiquid() {
   const app = cm.app({
@@ -13,12 +8,14 @@ export function forceLiquid() {
     height: 200,
   });
 
-  const movers = Array.from({ length: 25 }, () => ({
-    location: cm.vec(cm.random(0, app.width()), 0),
-    velocity: cm.vec(),
-    acceleration: cm.vec(),
-    mass: cm.random(1, 5),
-  }));
+  const movers = Array.from({ length: 25 }, () =>
+    object({
+      location: cm.vec(cm.random(0, app.width()), 0),
+      velocity: cm.vec(),
+      acceleration: cm.vec(),
+      mass: cm.random(1, 5),
+    })
+  );
 
   const liquid = {
     x: 0,
@@ -28,15 +25,17 @@ export function forceLiquid() {
     c: 0.1,
   };
 
-  const gravity = (d) => cm.vec(0, 0.1).mult(d.mass);
-  const drag = (d, i, data, app, liquid) => {
+  const applyGravity = force((d) => cm.vec(0, 0.1).mult(d.mass));
+  const applyDrag = force((d) => {
     const { x, y, height, width, c } = liquid;
     if (!d.location.inX(x, x + width)) return;
     if (!d.location.inY(y, y + height)) return;
     const v = d.velocity.mag();
     const mag = c * v * v;
     return cm.vecNeg(d.velocity).mag(mag);
-  };
+  });
+  const update = location();
+  const detect = collision();
 
   app
     .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
@@ -44,11 +43,10 @@ export function forceLiquid() {
     .frame(() => {
       app
         .data(movers)
-        .each(applyForce, drag, liquid)
-        .each(applyForce, gravity)
-        .each(updateLocation)
-        .each(collisionX)
-        .each(collisionY)
+        .each(applyGravity)
+        .each(applyDrag)
+        .each(update)
+        .each(detect)
         .shape(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

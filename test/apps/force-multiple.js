@@ -1,6 +1,6 @@
 import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
-import { applyForce, updateLocation, attraction } from "./_force.js";
+import { location, object, attraction } from "./_force.js";
 
 export function forceMultiple() {
   const app = cm.app({
@@ -11,26 +11,30 @@ export function forceMultiple() {
   const centerX = app.width() / 2;
   const centerY = app.height() / 2;
 
-  const attractor = {
+  const attractor = object({
     mass: 10,
-    G: 1,
     location: cm.vec(centerX, centerY),
-  };
+    G: 1,
+  });
 
-  const movers = Array.from({ length: 20 }, () => ({
-    location: cm.vec(cm.random(app.width()), cm.random(app.height())),
-    velocity: cm.vec(cm.random(), cm.random()),
-    acceleration: cm.vec(),
-    mass: cm.random(2, 5),
-  }));
+  const movers = Array.from({ length: 20 }, () =>
+    object({
+      location: cm.vec(cm.random(app.width()), cm.random(app.height())),
+      velocity: cm.vec(cm.random(), cm.random()),
+      mass: cm.random(2, 5),
+    })
+  );
+
+  const applyAttraction = attraction(attractor);
+  const update = location();
 
   app
     .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .data(movers)
-        .each(applyForce, attraction, attractor)
-        .each(updateLocation)
+        .each(applyAttraction)
+        .each(update)
         .shape(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
