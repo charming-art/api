@@ -1,4 +1,4 @@
-export function rect(context, I, value) {
+export function rect(renderer, I, value) {
   const {
     x: X = [],
     y: Y = [],
@@ -8,13 +8,13 @@ export function rect(context, I, value) {
     stroke: S = [],
   } = value;
   for (const i of I) {
-    const stroke = S[i];
-    context.beginPath();
-    if (stroke) context.strokeStyle = stroke;
-    context.fillStyle = F[i];
-    context.rect(X[i], Y[i], W[i], H[i]);
-    context.fill();
-    if (stroke) context.stroke();
-    context.closePath();
+    renderer.rect({
+      x: X[i],
+      y: Y[i],
+      width: W[i],
+      height: H[i],
+      stroke: S[i],
+      fill: F[i],
+    });
   }
 }

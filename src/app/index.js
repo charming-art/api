@@ -11,44 +11,17 @@ import { app$shape } from "./shape.js";
 import { app$call } from "./call.js";
 import { app$mouseX, app$mouseY } from "./mouse.js";
 import { app$dispose } from "./dispose.js";
-
-function createContext(document, width = 640, height = 480, dpi = null) {
-  if (dpi == null) dpi = devicePixelRatio;
-  const canvas = document.createElement("canvas");
-  canvas.width = width * dpi;
-  canvas.height = height * dpi;
-  canvas.style.width = width + "px";
-  canvas.style.height = height + "px";
-  const context = canvas.getContext("2d");
-  context.scale(dpi, dpi);
-  return context;
-}
-
-export function events(app) {
-  const node = app.node();
-  const mousemove = (e) => {
-    const { x, y } = node.getBoundingClientRect();
-    const { clientX, clientY } = e;
-    app._mouseX = clientX - x;
-    app._mouseY = clientY - y;
-  };
-  node.addEventListener("mousemove", mousemove);
-  app._dispose = () => {
-    node.addEventListener("mousemove", mousemove);
-  };
-}
+import { canvas } from "../renderers/canvas.js";
 
 function App({
   width = 640,
   height = 480,
-  document = window.document,
-  dpi = null,
+  renderer = canvas(),
   frameRate = 60,
+  dpi = null,
 } = {}) {
   Object.defineProperties(this, {
-    _context: { value: createContext(document, width, height, dpi) },
-    _width: { value: width, writable: true },
-    _height: { value: height, writable: true },
+    _renderer: { value: renderer },
     _data: { value: [], writable: true },
     _stop: { value: false, writable: true },
     _reschedule: { value: true, writable: true },
@@ -60,7 +33,13 @@ function App({
     _mouseY: { value: 0, writable: true },
     _dispose: { value: () => {}, writable: true },
   });
-  events(this);
+  this._renderer
+    .size(width, height, dpi) // Update size.
+    .mousemove((e) => {
+      const { x, y } = e;
+      this._mouseX = x;
+      this._mouseY = y;
+    });
 }
 
 Object.defineProperties(App.prototype, {

@@ -8,7 +8,7 @@ export function circleClover() {
 
   app
     .data(Array.from({ length: 240 }, (_, i) => i))
-    .map((_, i, data) => (i * Math.PI * 2) / data.length)
+    .map((_, { index, data }) => (index * Math.PI * 2) / data.length)
     .shape(cm.circle, {
       x: {
         value: (t) => Math.cos(t) * Math.cos(t * 3),

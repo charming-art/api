@@ -3,7 +3,7 @@ const defaults = {
   strokeWidth: 1,
 };
 
-export function link(context, I, value) {
+export function link(renderer, I, value) {
   const {
     x: X,
     y: Y,
@@ -13,14 +13,14 @@ export function link(context, I, value) {
     strokeWidth: SW = [],
   } = value;
   for (const i of I) {
-    const stroke = S[i] || defaults.stroke;
-    const strokeWidth = SW[i] || defaults.strokeWidth;
-    context.beginPath();
-    if (stroke) context.strokeStyle = stroke;
-    if (strokeWidth) context.lineWidth = strokeWidth;
-    context.moveTo(X[i], Y[i]);
-    context.lineTo(X1[i], Y1[i]);
-    if (stroke) context.stroke();
-    context.closePath();
+    renderer.line({
+      ...defaults,
+      x: X[i],
+      y: Y[i],
+      x1: X1[i],
+      y1: Y1[i],
+      ...(S[i] && { stroke: S[i] }),
+      ...(SW[i] && { strokeWidth: SW[i] }),
+    });
   }
 }

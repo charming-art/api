@@ -33,7 +33,7 @@ export function app$render() {
         const scaled = V.map(transform);
         return [key, scaled];
       });
-      render(this._context, I, Object.fromEntries(values), {
+      render(this._renderer, I, Object.fromEntries(values), {
         width: this.width(),
         height: this.height(),
       });

@@ -1,4 +1,4 @@
-export function circle(context, I, value) {
+export function circle(renderer, I, value) {
   const {
     x: X,
     y: Y,
@@ -7,18 +7,14 @@ export function circle(context, I, value) {
     stroke: S = [],
     strokeWidth: SW = [],
   } = value;
-  context.save();
   for (const i of I) {
-    const stroke = S[i];
-    const strokeWidth = SW[i];
-    context.beginPath();
-    if (stroke) context.strokeStyle = stroke;
-    if (strokeWidth) context.lineWidth = strokeWidth;
-    context.fillStyle = F[i];
-    context.arc(X[i], Y[i], R[i], 0, Math.PI * 2);
-    context.fill();
-    if (stroke) context.stroke();
-    context.closePath();
+    renderer.circle({
+      x: X[i],
+      y: Y[i],
+      r: R[i],
+      fill: F[i],
+      stroke: S[i],
+      strokeWidth: SW[i],
+    });
   }
-  context.restore();
 }

@@ -7,3 +7,4 @@ export { background } from "./shapes/background.js";
 export { rect } from "./shapes/rect.js";
 export { linear as scaleLinear } from "./scales/linear.js";
 export { sqrt as scaleSqrt } from "./scales/sqrt.js";
+export { canvas } from "./renderers/canvas.js";
