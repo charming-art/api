@@ -14,6 +14,14 @@ export function updateLocation(d) {
   d.acceleration.mult(0);
 }
 
+export function attraction(d, i, index, app, attractor) {
+  const { mass, G } = attractor;
+  const force = cm.vecSub(attractor.location, d.location);
+  const dist = cm.vecClamp(force, 5, 25).mag();
+  const strength = (G * mass * d.mass) / (dist * dist);
+  return cm.vecMag(force, strength);
+}
+
 export function collisionX(d, i, data, app) {
   if (!d.location.inX(app.width())) {
     d.location.clampX(app.width());
