@@ -11,6 +11,7 @@ import { app$shape } from "./shape.js";
 import { app$call } from "./call.js";
 import { app$mouseX, app$mouseY } from "./mouse.js";
 import { app$dispose } from "./dispose.js";
+import { app$frameCount } from "./frameCount.js";
 import { canvas } from "../renderers/canvas.js";
 
 function App({
@@ -57,6 +58,7 @@ Object.defineProperties(App.prototype, {
   mouseX: { value: app$mouseX },
   mouseY: { value: app$mouseY },
   dispose: { value: app$dispose },
+  frameCount: { value: app$frameCount },
 });
 
 export function app(options) {

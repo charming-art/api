@@ -1,13 +1,16 @@
 import { data$shape } from "./shape.js";
 import { data$map } from "./map.js";
-import { data$value } from "./value.js";
 import { data$each } from "./each.js";
+import { data$call } from "./call.js";
 import { data$filter } from "./filter.js";
 
-export function Data(data, app) {
+export function Data({ data, app, shape = null, parent = null, value = null }) {
   Object.defineProperties(this, {
-    _shapes: { value: [] },
     _data: { value: data, writable: true },
+    _value: { value: value, writable: true },
+    _shape: { value: shape },
+    _children: { value: [] },
+    _parent: { value: parent },
     _app: { value: app },
   });
 }
@@ -16,6 +19,6 @@ Object.defineProperties(Data.prototype, {
   map: { value: data$map },
   each: { value: data$each },
   filter: { value: data$filter },
+  call: { value: data$call },
   shape: { value: data$shape },
-  value: { value: data$value },
 });

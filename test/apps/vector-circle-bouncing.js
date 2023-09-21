@@ -17,17 +17,14 @@ export function vectorCircleBouncing() {
       if (!location.inY(app.height())) velocity.negY();
     })
     .frame(() => {
-      app
-        .shape(cm.background, {
-          fill: cm.rgb(255),
-        })
-        .shape(cm.circle, {
-          x: location.x,
-          y: location.y,
-          r: 16,
-          stroke: cm.rgb(0),
-          fill: cm.rgb(175),
-        });
+      app.shape(cm.background, { fill: cm.rgb(255) });
+      app.shape(cm.circle, {
+        x: location.x,
+        y: location.y,
+        r: 16,
+        stroke: cm.rgb(0),
+        fill: cm.rgb(175),
+      });
     });
 
   return app.call(frame).start();

@@ -8,3 +8,5 @@ export { forceLiquid } from "./force-liquid.js";
 export { forceAttract } from "./force-attract.js";
 export { forceMultiple } from "./force-multiple.js";
 export { forceEverything } from "./force-everything.js";
+export { oscillationBaton } from "./oscillation-baton.js";
+export { oscillationBatons } from "./oscillation-batons.js";

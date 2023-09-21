@@ -1,44 +1,35 @@
-import { linear as scaleLinear } from "../scales/linear.js";
-
-function extent(array) {
-  return [Math.min(...array), Math.max(...array)];
-}
-
-function normalizeOptions(options) {
-  return Object.entries(options).map(([key, value]) => [
-    key,
-    normalizeProperty(value),
-  ]);
-}
-
-function normalizeProperty(property) {
-  if (typeof property === "object") return property;
-  if (typeof property === "function") return { value: property };
-  return { value: () => property };
+function renderData(renderer, node, dimension) {
+  const { _shape, _data, _value, _children } = node;
+  const I = _data.map((_, i) => i);
+  if (_shape) {
+    const { render } = _shape;
+    render(renderer, I, _value, dimension);
+  }
+  if (!_children.length) return;
+  for (const i of I) {
+    if (_value) {
+      const { x: X, y: Y, rotate: R = [] } = _value;
+      const x = X[i];
+      const y = Y[i];
+      const r = R[i];
+      renderer.save();
+      renderer.translate(x, y);
+      if (r !== undefined) renderer.rotate(r);
+    }
+    _children.forEach((d) => renderData(renderer, d, dimension));
+    if (_value) {
+      renderer.restore();
+    }
+  }
 }
 
 export function app$render() {
-  for (const stream of this._data) {
-    const { shapes, data } = stream.value();
-    const I = data.map((_, i) => i);
-    for (const shape of shapes) {
-      const { render, options } = shape;
-      const normalized = normalizeOptions(options);
-      const values = normalized.map(([key, property]) => {
-        const { value, range, scale = scaleLinear } = property;
-        const V = data.map(value);
-        if (!range) return [key, V];
-        const domain = extent(V);
-        const transform = scale(domain, range);
-        const scaled = V.map(transform);
-        return [key, scaled];
-      });
-      render(this._renderer, I, Object.fromEntries(values), {
-        width: this.width(),
-        height: this.height(),
-      });
-    }
-  }
+  const renderer = this._renderer;
+  const dimension = {
+    width: this.width(),
+    height: this.height(),
+  };
+  this._data.forEach((d) => renderData(renderer, d, dimension));
   this._data = [];
   return this.node();
 }

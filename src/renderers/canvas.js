@@ -17,6 +17,7 @@ function canvas$node() {
 
 function canvas$circle({ stroke, strokeWidth, fill, x, y, r }) {
   const context = this._context;
+  context.save();
   context.beginPath();
   if (stroke) context.strokeStyle = stroke;
   if (strokeWidth) context.lineWidth = strokeWidth;
@@ -25,11 +26,13 @@ function canvas$circle({ stroke, strokeWidth, fill, x, y, r }) {
   context.fill();
   if (stroke) context.stroke();
   context.closePath();
+  context.restore();
   return this;
 }
 
 function canvas$rect({ stroke, fill, x, y, width, height }) {
   const context = this._context;
+  context.save();
   context.beginPath();
   if (stroke) context.strokeStyle = stroke;
   context.fillStyle = fill;
@@ -37,11 +40,13 @@ function canvas$rect({ stroke, fill, x, y, width, height }) {
   context.fill();
   if (stroke) context.stroke();
   context.closePath();
+  context.restore();
   return this;
 }
 
 function canvas$line({ stroke, strokeWidth, x, y, x1, y1 }) {
   const context = this._context;
+  context.save();
   context.beginPath();
   if (stroke) context.strokeStyle = stroke;
   if (strokeWidth) context.lineWidth = strokeWidth;
@@ -49,6 +54,7 @@ function canvas$line({ stroke, strokeWidth, x, y, x1, y1 }) {
   context.lineTo(x1, y1);
   if (stroke) context.stroke();
   context.closePath();
+  context.restore();
   return this;
 }
 
@@ -76,6 +82,22 @@ function canvas$height() {
   return this._height;
 }
 
+function canvas$translate(x, y) {
+  this._context.translate(x, y);
+}
+
+function canvas$save() {
+  this._context.save();
+}
+
+function canvas$restore() {
+  this._context.restore();
+}
+
+function canvas$rotate(angle) {
+  this._context.rotate(angle);
+}
+
 function Canvas({ document = window.document } = {}) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
@@ -97,6 +119,10 @@ Object.defineProperties(Canvas.prototype, {
   width: { value: canvas$width },
   height: { value: canvas$height },
   mousemove: { value: canvas$mousemove },
+  translate: { value: canvas$translate },
+  rotate: { value: canvas$rotate },
+  save: { value: canvas$save },
+  restore: { value: canvas$restore },
 });
 
 export function canvas(options) {
