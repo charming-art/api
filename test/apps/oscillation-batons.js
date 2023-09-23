@@ -1,4 +1,6 @@
 import * as cm from "./_cm.js";
+import { dispose } from "./_dispose.js";
+import { frame } from "./_frame.js";
 
 export function oscillationBatons() {
   const app = cm.app({
@@ -21,5 +23,5 @@ export function oscillationBatons() {
         .call((d) => d.shape(cm.circle, { x: 80, y: 0, r: 5 }));
     });
 
-  return app.start();
+  return app.call(dispose).call(frame).start();
 }

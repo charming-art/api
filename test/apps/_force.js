@@ -6,6 +6,9 @@ export function object(options) {
     velocity: cm.vec(),
     acceleration: cm.vec(),
     mass: 1,
+    aVelocity: 0,
+    aAcceleration: 0,
+    rotation: 0,
     ...options,
   };
 }
@@ -37,6 +40,15 @@ export function location() {
     d.velocity.add(d.acceleration);
     d.location.add(d.velocity);
     d.acceleration.mult(0);
+  };
+}
+
+export function rotation() {
+  return (d) => {
+    d.aAcceleration = d.acceleration.x / 10.0;
+    d.aVelocity += d.aAcceleration;
+    d.aVelocity = cm.clamp(d.aVelocity, -0.1, 0.1);
+    d.rotation += d.aVelocity;
   };
 }
 

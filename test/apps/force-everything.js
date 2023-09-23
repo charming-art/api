@@ -1,6 +1,7 @@
 import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
 import { location, attraction, object } from "./_force.js";
+import { dispose } from "./_dispose.js";
 
 export function forceEverything() {
   const app = cm.app({
@@ -42,5 +43,5 @@ export function forceEverything() {
         });
     });
 
-  return app.call(frame).start();
+  return app.call(dispose).call(frame).start();
 }

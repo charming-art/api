@@ -1,5 +1,6 @@
 import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
+import { dispose } from "./_dispose.js";
 
 export function vectorCircleBouncing() {
   const app = cm.app({
@@ -27,5 +28,5 @@ export function vectorCircleBouncing() {
       });
     });
 
-  return app.call(frame).start();
+  return app.call(dispose).call(frame).start();
 }

@@ -1,6 +1,7 @@
 import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
 import { force, location, collision, object } from "./_force.js";
+import { dispose } from "./_dispose.js";
 
 export function forceLiquid() {
   const app = cm.app({
@@ -60,5 +61,5 @@ export function forceLiquid() {
         });
     });
 
-  return app.call(frame).start();
+  return app.call(dispose).call(frame).start();
 }

@@ -1,9 +1,9 @@
 import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
-import { attraction, object, location } from "./_force.js";
+import { location, object, attraction, rotation } from "./_force.js";
 import { dispose } from "./_dispose.js";
 
-export function forceAttract() {
+export function oscillationSquareAttract() {
   const app = cm.app({
     width: 600,
     height: 200,
@@ -13,32 +13,37 @@ export function forceAttract() {
   const centerY = app.height() / 2;
 
   const attractor = object({
-    mass: 20,
-    G: 1,
+    mass: 10,
     location: cm.vec(centerX, centerY),
+    G: 1,
   });
 
-  const mover = object({
-    location: cm.vec(centerX, centerY - 50),
-    velocity: cm.vec(1, 0),
-    acceleration: cm.vec(),
-    mass: 5,
-  });
+  const movers = Array.from({ length: 20 }, () =>
+    object({
+      location: cm.vec(cm.random(app.width()), cm.random(app.height())),
+      velocity: cm.vec(cm.random(), cm.random()),
+      mass: cm.random(2, 5),
+    })
+  );
 
-  const update = location();
   const applyAttraction = attraction(attractor);
+  const rotate = rotation();
+  const move = location();
 
   app
     .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
-        .datum(mover)
+        .data(movers)
         .each(applyAttraction)
-        .each(update)
-        .shape(cm.circle, {
+        .each(rotate)
+        .each(move)
+        .shape(cm.rect, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
-          r: (d) => d.mass,
+          width: (d) => d.mass * 5,
+          height: (d) => d.mass * 5,
+          rotate: (d) => d.rotation,
           fill: cm.rgb(175),
           stroke: "#000",
           strokeWidth: 2,
@@ -50,7 +55,7 @@ export function forceAttract() {
         .shape(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
-          r: (d) => d.mass,
+          r: (d) => d.mass * 2,
           fill: cm.rgb(175),
           stroke: "#000",
           strokeWidth: 5,

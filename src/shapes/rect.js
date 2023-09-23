@@ -6,6 +6,7 @@ export function rect(renderer, I, value) {
     height: H = [],
     fill: F = [],
     stroke: S = [],
+    rotate: R = [],
   } = value;
   for (const i of I) {
     renderer.rect({
@@ -15,6 +16,7 @@ export function rect(renderer, I, value) {
       height: H[i],
       stroke: S[i],
       fill: F[i],
+      ...(R[i] && { rotate: R[i] }),
     });
   }
 }

@@ -1,4 +1,5 @@
 import * as cm from "./_cm.js";
+import { dispose } from "./_dispose.js";
 
 export function circleClover() {
   const app = cm.app({
@@ -24,5 +25,5 @@ export function circleClover() {
       },
     });
 
-  return app.render();
+  return app.call(dispose).render();
 }

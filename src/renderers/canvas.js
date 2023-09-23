@@ -30,13 +30,15 @@ function canvas$circle({ stroke, strokeWidth, fill, x, y, r }) {
   return this;
 }
 
-function canvas$rect({ stroke, fill, x, y, width, height }) {
+function canvas$rect({ stroke, fill, x, y, width, height, rotate }) {
   const context = this._context;
   context.save();
+  context.translate(x + width / 2, y + height / 2);
+  if (rotate) context.rotate(rotate);
   context.beginPath();
   if (stroke) context.strokeStyle = stroke;
   context.fillStyle = fill;
-  context.rect(x, y, width, height);
+  context.rect(-width / 2, -height / 2, width, height);
   context.fill();
   if (stroke) context.stroke();
   context.closePath();
