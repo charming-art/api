@@ -8,7 +8,7 @@ export function circleClover() {
   });
 
   app
-    .data(Array.from({ length: 240 }, (_, i) => i))
+    .data(cm.range(240))
     .map((_, { index, data }) => (index * Math.PI * 2) / data.length)
     .shape(cm.circle, {
       x: {

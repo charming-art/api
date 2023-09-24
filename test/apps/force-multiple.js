@@ -18,7 +18,7 @@ export function forceMultiple() {
     G: 1,
   });
 
-  const movers = Array.from({ length: 20 }, () =>
+  const movers = cm.range(20, () =>
     object({
       location: cm.vec(cm.random(app.width()), cm.random(app.height())),
       velocity: cm.vec(cm.random(), cm.random()),

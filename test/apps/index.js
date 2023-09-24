@@ -15,3 +15,5 @@ export { oscillationCar } from "./oscillation-car.js";
 export { oscillationDone } from "./oscillation-done.js";
 export { oscillationOscillate } from "./oscillation-oscillate.js";
 export { oscillationOscillateMultiple } from "./oscillation-oscillate-multiple.js";
+export { oscillationWave } from "./oscillation-wave.js";
+export { oscillationWaveSnake } from "./oscillation-wave-snake.js";

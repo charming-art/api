@@ -9,7 +9,7 @@ export function forceDancing() {
     height: 200,
   });
 
-  const movers = Array.from({ length: 25 }, () =>
+  const movers = cm.range(25, () =>
     object({
       location: cm.vec(),
       velocity: cm.vec(),

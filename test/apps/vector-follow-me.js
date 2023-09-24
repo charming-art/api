@@ -8,7 +8,7 @@ export function vectorFollowMe() {
     height: 200,
   });
 
-  const movers = Array.from({ length: 20 }, () => ({
+  const movers = cm.range(20, () => ({
     location: cm.vec(cm.random(app.width()), cm.random(app.height())),
     velocity: cm.vec(),
     acceleration: cm.vec(),

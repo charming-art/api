@@ -9,7 +9,7 @@ export function forceLiquid() {
     height: 200,
   });
 
-  const movers = Array.from({ length: 25 }, () =>
+  const movers = cm.range(25, () =>
     object({
       location: cm.vec(cm.random(0, app.width()), 0),
       velocity: cm.vec(),
