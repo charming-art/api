@@ -12,3 +12,6 @@ export { oscillationBaton } from "./oscillation-baton.js";
 export { oscillationBatons } from "./oscillation-batons.js";
 export { oscillationSquareAttract } from "./oscillation-square-attract.js";
 export { oscillationCar } from "./oscillation-car.js";
+export { oscillationDone } from "./oscillation-done.js";
+export { oscillationOscillate } from "./oscillation-oscillate.js";
+export { oscillationOscillateMultiple } from "./oscillation-oscillate-multiple.js";
