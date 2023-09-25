@@ -1,10 +1,12 @@
 function renderData(renderer, node, dimension) {
   const { _shape, _data, _value, _children } = node;
   const I = _data.map((_, i) => i);
-  if (_shape) {
-    const { render } = _shape;
-    render(renderer, I, _value, dimension);
+  if (!_shape) {
+    _children.forEach((d) => renderData(renderer, d, dimension));
+    return;
   }
+  const { render } = _shape;
+  render(renderer, I, _value, dimension);
   if (!_children.length) return;
   for (const i of I) {
     if (_value) {

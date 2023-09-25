@@ -8,7 +8,7 @@ export function oscillationWave() {
     height: 200,
   });
 
-  const X = cm.range(20, cm.TWO_PI);
+  const X = cm.range(50, cm.TWO_PI);
 
   app
     .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
@@ -19,13 +19,13 @@ export function oscillationWave() {
           range: [0, app.width()],
         },
         y: {
-          value: (d) => Math.sin(d + app.frameCount() / 20),
+          value: (d) => Math.sin(d + app.frameCount() / 30),
           range: [0, app.height()],
         },
         r: 20,
         fill: "rgba(175, 175, 175, 0.5)",
         stroke: "#000",
-        strokeWidth: 2,
+        strokeWidth: 1,
       });
     });
 
