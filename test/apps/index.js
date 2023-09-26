@@ -17,3 +17,4 @@ export { oscillationOscillate } from "./oscillation-oscillate.js";
 export { oscillationOscillateMultiple } from "./oscillation-oscillate-multiple.js";
 export { oscillationWave } from "./oscillation-wave.js";
 export { oscillationWaveSnake } from "./oscillation-wave-snake.js";
+export { oscillationSpring } from "./oscillation-spring.js";

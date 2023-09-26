@@ -16,3 +16,7 @@ export function range(length, start, end) {
   const step = (end - start) / length;
   return Array.from({ length }, (_, i) => start + i * step);
 }
+
+export function radian(degree) {
+  return (degree * Math.PI) / 180;
+}
