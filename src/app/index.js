@@ -12,7 +12,7 @@ import { app$call } from "./call.js";
 import { app$mouseX, app$mouseY } from "./mouse.js";
 import { app$dispose } from "./dispose.js";
 import { app$frameCount } from "./frameCount.js";
-import { canvas } from "../renderers/canvas.js";
+import { canvas } from "../renderer/canvas.js";
 
 function App({
   width = 640,

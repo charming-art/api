@@ -1,4 +1,4 @@
-import { linear as scaleLinear } from "../scales/linear.js";
+import { linear as scaleLinear } from "../scale/linear.js";
 
 function extent(array) {
   return [Math.min(...array), Math.max(...array)];
