@@ -16,7 +16,7 @@ export function vectorFollowMe() {
   }));
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .data(movers)
@@ -32,7 +32,7 @@ export function vectorFollowMe() {
             .clampX(app.width())
             .clampY(app.height());
         })
-        .shape(cm.circle, {
+        .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           fill: "rgba(175, 175, 175, 0.5)",

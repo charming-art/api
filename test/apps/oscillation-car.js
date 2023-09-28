@@ -22,14 +22,14 @@ export function oscillationCar() {
   };
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .datum(mover)
         .each(force(toMouse))
         .each(update)
         .each(constrain)
-        .shape(cm.rect, {
+        .append(cm.rect, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           width: 30,

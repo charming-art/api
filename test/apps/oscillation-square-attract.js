@@ -31,14 +31,14 @@ export function oscillationSquareAttract() {
   const move = location();
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .data(movers)
         .each(applyAttraction)
         .each(rotate)
         .each(move)
-        .shape(cm.rect, {
+        .append(cm.rect, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           width: (d) => d.mass * 5,
@@ -52,7 +52,7 @@ export function oscillationSquareAttract() {
     .frame(() => {
       app
         .datum(attractor) // Convert to an array.
-        .shape(cm.circle, {
+        .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           r: (d) => d.mass * 2,

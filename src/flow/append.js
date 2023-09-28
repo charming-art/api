@@ -1,7 +1,7 @@
 import { Flow } from "./index.js";
 import { valueOf } from "./_valueOf.js";
 
-export function flow$shape(render, options) {
+export function flow$append(render, options) {
   const values = valueOf(this._data, options);
   const flow = new Flow({
     data: this._shape ? [0] : this._data,

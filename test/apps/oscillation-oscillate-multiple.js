@@ -15,9 +15,9 @@ export function oscillationOscillateMultiple() {
   }));
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
-      const group = app.shape(cm.group, {
+      const group = app.append(cm.group, {
         x: app.width() / 2,
         y: app.height() / 2,
       });
@@ -26,9 +26,9 @@ export function oscillationOscillateMultiple() {
       group
         .data(oscillators)
         .each((d) => d.angle.add(d.velocity))
-        .call((d) => d.shape(cm.link, { x: 0, y: 0, x1: x, y1: y }))
+        .call((d) => d.append(cm.link, { x: 0, y: 0, x1: x, y1: y }))
         .call((d) =>
-          d.shape(cm.circle, {
+          d.append(cm.circle, {
             x,
             y,
             r: 16,

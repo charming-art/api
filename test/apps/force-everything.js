@@ -22,7 +22,7 @@ export function forceEverything() {
   const update = location();
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .data(movers)
@@ -33,7 +33,7 @@ export function forceEverything() {
             .each((j) => attraction(j)(i))
         )
         .each(update)
-        .shape(cm.circle, {
+        .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           r: (d) => d.mass * 2,

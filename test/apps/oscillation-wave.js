@@ -11,9 +11,9 @@ export function oscillationWave() {
   const X = cm.range(50, cm.TWO_PI);
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
-      app.data(X).shape(cm.circle, {
+      app.data(X).append(cm.circle, {
         x: {
           value: (d) => d,
           range: [0, app.width()],

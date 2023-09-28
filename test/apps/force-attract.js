@@ -29,13 +29,13 @@ export function forceAttract() {
   const applyAttraction = attraction(attractor);
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .datum(mover)
         .each(applyAttraction)
         .each(update)
-        .shape(cm.circle, {
+        .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           r: (d) => d.mass,
@@ -47,7 +47,7 @@ export function forceAttract() {
     .frame(() => {
       app
         .datum(attractor) // Convert to an array.
-        .shape(cm.circle, {
+        .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           r: (d) => d.mass,

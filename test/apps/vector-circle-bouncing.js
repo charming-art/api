@@ -18,8 +18,8 @@ export function vectorCircleBouncing() {
       if (!location.inY(app.height())) velocity.negY();
     })
     .frame(() => {
-      app.shape(cm.background, { fill: cm.rgb(255) });
-      app.shape(cm.circle, {
+      app.append(cm.background, { fill: cm.rgb(255) });
+      app.append(cm.circle, {
         x: location.x,
         y: location.y,
         r: 16,

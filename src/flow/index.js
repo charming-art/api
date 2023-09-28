@@ -1,4 +1,4 @@
-import { flow$shape } from "./shape.js";
+import { flow$append } from "./append.js";
 import { flow$map } from "./map.js";
 import { flow$each } from "./each.js";
 import { flow$call } from "./call.js";
@@ -22,7 +22,7 @@ Object.defineProperties(Flow.prototype, {
   each: { value: flow$each },
   filter: { value: flow$filter },
   call: { value: flow$call },
-  shape: { value: flow$shape },
+  append: { value: flow$append },
   data: { value: flow$data },
   datum: { value: flow$datum },
 });

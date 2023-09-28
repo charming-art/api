@@ -14,9 +14,9 @@ export function oscillationWaveSnake() {
   const X2 = cm.range(I.length, cm.TWO_PI / 3);
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
-      app.data(I).shape(cm.circle, {
+      app.data(I).append(cm.circle, {
         x: {
           value: (d) => d,
           range: [0, app.width()],

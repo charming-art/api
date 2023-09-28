@@ -10,7 +10,7 @@ export function circleClover() {
   app
     .data(cm.range(240))
     .map((_, { index, data }) => (index * Math.PI * 2) / data.length)
-    .shape(cm.circle, {
+    .append(cm.circle, {
       x: {
         value: (t) => Math.cos(t) * Math.cos(t * 3),
         range: [15, app.width() - 30],

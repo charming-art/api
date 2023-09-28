@@ -7,7 +7,7 @@ import { app$render } from "./render.js";
 import { app$start } from "./start.js";
 import { app$stop } from "./stop.js";
 import { app$width } from "./width.js";
-import { app$shape } from "./shape.js";
+import { app$append } from "./append.js";
 import { app$call } from "./call.js";
 import { app$mouseX, app$mouseY } from "./mouse.js";
 import { app$dispose } from "./dispose.js";
@@ -53,7 +53,7 @@ Object.defineProperties(App.prototype, {
   frame: { value: app$frame },
   start: { value: app$start },
   stop: { value: app$stop },
-  shape: { value: app$shape },
+  append: { value: app$append },
   call: { value: app$call },
   mouseX: { value: app$mouseX },
   mouseY: { value: app$mouseY },

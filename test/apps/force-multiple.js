@@ -30,13 +30,13 @@ export function forceMultiple() {
   const update = location();
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .data(movers)
         .each(applyAttraction)
         .each(update)
-        .shape(cm.circle, {
+        .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           r: (d) => d.mass * 2,
@@ -48,7 +48,7 @@ export function forceMultiple() {
     .frame(() => {
       app
         .datum(attractor) // Convert to an array.
-        .shape(cm.circle, {
+        .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           r: (d) => d.mass * 2,

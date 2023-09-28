@@ -24,7 +24,7 @@ export function forceDancing() {
   const detect = collision();
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       app
         .data(movers)
@@ -32,7 +32,7 @@ export function forceDancing() {
         .each(applyWind)
         .each(update)
         .each(detect)
-        .shape(cm.circle, {
+        .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           fill: "rgba(175, 175, 175, 0.5)",

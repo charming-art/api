@@ -19,15 +19,15 @@ export function oscillationSpring() {
   const y = (d) => d.r * Math.cos(cm.radian(d.angle));
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
-      const group = app.shape(cm.group, { x: app.width() / 2, y: 0 });
+      const group = app.append(cm.group, { x: app.width() / 2, y: 0 });
       group
         .datum(pendulum)
         .each(update)
-        .call((d) => d.shape(cm.link, { x: 0, y: 0, x1: x, y1: y }))
+        .call((d) => d.append(cm.link, { x: 0, y: 0, x1: x, y1: y }))
         .call((d) =>
-          d.shape(cm.circle, {
+          d.append(cm.circle, {
             x,
             y,
             r: 20,

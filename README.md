@@ -15,7 +15,7 @@ const app = cm.app({
 app
   .data(Array.from({ length: 240 }, (_, i) => i))
   .map((_, i, data) => (i * Math.PI * 2) / data.length)
-  .shape(cm.circle, {
+  .append(cm.circle, {
     x: {
       value: (t) => Math.cos(t) * Math.cos(t * 3),
       range: [15, app.width() - 30],

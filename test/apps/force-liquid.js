@@ -39,8 +39,8 @@ export function forceLiquid() {
   const detect = collision();
 
   app
-    .frame(() => app.shape(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => app.shape(cm.rect, { ...liquid, fill: cm.rgb(175) }))
+    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
+    .frame(() => app.append(cm.rect, { ...liquid, fill: cm.rgb(175) }))
     .frame(() => {
       app
         .data(movers)
@@ -48,7 +48,7 @@ export function forceLiquid() {
         .each(applyDrag)
         .each(update)
         .each(detect)
-        .shape(cm.circle, {
+        .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,
           fill: "rgba(175, 175, 175, 0.5)",
