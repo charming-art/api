@@ -1,15 +1,15 @@
-import { Data } from "../data";
-import { valueOf } from "../data/_valueOf";
+import { Flow } from "../flow";
+import { valueOf } from "../flow/_valueOf";
 
 export function app$shape(render, options) {
   const values = valueOf([0], options);
-  const data = new Data({
+  const flow = new Flow({
     data: [0],
     app: this,
     shape: { render, options },
     parent: null,
     value: Object.fromEntries(values),
   });
-  this._data.push(data);
-  return data;
+  this._flows.push(flow);
+  return flow;
 }

@@ -12,4 +12,4 @@ export { radian } from "./math/radian.js";
 export { random } from "./math/random.js";
 export { clamp } from "./math/clamp.js";
 export { range } from "./array/range.js";
-export { TOW_PI } from "./constant/TOW_PI.js";
+export { TWO_PI } from "./constant/TWO_PI.js";

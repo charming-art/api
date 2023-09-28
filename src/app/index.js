@@ -23,7 +23,7 @@ function App({
 } = {}) {
   Object.defineProperties(this, {
     _renderer: { value: renderer },
-    _data: { value: [], writable: true },
+    _flows: { value: [], writable: true },
     _stop: { value: false, writable: true },
     _reschedule: { value: true, writable: true },
     _frame: { value: [], writable: true },

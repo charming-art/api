@@ -1,7 +1,7 @@
-import { Data } from "../data/index.js";
+import { Flow } from "../flow/index.js";
 
 export function app$data(data) {
-  const newData = new Data({ data, app: this });
-  this._data.push(newData);
-  return newData;
+  const flow = new Flow({ data, app: this });
+  this._flows.push(flow);
+  return flow;
 }
