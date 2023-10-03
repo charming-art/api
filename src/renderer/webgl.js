@@ -1,3 +1,5 @@
+import { color as d3Color } from "d3-color";
+
 function createShader(gl, type, source) {
   const shader = gl.createShader(type);
   gl.shaderSource(shader, source);
@@ -23,19 +25,23 @@ function compileProgram(gl) {
   // Sources for our GLSL vertex shader.
   const vertexSource = `
     attribute vec2 a_position;
+    attribute vec4 a_color;
     uniform vec2 u_resolution;
+    varying vec4 v_color;
     void main() {
       vec2 scale = a_position / u_resolution;
       vec2 clipSpace = scale * 2.0 - 1.0;
       gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+      v_color = a_color;
     }
   `;
 
   // Source for our GLSL fragment shader.
   const fragmentSource = `
     precision mediump float;
+    varying vec4 v_color;
     void main() {
-      gl_FragColor = vec4(1, 0, 0.5, 1);
+      gl_FragColor = v_color;
     }
   `;
 
@@ -62,55 +68,47 @@ function webgl$size(width, height, dpi = null) {
 function webgl$triangles(I, value) {
   const { _gl: gl, _program: program } = this;
 
-  // Look up where the vertex data needs to go.
-  const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+  const { x: X, y: Y, x1: X1, y1: Y1, x2: X2, y2: Y2, fill: F = [] } = value;
 
-  // Look up uniform locations.
-  const resolutionUniformLocation = gl.getUniformLocation(
-    program,
-    "u_resolution"
-  );
-
-  // Create a buffer and put three 2d clip space points in it.
-  const positionBuffer = gl.createBuffer();
-
-  // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer).
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
-  const { x: X, y: Y, x1: X1, y1: Y1, x2: X2, y2: Y2 } = value;
-
+  // Pass vertexes to position buffer.
   const positions = I.flatMap((i) => [X[i], Y[i], X1[i], Y1[i], X2[i], Y2[i]]);
+  const positionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
-  // Turn on the attribute.
-  gl.enableVertexAttribArray(positionAttributeLocation);
+  // Pass colors to color buffer.
+  const colors = I.flatMap((i) => {
+    const fill = F[i];
+    const { r, g, b, opacity } = d3Color(fill).rgb();
+    const o = 255 * opacity;
+    return [r, g, b, o, r, g, b, o, r, g, b, o];
+  });
+  const colorBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(colors), gl.STATIC_DRAW);
 
-  // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
-  const size = 2; // 2 components per iteration
-  const type = gl.FLOAT; // the data is 32bit floats
-  const normalize = false; // don't normalize the data
-  const stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
-  const offset = 0; // start at the beginning of the buffer
-  gl.vertexAttribPointer(
-    positionAttributeLocation,
-    size,
-    type,
-    normalize,
-    stride,
-    offset
-  );
+  // Extract data from position buffer to attribute position.
+  const positionLocation = gl.getAttribLocation(program, "a_position");
+  gl.enableVertexAttribArray(positionLocation);
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+  // Extract data from color buffer to attribute color.
+  const colorLocation = gl.getAttribLocation(program, "a_color");
+  gl.enableVertexAttribArray(colorLocation);
+  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+  gl.vertexAttribPointer(colorLocation, 4, gl.UNSIGNED_BYTE, true, 0, 0);
 
   // Set the resolution.
+  const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
   gl.uniform2f(
-    resolutionUniformLocation,
+    resolutionLocation,
     gl.canvas.width / devicePixelRatio,
     gl.canvas.height / devicePixelRatio
   );
 
-  // draw
-  const primitiveType = gl.TRIANGLES;
-  const count = I.length * 3;
-  gl.drawArrays(primitiveType, offset, count);
+  // Render.
+  gl.drawArrays(gl.TRIANGLES, 0, I.length * 3);
 }
 
 function webgl$node() {

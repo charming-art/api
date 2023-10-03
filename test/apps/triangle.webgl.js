@@ -21,6 +21,7 @@ export function TriangleWebGL() {
       y1: (d) => d[3],
       x2: (d) => d[4],
       y2: (d) => d[5],
+      fill: (_, i) => (i ? "steelblue" : "orange"),
     });
 
   return app.call(dispose).call(frame).render();
