@@ -13,6 +13,7 @@ import { app$mouseX, app$mouseY } from "./mouse.js";
 import { app$dispose } from "./dispose.js";
 import { app$frameCount } from "./frameCount.js";
 import { canvas } from "../renderer/canvas.js";
+import { _maybe } from "./_maybe.js";
 
 function App({
   width = 640,
@@ -34,13 +35,12 @@ function App({
     _mouseY: { value: 0, writable: true },
     _dispose: { value: () => {}, writable: true },
   });
-  this._renderer
-    .size(width, height, dpi) // Update size.
-    .mousemove((e) => {
-      const { x, y } = e;
-      this._mouseX = x;
-      this._mouseY = y;
-    });
+  _maybe(this._renderer, "size", width, height, dpi);
+  _maybe(this._renderer, "mousemove", (e) => {
+    const { x, y } = e;
+    this._mouseX = x;
+    this._mouseY = y;
+  });
 }
 
 Object.defineProperties(App.prototype, {

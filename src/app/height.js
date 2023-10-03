@@ -1,3 +1,5 @@
+import { _maybe } from "./_maybe.js";
+
 export function app$height() {
-  return this._renderer.height();
+  return _maybe(this._renderer, "height");
 }

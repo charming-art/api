@@ -18,3 +18,4 @@ export { oscillationOscillateMultiple } from "./oscillation-oscillate-multiple.j
 export { oscillationWave } from "./oscillation-wave.js";
 export { oscillationWaveSnake } from "./oscillation-wave-snake.js";
 export { oscillationSpring } from "./oscillation-spring.js";
+export { TriangleWebGL } from "./triangle.webgl.js";
