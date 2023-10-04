@@ -60,6 +60,20 @@ function canvas$line({ stroke, strokeWidth, x, y, x1, y1 }) {
   return this;
 }
 
+function canvas$triangle({ x, y, x1, y1, x2, y2, fill }) {
+  const context = this._context;
+  context.save();
+  context.beginPath();
+  context.fillStyle = fill;
+  context.moveTo(x, y);
+  context.lineTo(x1, y1);
+  context.lineTo(x2, y2);
+  context.closePath();
+  context.fill();
+  context.restore();
+  return this;
+}
+
 function canvas$mousemove(listener) {
   const node = this.node();
   if (arguments.length === 0) {
@@ -118,6 +132,7 @@ Object.defineProperties(Canvas.prototype, {
   circle: { value: canvas$circle },
   rect: { value: canvas$rect },
   line: { value: canvas$line },
+  triangle: { value: canvas$triangle },
   width: { value: canvas$width },
   height: { value: canvas$height },
   mousemove: { value: canvas$mousemove },
