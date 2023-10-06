@@ -1,6 +1,7 @@
 import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
 import { dispose } from "./_dispose.js";
+import { stats } from "./_stats.js";
 
 export function vectorFollowMe() {
   const app = cm.app({
@@ -41,5 +42,5 @@ export function vectorFollowMe() {
         });
     });
 
-  return app.call(dispose).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start();
 }

@@ -1,6 +1,7 @@
 import * as cm from "./_cm.js";
 import { dispose } from "./_dispose.js";
 import { frame } from "./_frame.js";
+import { stats } from "./_stats.js";
 
 export function oscillationWave() {
   const app = cm.app({
@@ -29,5 +30,5 @@ export function oscillationWave() {
       });
     });
 
-  return app.call(dispose).call(frame).start();
+  return app.call(dispose).call(frame).call(stats).start();
 }

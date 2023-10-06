@@ -12,8 +12,12 @@ import { app$call } from "./call.js";
 import { app$mouseX, app$mouseY } from "./mouse.js";
 import { app$dispose } from "./dispose.js";
 import { app$frameCount } from "./frameCount.js";
+import { app$afterAll } from "./afterAll.js";
+import { app$afterEach } from "./afterEach.js";
+import { app$beforeAll } from "./beforeAll.js";
+import { app$beforeEach } from "./beforeEach.js";
 import { canvas } from "../renderer/canvas.js";
-import { _maybe } from "./_maybe.js";
+import { maybe } from "./_maybe.js";
 
 function App({
   width = 640,
@@ -27,7 +31,7 @@ function App({
     _flows: { value: [], writable: true },
     _stop: { value: false, writable: true },
     _reschedule: { value: true, writable: true },
-    _frame: { value: [], writable: true },
+    _hooks: { value: {}, writable: true },
     _frameRate: { value: frameRate, writable: true },
     _frameCount: { value: 0, writable: true },
     _timer: { value: null, writable: true },
@@ -35,8 +39,8 @@ function App({
     _mouseY: { value: 0, writable: true },
     _dispose: { value: () => {}, writable: true },
   });
-  _maybe(this._renderer, "size", width, height, dpi);
-  _maybe(this._renderer, "mousemove", (e) => {
+  maybe(this._renderer, "size", width, height, dpi);
+  maybe(this._renderer, "mousemove", (e) => {
     const { x, y } = e;
     this._mouseX = x;
     this._mouseY = y;
@@ -59,6 +63,10 @@ Object.defineProperties(App.prototype, {
   mouseY: { value: app$mouseY },
   dispose: { value: app$dispose },
   frameCount: { value: app$frameCount },
+  afterAll: { value: app$afterAll },
+  afterEach: { value: app$afterEach },
+  beforeAll: { value: app$beforeAll },
+  beforeEach: { value: app$beforeEach },
 });
 
 export function app(options) {

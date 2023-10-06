@@ -2,6 +2,7 @@ import * as cm from "./_cm.js";
 import { dispose } from "./_dispose.js";
 import { force, object, location } from "./_force.js";
 import { frame } from "./_frame.js";
+import { stats } from "./_stats.js";
 
 export function oscillationCar() {
   const app = cm.app({
@@ -40,5 +41,5 @@ export function oscillationCar() {
         });
     });
 
-  return app.call(dispose).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start();
 }

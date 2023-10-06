@@ -2,6 +2,7 @@ import * as cm from "./_cm.js";
 import { frame } from "./_frame.js";
 import { location, object, attraction, rotation } from "./_force.js";
 import { dispose } from "./_dispose.js";
+import { stats } from "./_stats.js";
 
 export function oscillationSquareAttract() {
   const app = cm.app({
@@ -62,5 +63,5 @@ export function oscillationSquareAttract() {
         });
     });
 
-  return app.call(dispose).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start();
 }

@@ -1,4 +1,4 @@
-export function _maybe(object, method, ...params) {
+export function maybe(object, method, ...params) {
   if (object[method]) {
     const value = object[method](...params);
     return value;

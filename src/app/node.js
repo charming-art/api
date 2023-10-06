@@ -1,5 +1,5 @@
-import { _maybe } from "./_maybe.js";
+import { maybe } from "./_maybe.js";
 
 export function app$node() {
-  return _maybe(this._renderer, "node");
+  return maybe(this._renderer, "node");
 }

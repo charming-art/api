@@ -1,6 +1,7 @@
 import * as cm from "./_cm.js";
 import { dispose } from "./_dispose.js";
 import { frame } from "./_frame.js";
+import { stats } from "./_stats.js";
 
 export function oscillationWaveSnake() {
   const app = cm.app({
@@ -38,5 +39,5 @@ export function oscillationWaveSnake() {
       });
     });
 
-  return app.call(dispose).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start();
 }

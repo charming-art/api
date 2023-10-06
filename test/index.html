@@ -1,14 +1,21 @@
 <script type="module">
   import * as apps from "./apps/index.js";
 
-  // UI
+  // Tool
+  const tool = document.createElement("div");
+  tool.id = "tool";
+  tool.style.display = "flex";
+  tool.style.margin = "1em 0px";
+  document.body.append(tool);
+
+  // Select
   const select = createSelect(() => {
     const { value } = select;
     history.pushState({ value }, "", `?name=${value}`);
     render();
   });
   const options = Object.keys(apps).map(createOption);
-  document.body.append(select);
+  tool.append(select);
   select.append(...options);
 
   // Init app name.
@@ -21,9 +28,8 @@
 
   function createSelect(onchange) {
     const select = document.createElement("select");
-    select.style.margin = "1em";
     select.onchange = onchange;
-    select.style.display = "block";
+    select.style.height = "20px";
     return select;
   }
 
