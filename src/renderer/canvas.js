@@ -90,6 +90,26 @@ function canvas$mousemove(listener) {
   return this;
 }
 
+function canvas$mouseup(listener) {
+  const node = this.node();
+  if (arguments.length === 0) {
+    node.removeEventListener("mouseup", this._mouseup);
+  }
+  this._mouseup = (e) => listener(e);
+  node.addEventListener("mouseup", this._mouseup);
+  return this;
+}
+
+function canvas$mousedown(listener) {
+  const node = this.node();
+  if (arguments.length === 0) {
+    node.removeEventListener("mousedown", this._mouseup);
+  }
+  this._mousedown = (e) => listener(e);
+  node.addEventListener("mousedown", this._mousedown);
+  return this;
+}
+
 function canvas$width() {
   return this._width;
 }
@@ -123,6 +143,8 @@ function Canvas({ document = window.document } = {}) {
     _width: { value: 0, writable: true },
     _height: { value: 0, writable: true },
     _mousemove: { value: null, writable: true },
+    _mousedown: { value: null, writable: true },
+    _mouseup: { value: null, writable: true },
   });
 }
 
@@ -136,6 +158,8 @@ Object.defineProperties(Canvas.prototype, {
   width: { value: canvas$width },
   height: { value: canvas$height },
   mousemove: { value: canvas$mousemove },
+  mouseup: { value: canvas$mouseup },
+  mousedown: { value: canvas$mousedown },
   translate: { value: canvas$translate },
   rotate: { value: canvas$rotate },
   save: { value: canvas$save },

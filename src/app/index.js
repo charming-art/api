@@ -16,8 +16,11 @@ import { app$afterAll } from "./afterAll.js";
 import { app$afterEach } from "./afterEach.js";
 import { app$beforeAll } from "./beforeAll.js";
 import { app$beforeEach } from "./beforeEach.js";
+import { app$mouseup } from "./mouseup.js";
+import { app$mousedown } from "./mousedown.js";
 import { canvas } from "../renderer/canvas.js";
 import { maybe } from "./_maybe.js";
+import { useHook } from "./_hook.js";
 
 function App({
   width = 640,
@@ -45,6 +48,8 @@ function App({
     this._mouseX = x;
     this._mouseY = y;
   });
+  maybe(this._renderer, "mousedown", () => useHook(this, "mousedown"));
+  maybe(this._renderer, "mouseup", () => useHook(this, "mouseup"));
 }
 
 Object.defineProperties(App.prototype, {
@@ -67,6 +72,8 @@ Object.defineProperties(App.prototype, {
   afterEach: { value: app$afterEach },
   beforeAll: { value: app$beforeAll },
   beforeEach: { value: app$beforeEach },
+  mouseup: { value: app$mouseup },
+  mousedown: { value: app$mousedown },
 });
 
 export function app(options) {
