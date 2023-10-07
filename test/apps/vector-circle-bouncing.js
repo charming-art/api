@@ -10,7 +10,7 @@ export function vectorCircleBouncing() {
   });
 
   const location = cm.vec(app.width() / 2, app.height() / 2);
-  const velocity = cm.vec(1, 3.3);
+  const velocity = cm.vec(1, 2.3);
 
   app
     .frame(() => {

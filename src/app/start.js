@@ -1,4 +1,4 @@
-import { interval } from "d3-timer";
+import { interval, timerFlush } from "d3-timer";
 import { useHook } from "./_hook";
 
 function schedule() {
@@ -15,7 +15,10 @@ function schedule() {
   if (this._reschedule) {
     if (this._timer) this._timer.stop();
     const delay = (1000 / this._frameRate) | 0;
-    this._timer = interval(() => tick.call(this), delay);
+    this._timer = interval(() => {
+      timerFlush();
+      tick.call(this);
+    }, delay);
     this._reschedule = false;
   }
 }
