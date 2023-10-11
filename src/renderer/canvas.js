@@ -1,3 +1,11 @@
+import { color as d3Color } from "d3-color";
+
+function normalizeColor(color, opacity) {
+  if (color === undefined || opacity === undefined) return color;
+  const { r, g, b } = d3Color(color);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
+
 function canvas$size(width, height, dpi = null) {
   if (dpi == null) dpi = devicePixelRatio;
   this._width = width;
@@ -15,8 +23,19 @@ function canvas$node() {
   return this._canvas;
 }
 
-function canvas$circle({ stroke, strokeWidth, fill, x, y, r }) {
+function canvas$circle({
+  stroke,
+  strokeWidth,
+  fill,
+  x,
+  y,
+  r,
+  fillOpacity,
+  strokeOpacity,
+}) {
   const context = this._context;
+  stroke = normalizeColor(stroke, strokeOpacity);
+  fill = normalizeColor(fill, fillOpacity);
   context.save();
   context.beginPath();
   if (stroke) context.strokeStyle = stroke;

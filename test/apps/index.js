@@ -21,3 +21,4 @@ export { oscillationSpring2 } from "./oscillation-spring2.js";
 export { oscillationSpring } from "./oscillation-spring.js";
 export { shapeTriangleWebGL } from "./shape-triangle.webgl.js";
 export { shapeTriangle } from "./shape-triangle.js";
+export { particleCluster } from "./particle-cluster.js";

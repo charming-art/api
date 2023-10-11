@@ -5,6 +5,8 @@ import { flow$call } from "./call.js";
 import { flow$filter } from "./filter.js";
 import { flow$data } from "./data.js";
 import { flow$datum } from "./datum.js";
+import { flow$push } from "./push.js";
+import { flow$pull } from "./pull.js";
 
 export function Flow({ data, app, shape = null, parent = null, value = null }) {
   Object.defineProperties(this, {
@@ -25,4 +27,6 @@ Object.defineProperties(Flow.prototype, {
   append: { value: flow$append },
   data: { value: flow$data },
   datum: { value: flow$datum },
+  push: { value: flow$push },
+  pull: { value: flow$pull },
 });

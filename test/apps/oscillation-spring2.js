@@ -60,10 +60,12 @@ export function oscillationSpring2() {
     .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
     .frame(() => {
       const group = app.append(cm.group, { x: app.width() / 2, y: 0 });
+
       group
         .datum(bob)
         .call(updateBob, { dragging, spring, anchor })
         .call(drawBob, { dragging });
+
       group.datum(anchor).append(cm.rect, {
         x: (d) => d.location.x - 5,
         y: (d) => d.location.y,

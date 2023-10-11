@@ -6,6 +6,8 @@ export function circle(renderer, I, value) {
     fill: F = [],
     stroke: S = [],
     strokeWidth: SW = [],
+    fillOpacity: FO = [],
+    strokeOpacity: SO = [],
   } = value;
   for (const i of I) {
     renderer.circle({
@@ -15,6 +17,8 @@ export function circle(renderer, I, value) {
       fill: F[i],
       stroke: S[i],
       strokeWidth: SW[i],
+      fillOpacity: FO[i],
+      strokeOpacity: SO[i],
     });
   }
 }
