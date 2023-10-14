@@ -31,7 +31,7 @@ function App({
 } = {}) {
   Object.defineProperties(this, {
     _renderer: { value: renderer },
-    _flows: { value: [], writable: true },
+    _children: { value: [], writable: true },
     _stop: { value: false, writable: true },
     _reschedule: { value: true, writable: true },
     _hooks: { value: {}, writable: true },

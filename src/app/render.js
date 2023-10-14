@@ -1,10 +1,6 @@
 function renderFlow(renderer, node, dimension) {
   const { _shape, _data, _value, _children } = node;
   const I = _data.map((_, i) => i);
-  if (!_shape) {
-    _children.forEach((d) => renderFlow(renderer, d, dimension));
-    return;
-  }
   const { render } = _shape;
   render(renderer, I, _value, dimension);
   if (!_children.length) return;
@@ -31,7 +27,7 @@ export function app$render() {
     width: this.width(),
     height: this.height(),
   };
-  this._flows.forEach((d) => renderFlow(renderer, d, dimension));
-  this._flows = [];
+  this._children.forEach((d) => renderFlow(renderer, d, dimension));
+  this._children = [];
   return this.node();
 }

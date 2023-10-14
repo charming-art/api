@@ -10,6 +10,6 @@ export function app$append(render, options) {
     parent: null,
     value: Object.fromEntries(values),
   });
-  this._flows.push(flow);
+  this._children.push(flow);
   return flow;
 }
