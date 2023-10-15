@@ -8,19 +8,9 @@ import { flow$datum } from "./datum.js";
 import { flow$push } from "./push.js";
 import { flow$pull } from "./pull.js";
 
-export function Flow({
-  data,
-  app,
-  children = [],
-  shape = null,
-  parent = null,
-  value = null,
-}) {
+export function Flow(data = null, parent = null, app = null) {
   Object.defineProperties(this, {
     _data: { value: data, writable: true },
-    _value: { value: value, writable: true },
-    _shape: { value: shape },
-    _children: { value: children },
     _parent: { value: parent, writable: true },
     _app: { value: app },
   });

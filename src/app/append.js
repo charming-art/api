@@ -1,15 +1,15 @@
-import { Flow } from "../flow";
-import { valueOf } from "../flow/_valueOf";
+import { Flow } from "../flow/index.js";
+import { valueOf } from "../flow/_valueOf.js";
+import { Node } from "../node/index.js";
 
 export function app$append(render, options) {
-  const values = valueOf([0], options);
-  const flow = new Flow({
-    data: [0],
-    app: this,
-    shape: { render, options },
-    parent: null,
-    value: Object.fromEntries(values),
+  const data = [0];
+  const node = new Node({
+    I: data,
+    render,
+    options,
+    value: valueOf(data, options),
   });
-  this._children.push(flow);
-  return flow;
+  this._children.push(node);
+  return new Flow(data, node, this);
 }

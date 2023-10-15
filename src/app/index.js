@@ -31,7 +31,6 @@ function App({
 } = {}) {
   Object.defineProperties(this, {
     _renderer: { value: renderer },
-    _children: { value: [], writable: true },
     _stop: { value: false, writable: true },
     _reschedule: { value: true, writable: true },
     _hooks: { value: {}, writable: true },
@@ -41,6 +40,7 @@ function App({
     _mouseX: { value: 0, writable: true },
     _mouseY: { value: 0, writable: true },
     _dispose: { value: () => {}, writable: true },
+    _children: { value: [], writable: true },
   });
   maybe(this._renderer, "size", width, height, dpi);
   maybe(this._renderer, "mousemove", (e) => {

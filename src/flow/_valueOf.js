@@ -19,7 +19,7 @@ function normalizeProperty(property) {
 
 export function valueOf(data, options) {
   const normalized = normalizeOptions(options);
-  return normalized.map(([key, property]) => {
+  const values = normalized.map(([key, property]) => {
     const { value, range, scale = scaleLinear } = property;
     const v = typeof value === "function" ? value : () => value;
     const V = data.map(v);
@@ -29,4 +29,5 @@ export function valueOf(data, options) {
     const scaled = V.map(transform);
     return [key, scaled];
   });
+  return Object.fromEntries(values);
 }
