@@ -21,11 +21,8 @@ function renderNode(renderer, node, dimension, index = 0) {
 
 export function app$render() {
   const renderer = this._renderer;
-  const dimension = {
-    width: this.width(),
-    height: this.height(),
-  };
-  this._children.forEach((d) => renderNode(renderer, d, dimension));
-  this._children = [];
+  const dimension = { width: this.width(), height: this.height() };
+  this._root._children.forEach((d) => renderNode(renderer, d, dimension));
+  this._root._children = [];
   return this.node();
 }

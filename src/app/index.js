@@ -19,6 +19,8 @@ import { app$beforeEach } from "./beforeEach.js";
 import { app$mouseup } from "./mouseup.js";
 import { app$mousedown } from "./mousedown.js";
 import { canvas } from "../renderer/canvas.js";
+import { Node } from "../node/index.js";
+import { Flow } from "../flow/index.js";
 import { maybe } from "./_maybe.js";
 import { useHook } from "./_hook.js";
 
@@ -29,6 +31,8 @@ function App({
   frameRate = 60,
   dpi = null,
 } = {}) {
+  const root = new Node();
+  const flow = new Flow([[0]], [0], root, this);
   Object.defineProperties(this, {
     _renderer: { value: renderer },
     _stop: { value: false, writable: true },
@@ -40,7 +44,8 @@ function App({
     _mouseX: { value: 0, writable: true },
     _mouseY: { value: 0, writable: true },
     _dispose: { value: () => {}, writable: true },
-    _children: { value: [], writable: true },
+    _root: { value: root },
+    _flow: { value: flow },
   });
   maybe(this._renderer, "size", width, height, dpi);
   maybe(this._renderer, "mousemove", (e) => {
