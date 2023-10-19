@@ -23,4 +23,5 @@ export { shapeTriangleWebGL } from "./shape-triangle.webgl.js";
 export { shapeTriangle } from "./shape-triangle.js";
 export { particleCluster } from "./particle-cluster.js";
 export { particleClusters } from "./particle-clusters.js";
+export { particleClusterShapes } from "./particle-cluster-shapes.js";
 export { flowNested } from "./flow-nested.js";

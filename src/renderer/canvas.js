@@ -49,7 +49,24 @@ function canvas$circle({
   return this;
 }
 
-function canvas$rect({ stroke, fill, x, y, width, height, rotate }) {
+function canvas$rect({
+  stroke,
+  fill,
+  x,
+  y,
+  width,
+  height,
+  rotate,
+  anchor,
+  fillOpacity,
+  strokeOpacity,
+}) {
+  if (anchor === "center") {
+    x = x - width / 2;
+    y = y - height / 2;
+  }
+  stroke = normalizeColor(stroke, strokeOpacity);
+  fill = normalizeColor(fill, fillOpacity);
   const context = this._context;
   context.save();
   context.translate(x + width / 2, y + height / 2);
