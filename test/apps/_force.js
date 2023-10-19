@@ -15,8 +15,8 @@ export function object(options) {
 
 export function force(d) {
   const callback = typeof d === "function" ? d : () => d;
-  return (d, context) => {
-    const f = callback(d, context);
+  return (d, ...params) => {
+    const f = callback(d, ...params);
     if (f === null || f === undefined) return;
     const a = cm.vecDiv(f, d.mass);
     d.acceleration.add(a);
@@ -53,7 +53,8 @@ export function rotation() {
 }
 
 export function collisionX() {
-  return (d, { app }) => {
+  return (d, i, _, flow) => {
+    const app = flow.app();
     if (!d.location.inX(app.width())) {
       d.location.clampX(app.width());
       d.velocity.negX();
@@ -62,7 +63,8 @@ export function collisionX() {
 }
 
 export function collisionY() {
-  return (d, { app }) => {
+  return (d, i, _, flow) => {
+    const app = flow.app();
     if (d.location.y > app.height()) {
       d.velocity.negY();
       d.location.y = app.height();
@@ -73,8 +75,8 @@ export function collisionY() {
 export function collision() {
   const x = collisionX();
   const y = collisionY();
-  return (d, context) => {
-    x(d, context);
-    y(d, context);
+  return (d, ...params) => {
+    x(d, ...params);
+    y(d, ...params);
   };
 }

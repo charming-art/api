@@ -1,7 +1,8 @@
-function renderFlow(renderer, node, dimension) {
-  const { render, I, value } = node._data;
-  const children = node._children;
+function renderNode(renderer, node, dimension, index = 0) {
+  const data = node._data[index];
+  const { render, I, value } = data;
   render(renderer, I, value, dimension);
+  const children = node._children;
   if (!children.length) return;
   for (const i of I) {
     if (value) {
@@ -13,10 +14,8 @@ function renderFlow(renderer, node, dimension) {
       renderer.translate(x, y);
       if (r !== undefined) renderer.rotate(r);
     }
-    children.forEach((d) => renderFlow(renderer, d, dimension));
-    if (value) {
-      renderer.restore();
-    }
+    for (const child of children) renderNode(renderer, child, dimension, i);
+    if (value) renderer.restore();
   }
 }
 
@@ -26,8 +25,7 @@ export function app$render() {
     width: this.width(),
     height: this.height(),
   };
-  this._children.forEach((d) => renderFlow(renderer, d, dimension));
-  // console.log(this._children);
+  this._children.forEach((d) => renderNode(renderer, d, dimension));
   this._children = [];
   return this.node();
 }

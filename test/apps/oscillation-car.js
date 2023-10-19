@@ -13,7 +13,8 @@ export function oscillationCar() {
   const mover = object();
 
   const update = location();
-  const toMouse = (d, { app }) => {
+  const toMouse = (d, i, _, flow) => {
+    const app = flow.app();
     const mouse = cm.vec(app.mouseX(), app.mouseY());
     return mouse.sub(d.location).mag(0.5);
   };

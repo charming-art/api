@@ -22,7 +22,7 @@ export function particleCluster() {
           acceleration: cm.vec(0, 0.05),
           lifespan: 255,
         })
-        .each((d, { index, flow }) => d.lifespan < 0 && flow.pull(index))
+        .eachRight((d, i, array) => d.lifespan < 0 && array.splice(i, 1))
         .each((d) => (d.lifespan -= 2))
         .each((d) => {
           d.velocity.add(d.acceleration);

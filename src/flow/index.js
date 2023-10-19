@@ -6,13 +6,15 @@ import { flow$filter } from "./filter.js";
 import { flow$data } from "./data.js";
 import { flow$datum } from "./datum.js";
 import { flow$push } from "./push.js";
-import { flow$pull } from "./pull.js";
+import { flow$eachRight } from "./eachRight.js";
+import { flow$app } from "./app.js";
 
-export function Flow(data = null, parent = null, app = null) {
+export function Flow(groups = null, data = null, parent = null, app = null) {
   Object.defineProperties(this, {
-    _data: { value: data, writable: true },
-    _parent: { value: parent, writable: true },
+    _groups: { value: groups },
+    _parent: { value: parent },
     _app: { value: app },
+    _data: { value: data },
   });
 }
 
@@ -25,5 +27,6 @@ Object.defineProperties(Flow.prototype, {
   data: { value: flow$data },
   datum: { value: flow$datum },
   push: { value: flow$push },
-  pull: { value: flow$pull },
+  eachRight: { value: flow$eachRight },
+  app: { value: flow$app },
 });
