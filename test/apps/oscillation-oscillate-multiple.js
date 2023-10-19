@@ -16,8 +16,8 @@ export function oscillationOscillateMultiple() {
   }));
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => {
       const group = app.append(cm.group, {
         x: app.width() / 2,
         y: app.height() / 2,

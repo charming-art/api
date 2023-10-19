@@ -10,8 +10,8 @@ export function oscillationBatons() {
   });
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => {
       app
         .data([0, 1, 2])
         .append(cm.group, {

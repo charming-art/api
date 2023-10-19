@@ -30,8 +30,8 @@ export function forceAttract() {
   const applyAttraction = attraction(attractor);
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       app
         .datum(mover)
         .each(applyAttraction)
@@ -45,7 +45,7 @@ export function forceAttract() {
           strokeWidth: 2,
         });
     })
-    .frame(() => {
+    .on("update", () => {
       app
         .datum(attractor) // Convert to an array.
         .append(cm.circle, {

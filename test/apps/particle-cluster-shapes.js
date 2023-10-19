@@ -29,8 +29,8 @@ export function particleClusterShapes() {
   const particles = [];
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => {
       const flow = app
         .data(particles)
         .push({

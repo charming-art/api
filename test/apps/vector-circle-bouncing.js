@@ -13,12 +13,12 @@ export function vectorCircleBouncing() {
   const velocity = cm.vec(1, 2.3);
 
   app
-    .frame(() => {
+    .on('update', () => {
       location.add(velocity);
       if (!location.inX(app.width())) velocity.negX();
       if (!location.inY(app.height())) velocity.negY();
     })
-    .frame(() => {
+    .on('update', () => {
       app.append(cm.background, { fill: cm.rgb(255) });
       app.append(cm.circle, {
         x: location.x,

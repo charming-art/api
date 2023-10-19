@@ -20,8 +20,8 @@ export function oscillationSpring() {
   const y = (d) => d.r * Math.cos(d.angle);
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => {
       const group = app.append(cm.group, { x: app.width() / 2, y: 0 });
       group
         .datum(pendulum)

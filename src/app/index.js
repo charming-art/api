@@ -1,6 +1,5 @@
 import { app$data } from "./data.js";
 import { app$datum } from "./datum.js";
-import { app$frame } from "./frame.js";
 import { app$height } from "./height.js";
 import { app$node } from "./node.js";
 import { app$render } from "./render.js";
@@ -12,17 +11,12 @@ import { app$call } from "./call.js";
 import { app$mouseX, app$mouseY } from "./mouse.js";
 import { app$dispose } from "./dispose.js";
 import { app$frameCount } from "./frameCount.js";
-import { app$afterAll } from "./afterAll.js";
-import { app$afterEach } from "./afterEach.js";
-import { app$beforeAll } from "./beforeAll.js";
-import { app$beforeEach } from "./beforeEach.js";
-import { app$mouseup } from "./mouseup.js";
-import { app$mousedown } from "./mousedown.js";
-import { canvas } from "../renderer/canvas.js";
-import { Node } from "../node/index.js";
-import { Flow } from "../flow/index.js";
+import { app$on } from "./on.js";
 import { maybe } from "./_maybe.js";
-import { useHook } from "./_hook.js";
+import { Emitter } from "../emitter.js";
+import { canvas } from "../renderer/canvas.js";
+import { Node } from "../node.js";
+import { Flow } from "../flow/index.js";
 
 function App({
   width = 640,
@@ -33,11 +27,11 @@ function App({
 } = {}) {
   const root = new Node();
   const flow = new Flow([[0]], [0], root, this);
+  const emitter = new Emitter();
   Object.defineProperties(this, {
     _renderer: { value: renderer },
     _stop: { value: false, writable: true },
     _reschedule: { value: true, writable: true },
-    _hooks: { value: {}, writable: true },
     _frameRate: { value: frameRate, writable: true },
     _frameCount: { value: 0, writable: true },
     _timer: { value: null, writable: true },
@@ -46,6 +40,7 @@ function App({
     _dispose: { value: () => {}, writable: true },
     _root: { value: root },
     _flow: { value: flow },
+    _emitter: { value: emitter },
   });
   maybe(this._renderer, "size", width, height, dpi);
   maybe(this._renderer, "mousemove", (e) => {
@@ -53,8 +48,8 @@ function App({
     this._mouseX = x;
     this._mouseY = y;
   });
-  maybe(this._renderer, "mousedown", () => useHook(this, "mousedown"));
-  maybe(this._renderer, "mouseup", () => useHook(this, "mouseup"));
+  maybe(this._renderer, "mousedown", () => emitter.emit("mousedown"));
+  maybe(this._renderer, "mouseup", () => emitter.emit("mouseup"));
 }
 
 Object.defineProperties(App.prototype, {
@@ -64,7 +59,6 @@ Object.defineProperties(App.prototype, {
   width: { value: app$width },
   height: { value: app$height },
   render: { value: app$render },
-  frame: { value: app$frame },
   start: { value: app$start },
   stop: { value: app$stop },
   append: { value: app$append },
@@ -73,12 +67,7 @@ Object.defineProperties(App.prototype, {
   mouseY: { value: app$mouseY },
   dispose: { value: app$dispose },
   frameCount: { value: app$frameCount },
-  afterAll: { value: app$afterAll },
-  afterEach: { value: app$afterEach },
-  beforeAll: { value: app$beforeAll },
-  beforeEach: { value: app$beforeEach },
-  mouseup: { value: app$mouseup },
-  mousedown: { value: app$mousedown },
+  on: { value: app$on },
 });
 
 export function app(options) {

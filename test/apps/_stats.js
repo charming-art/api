@@ -4,20 +4,20 @@ export function stats(app) {
   let stats;
 
   app
-    .beforeAll(() => {
+    .on("beforeAll", () => {
       const container = document.getElementById("tool");
       stats = new Stats();
       stats.dom.style.position = "inherit";
       stats.dom.style.marginLeft = "1em";
       container.appendChild(stats.dom);
     })
-    .beforeEach(() => {
+    .on("beforeEach", () => {
       stats.begin();
     })
-    .afterEach(() => {
+    .on("afterEach", () => {
       stats.end();
     })
-    .afterAll(() => {
+    .on("afterAll", () => {
       stats.dom.remove();
     });
 }

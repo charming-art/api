@@ -1,6 +1,6 @@
 import { Flow } from "./index.js";
 import { linear as scaleLinear } from "../scale/linear.js";
-import { Node } from "../node/index.js";
+import { Node } from "../node.js";
 
 function extent(array) {
   return [Math.min(...array), Math.max(...array)];

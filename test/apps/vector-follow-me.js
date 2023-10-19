@@ -17,8 +17,8 @@ export function vectorFollowMe() {
   }));
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => {
       app
         .data(movers)
         .each(({ location, velocity, acceleration, speed }) => {

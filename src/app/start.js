@@ -1,5 +1,4 @@
 import { interval, timerFlush } from "d3-timer";
-import { useHook } from "./_hook";
 
 function schedule() {
   // Need to stop?
@@ -24,16 +23,17 @@ function schedule() {
 }
 
 function tick() {
+  const emitter = this._emitter;
   this._frameCount++;
-  useHook(this, "beforeEach");
-  useHook(this, "frame");
+  emitter.emit("beforeEach");
+  emitter.emit("update");
   this.render();
-  useHook(this, "afterEach");
+  emitter.emit("afterEach");
   schedule.call(this); // Schedule at the end of every tick.
 }
 
 export function app$start() {
-  useHook(this, "beforeAll");
+  this._emitter.emit("beforeAll");
   if (!this._stop) tick.call(this);
   this._stop = false;
   return this.node();

@@ -24,8 +24,8 @@ export function oscillationCar() {
   };
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => {
       app
         .datum(mover)
         .each(force(toMouse))

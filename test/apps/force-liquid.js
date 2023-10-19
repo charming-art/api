@@ -40,9 +40,9 @@ export function forceLiquid() {
   const detect = collision();
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => app.append(cm.rect, { ...liquid, fill: cm.rgb(175) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => app.append(cm.rect, { ...liquid, fill: cm.rgb(175) }))
+    .on('update', () => {
       app
         .data(movers)
         .each(applyGravity)

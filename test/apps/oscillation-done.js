@@ -10,8 +10,8 @@ export function oscillationDone() {
   });
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => {
       const r = 75;
       const theta = app.frameCount() / 50;
       const group = app.append(cm.group, {

@@ -48,8 +48,8 @@ export function particleClusters() {
   const PS = [];
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       const groups = app.data(PS).append(cm.group, {
         x: (d) => d.origin.x,
         y: (d) => d.origin.y,
@@ -60,7 +60,7 @@ export function particleClusters() {
         .call(updateParticles)
         .call(drawParticles);
     })
-    .mousedown(() => {
+    .on("mousedown", () => {
       PS.push({
         origin: cm.vec(app.mouseX(), app.mouseY()),
         particles: [],

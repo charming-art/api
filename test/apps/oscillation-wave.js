@@ -12,8 +12,8 @@ export function oscillationWave() {
   const X = cm.range(50, cm.TWO_PI);
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => {
       app.data(X).append(cm.circle, {
         x: {
           value: (d) => d,

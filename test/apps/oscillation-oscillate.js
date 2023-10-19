@@ -10,8 +10,8 @@ export function oscillationOscillate() {
   });
 
   app
-    .frame(() => app.append(cm.background, { fill: cm.rgb(255) }))
-    .frame(() => {
+    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on('update', () => {
       const amplitude = 100;
       const period = 120;
       const group = app.append(cm.group, {
