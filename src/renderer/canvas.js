@@ -8,8 +8,8 @@ function normalizeColor(color, opacity) {
 
 function canvas$size(width, height, dpi = null) {
   if (dpi == null) dpi = devicePixelRatio;
-  this._width = width;
-  this._height = height;
+  this._props.width = width;
+  this._props.height = height;
   const { _canvas: canvas, _context: context } = this;
   canvas.width = width * dpi;
   canvas.height = height * dpi;
@@ -146,14 +146,6 @@ function canvas$mousedown(listener) {
   return this;
 }
 
-function canvas$width() {
-  return this._width;
-}
-
-function canvas$height() {
-  return this._height;
-}
-
 function canvas$translate(x, y) {
   this._context.translate(x, y);
 }
@@ -173,11 +165,11 @@ function canvas$rotate(angle) {
 function Canvas({ document = window.document } = {}) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
+  const props = { width: 0, height: 0 };
   Object.defineProperties(this, {
     _canvas: { value: canvas },
     _context: { value: context },
-    _width: { value: 0, writable: true },
-    _height: { value: 0, writable: true },
+    _props: { value: props },
     _mousemove: { value: null, writable: true },
     _mousedown: { value: null, writable: true },
     _mouseup: { value: null, writable: true },
@@ -191,8 +183,6 @@ Object.defineProperties(Canvas.prototype, {
   rect: { value: canvas$rect },
   line: { value: canvas$line },
   triangle: { value: canvas$triangle },
-  width: { value: canvas$width },
-  height: { value: canvas$height },
   mousemove: { value: canvas$mousemove },
   mouseup: { value: canvas$mouseup },
   mousedown: { value: canvas$mousedown },

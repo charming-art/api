@@ -55,8 +55,8 @@ export function rotation() {
 export function collisionX() {
   return (d, i, _, flow) => {
     const app = flow.app();
-    if (!d.location.inX(app.width())) {
-      d.location.clampX(app.width());
+    if (!d.location.inX(app.prop("width"))) {
+      d.location.clampX(app.prop("width"));
       d.velocity.negX();
     }
   };
@@ -65,9 +65,9 @@ export function collisionX() {
 export function collisionY() {
   return (d, i, _, flow) => {
     const app = flow.app();
-    if (d.location.y > app.height()) {
+    if (d.location.y > app.prop("height")) {
       d.velocity.negY();
-      d.location.y = app.height();
+      d.location.y = app.prop("height");
     }
   };
 }

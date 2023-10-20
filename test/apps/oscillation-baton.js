@@ -10,12 +10,12 @@ export function oscillationBaton() {
   });
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       const group = app.append(cm.group, {
-        x: app.width() / 2,
-        y: app.height() / 2,
-        rotate: app.frameCount() / 50,
+        x: app.prop("width") / 2,
+        y: app.prop("height") / 2,
+        rotate: app.prop("frameCount") / 50,
       });
       group.append(cm.link, { x: -80, y: 0, x1: 80, y1: 0 });
       group.append(cm.circle, { x: -80, y: 0, r: 5 });

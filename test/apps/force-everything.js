@@ -12,7 +12,10 @@ export function forceEverything() {
 
   const movers = Array.from({ length: 20 }, () =>
     object({
-      location: cm.vec(cm.random(app.width()), cm.random(app.height())),
+      location: cm.vec(
+        cm.random(app.prop("width")),
+        cm.random(app.prop("height"))
+      ),
       velocity: cm.vec(cm.random(-1, 1), cm.random(-1, 1)),
       acceleration: cm.vec(),
       mass: cm.random(2, 5),
@@ -23,8 +26,8 @@ export function forceEverything() {
   const update = location();
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       app
         .data(movers)
         .each((i) =>

@@ -12,7 +12,7 @@ export function forceLiquid() {
 
   const movers = cm.range(25, () =>
     object({
-      location: cm.vec(cm.random(0, app.width()), 0),
+      location: cm.vec(cm.random(0, app.prop("width")), 0),
       velocity: cm.vec(),
       acceleration: cm.vec(),
       mass: cm.random(1, 5),
@@ -21,9 +21,9 @@ export function forceLiquid() {
 
   const liquid = {
     x: 0,
-    y: app.height() / 2,
-    width: app.width(),
-    height: app.height() / 2,
+    y: app.prop("height") / 2,
+    width: app.prop("width"),
+    height: app.prop("height") / 2,
     c: 0.1,
   };
 
@@ -40,9 +40,9 @@ export function forceLiquid() {
   const detect = collision();
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => app.append(cm.rect, { ...liquid, fill: cm.rgb(175) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => app.append(cm.rect, { ...liquid, fill: cm.rgb(175) }))
+    .on("update", () => {
       app
         .data(movers)
         .each(applyGravity)

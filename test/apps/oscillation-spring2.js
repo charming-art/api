@@ -17,8 +17,8 @@ function updateBob(d, { dragging, anchor, spring }) {
   const applyDamping = (d) => d.velocity.mult(0.98);
   const applyDrag = (d, i, _, flow) => {
     const app = flow.app();
-    d.location.x = app.mouseX() - app.width() / 2;
-    d.location.y = app.mouseY();
+    d.location.x = app.prop("mouseX") - app.prop("width") / 2;
+    d.location.y = app.prop("mouseY");
     d.velocity.mult(0);
     d.acceleration.mult(0);
   };
@@ -60,7 +60,7 @@ export function oscillationSpring2() {
   app
     .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
     .on("update", () => {
-      const group = app.append(cm.group, { x: app.width() / 2, y: 0 });
+      const group = app.append(cm.group, { x: app.prop("width") / 2, y: 0 });
 
       group
         .datum(bob)

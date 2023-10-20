@@ -10,15 +10,16 @@ export function oscillationOscillate() {
   });
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       const amplitude = 100;
       const period = 120;
       const group = app.append(cm.group, {
-        x: app.width() / 2,
-        y: app.height() / 2,
+        x: app.prop("width") / 2,
+        y: app.prop("height") / 2,
       });
-      const x = amplitude * Math.cos((cm.TWO_PI * app.frameCount()) / period);
+      const x =
+        amplitude * Math.cos((cm.TWO_PI * app.prop("frameCount")) / period);
       const y = 0;
       group.append(cm.link, { x: 0, y: 0, x1: x, y1: y });
       group.append(cm.circle, { x, y, r: 16 });

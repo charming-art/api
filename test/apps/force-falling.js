@@ -12,7 +12,7 @@ export function forceFalling() {
 
   const movers = Array.from({ length: 25 }, () =>
     object({
-      location: cm.vec(cm.random(0, app.width()), 0),
+      location: cm.vec(cm.random(0, app.prop("width")), 0),
       velocity: cm.vec(),
       acceleration: cm.vec(),
       mass: cm.random(1, 5),
@@ -26,8 +26,8 @@ export function forceFalling() {
   const detect = collision();
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       app
         .data(movers)
         .each(applyFriction)

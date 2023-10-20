@@ -10,13 +10,13 @@ export function oscillationDone() {
   });
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       const r = 75;
-      const theta = app.frameCount() / 50;
+      const theta = app.prop("frameCount") / 50;
       const group = app.append(cm.group, {
-        x: app.width() / 2,
-        y: app.height() / 2,
+        x: app.prop("width") / 2,
+        y: app.prop("height") / 2,
       });
       const x = r * Math.cos(theta);
       const y = r * Math.sin(theta);

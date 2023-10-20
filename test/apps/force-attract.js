@@ -10,8 +10,8 @@ export function forceAttract() {
     height: 200,
   });
 
-  const centerX = app.width() / 2;
-  const centerY = app.height() / 2;
+  const centerX = app.prop("width") / 2;
+  const centerY = app.prop("height") / 2;
 
   const attractor = object({
     mass: 20,

@@ -10,8 +10,8 @@ export function forceMultiple() {
     height: 200,
   });
 
-  const centerX = app.width() / 2;
-  const centerY = app.height() / 2;
+  const centerX = app.prop("width") / 2;
+  const centerY = app.prop("height") / 2;
 
   const attractor = object({
     mass: 10,
@@ -21,7 +21,10 @@ export function forceMultiple() {
 
   const movers = cm.range(20, () =>
     object({
-      location: cm.vec(cm.random(app.width()), cm.random(app.height())),
+      location: cm.vec(
+        cm.random(app.prop("width")),
+        cm.random(app.prop("height"))
+      ),
       velocity: cm.vec(cm.random(), cm.random()),
       mass: cm.random(2, 5),
     })
@@ -31,8 +34,8 @@ export function forceMultiple() {
   const update = location();
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       app
         .data(movers)
         .each(applyAttraction)
@@ -46,7 +49,7 @@ export function forceMultiple() {
           strokeWidth: 2,
         });
     })
-    .on('update', () => {
+    .on("update", () => {
       app
         .datum(attractor) // Convert to an array.
         .append(cm.circle, {

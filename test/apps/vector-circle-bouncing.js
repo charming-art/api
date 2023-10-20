@@ -9,16 +9,16 @@ export function vectorCircleBouncing() {
     height: 200,
   });
 
-  const location = cm.vec(app.width() / 2, app.height() / 2);
+  const location = cm.vec(app.prop("width") / 2, app.prop("height") / 2);
   const velocity = cm.vec(1, 2.3);
 
   app
-    .on('update', () => {
+    .on("update", () => {
       location.add(velocity);
-      if (!location.inX(app.width())) velocity.negX();
-      if (!location.inY(app.height())) velocity.negY();
+      if (!location.inX(app.prop("width"))) velocity.negX();
+      if (!location.inY(app.prop("height"))) velocity.negY();
     })
-    .on('update', () => {
+    .on("update", () => {
       app.append(cm.background, { fill: cm.rgb(255) });
       app.append(cm.circle, {
         x: location.x,

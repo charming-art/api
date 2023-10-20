@@ -55,8 +55,8 @@ function compileProgram(gl) {
 
 function webgl$size(width, height, dpi = null) {
   if (dpi == null) dpi = devicePixelRatio;
-  this._width = width;
-  this._height = height;
+  this._props.width = width;
+  this._props.height = height;
   const { _canvas: canvas, _gl: gl } = this;
   canvas.width = width * dpi;
   canvas.height = height * dpi;
@@ -115,33 +115,23 @@ function webgl$node() {
   return this._canvas;
 }
 
-function webgl$width() {
-  return this._width;
-}
-
-function webgl$height() {
-  return this._height;
-}
-
 function WebGL({ document = window.document } = {}) {
   const canvas = document.createElement("canvas");
   const gl = canvas.getContext("webgl");
   const program = compileProgram(gl);
+  const props = { width: 0, height: 0 };
   // Tell it to use our program (pair of shaders).
   gl.useProgram(program);
   Object.defineProperties(this, {
     _canvas: { value: canvas },
     _gl: { value: gl },
     _program: { value: program },
-    _width: { value: 0, writable: true },
-    _height: { value: 0, writable: true },
+    _props: { value: props },
   });
 }
 
 Object.defineProperties(WebGL.prototype, {
   node: { value: webgl$node },
-  width: { value: webgl$width },
-  height: { value: webgl$height },
   size: { value: webgl$size },
   triangles: { value: webgl$triangles },
 });

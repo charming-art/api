@@ -15,17 +15,17 @@ export function oscillationCar() {
   const update = location();
   const toMouse = (d, i, _, flow) => {
     const app = flow.app();
-    const mouse = cm.vec(app.mouseX(), app.mouseY());
+    const mouse = cm.vec(app.prop("mouseX"), app.prop("mouseY"));
     return mouse.sub(d.location).mag(0.5);
   };
   const constrain = (d) => {
-    d.location.clampX(app.width()).clampY(app.height());
+    d.location.clampX(app.prop("width")).clampY(app.prop("height"));
     d.velocity.clamp(4);
   };
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       app
         .datum(mover)
         .each(force(toMouse))

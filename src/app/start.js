@@ -13,7 +13,7 @@ function schedule() {
   // Need to change frameRate?
   if (this._reschedule) {
     if (this._timer) this._timer.stop();
-    const delay = (1000 / this._frameRate) | 0;
+    const delay = (1000 / this._props.frameRate) | 0;
     this._timer = interval(() => {
       timerFlush();
       tick.call(this);
@@ -24,7 +24,7 @@ function schedule() {
 
 function tick() {
   const emitter = this._emitter;
-  this._frameCount++;
+  this._props.frameCount++;
   emitter.emit("beforeEach");
   emitter.emit("update");
   this.render();

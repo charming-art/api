@@ -29,12 +29,12 @@ export function particleClusterShapes() {
   const particles = [];
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       const flow = app
         .data(particles)
         .push({
-          location: cm.vec(app.width() / 2, 50),
+          location: cm.vec(app.prop("width") / 2, 50),
           velocity: cm.vec(cm.random(-1, 1), cm.random(-2, 0)),
           acceleration: cm.vec(0, 0.05),
           lifespan: 255,

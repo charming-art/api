@@ -15,22 +15,22 @@ export function oscillationWaveSnake() {
   const X2 = cm.range(I.length, cm.TWO_PI / 3);
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       app.data(I).append(cm.circle, {
         x: {
           value: (d) => d,
-          range: [0, app.width()],
+          range: [0, app.prop("width")],
         },
         y: {
           value: (d) => {
-            const offset = app.frameCount() / 120;
+            const offset = app.prop("frameCount") / 120;
             const x = Math.sin(X[d] + offset) * 2;
             const x1 = Math.sin(X1[d] + offset) * 1;
             const x2 = Math.sin(X2[d] + offset) * 3;
             return x * x1 * x2;
           },
-          range: [0, app.height()],
+          range: [0, app.prop("height")],
         },
         r: 20,
         fill: "rgba(175, 175, 175, 0.5)",

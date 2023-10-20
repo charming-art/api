@@ -25,8 +25,8 @@ export function forceDancing() {
   const detect = collision();
 
   app
-    .on('update', () => app.append(cm.background, { fill: cm.rgb(255) }))
-    .on('update', () => {
+    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => {
       app
         .data(movers)
         .each(applyGravity)
