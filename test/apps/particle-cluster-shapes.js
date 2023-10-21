@@ -14,6 +14,11 @@ export function particleClusterShapes() {
     y: (d) => d.location.y,
     fill: cm.rgb(0),
     stroke: cm.rgb(0),
+    rotate: {
+      value: (d) => d.location.x,
+      domain: [0, app.prop("width")],
+      range: [0, cm.TWO_PI * 2],
+    },
     fillOpacity: {
       value: (d) => d.lifespan,
       domain: [0, 255],

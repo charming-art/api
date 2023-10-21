@@ -26,7 +26,7 @@ export function valueOf(data, options) {
     const v = typeof value === "function" ? value : () => value;
     const V = data.map(v);
     if (!range) return [key, V];
-    const domain = extent(V);
+    const { domain = extent(V) } = property;
     const transform = scale(domain, range);
     const scaled = V.map(transform);
     return [key, scaled];
