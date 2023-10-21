@@ -13,6 +13,9 @@ export function triangle(renderer, I, value) {
     fill: F = [],
     stroke: S = [],
     strokeWidth: SW = [],
+    rotate: R = [],
+    translateX: TX = [],
+    translateY: TY = [],
   } = value;
   for (const i of I) {
     renderer.triangle({
@@ -25,6 +28,9 @@ export function triangle(renderer, I, value) {
       fill: F[i],
       stroke: S[i],
       strokeWidth: SW[i],
+      translateX: TX[i],
+      translateY: TY[i],
+      rotate: R[i],
     });
   }
 }
