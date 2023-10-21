@@ -26,3 +26,4 @@ export { particleClusters } from "./particle-clusters.js";
 export { particleClusterShapes } from "./particle-cluster-shapes.js";
 export { particleClusterForce } from "./particle-cluster-force.js";
 export { flowNested } from "./flow-nested.js";
+export { a2Seeking } from "./a2-seeking.js";

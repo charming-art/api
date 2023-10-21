@@ -35,7 +35,7 @@ export function valueOf(data, options) {
 }
 
 export function flow$append(render, options) {
-  const flow = this._data ? this : this.data(() => [0]);
+  const flow = this._data ? this : this.data((d) => [d]);
   const groups = flow._groups;
   const parent = this._parent;
   const values = groups.map((group) => ({

@@ -10,6 +10,7 @@ export function rect(renderer, I, value) {
     anchor: A = [],
     fillOpacity: FO = [],
     strokeOpacity: SO = [],
+    strokeWidth: SW = [],
   } = value;
   for (const i of I) {
     renderer.rect({
@@ -21,6 +22,7 @@ export function rect(renderer, I, value) {
       fill: F[i],
       fillOpacity: FO[i],
       strokeOpacity: SO[i],
+      strokeWidth: SW[i],
       ...(A[i] && { anchor: A[i] }),
       ...(R[i] && { rotate: R[i] }),
     });

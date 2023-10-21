@@ -3,7 +3,17 @@ export function triangle(renderer, I, value) {
     renderer.triangles(I, value);
     return;
   }
-  const { x: X, y: Y, x1: X1, y1: Y1, x2: X2, y2: Y2, fill: F = [] } = value;
+  const {
+    x: X,
+    y: Y,
+    x1: X1,
+    y1: Y1,
+    x2: X2,
+    y2: Y2,
+    fill: F = [],
+    stroke: S = [],
+    strokeWidth: SW = [],
+  } = value;
   for (const i of I) {
     renderer.triangle({
       x: X[i],
@@ -13,6 +23,8 @@ export function triangle(renderer, I, value) {
       x2: X2[i],
       y2: Y2[i],
       fill: F[i],
+      stroke: S[i],
+      strokeWidth: SW[i],
     });
   }
 }
