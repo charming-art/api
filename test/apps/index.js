@@ -29,3 +29,4 @@ export { flowNested } from "./flow-nested.js";
 export { a2Seeking } from "./a2-seeking.js";
 export { a2Arriving } from "./a2-arriving.js";
 export { a2Wandering } from "./a2-wandering.js";
+export { a2FlowRandom } from "./a2-flow-random.js";

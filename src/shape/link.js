@@ -11,6 +11,8 @@ export function link(renderer, I, value) {
     y1: Y1,
     stroke: S = [],
     strokeWidth: SW = [],
+    rotate: R = [],
+    transformOrigin: TO = [],
   } = value;
   for (const i of I) {
     renderer.line({
@@ -19,6 +21,8 @@ export function link(renderer, I, value) {
       y: Y[i],
       x1: X1[i],
       y1: Y1[i],
+      rotate: R[i],
+      transformOrigin: TO[i],
       ...(S[i] && { stroke: S[i] }),
       ...(SW[i] && { strokeWidth: SW[i] }),
     });

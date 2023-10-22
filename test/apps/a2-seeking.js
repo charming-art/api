@@ -8,6 +8,7 @@ function update(app, context) {
   const { target, a2 } = context;
 
   const update = location();
+
   const seek = force((d) => {
     const desired = cm.vecSub(target.location, a2.location).mag(d.maxSpeed);
     const steer = cm.vecSub(desired, d.velocity);
