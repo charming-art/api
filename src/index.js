@@ -3,7 +3,6 @@ export { rgb } from "./color/rgb.js";
 export { circle } from "./shape/circle.js";
 export { link } from "./shape/link.js";
 export { background } from "./shape/background.js";
-export { shape } from "./shape/shape.js";
 export { rect } from "./shape/rect.js";
 export { group } from "./shape/group.js";
 export { triangle } from "./shape/triangle.js";
