@@ -38,29 +38,29 @@ export function particleClusterShapes() {
     .on("update", () => {
       const flow = app
         .data(particles)
-        .push({
+        .process(cm.push, {
           location: cm.vec(app.prop("width") / 2, 50),
           velocity: cm.vec(cm.random(-1, 1), cm.random(-2, 0)),
           acceleration: cm.vec(0, 0.05),
           lifespan: 255,
           type: Math.random() < 0.5 ? 1 : 0,
         })
-        .eachRight((d, i, array) => d.lifespan < 0 && array.splice(i, 1))
-        .each((d) => (d.lifespan -= 2))
-        .each((d) => {
+        .process(cm.eachRight, (d, i, array) => d.lifespan < 0 && array.splice(i, 1))
+        .process(cm.each, (d) => (d.lifespan -= 2))
+        .process(cm.each, (d) => {
           d.velocity.add(d.acceleration);
           d.location.add(d.velocity);
         });
 
       flow
-        .filter((d) => d.type === 1)
+        .process(cm.filter, (d) => d.type === 1)
         .append(cm.circle, {
           ...options,
           r: 5,
         });
 
       flow
-        .filter((d) => d.type === 0)
+        .process(cm.filter, (d) => d.type === 0)
         .append(cm.rect, {
           ...options,
           width: 10,

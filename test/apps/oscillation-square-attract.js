@@ -39,9 +39,9 @@ export function oscillationSquareAttract() {
     .on("update", () => {
       app
         .data(movers)
-        .each(applyAttraction)
-        .each(rotate)
-        .each(move)
+        .process(cm.each, applyAttraction)
+        .process(cm.each, rotate)
+        .process(cm.each, move)
         .append(cm.rect, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

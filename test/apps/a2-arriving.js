@@ -27,7 +27,9 @@ function update(app, context) {
 
   app
     .datum(target)
-    .each((d) => d.location.set(app.prop("mouseX"), app.prop("mouseY")))
+    .process(cm.each, (d) =>
+      d.location.set(app.prop("mouseX"), app.prop("mouseY"))
+    )
     .append(cm.circle, {
       x: (d) => d.location.x,
       y: (d) => d.location.y,
@@ -39,8 +41,8 @@ function update(app, context) {
 
   app
     .datum(a2)
-    .each(arrive)
-    .each(update)
+    .process(cm.each, arrive)
+    .process(cm.each, update)
     .append(cm.triangle, {
       translateX: (d) => d.location.x,
       translateY: (d) => d.location.y,

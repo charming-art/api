@@ -43,17 +43,17 @@ export function particleClusterForce() {
 
       app
         .data(particles)
-        .push(
+        .process(cm.push, 
           object({
             location: cm.vec(app.prop("width") / 2, 50),
             lifespan: 255,
             velocity: cm.vec(cm.random(-1, 1), cm.random(-2, 0)),
           })
         )
-        .eachRight(fadeOut)
-        .each(applyRepeller)
-        .each(applyGravity)
-        .each(update)
+        .process(cm.eachRight, fadeOut)
+        .process(cm.each, applyRepeller)
+        .process(cm.each, applyGravity)
+        .process(cm.each, update)
         .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

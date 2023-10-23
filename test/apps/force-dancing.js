@@ -29,10 +29,10 @@ export function forceDancing() {
     .on("update", () => {
       app
         .data(movers)
-        .each(applyGravity)
-        .each(applyWind)
-        .each(update)
-        .each(detect)
+        .process(cm.each, applyGravity)
+        .process(cm.each, applyWind)
+        .process(cm.each, update)
+        .process(cm.each, detect)
         .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

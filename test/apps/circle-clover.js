@@ -9,7 +9,7 @@ export function circleClover() {
 
   app
     .data(cm.range(240))
-    .map((_, i, array) => (i * Math.PI * 2) / array.length)
+    .process(cm.map, (_, i, array) => (i * Math.PI * 2) / array.length)
     .append(cm.circle, {
       x: {
         value: (t) => Math.cos(t) * Math.cos(t * 3),

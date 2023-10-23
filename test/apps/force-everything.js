@@ -30,13 +30,13 @@ export function forceEverything() {
     .on("update", () => {
       app
         .data(movers)
-        .each((i) =>
+        .process(cm.each, (i) =>
           app
             .data(movers)
-            .filter((j) => i !== j)
-            .each((j) => attraction(j)(i))
+            .process(cm.filter, (j) => i !== j)
+            .process(cm.each, (j) => attraction(j)(i))
         )
-        .each(update)
+        .process(cm.each, update)
         .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

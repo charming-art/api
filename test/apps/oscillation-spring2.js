@@ -23,12 +23,12 @@ function updateBob(d, { dragging, anchor, spring }) {
     d.acceleration.mult(0);
   };
 
-  if (dragging) d.each(applyDrag);
+  if (dragging) d.process(cm.each, applyDrag);
   else {
-    d.each(force(applyGravity))
-      .each(force(applySpring))
-      .each(applyDamping)
-      .each(location());
+    d.process(cm.each, force(applyGravity))
+      .process(cm.each, force(applySpring))
+      .process(cm.each, applyDamping)
+      .process(cm.each, location());
   }
 }
 

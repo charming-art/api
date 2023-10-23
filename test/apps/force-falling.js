@@ -30,11 +30,11 @@ export function forceFalling() {
     .on("update", () => {
       app
         .data(movers)
-        .each(applyFriction)
-        .each(applyGravity)
-        .each(applyWind)
-        .each(update)
-        .each(detect)
+        .process(cm.each, applyFriction)
+        .process(cm.each, applyGravity)
+        .process(cm.each, applyWind)
+        .process(cm.each, update)
+        .process(cm.each, detect)
         .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

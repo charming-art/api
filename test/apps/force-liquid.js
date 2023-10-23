@@ -45,10 +45,10 @@ export function forceLiquid() {
     .on("update", () => {
       app
         .data(movers)
-        .each(applyGravity)
-        .each(applyDrag)
-        .each(update)
-        .each(detect)
+        .process(cm.each, applyGravity)
+        .process(cm.each, applyDrag)
+        .process(cm.each, update)
+        .process(cm.each, detect)
         .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

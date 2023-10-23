@@ -29,7 +29,7 @@ export function oscillationOscillateMultiple() {
       const y = (d) => Math.sin(d.angle.y) * d.amplitude.y;
       group
         .data(oscillators)
-        .each((d) => d.angle.add(d.velocity))
+        .process(cm.each, (d) => d.angle.add(d.velocity))
         .call((d) => d.append(cm.link, { x: 0, y: 0, x1: x, y1: y }))
         .call((d) =>
           d.append(cm.circle, {

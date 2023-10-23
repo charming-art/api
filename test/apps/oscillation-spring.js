@@ -25,7 +25,7 @@ export function oscillationSpring() {
       const group = app.append(cm.group, { x: app.prop("width") / 2, y: 0 });
       group
         .datum(pendulum)
-        .each(update)
+        .process(cm.each, update)
         .call((d) => d.append(cm.link, { x: 0, y: 0, x1: x, y1: y }))
         .call((d) =>
           d.append(cm.circle, {

@@ -15,3 +15,8 @@ export { random } from "./math/random.js";
 export { clamp } from "./math/clamp.js";
 export { range } from "./array/range.js";
 export { TWO_PI } from "./constant/TWO_PI.js";
+export { each } from "./process/each.js";
+export { eachRight } from "./process/eachRight.js";
+export { filter } from "./process/filter.js";
+export { map } from "./process/map.js";
+export { push } from "./process/push.js";

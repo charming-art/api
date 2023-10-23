@@ -28,9 +28,9 @@ export function oscillationCar() {
     .on("update", () => {
       app
         .datum(mover)
-        .each(force(toMouse))
-        .each(update)
-        .each(constrain)
+        .process(cm.each, force(toMouse))
+        .process(cm.each, update)
+        .process(cm.each, constrain)
         .append(cm.rect, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

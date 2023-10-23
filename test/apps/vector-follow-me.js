@@ -24,7 +24,7 @@ export function vectorFollowMe() {
     .on("update", () => {
       app
         .data(movers)
-        .each(({ location, velocity, acceleration, speed }) => {
+        .process(cm.each, ({ location, velocity, acceleration, speed }) => {
           cm.vec(app.prop("mouseX"), app.prop("mouseY"))
             .sub(location)
             .norm()

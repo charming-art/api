@@ -16,15 +16,15 @@ export function particleCluster() {
     .on("update", () => {
       app
         .data(particles)
-        .push({
+        .process(cm.push, {
           location: cm.vec(app.prop("width") / 2, 50),
           velocity: cm.vec(cm.random(-1, 1), cm.random(-2, 0)),
           acceleration: cm.vec(0, 0.05),
           lifespan: 255,
         })
-        .eachRight((d, i, array) => d.lifespan < 0 && array.splice(i, 1))
-        .each((d) => (d.lifespan -= 2))
-        .each((d) => {
+        .process(cm.eachRight, (d, i, array) => d.lifespan < 0 && array.splice(i, 1))
+        .process(cm.each, (d) => (d.lifespan -= 2))
+        .process(cm.each, (d) => {
           d.velocity.add(d.acceleration);
           d.location.add(d.velocity);
         })

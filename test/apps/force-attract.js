@@ -34,8 +34,8 @@ export function forceAttract() {
     .on("update", () => {
       app
         .datum(mover)
-        .each(applyAttraction)
-        .each(update)
+        .process(cm.each, applyAttraction)
+        .process(cm.each, update)
         .append(cm.circle, {
           x: (d) => d.location.x,
           y: (d) => d.location.y,

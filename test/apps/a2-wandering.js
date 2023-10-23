@@ -42,11 +42,11 @@ function update(app, context) {
 
   const groups = app
     .datum(a2)
-    .each(target)
-    .each(seek)
-    .each(constrainX)
-    .each(constrainY)
-    .each(update);
+    .process(cm.each, target)
+    .process(cm.each, seek)
+    .process(cm.each, constrainX)
+    .process(cm.each, constrainY)
+    .process(cm.each, update);
 
   groups.append(cm.circle, {
     x: (d) => d.circle.x,
