@@ -23,23 +23,20 @@ function updateParticles(flow) {
 }
 
 function drawParticles(flow) {
-  flow.append(cm.circle, {
-    x: (d) => d.location.x,
-    y: (d) => d.location.y,
-    r: 5,
-    fill: cm.rgb(0),
-    stroke: cm.rgb(0),
-    fillOpacity: {
-      value: (d) => d.lifespan,
-      domain: [0, 255],
-      range: [0, 0.6],
-    },
-    strokeOpacity: {
-      value: (d) => d.lifespan,
-      domain: [0, 255],
-      range: [0, 1],
-    },
-  });
+  flow
+    .append(cm.circle, {
+      x: (d) => d.location.x,
+      y: (d) => d.location.y,
+      r: 5,
+      fill: cm.rgb(0),
+      stroke: cm.rgb(0),
+      fillOpacity: (d) => d.lifespan,
+      strokeOpacity: (d) => d.lifespan,
+    })
+    .transform(cm.scale, {
+      fillOpacity: { domain: [0, 255], range: [0, 0.6] },
+      strokeOpacity: { domain: [0, 255], range: [0, 1] },
+    });
 }
 
 export function particleClusters() {

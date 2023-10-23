@@ -22,7 +22,10 @@ export function particleCluster() {
           acceleration: cm.vec(0, 0.05),
           lifespan: 255,
         })
-        .process(cm.eachRight, (d, i, array) => d.lifespan < 0 && array.splice(i, 1))
+        .process(
+          cm.eachRight,
+          (d, i, array) => d.lifespan < 0 && array.splice(i, 1)
+        )
         .process(cm.each, (d) => (d.lifespan -= 2))
         .process(cm.each, (d) => {
           d.velocity.add(d.acceleration);
@@ -34,16 +37,12 @@ export function particleCluster() {
           r: 5,
           fill: cm.rgb(0),
           stroke: cm.rgb(0),
-          fillOpacity: {
-            value: (d) => d.lifespan,
-            domain: [0, 255],
-            range: [0, 0.6],
-          },
-          strokeOpacity: {
-            value: (d) => d.lifespan,
-            domain: [0, 255],
-            range: [0, 1],
-          },
+          fillOpacity: (d) => d.lifespan,
+          strokeOpacity: (d) => d.lifespan,
+        })
+        .transform(cm.scale, {
+          fillOpacity: { domain: [0, 255], range: [0, 0.6] },
+          strokeOpacity: { domain: [0, 255], range: [0, 1] },
         });
     });
 

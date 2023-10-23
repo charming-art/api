@@ -4,6 +4,7 @@ import { flow$data } from "./data.js";
 import { flow$datum } from "./datum.js";
 import { flow$app } from "./app.js";
 import { flow$process } from "./process.js";
+import { flow$transform } from "./transform.js";
 
 export function Flow(groups = null, data = null, parent = null, app = null) {
   Object.defineProperties(this, {
@@ -21,4 +22,5 @@ Object.defineProperties(Flow.prototype, {
   datum: { value: flow$datum },
   app: { value: flow$app },
   process: { value: flow$process },
+  transform: { value: flow$transform },
 });

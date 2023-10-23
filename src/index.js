@@ -20,3 +20,4 @@ export { eachRight } from "./process/eachRight.js";
 export { filter } from "./process/filter.js";
 export { map } from "./process/map.js";
 export { push } from "./process/push.js";
+export { scale } from "./transform/scale.js";

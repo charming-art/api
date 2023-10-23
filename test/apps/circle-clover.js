@@ -9,20 +9,16 @@ export function circleClover() {
 
   app
     .data(cm.range(240))
-    .process(cm.map, (_, i, array) => (i * Math.PI * 2) / array.length)
+    .process(cm.map, (_, i, a) => (i * Math.PI * 2) / a.length)
     .append(cm.circle, {
-      x: {
-        value: (t) => Math.cos(t) * Math.cos(t * 3),
-        range: [15, app.prop("width") - 30],
-      },
-      y: {
-        value: (t) => Math.sin(t) * Math.cos(t * 3),
-        range: [15, app.prop("height") - 30],
-      },
-      r: {
-        value: (_, i) => i,
-        range: [1, 15],
-      },
+      x: (t) => Math.cos(t) * Math.cos(t * 3),
+      y: (t) => Math.sin(t) * Math.cos(t * 3),
+      r: (_, i) => i,
+    })
+    .transform(cm.scale, {
+      x: { range: [15, app.prop("width") - 30] },
+      y: { range: [15, app.prop("height") - 30] },
+      r: { range: [1, 15] },
     });
 
   return app.call(dispose).render();

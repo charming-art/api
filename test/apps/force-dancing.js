@@ -38,11 +38,10 @@ export function forceDancing() {
           y: (d) => d.location.y,
           fill: "rgba(175, 175, 175, 0.5)",
           stroke: cm.rgb(0),
-          r: {
-            scale: cm.scaleSqrt,
-            value: (d) => d.mass,
-            range: [2, 20],
-          },
+          r: (d) => d.mass,
+        })
+        .transform(cm.scale, {
+          r: { scale: cm.scaleSqrt, range: [2, 20] },
         });
     });
 

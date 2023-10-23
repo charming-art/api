@@ -14,21 +14,15 @@ export function particleClusterShapes() {
     y: (d) => d.location.y,
     fill: cm.rgb(0),
     stroke: cm.rgb(0),
-    rotate: {
-      value: (d) => d.location.x,
-      domain: [0, app.prop("width")],
-      range: [0, cm.TWO_PI * 2],
-    },
-    fillOpacity: {
-      value: (d) => d.lifespan,
-      domain: [0, 255],
-      range: [0, 0.6],
-    },
-    strokeOpacity: {
-      value: (d) => d.lifespan,
-      domain: [0, 255],
-      range: [0, 1],
-    },
+    rotate: (d) => d.location.x,
+    fillOpacity: (d) => d.lifespan,
+    strokeOpacity: (d) => d.lifespan,
+  };
+
+  const scaleOptions = {
+    fillOpacity: { domain: [0, 255], range: [0, 0.6] },
+    strokeOpacity: { domain: [0, 255], range: [0, 1] },
+    rotate: { domain: [0, app.prop("width")], range: [0, cm.TWO_PI * 2] },
   };
 
   const particles = [];
@@ -45,7 +39,10 @@ export function particleClusterShapes() {
           lifespan: 255,
           type: Math.random() < 0.5 ? 1 : 0,
         })
-        .process(cm.eachRight, (d, i, array) => d.lifespan < 0 && array.splice(i, 1))
+        .process(
+          cm.eachRight,
+          (d, i, array) => d.lifespan < 0 && array.splice(i, 1)
+        )
         .process(cm.each, (d) => (d.lifespan -= 2))
         .process(cm.each, (d) => {
           d.velocity.add(d.acceleration);
@@ -54,10 +51,8 @@ export function particleClusterShapes() {
 
       flow
         .process(cm.filter, (d) => d.type === 1)
-        .append(cm.circle, {
-          ...options,
-          r: 5,
-        });
+        .append(cm.circle, { ...options, r: 5 })
+        .transform(cm.scale, scaleOptions);
 
       flow
         .process(cm.filter, (d) => d.type === 0)
@@ -66,7 +61,8 @@ export function particleClusterShapes() {
           width: 10,
           height: 10,
           anchor: "center",
-        });
+        })
+        .transform(cm.scale, scaleOptions);
     });
 
   return app.call(dispose).call(frame).call(stats).start();

@@ -43,7 +43,8 @@ export function particleClusterForce() {
 
       app
         .data(particles)
-        .process(cm.push, 
+        .process(
+          cm.push,
           object({
             location: cm.vec(app.prop("width") / 2, 50),
             lifespan: 255,
@@ -60,16 +61,12 @@ export function particleClusterForce() {
           r: 5,
           fill: cm.rgb(0),
           stroke: cm.rgb(0),
-          fillOpacity: {
-            value: (d) => d.lifespan,
-            domain: [0, 255],
-            range: [0, 0.6],
-          },
-          strokeOpacity: {
-            value: (d) => d.lifespan,
-            domain: [0, 255],
-            range: [0, 1],
-          },
+          fillOpacity: (d) => d.lifespan,
+          strokeOpacity: (d) => d.lifespan,
+        })
+        .transform(cm.scale, {
+          fillOpacity: { domain: [0, 255], range: [0, 0.6] },
+          strokeOpacity: { domain: [0, 255], range: [0, 1] },
         });
     });
 
