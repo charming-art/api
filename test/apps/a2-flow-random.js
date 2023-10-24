@@ -46,9 +46,14 @@ export function a2FlowRandom() {
   const resolution = 16;
   const cols = Math.floor(app.prop("width") / resolution);
   const rows = Math.floor(app.prop("height") / resolution);
-  const fields = cm.range(cols * rows, () =>
-    cm.vec(cm.random(-1, 1), cm.random(-1, 1))
-  );
+
+  const noise = cm.noise(4);
+  const scale = cm.scaleLinear([0, 1], [0, cm.TWO_PI]);
+  const fields = cm.range(cols * rows, (_, d) => {
+    const i = d % cols;
+    const j = (d / cols) | 0;
+    return scale(noise(j * 0.1, i * 0.1));
+  });
 
   const cellWidth = app.prop("width") / cols;
   const cellHeight = app.prop("height") / rows;
@@ -59,7 +64,7 @@ export function a2FlowRandom() {
     x: (_, i) => x(i) + cellWidth / 2,
     y: (_, i) => y(i) + cellHeight / 2,
     length: cellWidth,
-    rotate: (d) => d.angle(),
+    rotate: (d) => d,
     angle: Math.PI / 6,
   });
 
