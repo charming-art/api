@@ -11,7 +11,6 @@ export function valueOf(data, options) {
 }
 
 export function flow$append(render, options) {
-  if (render._composite) return this.call(render, options);
   const flow = this._data ? this : this.data((d) => [d]);
   const groups = flow._groups;
   const parent = this._parent;

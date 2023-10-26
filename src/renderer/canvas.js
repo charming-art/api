@@ -181,10 +181,20 @@ function canvas$mouseup(listener) {
 function canvas$mousedown(listener) {
   const node = this.node();
   if (arguments.length === 0) {
-    node.removeEventListener("mousedown", this._mouseup);
+    node.removeEventListener("mousedown", this._mousedown);
   }
   this._mousedown = (e) => listener(e);
   node.addEventListener("mousedown", this._mousedown);
+  return this;
+}
+
+function canvas$mouseclick(listener) {
+  const node = this.node();
+  if (arguments.length === 0) {
+    node.removeEventListener("click", this._mouseclick);
+  }
+  this._mouseclick = (e) => listener(e);
+  node.addEventListener("click", this._mouseclick);
   return this;
 }
 
@@ -228,6 +238,7 @@ Object.defineProperties(Canvas.prototype, {
   mousemove: { value: canvas$mousemove },
   mouseup: { value: canvas$mouseup },
   mousedown: { value: canvas$mousedown },
+  mouseclick: { value: canvas$mouseclick },
   translate: { value: canvas$translate },
   rotate: { value: canvas$rotate },
   save: { value: canvas$save },

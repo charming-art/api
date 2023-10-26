@@ -50,6 +50,7 @@ function App({
   });
   maybe(this._renderer, "mousedown", () => emitter.emit("mousedown"));
   maybe(this._renderer, "mouseup", () => emitter.emit("mouseup"));
+  maybe(this._renderer, "mouseclick", () => emitter.emit("mouseclick"));
 }
 
 Object.defineProperties(App.prototype, {
