@@ -31,3 +31,4 @@ export { a2Arriving } from "./a2-arriving.js";
 export { a2Wandering } from "./a2-wandering.js";
 export { a2FlowRandom } from "./a2-flow-random.js";
 export { a2FlowNoise } from "./a2-flow-noise.js";
+export { randomWalk } from "./random-walk.js";
