@@ -47,7 +47,7 @@ export function a2FlowRandom() {
   const cols = Math.floor(app.prop("width") / resolution);
   const rows = Math.floor(app.prop("height") / resolution);
 
-  const noise = cm.noise(4);
+  const noise = cm.randomNoise(4);
   const scale = cm.scaleLinear([0, 1], [0, cm.TWO_PI]);
   const fields = cm.range(cols * rows, (_, d) => {
     const i = d % cols;

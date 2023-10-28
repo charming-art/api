@@ -13,7 +13,7 @@ export { webgl } from "./renderer/webgl.js";
 export { radian } from "./math/radian.js";
 export { random } from "./math/random.js";
 export { clamp } from "./math/clamp.js";
-export { noise } from "./math/noise.js";
+export { randomNoise } from "./math/randomNoise.js";
 export { range } from "./array/range.js";
 export { TWO_PI } from "./constant/TWO_PI.js";
 export { each } from "./process/each.js";

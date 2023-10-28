@@ -17,8 +17,8 @@ export function a2FlowNoise() {
 
   const cellWidth = app.prop("width") / cols;
   const cellHeight = app.prop("height") / rows;
-  const x = (i) => (i % cols) * cellWidth;
-  const y = (i) => ((i / cols) | 0) * cellHeight;
+  const x = (i) => (i % cols) * cellWidth + cellWidth / 2;
+  const y = (i) => ((i / cols) | 0) * cellHeight + cellHeight / 2;
 
   const vertices = cm.range(120).map(() =>
     object({
@@ -34,7 +34,7 @@ export function a2FlowNoise() {
   );
 
   const initFields = () => {
-    const noise = cm.noise(4, cm.random(10000));
+    const noise = cm.randomNoise(4, cm.random(10000));
     const scale = cm.scaleLinear([0, 1], [0, cm.TWO_PI]);
     for (let m = 0; m < fields.length; m++) {
       const i = m % cols;
