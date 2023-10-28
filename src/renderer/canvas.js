@@ -152,6 +152,21 @@ function canvas$triangle({
   return this;
 }
 
+function canvas$path({ d, stroke = "#000", strokeWidth }) {
+  const context = this._context;
+  context.save();
+  context.strokeStyle = stroke;
+  if (strokeWidth) context.lineWidth = strokeWidth;
+  context.beginPath();
+  for (const [type, ...params] of d) {
+    if (type === "M") context.moveTo(...params);
+    else if (type === "L") context.lineTo(...params);
+  }
+  context.stroke();
+  context.restore();
+  return this;
+}
+
 function canvas$mousemove(listener) {
   const node = this.node();
   if (arguments.length === 0) {
@@ -235,6 +250,7 @@ Object.defineProperties(Canvas.prototype, {
   rect: { value: canvas$rect },
   line: { value: canvas$line },
   triangle: { value: canvas$triangle },
+  path: { value: canvas$path },
   mousemove: { value: canvas$mousemove },
   mouseup: { value: canvas$mouseup },
   mousedown: { value: canvas$mousedown },

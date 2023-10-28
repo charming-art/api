@@ -33,3 +33,4 @@ export { a2FlowRandom } from "./a2-flow-random.js";
 export { a2FlowNoise } from "./a2-flow-noise.js";
 export { randomWalk } from "./random-walk.js";
 export { randomDistribution } from "./random-distribution.js";
+export { randomCurve } from "./random-curve.js";
