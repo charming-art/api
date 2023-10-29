@@ -37,3 +37,4 @@ export { randomCurve } from "./random-curve.js";
 export { randomNormal } from "./random-normal.js";
 export { matterFallingBoxes } from "./matter-falling-boxes.js";
 export { matterFallingPolygons } from "./matter-falling-polygons.js";
+export { toxicGrid } from "./toxic-grid.js";
