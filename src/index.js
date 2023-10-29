@@ -7,6 +7,7 @@ export { rect } from "./shape/rect.js";
 export { group } from "./shape/group.js";
 export { triangle } from "./shape/triangle.js";
 export { line } from "./shape/line.js";
+export { polygon } from "./shape/polygon.js";
 export { linear as scaleLinear } from "./scale/linear.js";
 export { sqrt as scaleSqrt } from "./scale/sqrt.js";
 export { canvas } from "./renderer/canvas.js";
