@@ -1,4 +1,4 @@
-import * as cm from "./_cm.js";
+import * as cm from "../../src/index.js";
 
 export function object(options) {
   return {

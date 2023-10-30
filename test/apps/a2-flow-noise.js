@@ -1,4 +1,4 @@
-import * as cm from "./_cm.js";
+import * as cm from "../../src/index.js";
 import { dispose } from "./_dispose.js";
 import { force, location, object } from "./_force.js";
 import { frame } from "./_frame.js";

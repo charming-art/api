@@ -1,4 +1,4 @@
-import * as cm from "./_cm.js";
+import * as cm from "../../src/index.js";
 import { dispose } from "./_dispose.js";
 
 export function circleClover() {
