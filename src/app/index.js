@@ -21,6 +21,7 @@ function App({
   renderer = canvas(),
   frameRate = 60,
   dpi = null,
+  ...rest
 } = {}) {
   const root = new Node();
   const flow = new Flow([[0]], [0], root, this);
@@ -42,7 +43,7 @@ function App({
     _emitter: { value: emitter },
     _props: { value: props, writable: false },
   });
-  maybe(this._renderer, "size", width, height, dpi);
+  maybe(this._renderer, "init", { width, height, dpi, ...rest });
   maybe(this._renderer, "mousemove", (e) => {
     const { x, y } = e;
     this._props.mouseX = x;

@@ -7,14 +7,14 @@ function renderNode(renderer, node, dimension, index = 0) {
   for (const i of I) {
     if (value) {
       const {
-        x: X,
-        y: Y,
+        x: X = [],
+        y: Y = [],
         translateX: TX = [],
         translateY: TY = [],
         rotate: R = [],
       } = value;
-      const x = X[i];
-      const y = Y[i];
+      const x = X[i] ?? 0;
+      const y = Y[i] ?? 0;
       const r = R[i];
       const tx = TX[i];
       const ty = TY[i];
@@ -38,5 +38,6 @@ export function app$render() {
   const dimension = { width: this.prop("width"), height: this.prop("height") };
   this._root._children.forEach((d) => renderNode(renderer, d, dimension));
   this._root._children = [];
+  if (this._renderer.render) this._renderer.render();
   return this.node();
 }

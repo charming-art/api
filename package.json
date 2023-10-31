@@ -15,8 +15,9 @@
     "dist/*/**.js"
   ],
   "scripts": {
-    "dev": "vite dev",
-    "test": "vitest"
+    "dev": "npm run build:rust && vite dev",
+    "test": "vitest",
+    "build:rust": "rm -rf ./src/backend && wasm-pack build ./rust --out-dir ../src/backend --out-name index --target web"
   },
   "sideEffect": false,
   "devDependencies": {

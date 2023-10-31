@@ -1,5 +1,17 @@
 import { color as d3Color } from "d3-color";
 
+function contextGL(width, height, dpi) {
+  if (dpi == null) dpi = devicePixelRatio;
+  const canvas = document.createElement("canvas");
+  const gl = canvas.getContext("webgl");
+  canvas.width = width * dpi;
+  canvas.height = height * dpi;
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+  gl.viewport(0, 0, width * dpi, height * dpi);
+  return gl;
+}
+
 function createShader(gl, type, source) {
   const shader = gl.createShader(type);
   gl.shaderSource(shader, source);
@@ -53,18 +65,6 @@ function compileProgram(gl) {
   return createProgram(gl, vertexShader, fragmentShader);
 }
 
-function webgl$size(width, height, dpi = null) {
-  if (dpi == null) dpi = devicePixelRatio;
-  this._props.width = width;
-  this._props.height = height;
-  const { _canvas: canvas, _gl: gl } = this;
-  canvas.width = width * dpi;
-  canvas.height = height * dpi;
-  canvas.style.width = width + "px";
-  canvas.style.height = height + "px";
-  gl.viewport(0, 0, width * dpi, height * dpi);
-}
-
 function webgl$triangles(I, value) {
   const { _gl: gl, _program: program } = this;
 
@@ -112,27 +112,29 @@ function webgl$triangles(I, value) {
 }
 
 function webgl$node() {
-  return this._canvas;
+  return this._gl.canvas;
 }
 
-function WebGL({ document = window.document } = {}) {
-  const canvas = document.createElement("canvas");
-  const gl = canvas.getContext("webgl");
+function webgl$init({ width, height, dpi = null }) {
+  const gl = contextGL(width, height, dpi);
   const program = compileProgram(gl);
-  const props = { width: 0, height: 0 };
-  // Tell it to use our program (pair of shaders).
   gl.useProgram(program);
+  Object.assign(this._props, { width, height });
+  Object.assign(this, { _gl: gl, _program: program });
+  return this;
+}
+
+function WebGL() {
   Object.defineProperties(this, {
-    _canvas: { value: canvas },
-    _gl: { value: gl },
-    _program: { value: program },
-    _props: { value: props },
+    _gl: { value: null, writable: true },
+    _program: { value: null, writable: true },
+    _props: { value: {}, writable: true },
   });
 }
 
 Object.defineProperties(WebGL.prototype, {
   node: { value: webgl$node },
-  size: { value: webgl$size },
+  init: { value: webgl$init },
   triangles: { value: webgl$triangles },
 });
 

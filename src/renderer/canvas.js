@@ -1,4 +1,5 @@
 import { color as d3Color } from "d3-color";
+import { context2d } from "./_context2d";
 
 function normalizeColor(color, opacity) {
   if (color === undefined || opacity === undefined) return color;
@@ -6,21 +7,8 @@ function normalizeColor(color, opacity) {
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
 
-function canvas$size(width, height, dpi = null) {
-  if (dpi == null) dpi = devicePixelRatio;
-  this._props.width = width;
-  this._props.height = height;
-  const { _canvas: canvas, _context: context } = this;
-  canvas.width = width * dpi;
-  canvas.height = height * dpi;
-  canvas.style.width = width + "px";
-  canvas.style.height = height + "px";
-  context.scale(dpi, dpi);
-  return this;
-}
-
 function canvas$node() {
-  return this._canvas;
+  return this._context.canvas;
 }
 
 function canvas$circle({
@@ -167,6 +155,12 @@ function canvas$path({ d, stroke = "#000", strokeWidth }) {
   return this;
 }
 
+function canvas$clear({ fill }) {
+  this._context.fillStyle = fill;
+  this._context.fillRect(0, 0, this._props.width, this._props.height);
+  return this;
+}
+
 function canvas$polygon({
   x: X,
   y: Y,
@@ -261,14 +255,17 @@ function canvas$rotate(angle) {
   this._context.rotate(angle);
 }
 
-function Canvas({ document = window.document } = {}) {
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
-  const props = { width: 0, height: 0 };
+function canvas$init({ width, height, dpi }) {
+  const context = context2d(width, height, dpi);
+  Object.assign(this, { _context: context });
+  Object.assign(this._props, { width, height });
+  return this;
+}
+
+function Canvas() {
   Object.defineProperties(this, {
-    _canvas: { value: canvas },
-    _context: { value: context },
-    _props: { value: props },
+    _context: { value: null, writable: true },
+    _props: { value: {}, writable: true },
     _mousemove: { value: null, writable: true },
     _mousedown: { value: null, writable: true },
     _mouseup: { value: null, writable: true },
@@ -276,7 +273,7 @@ function Canvas({ document = window.document } = {}) {
 }
 
 Object.defineProperties(Canvas.prototype, {
-  size: { value: canvas$size },
+  init: { value: canvas$init },
   node: { value: canvas$node },
   circle: { value: canvas$circle },
   rect: { value: canvas$rect },
@@ -284,6 +281,7 @@ Object.defineProperties(Canvas.prototype, {
   triangle: { value: canvas$triangle },
   path: { value: canvas$path },
   polygon: { value: canvas$polygon },
+  clear: { value: canvas$clear },
   mousemove: { value: canvas$mousemove },
   mouseup: { value: canvas$mouseup },
   mousedown: { value: canvas$mousedown },
