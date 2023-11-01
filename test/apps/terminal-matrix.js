@@ -12,7 +12,7 @@ export async function terminalMatrix() {
   app
     .data([
       [" +", "-", "+ "],
-      [" |", cm.wide("🚀"), "| "],
+      [" |", cm.wch("🚀"), "| "],
       [" +", "-", "+ "],
     ])
     .append(cm.group, { y: (_, i) => i })

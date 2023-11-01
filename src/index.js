@@ -1,7 +1,7 @@
 export { app } from "./app/index.js";
 export { rgb } from "./color/rgb.js";
 export { cfb } from "./color/cfb.js";
-export { wide } from "./color/wide.js";
+export { wch } from "./color/wch.js";
 export { circle } from "./shape/circle.js";
 export { link } from "./shape/link.js";
 export { background } from "./shape/background.js";
