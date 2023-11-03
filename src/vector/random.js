@@ -1,11 +1,11 @@
-import { memberize } from "./_memberize.js";
-import { staticize } from "./_staticize.js";
+import { memberize } from "./memberize.js";
+import { staticize } from "./staticize.js";
 
-function _random(out) {
+function random(out) {
   out.x = Math.random();
   out.y = Math.random();
 }
 
-export const vec$random = memberize(_random);
+export const vec$random = memberize(random);
 
-export const vecRandom = staticize(_random);
+export const vecRandom = staticize(random);

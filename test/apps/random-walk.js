@@ -1,7 +1,7 @@
 import * as cm from "../../src/index.js";
-import { frame } from "./_frame.js";
-import { dispose } from "./_dispose.js";
-import { stats } from "./_stats.js";
+import { frame } from "../frame.js";
+import { dispose } from "../dispose.js";
+import { stats } from "../stats.js";
 
 export function randomWalk() {
   const app = cm.app({

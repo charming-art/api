@@ -1,16 +1,5 @@
 import { color as d3Color } from "d3-color";
-
-function contextGL(width, height, dpi) {
-  if (dpi == null) dpi = devicePixelRatio;
-  const canvas = document.createElement("canvas");
-  const gl = canvas.getContext("webgl");
-  canvas.width = width * dpi;
-  canvas.height = height * dpi;
-  canvas.style.width = width + "px";
-  canvas.style.height = height + "px";
-  gl.viewport(0, 0, width * dpi, height * dpi);
-  return gl;
-}
+import { contextGL } from "./context.js";
 
 function createShader(gl, type, source) {
   const shader = gl.createShader(type);

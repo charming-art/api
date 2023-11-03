@@ -1,11 +1,11 @@
-import { memberize } from "./_memberize.js";
-import { staticize } from "./_staticize.js";
+import { memberize } from "./memberize.js";
+import { staticize } from "./staticize.js";
 
-function _norm(out, a) {
+function norm(out, a) {
   const mag = a.mag();
   if (mag !== 0) out.set(a).div(mag);
 }
 
-export const vec$norm = memberize(_norm);
+export const vec$norm = memberize(norm);
 
-export const vecNorm = staticize(_norm);
+export const vecNorm = staticize(norm);

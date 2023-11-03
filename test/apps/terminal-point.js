@@ -1,5 +1,5 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "./_dispose.js";
+import { dispose } from "../dispose.js";
 
 export async function terminalPoint() {
   const app = cm.app({

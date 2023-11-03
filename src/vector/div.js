@@ -1,11 +1,11 @@
-import { memberize } from "./_memberize.js";
-import { staticize } from "./_staticize.js";
+import { memberize } from "./memberize.js";
+import { staticize } from "./staticize.js";
 
-function _div(out, a, s) {
+function div(out, a, s) {
   out.x = a.x / s;
   out.y = a.y / s;
 }
 
-export const vec$div = memberize(_div);
+export const vec$div = memberize(div);
 
-export const vecDiv = staticize(_div);
+export const vecDiv = staticize(div);

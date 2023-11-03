@@ -9,7 +9,7 @@ import { app$call } from "./call.js";
 import { app$dispose } from "./dispose.js";
 import { app$on } from "./on.js";
 import { app$prop } from "./prop.js";
-import { maybe } from "./_maybe.js";
+import { maybe } from "./maybe.js";
 import { Emitter } from "../emitter.js";
 import { canvas } from "../renderer/canvas.js";
 import { Node } from "../node.js";

@@ -1,7 +1,7 @@
 import * as cm from "../../src/index.js";
-import { frame } from "./_frame.js";
-import { dispose } from "./_dispose.js";
-import { stats } from "./_stats.js";
+import { frame } from "../frame.js";
+import { dispose } from "../dispose.js";
+import { stats } from "../stats.js";
 import { Engine, Bodies, Composite, Body, Vector } from "matter-js";
 
 function createBoundary(parent, x, y, width, height) {

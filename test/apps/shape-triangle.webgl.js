@@ -1,6 +1,6 @@
 import * as cm from "../../src/index.js";
-import { frame } from "./_frame.js";
-import { dispose } from "./_dispose.js";
+import { frame } from "../frame.js";
+import { dispose } from "../dispose.js";
 
 export function shapeTriangleWebGL() {
   const app = cm.app({

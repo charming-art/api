@@ -1,6 +1,6 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "./_dispose.js";
-import { frame } from "./_frame.js";
+import { dispose } from "../dispose.js";
+import { frame } from "../frame.js";
 
 function multiple(d, x) {
   if (typeof d === "function") return (...params) => d(...params) * x;

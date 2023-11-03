@@ -1,25 +1,25 @@
-import { memberize } from "./_memberize.js";
-import { staticize } from "./_staticize.js";
+import { memberize } from "./memberize.js";
+import { staticize } from "./staticize.js";
 
-export function _neg(out, a) {
+export function neg(out, a) {
   out.x = a.x * -1;
   out.y = a.y * -1;
 }
 
-export function _negX(out, a) {
+export function negX(out, a) {
   out.x = a.x * -1;
   out.y = a.y;
 }
 
-export function _negY(out, a) {
+export function negY(out, a) {
   out.x = a.x;
   out.y = a.y * -1;
 }
 
-export const vec$neg = memberize(_neg);
-export const vec$negX = memberize(_negX);
-export const vec$negY = memberize(_negY);
+export const vec$neg = memberize(neg);
+export const vec$negX = memberize(negX);
+export const vec$negY = memberize(negY);
 
-export const vecNeg = staticize(_neg);
-export const vecNegX = staticize(_negX);
-export const vecNegY = staticize(_negY);
+export const vecNeg = staticize(neg);
+export const vecNegX = staticize(negX);
+export const vecNegY = staticize(negY);

@@ -1,5 +1,5 @@
 import { color as d3Color } from "d3-color";
-import { context2d } from "./_context2d";
+import { context2d } from "./context.js";
 
 function normalizeColor(color, opacity) {
   if (color === undefined || opacity === undefined) return color;

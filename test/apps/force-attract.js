@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
-import { frame } from "./_frame.js";
-import { attraction, object, location } from "./_force.js";
-import { dispose } from "./_dispose.js";
-import { stats } from "./_stats.js";
+import { frame } from "../frame.js";
+import { attraction, object, location } from "../force.js";
+import { dispose } from "../dispose.js";
+import { stats } from "../stats.js";
 
 export function forceAttract() {
   const app = cm.app({
