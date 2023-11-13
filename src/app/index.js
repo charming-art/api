@@ -11,7 +11,7 @@ import { app$on } from "./on.js";
 import { app$prop } from "./prop.js";
 import { maybe } from "./maybe.js";
 import { Emitter } from "../emitter.js";
-import { canvas } from "../renderer/canvas.js";
+import { canvas } from "../canvas/index.js";
 import { Node } from "../node.js";
 import { Flow } from "../flow/index.js";
 

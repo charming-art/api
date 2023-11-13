@@ -1,5 +1,5 @@
 import { color as d3Color } from "d3-color";
-import { contextGL } from "./context.js";
+import { contextGL } from "../context.js";
 
 function createShader(gl, type, source) {
   const shader = gl.createShader(type);

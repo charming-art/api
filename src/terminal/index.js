@@ -1,6 +1,6 @@
 import { rgb } from "d3-color";
 import init, { Backend } from "../backend/index.js";
-import { context2d } from "./context.js";
+import { context2d } from "../context.js";
 import wasm from "../backend/index_bg.wasm";
 
 // For vite env.

@@ -1,4 +1,4 @@
-import { NULL_VALUE } from "../renderer/terminal.js";
+import { NULL_VALUE } from "../terminal/index.js";
 
 export function wch(string) {
   const code = string.codePointAt(0);
