@@ -25,11 +25,13 @@ export function vectorFollowMe() {
       app
         .data(movers)
         .process(cm.each, ({ location, velocity, acceleration, speed }) => {
-          cm.vec(app.prop("mouseX"), app.prop("mouseY"))
+          const dir = cm
+            .vec(app.prop("mouseX"), app.prop("mouseY"))
             .sub(location)
             .norm()
-            .mult(0.5)
-            .out(acceleration);
+            .mult(0.5);
+
+          acceleration.set(dir);
 
           location
             .add(velocity.add(acceleration).clamp(speed))

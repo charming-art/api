@@ -488,38 +488,6 @@ describe("norm", () => {
   });
 });
 
-describe("out", () => {
-  test("vec.out(a)", () => {
-    const a = cm.vec(3, 4);
-    const b = cm.vec();
-    expect(a.out(b)).toBe(a);
-    expect(a.x).toBe(3);
-    expect(a.y).toBe(4);
-    expect(b.x).toBe(3);
-    expect(b.y).toBe(4);
-  });
-
-  test("vec.outX(a)", () => {
-    const a = cm.vec(3, 4);
-    const b = cm.vec();
-    expect(a.outX(b)).toBe(a);
-    expect(a.x).toBe(3);
-    expect(a.y).toBe(4);
-    expect(b.x).toBe(3);
-    expect(b.y).toBe(0);
-  });
-
-  test("vec.outY(a)", () => {
-    const a = cm.vec(3, 4);
-    const b = cm.vec();
-    expect(a.outY(b)).toBe(a);
-    expect(a.x).toBe(3);
-    expect(a.y).toBe(4);
-    expect(b.x).toBe(0);
-    expect(b.y).toBe(4);
-  });
-});
-
 describe("random", () => {
   test("cm.vecRandom()", () => {
     const a = cm.vecRandom();

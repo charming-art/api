@@ -10,7 +10,6 @@ import { vec$clamp, vec$clampX, vec$clampY } from "./clamp.js";
 import { vec$random } from "./random.js";
 import { vec$dot } from "./dot.js";
 import { vec$cross } from "./cross.js";
-import { vec$out, vec$outX, vec$outY } from "./out.js";
 import { vec$neg, vec$negX, vec$negY } from "./neg.js";
 import { vec$inX, vec$inY } from "./in.js";
 import { vec$angle } from "./angle.js";
@@ -41,9 +40,6 @@ Object.defineProperties(Vec.prototype, {
   random: { value: vec$random },
   dot: { value: vec$dot },
   cross: { value: vec$cross },
-  out: { value: vec$out },
-  outX: { value: vec$outX },
-  outY: { value: vec$outY },
   random: { value: vec$random },
   neg: { value: vec$neg },
   negX: { value: vec$negX },
