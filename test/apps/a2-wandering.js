@@ -38,7 +38,7 @@ function update(app, context) {
     d.circle = circle;
   };
 
-  app.append(cm.background, { fill: cm.rgb(255) });
+  app.append(cm.clear, { fill: cm.rgb(255) });
 
   const groups = app
     .datum(a2)

@@ -14,7 +14,7 @@ export async function terminalPoint() {
   app.on("update", () => {
     const i = x % app.prop("cols");
     const j = (x / app.prop("cols")) | 0;
-    app.append(cm.background, { fill: "#000" });
+    app.append(cm.clear, { fill: "#000" });
     app.append(cm.point, { x: i, y: j, stroke: cm.cfb("@") });
     x += 1;
   });

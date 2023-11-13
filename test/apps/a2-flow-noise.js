@@ -75,7 +75,7 @@ export function a2FlowNoise() {
   initFields();
 
   function update() {
-    app.append(cm.background, { fill: "white" });
+    app.append(cm.clear, { fill: "white" });
 
     app
       .data(fields)

@@ -31,7 +31,7 @@ export function particleClusterForce() {
   });
 
   app
-    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => app.append(cm.clear, { fill: cm.rgb(255) }))
     .on("update", () => {
       app.datum(repeller).append(cm.circle, {
         x: (d) => d.location.x,

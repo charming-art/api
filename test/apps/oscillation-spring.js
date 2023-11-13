@@ -20,7 +20,7 @@ export function oscillationSpring() {
   const y = (d) => d.r * Math.cos(d.angle);
 
   app
-    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => app.append(cm.clear, { fill: cm.rgb(255) }))
     .on("update", () => {
       const group = app.append(cm.group, { x: app.prop("width") / 2, y: 0 });
       group

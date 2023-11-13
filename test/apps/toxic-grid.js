@@ -54,7 +54,7 @@ export function toxicGrid() {
 
   function update() {
     world.update();
-    app.append(cm.background, { fill: "#fff" });
+    app.append(cm.clear, { fill: "#fff" });
     app.data(springs).append(cm.link, {
       x: (d) => d.a.x,
       y: (d) => d.a.y,

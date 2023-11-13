@@ -19,7 +19,7 @@ export function oscillationOscillateMultiple() {
   }));
 
   app
-    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => app.append(cm.clear, { fill: cm.rgb(255) }))
     .on("update", () => {
       const group = app.append(cm.group, {
         x: app.prop("width") / 2,

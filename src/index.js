@@ -4,7 +4,7 @@ export { cfb } from "./color/cfb.js";
 export { wch } from "./color/wch.js";
 export { circle } from "./shape/circle.js";
 export { link } from "./shape/link.js";
-export { background } from "./shape/background.js";
+export { clear } from "./shape/clear.js";
 export { rect } from "./shape/rect.js";
 export { group } from "./shape/group.js";
 export { triangle } from "./shape/triangle.js";

@@ -10,7 +10,7 @@ export function oscillationDone() {
   });
 
   app
-    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => app.append(cm.clear, { fill: cm.rgb(255) }))
     .on("update", () => {
       const r = 75;
       const theta = app.prop("frameCount") / 50;

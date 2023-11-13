@@ -53,7 +53,7 @@ export function matterFallingPolygons() {
   function update() {
     if (cm.random(1) < 0.1) boxes.push(createBox(engine.world, w / 2, 50));
 
-    app.append(cm.background, { fill: "#fff" });
+    app.append(cm.clear, { fill: "#fff" });
 
     app
       .data(boxes)

@@ -40,7 +40,7 @@ export function forceLiquid() {
   const detect = collision();
 
   app
-    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => app.append(cm.clear, { fill: cm.rgb(255) }))
     .on("update", () => app.append(cm.rect, { ...liquid, fill: cm.rgb(175) }))
     .on("update", () => {
       app

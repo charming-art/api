@@ -26,7 +26,7 @@ export function randomCurve() {
   app.on("update", () => {
     const curve = bellCurve(0, sigma);
 
-    app.append(cm.background, { fill: "#fff" });
+    app.append(cm.clear, { fill: "#fff" });
 
     app
       .data(X)

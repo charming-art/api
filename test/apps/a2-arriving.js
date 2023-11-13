@@ -23,7 +23,7 @@ function update(app, context) {
     return steer;
   });
 
-  app.append(cm.background, { fill: cm.rgb(255) });
+  app.append(cm.clear, { fill: cm.rgb(255) });
 
   app
     .datum(target)

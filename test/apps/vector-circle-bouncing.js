@@ -19,7 +19,7 @@ export function vectorCircleBouncing() {
       if (!location.inY(app.prop("height"))) velocity.negY();
     })
     .on("update", () => {
-      app.append(cm.background, { fill: cm.rgb(255) });
+      app.append(cm.clear, { fill: cm.rgb(255) });
       app.append(cm.circle, {
         x: location.x,
         y: location.y,

@@ -48,7 +48,7 @@ export function particleClusters() {
   const PS = [];
 
   app
-    .on("update", () => app.append(cm.background, { fill: cm.rgb(255) }))
+    .on("update", () => app.append(cm.clear, { fill: cm.rgb(255) }))
     .on("update", () => {
       const groups = app.data(PS).append(cm.group, {
         x: (d) => d.origin.x,

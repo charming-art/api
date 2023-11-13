@@ -13,7 +13,7 @@ export function vectorMoveLink() {
     const center = cm.vec(app.prop("width") / 2, app.prop("height") / 2);
     const mouse = cm.vec(app.prop("mouseX"), app.prop("mouseY"));
     const dir = cm.vecSub(mouse, center);
-    app.append(cm.background, { fill: cm.rgb(255) });
+    app.append(cm.clear, { fill: cm.rgb(255) });
     app.append(cm.link, {
       x: center.x,
       y: center.y,
