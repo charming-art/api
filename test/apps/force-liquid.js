@@ -56,7 +56,7 @@ export function forceLiquid() {
           stroke: cm.rgb(0),
           r: (d) => d.mass,
         })
-        .transform(cm.scale, {
+        .transform(cm.mapValues, {
           r: { scale: cm.scaleSqrt, range: [2, 20] },
         });
     });

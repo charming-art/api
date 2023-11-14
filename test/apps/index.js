@@ -1,4 +1,5 @@
-export { circleClover } from "./circle-clover.js";
+export { curveCircleClover } from "./curve-circle-clover.js";
+export { curveLineMaurerRose } from "./curve-line-maurer-rose.js";
 export { vectorCircleBouncing } from "./vector-circle-bouncing.js";
 export { vectorMoveLink } from "./vector-move-link.js";
 export { vectorFollowMe } from "./vector-follow-me.js";

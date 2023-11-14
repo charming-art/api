@@ -17,7 +17,7 @@ function applyScale(value, options) {
   );
 }
 
-export function scale(_, data, options) {
+export function mapValues(_, data, options) {
   const m = data.length;
   for (let i = 0; i < m; i++) {
     const context = data[i];

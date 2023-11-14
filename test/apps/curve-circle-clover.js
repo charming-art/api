@@ -1,7 +1,7 @@
 import * as cm from "../../src/index.js";
 import { dispose } from "../dispose.js";
 
-export function circleClover() {
+export function curveCircleClover() {
   const app = cm.app({
     width: 640,
     height: 640,
@@ -15,7 +15,7 @@ export function circleClover() {
       y: (t) => Math.sin(t) * Math.cos(t * 3),
       r: (_, i) => i,
     })
-    .transform(cm.scale, {
+    .transform(cm.mapValues, {
       x: { range: [15, app.prop("width") - 30] },
       y: { range: [15, app.prop("height") - 30] },
       r: { range: [1, 15] },

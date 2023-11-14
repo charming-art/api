@@ -36,7 +36,7 @@ export function randomCurve() {
         stroke: "black",
         strokeWidth: 2,
       })
-      .transform(cm.scale, {
+      .transform(cm.mapValues, {
         y: {
           domain: [0, 1],
           range: [app.prop("height") - 2, 2],
