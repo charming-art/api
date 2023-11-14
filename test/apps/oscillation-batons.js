@@ -20,8 +20,8 @@ export function oscillationBatons() {
           rotate: (_, i) => app.prop("frameCount") / 50 + i * 30,
         })
         .call((d) => d.append(cm.link, { x: -80, y: 0, x1: 80, y1: 0 }))
-        .call((d) => d.append(cm.circle, { x: -80, y: 0, r: 5 }))
-        .call((d) => d.append(cm.circle, { x: 80, y: 0, r: 5 }));
+        .call((d) => d.append(cm.circle, { x: -80, y: 0, r: 5, fill: "black" }))
+        .call((d) => d.append(cm.circle, { x: 80, y: 0, r: 5, fill: "black" }));
     });
 
   return app.call(dispose).call(stats).call(frame).start();

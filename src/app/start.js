@@ -15,7 +15,6 @@ function schedule() {
     if (this._timer) this._timer.stop();
     const delay = (1000 / this._props.frameRate) | 0;
     this._timer = interval(() => {
-      timerFlush();
       tick.call(this);
     }, delay);
     this._reschedule = false;
@@ -25,10 +24,10 @@ function schedule() {
 function tick() {
   const emitter = this._emitter;
   this._props.frameCount++;
-  emitter.emit("beforeEach");
-  emitter.emit("update");
+  emitter.emit("beforeEach", this);
+  emitter.emit("update", this);
   this.render();
-  emitter.emit("afterEach");
+  emitter.emit("afterEach", this);
   schedule.call(this); // Schedule at the end of every tick.
 }
 

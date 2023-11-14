@@ -18,8 +18,8 @@ export function oscillationBaton() {
         rotate: app.prop("frameCount") / 50,
       });
       group.append(cm.link, { x: -80, y: 0, x1: 80, y1: 0 });
-      group.append(cm.circle, { x: -80, y: 0, r: 5 });
-      group.append(cm.circle, { x: 80, y: 0, r: 5 });
+      group.append(cm.circle, { x: -80, y: 0, r: 5, fill: "black" });
+      group.append(cm.circle, { x: 80, y: 0, r: 5, fill: "black" });
     });
 
   return app.call(dispose).call(stats).call(frame).start();

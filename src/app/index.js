@@ -49,9 +49,9 @@ function App({
     this._props.mouseX = x;
     this._props.mouseY = y;
   });
-  maybe(this._renderer, "mousedown", () => emitter.emit("mousedown"));
-  maybe(this._renderer, "mouseup", () => emitter.emit("mouseup"));
-  maybe(this._renderer, "mouseclick", () => emitter.emit("mouseclick"));
+  maybe(this._renderer, "mousedown", () => emitter.emit("mousedown", this));
+  maybe(this._renderer, "mouseup", () => emitter.emit("mouseup", this));
+  maybe(this._renderer, "mouseclick", () => emitter.emit("mouseclick", this));
 }
 
 Object.defineProperties(App.prototype, {
