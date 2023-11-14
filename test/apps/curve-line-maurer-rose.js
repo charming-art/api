@@ -1,6 +1,7 @@
 import * as cm from "../../src/index.js";
 import { dispose } from "../dispose.js";
 
+// @see https://observablehq.com/@recifs/a-rose-is-a-rose
 export function curveLineMaurerRose() {
   const n = 10;
   const d = 17;

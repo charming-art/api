@@ -3,6 +3,7 @@ import * as cm from "../../src/index.js";
 import { dispose } from "../dispose.js";
 import { stats } from "../stats.js";
 
+// @see https://observablehq.com/d/a741f9a27e8c0e73
 export function oscillationBeesSandBombs() {
   const width = 640;
   const radius = 12;
