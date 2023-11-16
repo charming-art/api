@@ -1,11 +1,46 @@
 import { mapValues } from "./mapValues.js";
 
-export function mapPosition(flow, data, options) {
+export function mapPosition(
+  flow,
+  data,
+  {
+    scaleX,
+    scaleY,
+    domainX,
+    domainY,
+    reverseY = false,
+    reverseX = false,
+    padding = 0,
+    keysX = ["x", "x1"],
+    keysY = ["y", "y1"],
+  } = {}
+) {
   const app = flow.app();
   const width = app.prop("width");
   const height = app.prop("height");
-  const { x = {}, y = {} } = options;
-  const newX = { ...x, range: [0, width] };
-  const newY = { ...y, range: [0, height] };
-  return mapValues(flow, data, { x: newX, y: newY });
+  const rangeX = [padding, width - padding * 2];
+  const rangeY = [padding, height - padding * 2];
+
+  if (reverseX) rangeX.reverse();
+  if (reverseY) rangeY.reverse();
+
+  const X = keysX.map((key) => [
+    key,
+    {
+      domain: domainX,
+      range: rangeX,
+      scale: scaleX,
+    },
+  ]);
+
+  const Y = keysY.map((key) => [
+    key,
+    {
+      domain: domainY,
+      range: rangeY,
+      scale: scaleY,
+    },
+  ]);
+
+  return mapValues(flow, data, Object.fromEntries([...X, ...Y]));
 }

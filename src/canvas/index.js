@@ -140,6 +140,7 @@ function canvas$triangle({
   return this;
 }
 
+// @TODO More command.
 function canvas$path({
   x = 0,
   y = 0,
@@ -167,6 +168,35 @@ function canvas$path({
   if (stroke) context.stroke();
   context.restore();
   return this;
+}
+
+function canvas$text({
+  text,
+  x,
+  y,
+  fill,
+  stroke,
+  strokeWidth,
+  fillOpacity,
+  strokeOpacity,
+  fontFamily,
+  textAlign,
+  textBaseline,
+  fontSize = 14,
+  fontWeight = "normal",
+}) {
+  stroke = normalizeColor(stroke, strokeOpacity);
+  fill = normalizeColor(fill, fillOpacity);
+  const context = this._context;
+  context.save();
+  if (stroke) context.strokeStyle = stroke;
+  if (strokeWidth) context.lineWidth = strokeWidth;
+  if (fill) context.fill = fill;
+  if (textAlign) context.textAlign = textAlign;
+  if (textBaseline) context.textBaseline = textBaseline;
+  context.font = `${fontWeight} ${fontSize}px ${fontFamily ?? ""}`.trim();
+  context.fillText(text, x, y);
+  context.restore();
 }
 
 function canvas$clear({ fill }) {
@@ -295,6 +325,7 @@ Object.defineProperties(Canvas.prototype, {
   triangle: { value: canvas$triangle },
   path: { value: canvas$path },
   polygon: { value: canvas$polygon },
+  text: { value: canvas$text },
   clear: { value: canvas$clear },
   mousemove: { value: canvas$mousemove },
   mouseup: { value: canvas$mouseup },

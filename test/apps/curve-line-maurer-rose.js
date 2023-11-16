@@ -21,8 +21,8 @@ export function curveLineMaurerRose() {
       strokeWidth: 0.33,
     })
     .transform(cm.mapPosition, {
-      x: { domain: [-1, 1] },
-      y: { domain: [-1, 1] },
+      domainX: [-1, 1],
+      domainY: [-1, 1],
     });
 
   app
@@ -34,8 +34,8 @@ export function curveLineMaurerRose() {
       strokeWidth: 2.5,
     })
     .transform(cm.mapPosition, {
-      x: { domain: [-1, 1] },
-      y: { domain: [-1, 1] },
+      domainX: [-1, 1],
+      domainY: [-1, 1],
     });
 
   return app.call(dispose).render();

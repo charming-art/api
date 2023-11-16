@@ -8,6 +8,8 @@ export function circle(renderer, I, value) {
     strokeWidth: SW = [],
     fillOpacity: FO = [],
     strokeOpacity: SO = [],
+    fontWeight: FW = [],
+    fontFamily: FF = [],
   } = value;
   for (const i of I) {
     renderer.circle({
@@ -19,6 +21,8 @@ export function circle(renderer, I, value) {
       strokeWidth: SW[i],
       fillOpacity: FO[i],
       strokeOpacity: SO[i],
+      fontWeight: FW[i],
+      fontFamily: FF[i],
     });
   }
 }
