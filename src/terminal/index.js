@@ -118,13 +118,14 @@ function terminal$point({ x, y, stroke }) {
 }
 
 function terminal$clear({ fill = "#000" }) {
+  const { widthP, heightP } = this._props;
   this._context.fillStyle = fill;
-  this._context.fillRect(0, 0, this._props.width, this._props.height);
+  this._context.fillRect(0, 0, widthP, heightP);
 }
 
 function terminal$char(char, i, j, fg, bg, wide = false) {
   const {
-    cols,
+    width: cols,
     mode,
     cellWidth,
     cellHeight,
@@ -163,7 +164,7 @@ function terminal$char(char, i, j, fg, bg, wide = false) {
 
 export function terminal$render() {
   const bufferPtr = this._backend.render();
-  const { cols, rows } = this._props;
+  const { width: cols, height: rows } = this._props;
   const buffer = new Uint32Array(
     this._memory.buffer,
     bufferPtr,
@@ -186,12 +187,14 @@ export function terminal$render() {
 
 function terminal$toString() {
   let string = "";
-  for (let j = 0; j < this._rows; j++) {
+  const { width: cols, height: rows } = this._props;
+  const { _mode: mode, _buffer: buffer } = this;
+  for (let j = 0; j < rows; j++) {
     if (j !== 0) string += "\n";
-    for (let i = 0; i < this._cols; i++) {
-      const index = (this._cols * j + i) * CELL_SIZE;
-      const empty = this._mode === "double" ? "··" : "·";
-      const char = this._buffer[index] || empty;
+    for (let i = 0; i < cols; i++) {
+      const index = (cols * j + i) * CELL_SIZE;
+      const empty = mode === "double" ? "··" : "·";
+      const char = buffer[index] || empty;
       string += char;
     }
   }
@@ -203,8 +206,6 @@ function terminal$init({
   width,
   height,
   mode = "single",
-  cols = mode === "single" ? 80 : 40,
-  rows = 24,
   fontFamily = "courier-new, courier, monospace",
   fontSize = 15,
   fontWeight = "normal",
@@ -216,8 +217,10 @@ function terminal$init({
   });
   const cellWidth = mode === "double" ? tw * 2 : tw;
   const cellHeight = th;
-  const computedCols = dimensionOf(cols, width, cellWidth);
-  const computedRows = dimensionOf(rows, height, cellHeight);
+  const cols = typeof width === "number" ? undefined : width;
+  const rows = typeof height === "number" ? undefined : height;
+  const computedCols = dimensionOf(cols, Number.parseFloat(width), cellWidth);
+  const computedRows = dimensionOf(rows, Number.parseFloat(height), cellHeight);
   const computedWidth = computedCols * cellWidth;
   const computedHeight = computedRows * cellHeight;
   const context = context2d(computedWidth, computedHeight);
@@ -234,10 +237,10 @@ function terminal$init({
     fontSize,
     fontFamily,
     fontWeight,
-    cols: computedCols,
-    rows: computedRows,
-    width: computedWidth,
-    height: computedHeight,
+    width: computedCols,
+    height: computedRows,
+    widthP: computedWidth,
+    heightP: computedHeight,
   });
   Object.assign(this, {
     _buffer: buffer,
