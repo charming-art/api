@@ -33,7 +33,7 @@ export { eachRight } from "./process/eachRight.js";
 export { filter } from "./process/filter.js";
 export { map } from "./process/map.js";
 export { push } from "./process/push.js";
-export { mapValues } from "./transform/mapValues.js";
+export { mapProps } from "./transform/mapProps.js";
 export { mapPosition } from "./transform/mapPosition.js";
 export { vec } from "./vector/vec.js";
 export { vecAdd } from "./vector/add.js";

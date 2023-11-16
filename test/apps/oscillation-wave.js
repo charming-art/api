@@ -24,7 +24,7 @@ export function oscillationWave() {
           stroke: "#000",
           strokeWidth: 1,
         })
-        .transform(cm.mapValues, {
+        .transform(cm.mapProps, {
           x: { range: [0, app.prop("width")] },
           y: { range: [0, app.prop("height")] },
         });

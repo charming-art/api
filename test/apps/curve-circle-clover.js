@@ -15,7 +15,7 @@ export function curveCircleClover() {
       y: (t) => Math.sin(t) * Math.cos(t * 3),
       r: (_, i) => i,
     })
-    .transform(cm.mapValues, {
+    .transform(cm.mapProps, {
       x: { range: [15, app.prop("width") - 30] },
       y: { range: [15, app.prop("height") - 30] },
       r: { range: [1, 15] },
