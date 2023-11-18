@@ -1,4 +1,6 @@
 import { rgb } from "d3-color";
+import { textSync } from "figlet";
+import { fontStandard } from "../font/standard.js";
 import init, { Backend } from "../backend/index.js";
 import { context2d } from "../context.js";
 import wasm from "../backend/index_bg.wasm";
@@ -115,6 +117,40 @@ function terminal$point({ x, y, stroke }) {
   const { ch, fg = "#fff", bg = null } = stroke;
   this._backend.stroke(...cfb({ ch, fg, bg }));
   this._backend.point(x, y);
+}
+
+function terminal$text({
+  x,
+  y,
+  text,
+  fill,
+  textAlign = "start",
+  textBaseline = "top",
+  fontFamily = fontStandard(),
+}) {
+  const matrix = textSync(text, { font: fontFamily });
+  const lines = matrix.split("\n");
+  const textHeight = lines.length;
+  const textWidth = Math.max(...lines.map((l) => l.length));
+  const startX =
+    textAlign === "left"
+      ? x - textWidth
+      : textAlign === "center"
+      ? x - textWidth / 2
+      : x;
+  const startY =
+    textBaseline === "bottom"
+      ? y - textHeight
+      : textBaseline === "middle"
+      ? y - textHeight / 2
+      : y;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    for (let j = 0; j < line.length; j++) {
+      const ch = line[j];
+      this.point({ x: startX + j, y: startY + i, stroke: { ch, fg: fill } });
+    }
+  }
 }
 
 function terminal$clear({ fill = "#000" }) {
@@ -267,6 +303,7 @@ Object.defineProperties(Terminal.prototype, {
   char: { value: terminal$char },
   render: { value: terminal$render },
   point: { value: terminal$point },
+  text: { value: terminal$text },
   clear: { value: terminal$clear },
   save: { value: terminal$save },
   restore: { value: terminal$restore },

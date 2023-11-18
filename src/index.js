@@ -52,3 +52,5 @@ export { vecInX, vecInY } from "./vector/in.js";
 export { vecAngle } from "./vector/angle.js";
 export { vecFromAngle } from "./vector/fromAngle.js";
 export { pathArray } from "./pathArray.js";
+export { fontGhost } from "./font/ghost.js";
+export { fontStandard } from "./font/standard.js";

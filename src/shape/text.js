@@ -10,6 +10,7 @@ export function text(renderer, I, value) {
     strokeWidth: SW = [],
     textBaseline: TB = [],
     textAlign: TA = [],
+    fontFamily: FF = [],
   } = value;
   for (const i of I) {
     renderer.text({
@@ -23,6 +24,7 @@ export function text(renderer, I, value) {
       strokeWidth: SW[i],
       textBaseline: TB[i],
       textAlign: TA[i],
+      fontFamily: FF[i],
     });
   }
 }

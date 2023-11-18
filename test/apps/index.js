@@ -42,4 +42,5 @@ export { matterFallingPolygons } from "./matter-falling-polygons.js";
 export { toxicGrid } from "./toxic-grid.js";
 export { terminalMatrix } from "./terminal-matrix.js";
 export { terminalPoint } from "./terminal-point.js";
+export { terminalText } from "./terminal-text.js";
 export { regularNumbers } from "./regular-numbers.js";
