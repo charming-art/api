@@ -23,10 +23,10 @@ function schedule() {
 
 function tick() {
   const emitter = this._emitter;
-  this._props.frameCount++;
   emitter.emit("beforeEach", this);
   emitter.emit("update", this);
   this.render();
+  this._props.frameCount++;
   emitter.emit("afterEach", this);
   schedule.call(this); // Schedule at the end of every tick.
 }

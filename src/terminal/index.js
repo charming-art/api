@@ -1,6 +1,6 @@
 import { rgb } from "d3-color";
 import { textSync } from "figlet";
-import { fontStandard } from "../font/standard.js";
+import { standard as fontStandard } from "../font/standard.js";
 import init, { Backend } from "../backend/index.js";
 import { context2d } from "../context.js";
 import wasm from "../backend/index_bg.wasm";
@@ -47,6 +47,11 @@ function measureText(text, styles) {
   return { width: bbox.width, height: Math.ceil(bbox.height) };
 }
 
+function normalizeColor(color, width, height) {
+  if (typeof color === "function") return color(width, height);
+  return () => color;
+}
+
 function dimensionOf(count, pixel, unit) {
   if (count === undefined) return (pixel / unit) | 0;
   return count;
@@ -72,6 +77,25 @@ function encodeColor(color) {
   if (color === NULL_VALUE || color === null) return NULL_VALUE;
   const { r, g, b } = rgb(color);
   return b + (g << 8) + (r << 16);
+}
+
+function bboxOf(matrix, { x, y, textAlign, textBaseline }) {
+  const lines = matrix.split("\n");
+  const height = lines.length;
+  const width = Math.max(...lines.map((l) => l.length));
+  const startX =
+    textAlign === "left"
+      ? x - width
+      : textAlign === "center"
+      ? x - width / 2
+      : x;
+  const startY =
+    textBaseline === "bottom"
+      ? y - height
+      : textBaseline === "middle"
+      ? y - height / 2
+      : y;
+  return { lines, x: startX, y: startY, width, height };
 }
 
 function encodeChar(ch) {
@@ -129,28 +153,45 @@ function terminal$text({
   fontFamily = fontStandard(),
 }) {
   const matrix = textSync(text, { font: fontFamily });
-  const lines = matrix.split("\n");
-  const textHeight = lines.length;
-  const textWidth = Math.max(...lines.map((l) => l.length));
-  const startX =
-    textAlign === "left"
-      ? x - textWidth
-      : textAlign === "center"
-      ? x - textWidth / 2
-      : x;
-  const startY =
-    textBaseline === "bottom"
-      ? y - textHeight
-      : textBaseline === "middle"
-      ? y - textHeight / 2
-      : y;
+  const {
+    x: startX,
+    y: startY,
+    width: textWidth,
+    height: textHeight,
+    lines,
+  } = bboxOf(matrix, {
+    x,
+    y,
+    textAlign,
+    textBaseline,
+  });
+  fill = normalizeColor(fill, textWidth, textHeight);
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     for (let j = 0; j < line.length; j++) {
       const ch = line[j];
-      this.point({ x: startX + j, y: startY + i, stroke: { ch, fg: fill } });
+      this.point({
+        x: startX + j,
+        y: startY + i,
+        stroke: { ch, fg: fill(j, i) },
+      });
     }
   }
+}
+
+function terminal$textBBox({
+  text,
+  fontFamily = fontStandard(),
+  textAlign = "start",
+  textBaseline = "top",
+  x = 0,
+  y = 0,
+} = {}) {
+  const matrix = textSync(text, {
+    font: fontFamily,
+  });
+  const bbox = bboxOf(matrix, { textAlign, textBaseline, x, y });
+  return { x: bbox.x, y: bbox.y, width: bbox.width, height: bbox.height };
 }
 
 function terminal$clear({ fill = "#000" }) {
@@ -311,6 +352,7 @@ Object.defineProperties(Terminal.prototype, {
   scale: { value: terminal$scale },
   translate: { value: terminal$translate },
   toString: { value: terminal$toString },
+  textBBox: { value: terminal$textBBox },
 });
 
 export async function terminal() {

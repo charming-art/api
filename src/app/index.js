@@ -9,6 +9,7 @@ import { app$call } from "./call.js";
 import { app$dispose } from "./dispose.js";
 import { app$on } from "./on.js";
 import { app$prop } from "./prop.js";
+import { app$textBBox } from "./textBBox.js";
 import { maybe } from "./maybe.js";
 import { Emitter } from "../emitter.js";
 import { canvas } from "../canvas/index.js";
@@ -66,6 +67,7 @@ Object.defineProperties(App.prototype, {
   dispose: { value: app$dispose },
   prop: { value: app$prop },
   on: { value: app$on },
+  textBBox: { value: app$textBBox },
 });
 
 export function app(options) {
