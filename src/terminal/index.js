@@ -195,9 +195,9 @@ function terminal$textBBox({
 }
 
 function terminal$clear({ fill = "#000" }) {
-  const { widthP, heightP } = this._props;
+  const { pixelWidth, pixelHeight } = this._props;
   this._context.fillStyle = fill;
-  this._context.fillRect(0, 0, widthP, heightP);
+  this._context.fillRect(0, 0, pixelWidth, pixelHeight);
 }
 
 function terminal$char(char, i, j, fg, bg, wide = false) {
@@ -316,8 +316,8 @@ function terminal$init({
     fontWeight,
     width: computedCols,
     height: computedRows,
-    widthP: computedWidth,
-    heightP: computedHeight,
+    pixelWidth: computedWidth,
+    pixelHeight: computedHeight,
   });
   Object.assign(this, {
     _buffer: buffer,
