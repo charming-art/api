@@ -60,7 +60,7 @@ export function particleClusters() {
         .call(updateParticles)
         .call(drawParticles);
     })
-    .on("mousedown", () => {
+    .on("mouseDown", () => {
       PS.push({
         origin: cm.vec(app.prop("mouseX"), app.prop("mouseY")),
         particles: [],

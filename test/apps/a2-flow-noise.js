@@ -115,13 +115,13 @@ export function a2FlowNoise() {
       });
   }
 
-  function mouseclick() {
+  function mouseClick() {
     initFields();
   }
 
   return app
     .on("update", update)
-    .on("mouseclick", mouseclick)
+    .on("mouseClick", mouseClick)
     .call(dispose)
     .call(frame)
     .call(stats)

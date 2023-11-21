@@ -76,8 +76,8 @@ export function oscillationSpring2() {
         stroke: cm.rgb(0),
       });
     })
-    .on("mousedown", () => (dragging = true))
-    .on("mouseup", () => (dragging = false));
+    .on("mouseDown", () => (dragging = true))
+    .on("mouseUp", () => (dragging = false));
 
   return app.call(dispose).call(stats).call(frame).start();
 }
