@@ -82,6 +82,8 @@ document.body.appendChild(app.render().node());
 - [Shape](#shape)
 - [Transform](#transform)
 - [Scale](#scale)
+- [Event](#event)
+- [Prop](#prop)
 - [Color](#color)
 - [Array](#array)
 - [Math](#math)
@@ -190,6 +192,54 @@ document.body.appendChild(app.render().node());
 <a name="cm-scaleSqrt" href="#cm-scaleSqrt">#</a> cm.**scaleSqrt**(_domain, range_)
 
 <a name="cm-scaleLog" href="#cm-scaleLog">#</a> cm.**scaleLog**(_domain, range_)
+
+### Event
+
+<a name="event-update" href="#event-update">#</a> event.**update**
+
+<a name="event-mouseDown" href="#event-mouseDown">#</a> event.**mouseDown**
+
+<a name="event-mouseUp" href="#event-mouseUp">#</a> event.**mouseUp**
+
+<a name="event-mouseClick" href="#event-mouseClick">#</a> event.**mouseClick**
+
+<a name="event-beforeEach" href="#event-beforeEach">#</a> event.**beforeEach**
+
+<a name="event-afterEach" href="#event-afterEach">#</a> event.**afterEach**
+
+<a name="event-beforeAll" href="#event-beforeAll">#</a> event.**beforeAll**
+
+<a name="event-afterAll" href="#event-afterAll">#</a> event.**afterAll**
+
+### Prop
+
+<a name="prop-width" href="#prop-width">#</a> prop.**width**
+
+<a name="prop-height" href="#prop-height">#</a> prop.**height**
+
+<a name="prop-pixelWidth" href="#prop-pixelWidth">#</a> prop.**pixelWidth**
+
+<a name="prop-pixelHeight" href="#prop-pixelHeight">#</a> prop.**pixelHeight**
+
+<a name="prop-frameCount" href="#prop-frameCount">#</a> prop.**frameCount**
+
+<a name="prop-frameRate" href="#prop-frameRate">#</a> prop.**frameRate**
+
+<a name="prop-mouseX" href="#prop-mouseX">#</a> prop.**mouseX**
+
+<a name="prop-mouseY" href="#prop-mouseY">#</a> prop.**mouseY**
+
+<a name="prop-mode" href="#prop-mode">#</a> prop.**mode**
+
+<a name="prop-cellWidth" href="#prop-cellWidth">#</a> prop.**cellWidth**
+
+<a name="prop-cellHeight" href="#prop-cellHeight">#</a> prop.**cellHeight**
+
+<a name="prop-fontSize" href="#prop-fontSize">#</a> prop.**fontSize**
+
+<a name="prop-fontFamily" href="#prop-fontFamily">#</a> prop.**fontFamily**
+
+<a name="prop-fontWeight" href="#prop-fontWeight">#</a> prop.**fontWeight**
 
 ### Color
 
