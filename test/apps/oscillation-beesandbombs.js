@@ -50,7 +50,7 @@ export function oscillationBeesSandBombs() {
 
   function applyScale(flow) {
     const app = flow.app();
-    flow.transform(cm.mapProps, {
+    flow.transform(cm.mapAttrs, {
       x: { range: [40, app.prop("width") - 40] },
       y: { range: [40, app.prop("height") - 40] },
     });

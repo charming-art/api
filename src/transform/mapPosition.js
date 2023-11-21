@@ -1,4 +1,4 @@
-import { mapProps } from "./mapProps.js";
+import { mapAttrs } from "./mapAttrs.js";
 
 export function mapPosition(
   flow,
@@ -42,5 +42,5 @@ export function mapPosition(
     },
   ]);
 
-  return mapProps(flow, data, Object.fromEntries([...X, ...Y]));
+  return mapAttrs(flow, data, Object.fromEntries([...X, ...Y]));
 }

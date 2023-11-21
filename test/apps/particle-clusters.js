@@ -33,7 +33,7 @@ function drawParticles(flow) {
       fillOpacity: (d) => d.lifespan,
       strokeOpacity: (d) => d.lifespan,
     })
-    .transform(cm.mapProps, {
+    .transform(cm.mapAttrs, {
       fillOpacity: { domain: [0, 255], range: [0, 0.6] },
       strokeOpacity: { domain: [0, 255], range: [0, 1] },
     });

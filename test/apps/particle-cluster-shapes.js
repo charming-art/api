@@ -52,7 +52,7 @@ export function particleClusterShapes() {
       flow
         .process(cm.filter, (d) => d.type === 1)
         .append(cm.circle, { ...options, r: 5 })
-        .transform(cm.mapProps, scaleOptions);
+        .transform(cm.mapAttrs, scaleOptions);
 
       flow
         .process(cm.filter, (d) => d.type === 0)
@@ -62,7 +62,7 @@ export function particleClusterShapes() {
           height: 10,
           anchor: "center",
         })
-        .transform(cm.mapProps, scaleOptions);
+        .transform(cm.mapAttrs, scaleOptions);
     });
 
   return app.call(dispose).call(frame).call(stats).start();
