@@ -213,33 +213,148 @@ document.body.appendChild(app.render());
 
 ### Prop
 
-<a name="prop-width" href="#prop-width">#</a> prop.**width**
+<a name="prop-width" href="#prop-width">#</a> app.**prop**(_"width"_)
 
-<a name="prop-height" href="#prop-height">#</a> prop.**height**
+If the renderer is not terminal, returns the width of the app in pixel.
 
-<a name="prop-pixelWidth" href="#prop-pixelWidth">#</a> prop.**pixelWidth**
+```js
+const app = cm.app();
+app.prop("width"); // 640;
+```
 
-<a name="prop-pixelHeight" href="#prop-pixelHeight">#</a> prop.**pixelHeight**
+If the renderer is [terminal](#cm-terminal), returns the width of the app in cell.
 
-<a name="prop-frameCount" href="#prop-frameCount">#</a> prop.**frameCount**
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("width"); // 71
+```
 
-<a name="prop-frameRate" href="#prop-frameRate">#</a> prop.**frameRate**
+<a name="prop-height" href="#prop-height">#</a> app.**prop**(_"height"_)
 
-<a name="prop-mouseX" href="#prop-mouseX">#</a> prop.**mouseX**
+If the renderer is not [terminal](#cm-terminal), returns the height of the app in pixel.
 
-<a name="prop-mouseY" href="#prop-mouseY">#</a> prop.**mouseY**
+```js
+const app = cm.app();
+app.prop("height"); // 480;
+```
 
-<a name="prop-mode" href="#prop-mode">#</a> prop.**mode**
+If the renderer is [terminal](#cm-terminal), returns the height of the app in cell.
 
-<a name="prop-cellWidth" href="#prop-cellWidth">#</a> prop.**cellWidth**
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("height"); // 26
+```
 
-<a name="prop-cellHeight" href="#prop-cellHeight">#</a> prop.**cellHeight**
+<a name="prop-frameCount" href="#prop-frameCount">#</a> app.**prop**(_"frameCount"_)
 
-<a name="prop-fontSize" href="#prop-fontSize">#</a> prop.**fontSize**
+Returns the number of frames that have been displayed since the app started. For example, to draw a moving rect:
 
-<a name="prop-fontFamily" href="#prop-fontFamily">#</a> prop.**fontFamily**
+```js
+app.on("update", () =>
+  app.append(cm.rect, {
+    x: app.frameCount(),
+    y: 0,
+    width: 10,
+    height: 10,
+  })
+);
+```
 
-<a name="prop-fontWeight" href="#prop-fontWeight">#</a> prop.**fontWeight**
+<a name="prop-frameRate" href="#prop-frameRate">#</a> app.**prop**(_"frameCount"_)
+
+Returns the number of frames to be displayed per second.
+
+```js
+app.prop("frameRate"); // 60
+```
+
+<a name="prop-mouseX" href="#prop-mouseX">#</a> app.**prop**(_"mouseX"_)
+
+Returns the x coordinate of the mouse position.
+
+```js
+app.prop("mouseX"); // 0
+```
+
+<a name="prop-mouseY" href="#prop-mouseY">#</a> app.**prop**(_"mouseY"_)
+
+Returns the y coordinate of the mouse position.
+
+```js
+app.prop("mouseY"); // 0
+```
+
+<a name="prop-mode" href="#prop-mode">#</a> app.**prop**(_"mode"_)
+
+Returns the rendering mode of the app, which is only for app with a [terminal](#cm-terminal) renderer.
+
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("mode"); // "single"
+```
+
+<a name="prop-pixelWidth" href="#prop-pixelWidth">#</a> app.**prop**(_"pixelWidth"_)
+
+Returns the computed width of the app in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
+
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("pixelWidth"); // 639
+```
+
+<a name="prop-pixelHeight" href="#prop-pixelHeight">#</a> app.**prop**(_"pixelHeight"_)
+
+Returns the computed height of the app in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
+
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("pixelHeight"); // 468;
+```
+
+<a name="prop-cellWidth" href="#prop-cellWidth">#</a> app.**prop**(_"cellWidth"_)
+
+Returns the computed width of the cells in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
+
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("cellWidth"); // 9
+```
+
+<a name="prop-cellHeight" href="#prop-cellHeight">#</a> app.**prop**(_"cellHeight"_)
+
+Returns the computed height of the cells in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
+
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("cellHeight"); // 18
+```
+
+<a name="prop-fontSize" href="#prop-fontSize">#</a> app.**prop**(_"fontSize"_)
+
+Returns the font size used to render text, which is only for app with a [terminal](#cm-terminal) renderer.
+
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("fontSize"); // 15
+```
+
+<a name="prop-fontFamily" href="#prop-fontFamily">#</a> app.**prop**(_"fontFamily"_)
+
+Returns the font family used to render text, which is only for app with a [terminal](#cm-terminal) renderer.
+
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("fontFamily"); // "courier-new, courier, monospace"
+```
+
+<a name="prop-fontWeight" href="#prop-fontWeight">#</a> app.**prop**(_"fontWeight"_)
+
+Returns the font weight used to render text, which is only for app with a [terminal](#cm-terminal) renderer.
+
+```js
+const app = cm.app({ renderer: await cm.terminal() });
+app.prop("fontWeight"); // "normal"
+```
 
 ### Color
 
