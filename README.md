@@ -30,7 +30,7 @@ In vanilla HTML, Charming can be imported as an ES module, say from jsDelivr:
 
   // ...
 
-  document.body.append(app.render().node());
+  document.body.append(app.render());
 </script>
 ```
 
@@ -43,7 +43,7 @@ Charming is also available as a UMD bundle for legacy browsers.
 
   // ...
 
-  document.body.append(app.render().node());
+  document.body.append(app.render());
 </script>
 ```
 
@@ -71,7 +71,7 @@ app
     r: { range: [1, 15] },
   });
 
-document.body.appendChild(app.render().node());
+document.body.appendChild(app.render());
 ```
 
 ## API Reference

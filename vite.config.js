@@ -7,7 +7,6 @@ export default defineConfig({
       "../backend/index_bg.wasm": "../backend/index_bg.wasm?url",
     },
   },
-  server: {
-    port: "8080",
-  },
+  server: { port: "8080" },
+  build: { outDir: "../" },
 });

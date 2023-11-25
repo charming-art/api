@@ -1,4 +1,4 @@
-import { interval, timerFlush } from "d3-timer";
+import { interval } from "d3-timer";
 
 function schedule() {
   // Need to stop?
