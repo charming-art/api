@@ -271,89 +271,583 @@ document.body.appendChild(app.render().node());
 
 <a name="cm-vec" href="#cm-vec">#</a> cm.**vec**(_[x[, y]]_)
 
-<a name="cm-vecFromAngle" href="#cm-vecFromAngle">#</a> cm.**vecFromAngle**(_theta_)
+Constructs a vector with the specified _x_ and _y_ component. If either _x_ or _y_ are not specified, each defaults to 0. The returned vector has the following properties:
+
+- x - x component of the vector
+- y - y component of the vector
+
+```js
+cm.vec(); // { x: 0, y: 0 }
+cm.vec(1); // { x: 1, y: 0 }
+cm.vec(2, 3); // { x: 2, y: 3 }
+```
+
+<a name="cm-vecFromAngle" href="#cm-vecFromAngle">#</a> cm.**vecFromAngle**(_angle_)
+
+Constructs a vector from the specified _angle_ in radians.
+
+```js
+cm.vecFromAngle(Math.PI / 4); // { x: 1, y: 1 }
+```
 
 <a name="cm-vecAdd" href="#cm-vecAdd">#</a> cm.**vecAdd**(_a, b_)
 
+Adds the specified _vectors_ and returns a new vector.
+
+```js
+const a = cm.vec(1, 2);
+const b = cm.vec(2, 3);
+const c = cm.vecAdd(a, b);
+a; // { x: 1, y: 2 }
+b; // { x: 2, y: 3 }
+c; // { x: 3, y: 5 }
+```
+
 <a name="cm-vecAngle" href="#cm-vecAngle">#</a> cm.**vecAngle**(_a_)
 
-<a name="cm-vecClamp" href="#cm-vecClamp">#</a> cm.**vecClamp**(_a, m[, m1]_)
+Computes the angle of the specified _vector_.
 
-<a name="cm-vecClampX" href="#cm-vecClampX">#</a> cm.**vecClampX**(_a, x[, x1]_)
+```js
+const a = cm.vec(1, 1);
+cm.vecAngle(a); // Math.PI / 4
+```
 
-<a name="cm-vecClampY" href="#cm-vecClampY">#</a> cm.**vecClampY**(_a, x[, x1]_)
+<a name="cm-vecClamp" href="#cm-vecClamp">#</a> cm.**vecClamp**(_a, min[, max]_)
+
+Constrains the magnitude of the specified _vector_ within the specified range _[min, max]_, and returns a new _vector_.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vecClamp(a, 10, 15);
+a; // { x: 3, y: 4 }
+b; // { x: 6, y: 8 }
+```
+
+If two arguments are specified, the second one is interpreted as the _maximum magnitude_, with the minium magnitude defaults to 0.
+
+```js
+const a = cm.vec(6, 8);
+cm.vecClamp(a, 5); // { a: 3, b: 4 }
+```
+
+<a name="cm-vecClampX" href="#cm-vecClampX">#</a> cm.**vecClampX**(_a, min[, max]_)
+
+Constrains the x component of the specified _vector_ within the specified range _[min, max]_, and returns a new _vector_.
+
+```js
+const a = cm.vec(6, 8);
+const b = cm.vecClampX(a, 10, 15);
+a; // { x: 6, y: 8 }
+b; // { x: 10, y: 8 }
+```
+
+If two arguments are specified, the second one is interpreted as the _maximum value_, with the minium value defaults to 0.
+
+```js
+const a = cm.vec(6, 8);
+const b = cm.vecClampX(a, 5);
+a; // { x: 6, y: 8 }
+b; // { x: 5, y: 8 }
+```
+
+<a name="cm-vecClampY" href="#cm-vecClampY">#</a> cm.**vecClampY**(_a, min[, max]_)
+
+Constrains the y component of the specified _vector_ within the specified range _[min, max]_, and returns a new _vector_.
+
+```js
+const a = cm.vec(6, 8);
+const b = cm.vecClampY(a, 10, 15);
+a; // { x: 6, y: 8 }
+b; // { x: 6, y: 10 }
+```
+
+If two arguments are specified, the second one is interpreted as the _maximum value_, with the minium value defaults to 0.
+
+```js
+const a = cm.vec(6, 8);
+const b = cm.vecClampY(a, 5);
+a; // { x: 6, y: 8 }
+b; // { x: 6, y: 5 }
+```
 
 <a name="cm-vecCross" href="#cm-vecCross">#</a> cm.**vecCross**(_a, b_)
 
+Computes the cross product of the specified _vectors_.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vec(1, 2);
+cm.vecCross(a, b); // 2
+```
+
 <a name="cm-vecDist" href="#cm-vecDist">#</a> cm.**vecDist**(_a, b_)
 
-<a name="cm-vecDiv" href="#cm-vecDiv">#</a> cm.**vecDiv**(_a, m_)
+Computes the distance of the specified _vectors_.
+
+```js
+const a = cm.vec(4, 6);
+const b = cm.vec(1, 2);
+cm.vecDist(a, b); // 5
+```
+
+<a name="cm-vecDist2" href="#cm-vecDist2">#</a> cm.**vecDist2**(_a, b_)
+
+Computes the square distance of the specified _vectors_.
+
+```js
+const a = cm.vec(4, 6);
+const b = cm.vec(1, 2);
+cm.vecDist2(a, b); // 25
+```
+
+<a name="cm-vecDiv" href="#cm-vecDiv">#</a> cm.**vecDiv**(_a, value_)
+
+Divides the specified _vector's_ x and y component by the specified _value_, and returns a new _vector_.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vecDiv(a, 0.5);
+a; // { x: 3, y: 4 }
+b; // { x: 6, y: 8 }
+```
 
 <a name="cm-vecDot" href="#cm-vecDot">#</a> cm.**vecDot**(_a, b_)
 
-<a name="cm-vecInX" href="#cm-vecInX">#</a> cm.**vecInX**(_a, x[, x1]_)
+Computes the dot product of the specified _vectors_.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vec(1, 2);
+cm.vecDot(a, b); // 11
+```
+
+<a name="cm-vecInX" href="#cm-vecInX">#</a> cm.**vecInX**(_a, min[, max]_)
+
+Returns true if the specified _vector's_ x component is within the specified range _[min, max]_.
+
+```js
+const a = cm.vec(3, 4);
+cm.vecInX(a, 1, 2); // false
+cm.vecInX(a, 1, 3); // true
+cm.vecInX(a, 1, 4); // true
+```
+
+If two arguments are specified, the second one is interpreted as the _maximum value_, with the minium value defaults to 0.
+
+```js
+const a = cm.vec(3, 4);
+cm.vecInX(a, 2); // false
+cm.vecInX(a, 3); // true
+cm.vecInX(a, 4); // true
+```
 
 <a name="cm-vecInY" href="#cm-vecInY">#</a> cm.**vecInY**(_a, x[, x1]_)
 
-<a name="cm-vecMag" href="#cm-vecMag">#</a> cm.**vecMag**(_a[, m]_)
+Returns true if the specified _vector's_ y component is within the specified range _[min, max]_.
 
-<a name="cm-vecMult" href="#cm-vecMult">#</a> cm.**vecMult**(_a, m_)
+```js
+const a = cm.vec(3, 4);
+cm.vecInY(a, 1, 3); // false
+cm.vecInY(a, 1, 4); // true
+cm.vecInY(a, 1, 5); // true
+```
+
+If two arguments are specified, the second one is interpreted as the maximum value, with the minium value defaults to 0.
+
+```js
+const a = cm.vec(3, 4);
+cm.vecInY(a, 3); // false
+cm.vecInY(a, 4); // true
+cm.vecInY(a, 5); // true
+```
+
+<a name="cm-vecMag" href="#cm-vecMag">#</a> cm.**vecMag**(_a[, value]_)
+
+If only one argument is specified, computes the magnitude of the specified _vector_.
+
+```js
+const a = cm.vec(3, 4);
+cm.vecMag(a); // 5
+```
+
+If two arguments are specified, sets the magnitude of the specified _vector_ to the specified _value_, and returns a new vector.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vecMag(a, 10);
+a; // { x: 3, y: 4 }
+b; // { x: 6, y: 8 }
+```
+
+<a name="cm-vecMult" href="#cm-vecMult">#</a> cm.**vecMult**(_a, value_)
+
+Multiplies the specified _vector's_ x and y component by the specified _value_, and returns a new vector.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vecMult(a, 2);
+a; // { x: 3, y: 4 }
+b; // { x: 6, y: 8 }
+```
 
 <a name="cm-vecNeg" href="#cm-vecNeg">#</a> cm.**vecNeg**(_a_)
 
+Negates the specified _vector's_ x and y component, and returns a new vector.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vecNeg(a);
+a; // { x: 3, y: 4 }
+b; // { x: -3, y: -4 }
+```
+
 <a name="cm-vecNegX" href="#cm-vecNegX">#</a> cm.**vecNegX**(_a_)
+
+Negates the specified _vector's_ x component, and returns a new vector.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vecNegX(a);
+a; // { x: 3, y: 4 }
+b; // { x: -3, y: 4 }
+```
 
 <a name="cm-vecNegY" href="#cm-vecNegY">#</a> cm.**vecNegY**(_a_)
 
+Negates the specified _vector's_ y component, and returns a new vector.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vecNegY(a);
+a; // { x: 3, y: 4 }
+b; // { x: 3, y: -4 }
+```
+
 <a name="cm-vecNorm" href="#cm-vecNorm">#</a> cm.**vecNorm**(_a_)
+
+Normalizes the specified _vector_, and returns a new vector.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vecNorm(a);
+a; // { x: 3, y: 4 }
+b; // { x: 0.6, y: 0.8 }
+```
 
 <a name="cm-vecRandom" href="#cm-vecRandom">#</a> cm.**vecRandom**()
 
+Returns a unit vector with a random heading, following a uniform distribution.
+
+```js
+cm.vecRandom(); // { x: 0.9239434883837478, y: 0.688605153583981 }
+```
+
 <a name="cm-vecSub" href="#cm-vecSub">#</a> cm.**vecSub**(_a, b_)
+
+Subtracts the specified _vectors_ and returns a new vector.
+
+```js
+const a = cm.vec(1, 2);
+const b = cm.vec(2, 4);
+const c = cm.vecSub(a, b);
+a; // { x: 1, y: 2 }
+b; // { x: 2, y: 4 }
+c; // { x: -1, y: -2 }
+```
 
 <a name="vec-clone" href="#vec-clone">#</a> vec.**clone**()
 
+Clones the _vector_ and returns a new vector.
+
+```js
+const a = cm.vec(1, 2);
+const b = a.clone();
+a === b; // false
+b; // { x: 1, y: 2 }
+```
+
 <a name="vec-add" href="#vec-add">#</a> vec.**add**(_a_)
+
+Adds the specified _vector_ to the target vector, and returns the target vector.
+
+```js
+const a = cm.vec(1, 2);
+const b = cm.vec(3, 4);
+a.add(b); // a
+a; // { x: 4, y: 6 }
+```
 
 <a name="vec-angle" href="#vec-angle">#</a> vec.**angle**()
 
-<a name="vec-clamp" href="#vec-clamp">#</a> vec.**clamp**(_m[, m1]_)
+Computes the angle of the target vector.
 
-<a name="vec-clampX" href="#vec-clampX">#</a> vec.**clampX**(_x[, x1]_)
+```js
+const a = cm.vec(1, 1);
+a.angle(); // Math.PI / 4
+```
 
-<a name="vec-clampY" href="#vec-clampY">#</a> vec.**clampY**(_x[, x1]_)
+<a name="vec-clamp" href="#vec-clamp">#</a> vec.**clamp**(_min[, max]_)
+
+Constrains the magnitude of the target vector within the specified range _[min, max]_, and returns it.
+
+```js
+const a = cm.vec(3, 4);
+a.clamp(10, 15); // a
+a; // { x: 6, y: 8 }
+```
+
+If two arguments are specified, the second one is interpreted as the _maximum magnitude_, with the minium magnitude defaults to 0.
+
+```js
+const a = cm.vec(6, 8);
+a.clamp(5); // a
+a; // { a: 3, b: 4 }
+```
+
+<a name="vec-clampX" href="#vec-clampX">#</a> vec.**clampX**(_min[, max]_)
+
+Constrains the x component of the target _vector_ within the specified range _[min, max]_, and returns it.
+
+```js
+const a = cm.vec(6, 8);
+a.clampX(10, 15); // a
+a; // { x: 10, y: 8 }
+```
+
+If two arguments are specified, the second one is interpreted as the _maximum value_, with the minium value defaults to 0.
+
+```js
+const a = cm.vec(6, 8);
+a.clampX(5); // a
+a; // { x: 5, y: 8 }
+```
+
+<a name="vec-clampY" href="#vec-clampY">#</a> vec.**clampY**(_min[, max]_)
+
+Constrains the y component of the target _vector_ within the specified range _[min, max]_, and returns it.
+
+```js
+const a = cm.vec(6, 8);
+a.clampY(10, 15); // a
+a; // { x: 6, y: 10 }
+```
+
+If two arguments are specified, the second one is interpreted as the _maximum value_, with the minium value defaults to 0.
+
+```js
+const a = cm.vec(6, 8);
+a.clampY(5);
+a; // { x: 6, y: 5 }
+```
 
 <a name="vec-cross" href="#vec-cross">#</a> vec.**cross**(_a_)
 
+Computes the cross product of the specified _vector_ and the target vector.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vec(1, 2);
+a.cross(b); // 2
+```
+
 <a name="vec-dist" href="#vec-dist">#</a> vec.**dist**(_a_)
 
-<a name="vec-div" href="#vec-div">#</a> vec.**div**(_m_)
+Computes the distance of the specified _vector_ and the target vector.
+
+```js
+const a = cm.vec(4, 6);
+const b = cm.vec(1, 2);
+a.dist(b); // 5
+```
+
+<a name="vec-dist2" href="#vec-dist2">#</a> vec.**dist2**(_a_)
+
+Computes the square distance of the specified _vector_ and the target vector.
+
+```js
+const a = cm.vec(4, 6);
+const b = cm.vec(1, 2);
+a.dist(b); // 25
+```
+
+<a name="vec-div" href="#vec-div">#</a> vec.**div**(_value_)
+
+Divides the target vector' x and y component by the specified _value_, and returns it.
+
+```js
+const a = cm.vec(3, 4);
+a.div(0.5); // a
+a; // { x: 6, y: 8 }
+```
 
 <a name="vec-dot" href="#vec-dot">#</a> vec.**dot**(_a_)
 
-<a name="vec-inX" href="#vec-inX">#</a> vec.**inX**(_x[, x1]_)
+Computes the dot product of the specified _vector_ and the target vector.
 
-<a name="vec-inY" href="#vec-inY">#</a> vec.**inY**(_x[, x1]_)
+```js
+const a = cm.vec(3, 4);
+const b = cm.vec(1, 2);
+a.dot(b); // 11
+```
 
-<a name="vec-mag" href="#vec-mag">#</a> vec.**mag**(_[s]_)
+<a name="vec-inX" href="#vec-inX">#</a> vec.**inX**(_min[, max]_)
+
+Returns true if the target vector's x component is within the specified range _[min, max]_.
+
+```js
+const a = cm.vec(3, 4);
+a.inX(1, 2); // false
+a.inX(1, 3); // true
+a.inX(1, 4); // true
+```
+
+If two arguments are specified, the second one is interpreted as the _maximum value_, with the minium value defaults to 0.
+
+```js
+const a = cm.vec(3, 4);
+a.inX(2); // false
+a.inX(3); // true
+a.inX(4); // true
+```
+
+<a name="vec-inY" href="#vec-inY">#</a> vec.**inY**(_min[, max]_)
+
+Returns true if the target vector's y component is within the specified range _[min, max]_.
+
+```js
+const a = cm.vec(3, 4);
+a.inY(1, 3); // false
+a.inY(1, 4); // true
+a.inY(1, 5); // true
+```
+
+If two arguments are specified, the second one is interpreted as the maximum value, with the minium value defaults to 0.
+
+```js
+const a = cm.vec(3, 4);
+a.inY(3); // false
+a.inY(4); // true
+a.inY(5); // true
+```
+
+<a name="vec-mag" href="#vec-mag">#</a> vec.**mag**(_[value]_)
+
+If no argument is specified, computes the magnitude of the target vector.
+
+```js
+const a = cm.vec(3, 4);
+cm.mag(); // 5
+```
+
+If one argument is specified, sets the magnitude of the target to the specified _value_, and returns it.
+
+```js
+const a = cm.vec(3, 4);
+a.mag(10); // a
+a; // { x: 6, y: 8 }
+```
 
 <a name="vec-mult" href="#vec-mult">#</a> vec.**mult**(_m_)
 
+Multiplies the specified component's x and y by the specified _value_, and returns a new vector.
+
+```js
+const a = cm.vec(3, 4);
+const b = cm.vecMult(a, 2);
+a; // { x: 3, y: 4 }
+b; // { x: 6, y: 8 }
+```
+
 <a name="vec-neg" href="#vec-neg">#</a> vec.**neg**()
+
+Negates the target vector's x and y component, and returns it.
+
+```js
+const a = cm.vec(3, 4);
+a.neg(); // a
+a; // { x: -3, y: -4 }
+```
 
 <a name="vec-negX" href="#vec-negX">#</a> vec.**negX**()
 
+Negates the target vector's x component, and returns it.
+
+```js
+const a = cm.vec(3, 4);
+a.negX(); // a
+a; // { x: -3, y: 4 }
+```
+
 <a name="vec-negY" href="#vec-negY">#</a> vec.**negY**()
+
+Negates the target vector's y component, and returns it.
+
+```js
+const a = cm.vec(3, 4);
+a.negY(); // a
+a; // { x: 3, y: -4 }
+```
 
 <a name="vec-norm" href="#vec-norm">#</a> vec.**norm**()
 
+Normalizes the target vector, and returns it.
+
+```js
+const a = cm.vec(3, 4);
+a.norm(); // a
+a; // { x: 0.6, y: 0.8 }
+```
+
 <a name="vec-set" href="#vec-set">#</a> vec.**set**(_x[, y]_)
+
+If only one argument is specified and it is a vector instance, sets the target vector's x and y component with the source _vector's_ x and y component, and returns the target vector.
+
+```js
+const a = cm.vec(1, 2);
+const b = cm.vec(3, 4);
+a.set(b); // a
+a; // { x: 3, y: 4 }
+```
+
+If two arguments are specified, sets the target vector's x and y component with the specified _x_ and _y_, and returns it.
+
+```js
+const a = cm.vec(1, 2);
+a.set(3, 4); // a
+a; // { x: 3, y: 4 }
+```
 
 <a name="vec-setX" href="#vec-setX">#</a> vec.**setX**(_x_)
 
-<a name="vec-setY" href="#vec-setY">#</a> vec.**setY**(_x_)
+Sets the target vector's x component with the specified _x_, and returns it.
+
+```js
+const a = cm.vec(1, 2);
+a.setX(3); // a
+a; // { x: 3, y: 2 }
+```
+
+<a name="vec-setY" href="#vec-setY">#</a> vec.**setY**(_y_)
+
+Sets the target vector's y component with the specified _y_, and returns it.
+
+```js
+const a = cm.vec(1, 2);
+a.setY(3); // a
+a; // { x: 1, y: 3 }
+```
 
 <a name="vec-sub" href="#vec-sub">#</a> vec.**sub**(_a_)
+
+Subtracts the target vector with the specified vector and returns the target vector.
+
+```js
+const a = cm.vec(1, 2);
+const b = cm.vec(2, 4);
+a.sub(b); // a
+a; // { x: -1, y: -2 }
+b; // { x: 2, y: 4 }
+```
 
 ### Constant
 
