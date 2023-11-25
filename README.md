@@ -857,7 +857,7 @@ b; // { x: 2, y: 4 }
 
 <a name="cm-fontStandard" href="#cm-fontStandard">#</a> cm.**fontStandard**()
 
-<a name="cm-fontGhost" href="#cm-fontGhost">#</a> cm.**fontStandard**()
+<a name="cm-fontGhost" href="#cm-fontGhost">#</a> cm.**fontGhost**()
 
 ### Gradient
 
