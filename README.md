@@ -253,9 +253,35 @@ document.body.appendChild(app.render());
 
 <a name="cm-range" href="#cm-range">#</a> cm.**range**(_count[, start[, end]]_)
 
-<a name="cm-cross" href="#cm-cross">#</a> cm.**cross**(_array…_)
+Returns an array of exactly _count_ uniformly-spaced values between _start_ and _end_. If _start_ is not specified, it defaults to 0. If _end_ is not specified, it defaults to 1.
 
-<a name="cm-extent" href="#cm-extent">#</a> cm.**extent**(_array[, valueof]_)
+```js
+cm.range(10); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+cm.range(10, 5); // [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5]
+cm.range(10, 5, 55); // [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+```
+
+<a name="cm-cross" href="#cm-cross">#</a> cm.**cross**(_...arrays_)
+
+Returns the [Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product) of the specified arrays.
+
+```js
+cm.cross([1, 2, 3], [1, 2]); // [[1, 1], [1, 2], [2, 1], [2, 2], [3, 1], [3, 2]]
+```
+
+<a name="cm-extent" href="#cm-extent">#</a> cm.**extent**(_array[, accessor]_)
+
+Returns the minium and maximum value in given _array_ using natural order.
+
+```js
+cm.extent([4, 3, 2, 2, 7, 3, 5]); // [2, 7]
+```
+
+If an optional accessor function is specified, the extent is computed after calling array.map function.
+
+```js
+cm.extent(people, (d) => d.age); // [10, 30]
+```
 
 ### Math
 
