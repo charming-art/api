@@ -360,9 +360,57 @@ app.prop("fontWeight"); // "normal"
 
 <a name="cm-rgb" href="#cm-rgb">#</a> cm.**rgb**(_r[, g[, b]]_)
 
+Returns a string representing the color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value).
+
+```js
+cm.rgb(234, 260, 180); // 'rgb(234, 260, 180)'
+```
+
+If only on argument is specified, sets all channels to the same _value_.
+
+```js
+cm.rgb(100); // 'rgb(100, 100, 100)'
+```
+
 <a name="cm-cfb" href="#cm-cfb">#</a> cm.**cfb**(_ch[, f[, b]]_)
 
+Returns a terminal color object, which is only for app with a [terminal](#cm-terminal) renderer. A terminal color comprises the following three channels:
+
+- _ch_: character
+- _f_: CSS Color for the color of the character
+- _b_: CSS color for the background cell of the character
+
+If neither _f_ or _b_ are not specified, each defaults to null.
+
+```js
+app.append(cm.rect, {
+  x: 0,
+  y: 0,
+  width: 10,
+  height: 5,
+  fill: cm.cfb("@", "steelblue", "orange"),
+  stroke: cm.cfg("+"),
+});
+```
+
 <a name="cm-wch" href="#cm-wch">#</a> cm.**wch**(_ch_)
+
+Returns a character marked as a wide character, which is only for app with a [terminal](#cm-terminal) in double mode.
+
+```js
+const app = cm.app({
+  terminal: await cm.terminal(),
+  mode: "double",
+});
+
+app.append(cm.rect, {
+  x: 0,
+  y: 0,
+  width: 10,
+  height: 5,
+  fill: cm.cfb(cm.wch("😊")),
+});
+```
 
 ### Array
 
