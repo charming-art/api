@@ -189,9 +189,33 @@ document.body.appendChild(app.render());
 
 <a name="cm-scaleLinear" href="#cm-scaleLinear">#</a> cm.**scaleLinear**(_domain, range_)
 
+Constructs a new linear scale with the specified _domain_ and _range_. Linear scales map a continuous, quantitative to a continuous output using a linear transformation.
+
+```js
+const scale = cm.scaleLinear([0, 1], [0, 100]);
+scale(0); // 0;
+scale(0.5); // 50;
+scale(1); // 100;
+```
+
 <a name="cm-scaleSqrt" href="#cm-scaleSqrt">#</a> cm.**scaleSqrt**(_domain, range_)
 
+Constructs a new sqrt scale with the specified _domain_ and _range_. Sqrt scales are similar to [linear scale](#cm-scaleLinear), except a square root transform is applied to the input domain value before the output range is computed.
+
+```js
+const scale = cm.scaleSqrt([0, 1], [0, 100]);
+scale(0.09); // 30
+scale(0.64); // 80
+scale(0.81); // 90
+```
+
 <a name="cm-scaleLog" href="#cm-scaleLog">#</a> cm.**scaleLog**(_domain, range_)
+
+Constructs a new log scale with the specified domain and range. Log scales are similar to [linear scale](#cm-scaleLinear), except a logarithmic transform transform is applied to the input domain value before the output range is computed.
+
+```js
+const scale = cm.scaleLog([1, 10], [0, 960]);
+```
 
 ### Event
 
