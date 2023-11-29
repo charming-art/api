@@ -219,21 +219,134 @@ const scale = cm.scaleLog([1, 10], [0, 960]);
 
 ### Event
 
-<a name="event-update" href="#event-update">#</a> event.**update**
+<a name="event-update" href="#event-update">#</a> app.**on**(_"update", callback_)
 
-<a name="event-mouseDown" href="#event-mouseDown">#</a> event.**mouseDown**
+The _update_ event is fired repeatedly until [app.stop](#app-stop) is called after calling [app.start](#app-start). For example, to draw a moving rect:
 
-<a name="event-mouseUp" href="#event-mouseUp">#</a> event.**mouseUp**
+```js
+let x = 0;
 
-<a name="event-mouseClick" href="#event-mouseClick">#</a> event.**mouseClick**
+function update() {
+  app.append(cm.rect, {
+    x: x++,
+    y: 0,
+    width: 100,
+    height: 50,
+  });
+}
 
-<a name="event-beforeEach" href="#event-beforeEach">#</a> event.**beforeEach**
+app.on("update", update);
+```
 
-<a name="event-afterEach" href="#event-afterEach">#</a> event.**afterEach**
+<a name="event-mouseDown" href="#event-mouseDown">#</a> app.**on**(_"mouseDown", callback_)
 
-<a name="event-beforeAll" href="#event-beforeAll">#</a> event.**beforeAll**
+The _mouseDown_ event is fired when a mouse button is pressed. For example, to change the background color:
 
-<a name="event-afterAll" href="#event-afterAll">#</a> event.**afterAll**
+```js
+let background = "red";
+
+function mouseDown() {
+  background = "blue";
+}
+
+app.on("mouseDown", mouseDown);
+```
+
+<a name="event-mouseUp" href="#event-mouseUp">#</a> app.**on**(_"mouseUp", callback_)
+
+The _mouseUp_ event is fired when a mouse button is released. For example, to change the background color:
+
+```js
+let background = "red";
+
+function mouseUp() {
+  background = "blue";
+}
+
+app.on("mouseUp", mouseUp);
+```
+
+<a name="event-mouseClick" href="#event-mouseClick">#</a> app.**on**(_"mouseClick", callback_)
+
+The _mouseClick_ event is fired when a mouse button is clicked. For example, to change the background color:
+
+```js
+let background = "red";
+
+function mouseClick() {
+  background = "blue";
+}
+
+app.on("mouseClick", mouseClick);
+```
+
+<a name="event-beforeEach" href="#event-beforeEach">#</a> app.**on**(_"beforeEach", callback_)
+
+The _beforeEach_ event is fired before each [update event](#event-update) is fired. For example, to begin measuring frame rate by [stats.js](https://github.com/mrdoob/stats.js):
+
+```js
+function measure(app) {
+  // ...
+  app.on("beforeEach", () => {
+    stats.begin();
+  });
+}
+
+app.call(measure);
+```
+
+<a name="event-afterEach" href="#event-afterEach">#</a> app.**on**(_"afterEach", callback_)
+
+The _afterEach_ event is fired after each [update event](#event-update) is fired. For example, to end measuring frame rate by [stats.js](https://github.com/mrdoob/stats.js):
+
+```js
+function measure(app) {
+  // ...
+  app.on("afterEach", () => {
+    stats.end();
+  });
+}
+
+app.call(measure);
+```
+
+<a name="event-beforeAll" href="#event-beforeAll">#</a> app.**on**(_"beforeAll", callback_)
+
+The _beforeAll_ event is fired before calling [app.start](#app-start). For example, to construct a Stats instance from [stats.js](https://github.com/mrdoob/stats.js):
+
+```js
+function measure(app) {
+  let stats;
+
+  //...
+  app.on("beforeAll", () => {
+    const container = document.getElementById("tool");
+    stats = new Stats();
+    stats.dom.style.position = "inherit";
+    stats.dom.style.marginLeft = "1em";
+    container.appendChild(stats.dom);
+  });
+}
+
+app.call(measure);
+```
+
+<a name="event-afterAll" href="#event-afterAll">#</a> app.**on**(_"afterAll", callback_)
+
+The _afterAll_ event is fired after calling [app.dispose](#app-dispose). For example, to remove the DOM of a Stats instance from [stats.js](https://github.com/mrdoob/stats.js):
+
+```js
+function measure(app) {
+  let stats;
+
+  //...
+  app.on("afterAll", () => {
+    stats.dom.remove();
+  });
+}
+
+app.call(measure);
+```
 
 ### Prop
 
