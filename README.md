@@ -65,9 +65,8 @@ app
     y: (t) => Math.sin(t) * Math.cos(t * 3),
     r: (_, i) => i,
   })
+  .transform(cm.mapPosition, { padding: 15 })
   .transform(cm.mapAttrs, {
-    x: { range: [15, app.prop("width") - 30] },
-    y: { range: [15, app.prop("height") - 30] },
     r: { range: [1, 15] },
   });
 
@@ -183,7 +182,57 @@ document.body.appendChild(app.render());
 
 <a name="cm-mapAttrs" href="#cm-mapAttrs">#</a> cm.**mapAttrs**
 
+Maps abstract attributes to visual attributes with scales. Each scale's options are specified as a nested options object with the corresponding attribute name.
+
+```js
+app
+  .append(cm.circle, { x: (d) => d[0], y: (d) => d[1] })
+  .transform(cm.mapAttrs, {
+    x: {}, // scale for x attribute
+    y: {}, // scale for y attribute
+  });
+```
+
+A scale's domain is typically inferred automatically. You can custom a scale explicitly using these options:
+
+- **scale** - [scale](#scale), defaults to [scaleLinear](#cm-scaleLinear)
+- **domain** - abstract values, typically _[min, max]_
+- **range** - visual values, typically _[min, max]_
+
+```js
+app
+  .append(cm.circle, { x: (d) => d[0], y: (d) => d[1] })
+  .transform(cm.mapAttrs, {
+    x: {
+      scale: cm.scaleLog,
+      range: [0, app.prop("height")],
+    },
+  });
+```
+
 <a name="cm-mapPosition" href="#cm-mapPosition">#</a> cm.**mapPosition**
+
+Map abstract position to visual position. Like [mapAttrs](#cm-mapAttrs), but only maps position attributes to corresponding dimension range.
+
+For x attributes, such as x and x1, the scale's range is _[0, app.prop("width")]_ by default. For y attributes, such as y and y1, the scale's range is _[0, app.prop("height")]_ by default.
+
+- **scaleX** - [scale](#scale) for x attributes, defaults to [scaleLinear](#cm-scaleLinear)
+- **scaleY** - [scale](#scale) for y attributes, defaults to [scaleLinear](#cm-scaleLinear)
+- **domainX** - abstract values for x attributes, typically _[min, max]_
+- **domainY** - abstract values for y attributes, typically _[min, max]_
+- **reverseX** - reverses range for x attributes, defaults to false
+- **reverseY** - reverses range for y attributes, defaults to false
+- **padding** - space between shapes and border, defaults to 0
+
+```js
+app
+  .append(cm.line, { x: (d) => d[0], y: (d) => d[0] })
+  .transform(cm.mapPosition, {
+    scaleX: cm.scaleLog,
+    reverseY: true,
+    padding: 15,
+  });
+```
 
 ### Scale
 
