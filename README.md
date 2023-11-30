@@ -140,7 +140,83 @@ document.body.appendChild(app.render());
 
 <a name="cm-canvas" href="#cm-canvas">#</a> cm.**canvas()**
 
+Constructs a canvas renderer, drawing shapes with [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). It is the default renderer for [app](#cm-app) and there is no need to specify it explicitly.
+
+```js
+const app = cm.app({
+  height: 200,
+  renderer: cm.canvas(), // not necessary
+});
+
+app.append(cm.circle, {
+  x: 100,
+  y: 100,
+  r: 50,
+  fill: "orange",
+});
+
+app.render();
+```
+
+<img src="./img/cm-canvas.png" width=640>
+
 <a name="cm-terminal" href="#cm-terminal">#</a> cm.**terminal()**
+
+Returns a promise resolved to a terminal renderer, drawing shapes in a terminal like context.
+
+```js
+cm.app({
+  renderer: await cm.terminal(),
+});
+```
+
+Shapes drawn by terminal renders are (typically) not positioned in literal pixels, or colored in literal colors, as in a conventional graphics system. Instead they are positioned in count of terminal's cell and colored by [characters](#cm-cfb).
+
+```js
+const app = cm.app({
+  mode: "double",
+  renderer: await cm.terminal(),
+});
+
+app
+  .data(cm.range(240, 0, Math.PI * 2))
+  .append(cm.group, {
+    x: app.prop("width") / 2,
+    y: app.prop("height") / 2,
+  })
+  .append(cm.point, {
+    x: (t) => 10 * Math.cos(t) * Math.cos(t * 3),
+    y: (t) => 10 * Math.sin(t) * Math.cos(t * 3),
+    stroke: cm.cfb(cm.wch("🌟")),
+  });
+
+app.render();
+```
+
+<img src="./img/cm-terminal-shape.png" width=640 />
+
+Moreover, it draws ASCII text powered by [figlet.js](https://github.com/patorjk/figlet.js).
+
+```js
+const app = cm.app({
+  width: 800,
+  height: 200,
+  mode: "double",
+  renderer: await cm.terminal(),
+});
+
+app.append(cm.text, {
+  x: app.prop("width") / 2,
+  y: app.prop("height") / 2,
+  text: "charming",
+  textBaseline: "middle",
+  textAlign: "center",
+});
+
+app.render();
+```
+
+<img src="./img/cm-terminal-text.png" width=800 />
 
 ### Process
 
