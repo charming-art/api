@@ -24,7 +24,7 @@ In vanilla HTML, Charming can be imported as an ES module, say from jsDelivr:
 
 ```html
 <script type="module">
-  import * as cm from "https://cdn.jsdelivr.net/npm/@charming-art/charming@0.1/+esm";
+  import * as cm from "https://cdn.jsdelivr.net/npm/@charming-art/charming@0.0.2/+esm";
 
   const app = cm.app();
 

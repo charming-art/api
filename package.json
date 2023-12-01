@@ -1,6 +1,6 @@
 {
   "name": "@charming-art/charming",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The data-driven language for creative coding and ASCII art.",
   "author": {
     "name": "pearmini",
@@ -22,7 +22,7 @@
   },
   "files": [
     "dist/**/*.wasm",
-    "dist/*/**.js"
+    "dist/**/**.js"
   ],
   "scripts": {
     "dev": "npm run build:rust && vite dev",
