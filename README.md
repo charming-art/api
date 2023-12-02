@@ -75,6 +75,20 @@ app
 document.body.appendChild(app.render());
 ```
 
+## Why is Charming?
+
+### Charming is data-driven
+
+### Charming supports ASCII art
+
+### Charming will be high performance
+
+### Charming will be composable
+
+### Compared to P5.js
+
+### Compared to D3.js
+
 ## API Reference
 
 - [App](#app)
