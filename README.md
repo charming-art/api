@@ -118,7 +118,7 @@ document.body.appendChild(app.render());
 
 ### App
 
-<a name="cm-app" href="#cm-app">#</a> cm.**app**(_[options]_)
+<a name="cm-app" href="#cm-app">#</a> _cm_.**app**(_[options]_)
 
 Constructs a new app with the specified _options_. If no argument is specified, constructs with default options.
 
@@ -168,7 +168,7 @@ If _mode_ is _single_, a cell in terminal renders both single-width and double-w
 
 Single-width characters include characters like _A_, _a_, _1_, _@_, etc,. Double-width characters are characters include characters like _中_, _🚀_ and strings made of two single-width characters like _AB_. Double mode aims to address the overlapping issues that arise from the inconsistent widths of single-width and double-width characters.
 
-<a name="app-data" href="#app-data">#</a> app.**data**(_data_)
+<a name="app-data" href="#app-data">#</a> _app_.**data**(_data_)
 
 Appends a new flow with the specified array of _data_ to the root flow of app, returning the new flow.
 
@@ -176,7 +176,7 @@ Appends a new flow with the specified array of _data_ to the root flow of app, r
 app.data([1, 2, 3]);
 ```
 
-<a name="app-datum" href="#app-datum">#</a> app.**datum**(_datum_)
+<a name="app-datum" href="#app-datum">#</a> _app_.**datum**(_datum_)
 
 Appends a new flow with an array containing the specified _datum_ to the root flow app, returning the new flow.
 
@@ -190,7 +190,7 @@ The shorthand is thus equivalent to:
 app.data([1]);
 ```
 
-<a name="app-append" href="#app-append">#</a> app.**append**(_shape[, options]_)
+<a name="app-append" href="#app-append">#</a> _app_.**append**(_shape[, options]_)
 
 Appends a shape with the specified options to this app, returning the new flow that contains the shape. Each shape has its own options, and different shape types support different options. See the respective [shape](#shape) type for details.
 
@@ -198,7 +198,7 @@ Appends a shape with the specified options to this app, returning the new flow t
 app.append(cm.circle, { x: 100, y: 100, r: 50, fill: "orange" });
 ```
 
-<a name="app-render" href="#app-render">#</a> app.**render**()
+<a name="app-render" href="#app-render">#</a> _app_.**render**()
 
 Renders shapes in flows to canvas and removes existing flows, returning this app.
 
@@ -222,7 +222,7 @@ app.append(cm.circle, {
 app.render();
 ```
 
-<a name="app-start" href="#app-start">#</a> app.**start**()
+<a name="app-start" href="#app-start">#</a> _app_.**start**()
 
 Starts this app and returns it, firing [_update_](#event-update) event repeatedly until calling [app.stop](#app-stop). This allows this app to invoke the update callback every delay milliseconds, which is controlled by the [frameCount](#cm-app) option. Note that [app.render](#app-render) will be invoked automatically at the end of each frame, so there is no need to call it explicitly. For example, to draw a moving rect:
 
@@ -242,7 +242,7 @@ app.on("update", update);
 app.start();
 ```
 
-<a name="app-stop" href="#app-stop">#</a> app.**stop**()
+<a name="app-stop" href="#app-stop">#</a> _app_.**stop**()
 
 Stops this app and returns it, cancelling firing [_update_](#event-update), thereby stops the animation.
 
@@ -254,7 +254,7 @@ app.start();
 setTimeout(() => app.stop(), 5000);
 ```
 
-<a name="app-dispose" href="#app-dispose">#</a> app.**dispose**()
+<a name="app-dispose" href="#app-dispose">#</a> _app_.**dispose**()
 
 Disposes this app and returns it, stopping the timer to firing [_update_](#event-update) event and removing all event listeners.
 
@@ -264,7 +264,7 @@ app.on("mouseMove", mouseMove);
 app.dispose();
 ```
 
-<a name="app-node" href="#app-node">#</a> app.**node**()
+<a name="app-node" href="#app-node">#</a> _app_.**node**()
 
 Returns the [canvas element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) for drawing shapes.
 
@@ -272,7 +272,7 @@ Returns the [canvas element](https://developer.mozilla.org/en-US/docs/Web/HTML/E
 document.body.append(app.node());
 ```
 
-<a name="app-prop" href="#app-prop">#</a> app.**prop**(_name_)
+<a name="app-prop" href="#app-prop">#</a> _app_.**prop**(_name_)
 
 Returns the property with the _specified_ name for this app. See the respective [property](#prop) name for details.
 
@@ -280,7 +280,7 @@ Returns the property with the _specified_ name for this app. See the respective 
 app.prop("width"); // 640
 ```
 
-<a name="app-on" href="#app-on">#</a> app.**on**(_type, listener_)
+<a name="app-on" href="#app-on">#</a> _app_.**on**(_type, listener_)
 
 Adds a _listener_ for the specified event _type_. Multiple listeners can be registered to receive the same event.
 
@@ -294,7 +294,7 @@ app.on("mouseMove", mouseMove).on("mouseMove", mouseMove1);
 
 See the respective [event](#event) type for details.
 
-<a name="app-call" href="#app-call">#</a> app.**call**(_callback[, ...argument]_)
+<a name="app-call" href="#app-call">#</a> _app_.**call**(_callback[, ...argument]_)
 
 Calls the specified _function_ on this app with any optional _arguments_ and returns this app. This is equivalent to calling the function by hand but avoids to break method chaining. For example, to draw two concentric circles in a reusable function:
 
@@ -327,7 +327,7 @@ app.call(ring, {
 });
 ```
 
-<a name="app-textBBox" href="#app-textBBox">#</a> app.**textBBox**(_text_, _textOptions_)
+<a name="app-textBBox" href="#app-textBBox">#</a> _app_.**textBBox**(_text_, _textOptions_)
 
 Computes the bounding box for the specified _text_ with the specified [_textOptions_](#cm-text). The returned bounding box has the following properties:
 
@@ -345,23 +345,23 @@ const bbox = app.textBBox("hello world", {
 
 ### Flow
 
-<a name="flow-append" href="#flow-append">#</a> flow.**append**(_shape[, options]_)
+<a name="flow-append" href="#flow-append">#</a> _flow_.**append**(_shape[, options]_)
 
-<a name="flow-data" href="#flow-data">#</a> flow.**data**(_value_)
+<a name="flow-data" href="#flow-data">#</a> _flow_.**data**(_value_)
 
-<a name="flow-datum" href="#flow-datum">#</a> flow.**datum**(_value_)
+<a name="flow-datum" href="#flow-datum">#</a> _flow_.**datum**(_value_)
 
-<a name="flow-process" href="#flow-process">#</a> flow.**process**(_process, options_)
+<a name="flow-process" href="#flow-process">#</a> _flow_.**process**(_process, options_)
 
-<a name="flow-transform" href="#flow-transform">#</a> flow.**transform**(_transform, options_)
+<a name="flow-transform" href="#flow-transform">#</a> _flow_.**transform**(_transform, options_)
 
-<a name="flow-call" href="#flow-call">#</a> flow.**call**(_callback[, arguments…]_)
+<a name="flow-call" href="#flow-call">#</a> _flow_.**call**(_callback[, arguments…]_)
 
-<a name="flow-app" href="#flow-app">#</a> flow.**app**()
+<a name="flow-app" href="#flow-app">#</a> _flow_.**app**()
 
 ### Renderer
 
-<a name="cm-canvas" href="#cm-canvas">#</a> cm.**canvas()**
+<a name="cm-canvas" href="#cm-canvas">#</a> _cm_.**canvas()**
 
 Constructs a canvas renderer, drawing shapes with [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). It is the default renderer for [app](#cm-app) and there is no need to specify it explicitly.
 
@@ -383,7 +383,7 @@ app.render();
 
 <img src="./img/cm-canvas.png" width=640>
 
-<a name="cm-terminal" href="#cm-terminal">#</a> cm.**terminal()**
+<a name="cm-terminal" href="#cm-terminal">#</a> _cm_.**terminal()**
 
 Returns a promise resolved to a terminal renderer, drawing shapes in a terminal like context.
 
@@ -443,43 +443,43 @@ app.render();
 
 ### Process
 
-<a name="cm-each" href="#cm-each">#</a> cm.**each**
+<a name="cm-each" href="#cm-each">#</a> _cm_.**each**
 
-<a name="cm-eachRight" href="#cm-eachRight">#</a> cm.**eachRight**
+<a name="cm-eachRight" href="#cm-eachRight">#</a> _cm_.**eachRight**
 
-<a name="cm-filter" href="#cm-filter">#</a> cm.**filter**
+<a name="cm-filter" href="#cm-filter">#</a> _cm_.**filter**
 
-<a name="cm-map" href="#cm-map">#</a> cm.**map**
+<a name="cm-map" href="#cm-map">#</a> _cm_.**map**
 
-<a name="cm-push" href="#cm-push">#</a> cm.**push**
+<a name="cm-push" href="#cm-push">#</a> _cm_.**push**
 
 ### Shape
 
-<a name="cm-point" href="#cm-point">#</a> cm.**point**
+<a name="cm-point" href="#cm-point">#</a> _cm_.**point**
 
-<a name="cm-link" href="#cm-link">#</a> cm.**link**
+<a name="cm-link" href="#cm-link">#</a> _cm_.**link**
 
-<a name="cm-rect" href="#cm-rect">#</a> cm.**rect**
+<a name="cm-rect" href="#cm-rect">#</a> _cm_.**rect**
 
-<a name="cm-circle" href="#cm-circle">#</a> cm.**circle**
+<a name="cm-circle" href="#cm-circle">#</a> _cm_.**circle**
 
-<a name="cm-triangle" href="#cm-triangle">#</a> cm.**triangle**
+<a name="cm-triangle" href="#cm-triangle">#</a> _cm_.**triangle**
 
-<a name="cm-polygon" href="#cm-polygon">#</a> cm.**polygon**
+<a name="cm-polygon" href="#cm-polygon">#</a> _cm_.**polygon**
 
-<a name="cm-line" href="#cm-line">#</a> cm.**line**
+<a name="cm-line" href="#cm-line">#</a> _cm_.**line**
 
-<a name="cm-path" href="#cm-path">#</a> cm.**path**
+<a name="cm-path" href="#cm-path">#</a> _cm_.**path**
 
-<a name="cm-text" href="#cm-text">#</a> cm.**text**
+<a name="cm-text" href="#cm-text">#</a> _cm_.**text**
 
-<a name="cm-group" href="#cm-group">#</a> cm.**group**
+<a name="cm-group" href="#cm-group">#</a> _cm_.**group**
 
-<a name="cm-clear" href="#cm-clear">#</a> cm.**clear**
+<a name="cm-clear" href="#cm-clear">#</a> _cm_.**clear**
 
 ### Transform
 
-<a name="cm-mapAttrs" href="#cm-mapAttrs">#</a> cm.**mapAttrs**
+<a name="cm-mapAttrs" href="#cm-mapAttrs">#</a> _cm_.**mapAttrs**
 
 Maps abstract attributes to visual attributes with scales. Each scale's options are specified as a nested options object with the corresponding attribute name.
 
@@ -509,7 +509,7 @@ app
   });
 ```
 
-<a name="cm-mapPosition" href="#cm-mapPosition">#</a> cm.**mapPosition**
+<a name="cm-mapPosition" href="#cm-mapPosition">#</a> _cm_.**mapPosition**
 
 Map abstract position to visual position. Like [mapAttrs](#cm-mapAttrs), but only maps position attributes to corresponding dimension range.
 
@@ -535,7 +535,7 @@ app
 
 ### Scale
 
-<a name="cm-scaleLinear" href="#cm-scaleLinear">#</a> cm.**scaleLinear**(_domain, range_)
+<a name="cm-scaleLinear" href="#cm-scaleLinear">#</a> _cm_.**scaleLinear**(_domain, range_)
 
 Constructs a new linear scale with the specified _domain_ and _range_. Linear scales map a continuous, quantitative to a continuous output using a linear transformation.
 
@@ -546,7 +546,7 @@ scale(0.5); // 50;
 scale(1); // 100;
 ```
 
-<a name="cm-scaleSqrt" href="#cm-scaleSqrt">#</a> cm.**scaleSqrt**(_domain, range_)
+<a name="cm-scaleSqrt" href="#cm-scaleSqrt">#</a> _cm_.**scaleSqrt**(_domain, range_)
 
 Constructs a new sqrt scale with the specified _domain_ and _range_. Sqrt scales are similar to [linear scale](#cm-scaleLinear), except a square root transform is applied to the input domain value before the output range is computed.
 
@@ -557,7 +557,7 @@ scale(0.64); // 80
 scale(0.81); // 90
 ```
 
-<a name="cm-scaleLog" href="#cm-scaleLog">#</a> cm.**scaleLog**(_domain, range_)
+<a name="cm-scaleLog" href="#cm-scaleLog">#</a> _cm_.**scaleLog**(_domain, range_)
 
 Constructs a new log scale with the specified domain and range. Log scales are similar to [linear scale](#cm-scaleLinear), except a logarithmic transform transform is applied to the input domain value before the output range is computed.
 
@@ -567,7 +567,7 @@ const scale = cm.scaleLog([1, 10], [0, 960]);
 
 ### Event
 
-<a name="event-update" href="#event-update">#</a> app.**on**(_"update", callback_)
+<a name="event-update" href="#event-update">#</a> _app_.**on**(_"update", callback_)
 
 The _update_ event is fired repeatedly until [app.stop](#app-stop) is called after calling [app.start](#app-start). For example, to draw a moving rect:
 
@@ -586,7 +586,7 @@ function update() {
 app.on("update", update);
 ```
 
-<a name="event-mouseDown" href="#event-mouseDown">#</a> app.**on**(_"mouseDown", callback_)
+<a name="event-mouseDown" href="#event-mouseDown">#</a> _app_.**on**(_"mouseDown", callback_)
 
 The _mouseDown_ event is fired when a mouse button is pressed. For example, to change the background color:
 
@@ -600,7 +600,7 @@ function mouseDown() {
 app.on("mouseDown", mouseDown);
 ```
 
-<a name="event-mouseUp" href="#event-mouseUp">#</a> app.**on**(_"mouseUp", callback_)
+<a name="event-mouseUp" href="#event-mouseUp">#</a> _app_.**on**(_"mouseUp", callback_)
 
 The _mouseUp_ event is fired when a mouse button is released. For example, to change the background color:
 
@@ -614,7 +614,7 @@ function mouseUp() {
 app.on("mouseUp", mouseUp);
 ```
 
-<a name="event-mouseClick" href="#event-mouseClick">#</a> app.**on**(_"mouseClick", callback_)
+<a name="event-mouseClick" href="#event-mouseClick">#</a> _app_.**on**(_"mouseClick", callback_)
 
 The _mouseClick_ event is fired when a mouse button is clicked. For example, to change the background color:
 
@@ -628,7 +628,7 @@ function mouseClick() {
 app.on("mouseClick", mouseClick);
 ```
 
-<a name="event-beforeEach" href="#event-beforeEach">#</a> app.**on**(_"beforeEach", callback_)
+<a name="event-beforeEach" href="#event-beforeEach">#</a> _app_.**on**(_"beforeEach", callback_)
 
 The _beforeEach_ event is fired before each [update event](#event-update) is fired. For example, to begin measuring frame rate by [stats.js](https://github.com/mrdoob/stats.js):
 
@@ -643,7 +643,7 @@ function measure(app) {
 app.call(measure);
 ```
 
-<a name="event-afterEach" href="#event-afterEach">#</a> app.**on**(_"afterEach", callback_)
+<a name="event-afterEach" href="#event-afterEach">#</a> _app_.**on**(_"afterEach", callback_)
 
 The _afterEach_ event is fired after each [update event](#event-update) is fired. For example, to end measuring frame rate by [stats.js](https://github.com/mrdoob/stats.js):
 
@@ -658,7 +658,7 @@ function measure(app) {
 app.call(measure);
 ```
 
-<a name="event-beforeAll" href="#event-beforeAll">#</a> app.**on**(_"beforeAll", callback_)
+<a name="event-beforeAll" href="#event-beforeAll">#</a> _app_.**on**(_"beforeAll", callback_)
 
 The _beforeAll_ event is fired before calling [app.start](#app-start). For example, to construct a Stats instance from [stats.js](https://github.com/mrdoob/stats.js):
 
@@ -679,7 +679,7 @@ function measure(app) {
 app.call(measure);
 ```
 
-<a name="event-afterAll" href="#event-afterAll">#</a> app.**on**(_"afterAll", callback_)
+<a name="event-afterAll" href="#event-afterAll">#</a> _app_.**on**(_"afterAll", callback_)
 
 The _afterAll_ event is fired after calling [app.dispose](#app-dispose). For example, to remove the DOM of a Stats instance from [stats.js](https://github.com/mrdoob/stats.js):
 
@@ -698,7 +698,7 @@ app.call(measure);
 
 ### Prop
 
-<a name="prop-width" href="#prop-width">#</a> app.**prop**(_"width"_)
+<a name="prop-width" href="#prop-width">#</a> _app_.**prop**(_"width"_)
 
 If the renderer is not terminal, returns the width of this app in pixel.
 
@@ -714,7 +714,7 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("width"); // 71
 ```
 
-<a name="prop-height" href="#prop-height">#</a> app.**prop**(_"height"_)
+<a name="prop-height" href="#prop-height">#</a> _app_.**prop**(_"height"_)
 
 If the renderer is not [terminal](#cm-terminal), returns the height of this app in pixel.
 
@@ -730,7 +730,7 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("height"); // 26
 ```
 
-<a name="prop-frameCount" href="#prop-frameCount">#</a> app.**prop**(_"frameCount"_)
+<a name="prop-frameCount" href="#prop-frameCount">#</a> _app_.**prop**(_"frameCount"_)
 
 Returns the number of frames that have been displayed since this app started. For example, to draw a moving rect:
 
@@ -745,7 +745,7 @@ app.on("update", () =>
 );
 ```
 
-<a name="prop-frameRate" href="#prop-frameRate">#</a> app.**prop**(_"frameCount"_)
+<a name="prop-frameRate" href="#prop-frameRate">#</a> _app_.**prop**(_"frameCount"_)
 
 Returns the number of frames to be displayed per second.
 
@@ -753,7 +753,7 @@ Returns the number of frames to be displayed per second.
 app.prop("frameRate"); // 60
 ```
 
-<a name="prop-mouseX" href="#prop-mouseX">#</a> app.**prop**(_"mouseX"_)
+<a name="prop-mouseX" href="#prop-mouseX">#</a> _app_.**prop**(_"mouseX"_)
 
 Returns the x coordinate of the mouse position.
 
@@ -761,7 +761,7 @@ Returns the x coordinate of the mouse position.
 app.prop("mouseX"); // 0
 ```
 
-<a name="prop-mouseY" href="#prop-mouseY">#</a> app.**prop**(_"mouseY"_)
+<a name="prop-mouseY" href="#prop-mouseY">#</a> _app_.**prop**(_"mouseY"_)
 
 Returns the y coordinate of the mouse position.
 
@@ -769,7 +769,7 @@ Returns the y coordinate of the mouse position.
 app.prop("mouseY"); // 0
 ```
 
-<a name="prop-mode" href="#prop-mode">#</a> app.**prop**(_"mode"_)
+<a name="prop-mode" href="#prop-mode">#</a> _app_.**prop**(_"mode"_)
 
 Returns the rendering mode of this app, which is only for app with a [terminal](#cm-terminal) renderer.
 
@@ -778,7 +778,7 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("mode"); // "single"
 ```
 
-<a name="prop-pixelWidth" href="#prop-pixelWidth">#</a> app.**prop**(_"pixelWidth"_)
+<a name="prop-pixelWidth" href="#prop-pixelWidth">#</a> _app_.**prop**(_"pixelWidth"_)
 
 Returns the computed width of this app in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
 
@@ -787,7 +787,7 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("pixelWidth"); // 639
 ```
 
-<a name="prop-pixelHeight" href="#prop-pixelHeight">#</a> app.**prop**(_"pixelHeight"_)
+<a name="prop-pixelHeight" href="#prop-pixelHeight">#</a> _app_.**prop**(_"pixelHeight"_)
 
 Returns the computed height of this app in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
 
@@ -796,7 +796,7 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("pixelHeight"); // 468;
 ```
 
-<a name="prop-cellWidth" href="#prop-cellWidth">#</a> app.**prop**(_"cellWidth"_)
+<a name="prop-cellWidth" href="#prop-cellWidth">#</a> _app_.**prop**(_"cellWidth"_)
 
 Returns the computed width of the cells in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
 
@@ -805,7 +805,7 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("cellWidth"); // 9
 ```
 
-<a name="prop-cellHeight" href="#prop-cellHeight">#</a> app.**prop**(_"cellHeight"_)
+<a name="prop-cellHeight" href="#prop-cellHeight">#</a> _app_.**prop**(_"cellHeight"_)
 
 Returns the computed height of the cells in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
 
@@ -814,7 +814,7 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("cellHeight"); // 18
 ```
 
-<a name="prop-fontSize" href="#prop-fontSize">#</a> app.**prop**(_"fontSize"_)
+<a name="prop-fontSize" href="#prop-fontSize">#</a> _app_.**prop**(_"fontSize"_)
 
 Returns the font size used to render text, which is only for app with a [terminal](#cm-terminal) renderer.
 
@@ -823,7 +823,7 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("fontSize"); // 15
 ```
 
-<a name="prop-fontFamily" href="#prop-fontFamily">#</a> app.**prop**(_"fontFamily"_)
+<a name="prop-fontFamily" href="#prop-fontFamily">#</a> _app_.**prop**(_"fontFamily"_)
 
 Returns the font family used to render text, which is only for app with a [terminal](#cm-terminal) renderer.
 
@@ -832,7 +832,7 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("fontFamily"); // "courier-new, courier, monospace"
 ```
 
-<a name="prop-fontWeight" href="#prop-fontWeight">#</a> app.**prop**(_"fontWeight"_)
+<a name="prop-fontWeight" href="#prop-fontWeight">#</a> _app_.**prop**(_"fontWeight"_)
 
 Returns the font weight used to render text, which is only for app with a [terminal](#cm-terminal) renderer.
 
@@ -843,7 +843,7 @@ app.prop("fontWeight"); // "normal"
 
 ### Color
 
-<a name="cm-rgb" href="#cm-rgb">#</a> cm.**rgb**(_r[, g[, b]]_)
+<a name="cm-rgb" href="#cm-rgb">#</a> _cm_.**rgb**(_r[, g[, b]]_)
 
 Returns a string representing the color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value).
 
@@ -857,7 +857,7 @@ If only on argument is specified, sets all channels to the same _value_.
 cm.rgb(100); // 'rgb(100, 100, 100)'
 ```
 
-<a name="cm-cfb" href="#cm-cfb">#</a> cm.**cfb**(_ch[, f[, b]]_)
+<a name="cm-cfb" href="#cm-cfb">#</a> _cm_.**cfb**(_ch[, f[, b]]_)
 
 Returns a terminal color object, which is only for app with a [terminal](#cm-terminal) renderer. A terminal color comprises the following three channels:
 
@@ -878,7 +878,7 @@ app.append(cm.rect, {
 });
 ```
 
-<a name="cm-wch" href="#cm-wch">#</a> cm.**wch**(_ch_)
+<a name="cm-wch" href="#cm-wch">#</a> _cm_.**wch**(_ch_)
 
 Returns a character marked as a wide character, which is only for app with a [terminal](#cm-terminal) in double mode.
 
@@ -899,7 +899,7 @@ app.append(cm.rect, {
 
 ### Array
 
-<a name="cm-range" href="#cm-range">#</a> cm.**range**(_count[, start[, end]]_)
+<a name="cm-range" href="#cm-range">#</a> _cm_.**range**(_count[, start[, end]]_)
 
 Returns an array of exactly _count_ uniformly-spaced values between _start_ and _end_. If _start_ is not specified, it defaults to 0. If _end_ is not specified, it defaults to 1.
 
@@ -909,7 +909,7 @@ cm.range(10, 5); // [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5]
 cm.range(10, 5, 55); // [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 ```
 
-<a name="cm-cross" href="#cm-cross">#</a> cm.**cross**(_...arrays_)
+<a name="cm-cross" href="#cm-cross">#</a> _cm_.**cross**(_...arrays_)
 
 Returns the [Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product) of the specified arrays.
 
@@ -917,7 +917,7 @@ Returns the [Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product)
 cm.cross([1, 2, 3], [1, 2]); // [[1, 1], [1, 2], [2, 1], [2, 2], [3, 1], [3, 2]]
 ```
 
-<a name="cm-extent" href="#cm-extent">#</a> cm.**extent**(_array[, accessor]_)
+<a name="cm-extent" href="#cm-extent">#</a> _cm_.**extent**(_array[, accessor]_)
 
 Returns the minium and maximum value in given _array_ using natural order.
 
@@ -933,7 +933,7 @@ cm.extent(people, (d) => d.age); // [10, 30]
 
 ### Math
 
-<a name="cm-clamp" href="#cm-clamp">#</a> cm.**clamp**(_value, min, max_)
+<a name="cm-clamp" href="#cm-clamp">#</a> _cm_.**clamp**(_value, min, max_)
 
 Constrains the input _value_ within the specified range _[min, max]_.
 
@@ -944,7 +944,7 @@ cm.clamp(10, 2, 12); // 10
 cm.clamp(10, 12, 20); // 12
 ```
 
-<a name="cm-random" href="#cm-random">#</a> cm.**random**(_[min[, max]]_)
+<a name="cm-random" href="#cm-random">#</a> _cm_.**random**(_[min[, max]]_)
 
 Generates random number with a uniform distribution, which is within range _\[min, max\)_. If _min_ is not specified, it defaults to 0; if _max_ is not specified, it defaults to 1.
 
@@ -956,7 +956,7 @@ cm.random(2, 10); // 6.649642684087617
 
 <img src="./img/cm-random.png" width=600 alt="cm-random">
 
-<a name="cm-randomNoise" href="#cm-randomNoise">#</a> cm.**randomNoise**(_[octaves[, seed]]_)
+<a name="cm-randomNoise" href="#cm-randomNoise">#</a> _cm_.**randomNoise**(_[octaves[, seed]]_)
 
 Returns a function for generating random numbers with a smooth, continuous random-like distribution, commonly referred to as [Perlin Noise](https://en.wikipedia.org/wiki/Perlin_noise).
 
@@ -973,7 +973,7 @@ cm.randomNoise(6, 2)(0.2, 0.1); // -0.08489767172063487
 
 <img src="./img/cm-randomNoise.png" width=600 alt="cm-randomNoise">
 
-<a name="cm-randomNormal" href="#cm-randomNormal">#</a> cm.**randomNormal**(_[mu[, sigma]]_)
+<a name="cm-randomNormal" href="#cm-randomNormal">#</a> _cm_.**randomNormal**(_[mu[, sigma]]_)
 
 Returns a function for generating random numbers with a [normal(Gaussian) distribution](https://en.wikipedia.org/wiki/Normal_distribution). The expected value of the generated number is _mu_, with given standard deviation sigma. If _mu_ is not specified, it defaults to 0; if _sigma_ is not specified, it defaults to 1.
 
@@ -986,7 +986,7 @@ cm.randomNormal(30, 10)(); // 31.94829616303788
 
 ### Constant
 
-<a name="cm-two-pi" href="#cm-two-pi">#</a> cm.**TWO_PI**
+<a name="cm-two-pi" href="#cm-two-pi">#</a> _cm_.**TWO_PI**
 
 It is twice the ratio of the circumference of a circle to its diameter.
 
@@ -996,7 +996,7 @@ Math.cos(cm.TOW_PI); // 1
 
 ### Font
 
-<a name="cm-fontStandard" href="#cm-fontStandard">#</a> cm.**fontStandard**()
+<a name="cm-fontStandard" href="#cm-fontStandard">#</a> _cm_.**fontStandard**()
 
 Parses and returns the standard font for the fontFamily attribute.
 
@@ -1009,7 +1009,7 @@ app.append(cm.text, {
 
 <img src="./img/cm-fontStandard.png" width=800 alt="cm-fontStandard">
 
-<a name="cm-fontGhost" href="#cm-fontGhost">#</a> cm.**fontGhost**()
+<a name="cm-fontGhost" href="#cm-fontGhost">#</a> _cm_.**fontGhost**()
 
 Parses and returns the ghost font for the fontFamily attribute.
 
@@ -1024,7 +1024,7 @@ app.append(cm.text, {
 
 ### Gradient
 
-<a name="cm-gradientRainBowX" href="#cm-gradientRainBowX">#</a> cm.**gradientRainBowX**()
+<a name="cm-gradientRainBowX" href="#cm-gradientRainBowX">#</a> _cm_.**gradientRainBowX**()
 
 Returns the fill attribute with the vertical rainbow gradient.
 
@@ -1037,7 +1037,7 @@ app.append(cm.text, {
 
 <img src="./img/cm-gradientRainBowX.png" width=800 alt="cm-gradientRainBowX">
 
-<a name="cm-gradientSineBowX" href="#cm-gradientSineBowX">#</a> cm.**gradientSineBowX**()
+<a name="cm-gradientSineBowX" href="#cm-gradientSineBowX">#</a> _cm_.**gradientSineBowX**()
 
 Returns the fill attribute with the vertical sinebox gradient.
 
@@ -1052,7 +1052,7 @@ app.append(cm.text, {
 
 ### Helper
 
-<a name="cm-pathArray" href="#cm-pathArray">#</a> cm.**pathArray**()
+<a name="cm-pathArray" href="#cm-pathArray">#</a> _cm_.**pathArray**()
 
 Constructs a new path generator like [d3-path](https://d3js.org/d3-path#path) serializer, expect returns an array of path commands instead of a path string. Useful for charming to render the path generated by [d3-shape](https://d3js.org/d3-shape) or [d3-geo](https://d3js.org/d3-geo/path) without parsing it, which is good for performance.
 
@@ -1072,7 +1072,7 @@ app.append(cm.path, {
 
 See [d3-path](https://d3js.org/d3-path#path) for more [CanvasPathMethods](https://html.spec.whatwg.org/multipage/#canvaspathmethods).
 
-<a name="pathArray-toArray" href="#pathArray-toArray">#</a> pathArray.**toArray**()
+<a name="pathArray-toArray" href="#pathArray-toArray">#</a> _pathArray_.**toArray**()
 
 Returns the array of path commands.
 
@@ -1087,7 +1087,7 @@ context.toArray(); // [["M", 0, 0], ["L", 10, 0], ["L", 10, 10], ["Z"]]
 
 ### Vector
 
-<a name="cm-vec" href="#cm-vec">#</a> cm.**vec**(_[x[, y]]_)
+<a name="cm-vec" href="#cm-vec">#</a> _cm_.**vec**(_[x[, y]]_)
 
 Constructs a vector with the specified _x_ and _y_ component. If either _x_ or _y_ are not specified, each defaults to 0. The returned vector has the following properties:
 
@@ -1100,7 +1100,7 @@ cm.vec(1); // { x: 1, y: 0 }
 cm.vec(2, 3); // { x: 2, y: 3 }
 ```
 
-<a name="cm-vecFromAngle" href="#cm-vecFromAngle">#</a> cm.**vecFromAngle**(_angle_)
+<a name="cm-vecFromAngle" href="#cm-vecFromAngle">#</a> _cm_.**vecFromAngle**(_angle_)
 
 Constructs a vector from the specified _angle_ in radians.
 
@@ -1108,7 +1108,7 @@ Constructs a vector from the specified _angle_ in radians.
 cm.vecFromAngle(Math.PI / 4); // { x: 1, y: 1 }
 ```
 
-<a name="cm-vecAdd" href="#cm-vecAdd">#</a> cm.**vecAdd**(_a, b_)
+<a name="cm-vecAdd" href="#cm-vecAdd">#</a> _cm_.**vecAdd**(_a, b_)
 
 Adds the specified _vectors_ and returns a new vector.
 
@@ -1121,7 +1121,7 @@ b; // { x: 2, y: 3 }
 c; // { x: 3, y: 5 }
 ```
 
-<a name="cm-vecAngle" href="#cm-vecAngle">#</a> cm.**vecAngle**(_a_)
+<a name="cm-vecAngle" href="#cm-vecAngle">#</a> _cm_.**vecAngle**(_a_)
 
 Computes the angle of the specified _vector_.
 
@@ -1130,7 +1130,7 @@ const a = cm.vec(1, 1);
 cm.vecAngle(a); // Math.PI / 4
 ```
 
-<a name="cm-vecClamp" href="#cm-vecClamp">#</a> cm.**vecClamp**(_a, min[, max]_)
+<a name="cm-vecClamp" href="#cm-vecClamp">#</a> _cm_.**vecClamp**(_a, min[, max]_)
 
 Constrains the magnitude of the specified _vector_ within the specified range _[min, max]_, and returns a new _vector_.
 
@@ -1148,7 +1148,7 @@ const a = cm.vec(6, 8);
 cm.vecClamp(a, 5); // { a: 3, b: 4 }
 ```
 
-<a name="cm-vecClampX" href="#cm-vecClampX">#</a> cm.**vecClampX**(_a, min[, max]_)
+<a name="cm-vecClampX" href="#cm-vecClampX">#</a> _cm_.**vecClampX**(_a, min[, max]_)
 
 Constrains the x component of the specified _vector_ within the specified range _[min, max]_, and returns a new _vector_.
 
@@ -1168,7 +1168,7 @@ a; // { x: 6, y: 8 }
 b; // { x: 5, y: 8 }
 ```
 
-<a name="cm-vecClampY" href="#cm-vecClampY">#</a> cm.**vecClampY**(_a, min[, max]_)
+<a name="cm-vecClampY" href="#cm-vecClampY">#</a> _cm_.**vecClampY**(_a, min[, max]_)
 
 Constrains the y component of the specified _vector_ within the specified range _[min, max]_, and returns a new _vector_.
 
@@ -1188,7 +1188,7 @@ a; // { x: 6, y: 8 }
 b; // { x: 6, y: 5 }
 ```
 
-<a name="cm-vecCross" href="#cm-vecCross">#</a> cm.**vecCross**(_a, b_)
+<a name="cm-vecCross" href="#cm-vecCross">#</a> _cm_.**vecCross**(_a, b_)
 
 Computes the cross product of the specified _vectors_.
 
@@ -1198,7 +1198,7 @@ const b = cm.vec(1, 2);
 cm.vecCross(a, b); // 2
 ```
 
-<a name="cm-vecDist" href="#cm-vecDist">#</a> cm.**vecDist**(_a, b_)
+<a name="cm-vecDist" href="#cm-vecDist">#</a> _cm_.**vecDist**(_a, b_)
 
 Computes the distance of the specified _vectors_.
 
@@ -1208,7 +1208,7 @@ const b = cm.vec(1, 2);
 cm.vecDist(a, b); // 5
 ```
 
-<a name="cm-vecDist2" href="#cm-vecDist2">#</a> cm.**vecDist2**(_a, b_)
+<a name="cm-vecDist2" href="#cm-vecDist2">#</a> _cm_.**vecDist2**(_a, b_)
 
 Computes the square distance of the specified _vectors_.
 
@@ -1218,7 +1218,7 @@ const b = cm.vec(1, 2);
 cm.vecDist2(a, b); // 25
 ```
 
-<a name="cm-vecDiv" href="#cm-vecDiv">#</a> cm.**vecDiv**(_a, value_)
+<a name="cm-vecDiv" href="#cm-vecDiv">#</a> _cm_.**vecDiv**(_a, value_)
 
 Divides the specified _vector's_ x and y component by the specified _value_, and returns a new _vector_.
 
@@ -1229,7 +1229,7 @@ a; // { x: 3, y: 4 }
 b; // { x: 6, y: 8 }
 ```
 
-<a name="cm-vecDot" href="#cm-vecDot">#</a> cm.**vecDot**(_a, b_)
+<a name="cm-vecDot" href="#cm-vecDot">#</a> _cm_.**vecDot**(_a, b_)
 
 Computes the dot product of the specified _vectors_.
 
@@ -1239,7 +1239,7 @@ const b = cm.vec(1, 2);
 cm.vecDot(a, b); // 11
 ```
 
-<a name="cm-vecInX" href="#cm-vecInX">#</a> cm.**vecInX**(_a, min[, max]_)
+<a name="cm-vecInX" href="#cm-vecInX">#</a> _cm_.**vecInX**(_a, min[, max]_)
 
 Returns true if the specified _vector's_ x component is within the specified range _[min, max]_.
 
@@ -1259,7 +1259,7 @@ cm.vecInX(a, 3); // true
 cm.vecInX(a, 4); // true
 ```
 
-<a name="cm-vecInY" href="#cm-vecInY">#</a> cm.**vecInY**(_a, x[, x1]_)
+<a name="cm-vecInY" href="#cm-vecInY">#</a> _cm_.**vecInY**(_a, x[, x1]_)
 
 Returns true if the specified _vector's_ y component is within the specified range _[min, max]_.
 
@@ -1279,7 +1279,7 @@ cm.vecInY(a, 4); // true
 cm.vecInY(a, 5); // true
 ```
 
-<a name="cm-vecMag" href="#cm-vecMag">#</a> cm.**vecMag**(_a[, value]_)
+<a name="cm-vecMag" href="#cm-vecMag">#</a> _cm_.**vecMag**(_a[, value]_)
 
 If only one argument is specified, computes the magnitude of the specified _vector_.
 
@@ -1297,7 +1297,7 @@ a; // { x: 3, y: 4 }
 b; // { x: 6, y: 8 }
 ```
 
-<a name="cm-vecMult" href="#cm-vecMult">#</a> cm.**vecMult**(_a, value_)
+<a name="cm-vecMult" href="#cm-vecMult">#</a> _cm_.**vecMult**(_a, value_)
 
 Multiplies the specified _vector's_ x and y component by the specified _value_, and returns a new vector.
 
@@ -1308,7 +1308,7 @@ a; // { x: 3, y: 4 }
 b; // { x: 6, y: 8 }
 ```
 
-<a name="cm-vecNeg" href="#cm-vecNeg">#</a> cm.**vecNeg**(_a_)
+<a name="cm-vecNeg" href="#cm-vecNeg">#</a> _cm_.**vecNeg**(_a_)
 
 Negates the specified _vector's_ x and y component, and returns a new vector.
 
@@ -1319,7 +1319,7 @@ a; // { x: 3, y: 4 }
 b; // { x: -3, y: -4 }
 ```
 
-<a name="cm-vecNegX" href="#cm-vecNegX">#</a> cm.**vecNegX**(_a_)
+<a name="cm-vecNegX" href="#cm-vecNegX">#</a> _cm_.**vecNegX**(_a_)
 
 Negates the specified _vector's_ x component, and returns a new vector.
 
@@ -1330,7 +1330,7 @@ a; // { x: 3, y: 4 }
 b; // { x: -3, y: 4 }
 ```
 
-<a name="cm-vecNegY" href="#cm-vecNegY">#</a> cm.**vecNegY**(_a_)
+<a name="cm-vecNegY" href="#cm-vecNegY">#</a> _cm_.**vecNegY**(_a_)
 
 Negates the specified _vector's_ y component, and returns a new vector.
 
@@ -1341,7 +1341,7 @@ a; // { x: 3, y: 4 }
 b; // { x: 3, y: -4 }
 ```
 
-<a name="cm-vecNorm" href="#cm-vecNorm">#</a> cm.**vecNorm**(_a_)
+<a name="cm-vecNorm" href="#cm-vecNorm">#</a> _cm_.**vecNorm**(_a_)
 
 Normalizes the specified _vector_, and returns a new vector.
 
@@ -1352,7 +1352,7 @@ a; // { x: 3, y: 4 }
 b; // { x: 0.6, y: 0.8 }
 ```
 
-<a name="cm-vecRandom" href="#cm-vecRandom">#</a> cm.**vecRandom**()
+<a name="cm-vecRandom" href="#cm-vecRandom">#</a> _cm_.**vecRandom**()
 
 Returns a unit vector with a random heading, following a uniform distribution.
 
@@ -1360,7 +1360,7 @@ Returns a unit vector with a random heading, following a uniform distribution.
 cm.vecRandom(); // { x: 0.9239434883837478, y: 0.688605153583981 }
 ```
 
-<a name="cm-vecSub" href="#cm-vecSub">#</a> cm.**vecSub**(_a, b_)
+<a name="cm-vecSub" href="#cm-vecSub">#</a> _cm_.**vecSub**(_a, b_)
 
 Subtracts the specified _vectors_ and returns a new vector.
 
@@ -1373,7 +1373,7 @@ b; // { x: 2, y: 4 }
 c; // { x: -1, y: -2 }
 ```
 
-<a name="vec-clone" href="#vec-clone">#</a> vec.**clone**()
+<a name="vec-clone" href="#vec-clone">#</a> _vec_.**clone**()
 
 Clones the _vector_ and returns a new vector.
 
@@ -1384,7 +1384,7 @@ a === b; // false
 b; // { x: 1, y: 2 }
 ```
 
-<a name="vec-add" href="#vec-add">#</a> vec.**add**(_a_)
+<a name="vec-add" href="#vec-add">#</a> _vec_.**add**(_a_)
 
 Adds the specified _vector_ to the target vector, and returns the target vector.
 
@@ -1395,7 +1395,7 @@ a.add(b); // a
 a; // { x: 4, y: 6 }
 ```
 
-<a name="vec-angle" href="#vec-angle">#</a> vec.**angle**()
+<a name="vec-angle" href="#vec-angle">#</a> _vec_.**angle**()
 
 Computes the angle of the target vector.
 
@@ -1404,7 +1404,7 @@ const a = cm.vec(1, 1);
 a.angle(); // Math.PI / 4
 ```
 
-<a name="vec-clamp" href="#vec-clamp">#</a> vec.**clamp**(_min[, max]_)
+<a name="vec-clamp" href="#vec-clamp">#</a> _vec_.**clamp**(_min[, max]_)
 
 Constrains the magnitude of the target vector within the specified range _[min, max]_, and returns it.
 
@@ -1422,7 +1422,7 @@ a.clamp(5); // a
 a; // { a: 3, b: 4 }
 ```
 
-<a name="vec-clampX" href="#vec-clampX">#</a> vec.**clampX**(_min[, max]_)
+<a name="vec-clampX" href="#vec-clampX">#</a> _vec_.**clampX**(_min[, max]_)
 
 Constrains the x component of the target _vector_ within the specified range _[min, max]_, and returns it.
 
@@ -1440,7 +1440,7 @@ a.clampX(5); // a
 a; // { x: 5, y: 8 }
 ```
 
-<a name="vec-clampY" href="#vec-clampY">#</a> vec.**clampY**(_min[, max]_)
+<a name="vec-clampY" href="#vec-clampY">#</a> _vec_.**clampY**(_min[, max]_)
 
 Constrains the y component of the target _vector_ within the specified range _[min, max]_, and returns it.
 
@@ -1458,7 +1458,7 @@ a.clampY(5);
 a; // { x: 6, y: 5 }
 ```
 
-<a name="vec-cross" href="#vec-cross">#</a> vec.**cross**(_a_)
+<a name="vec-cross" href="#vec-cross">#</a> _vec_.**cross**(_a_)
 
 Computes the cross product of the specified _vector_ and the target vector.
 
@@ -1468,7 +1468,7 @@ const b = cm.vec(1, 2);
 a.cross(b); // 2
 ```
 
-<a name="vec-dist" href="#vec-dist">#</a> vec.**dist**(_a_)
+<a name="vec-dist" href="#vec-dist">#</a> _vec_.**dist**(_a_)
 
 Computes the distance of the specified _vector_ and the target vector.
 
@@ -1478,7 +1478,7 @@ const b = cm.vec(1, 2);
 a.dist(b); // 5
 ```
 
-<a name="vec-dist2" href="#vec-dist2">#</a> vec.**dist2**(_a_)
+<a name="vec-dist2" href="#vec-dist2">#</a> _vec_.**dist2**(_a_)
 
 Computes the square distance of the specified _vector_ and the target vector.
 
@@ -1488,7 +1488,7 @@ const b = cm.vec(1, 2);
 a.dist(b); // 25
 ```
 
-<a name="vec-div" href="#vec-div">#</a> vec.**div**(_value_)
+<a name="vec-div" href="#vec-div">#</a> _vec_.**div**(_value_)
 
 Divides the target vector' x and y component by the specified _value_, and returns it.
 
@@ -1498,7 +1498,7 @@ a.div(0.5); // a
 a; // { x: 6, y: 8 }
 ```
 
-<a name="vec-dot" href="#vec-dot">#</a> vec.**dot**(_a_)
+<a name="vec-dot" href="#vec-dot">#</a> _vec_.**dot**(_a_)
 
 Computes the dot product of the specified _vector_ and the target vector.
 
@@ -1508,7 +1508,7 @@ const b = cm.vec(1, 2);
 a.dot(b); // 11
 ```
 
-<a name="vec-inX" href="#vec-inX">#</a> vec.**inX**(_min[, max]_)
+<a name="vec-inX" href="#vec-inX">#</a> _vec_.**inX**(_min[, max]_)
 
 Returns true if the target vector's x component is within the specified range _[min, max]_.
 
@@ -1528,7 +1528,7 @@ a.inX(3); // true
 a.inX(4); // true
 ```
 
-<a name="vec-inY" href="#vec-inY">#</a> vec.**inY**(_min[, max]_)
+<a name="vec-inY" href="#vec-inY">#</a> _vec_.**inY**(_min[, max]_)
 
 Returns true if the target vector's y component is within the specified range _[min, max]_.
 
@@ -1548,7 +1548,7 @@ a.inY(4); // true
 a.inY(5); // true
 ```
 
-<a name="vec-mag" href="#vec-mag">#</a> vec.**mag**(_[value]_)
+<a name="vec-mag" href="#vec-mag">#</a> _vec_.**mag**(_[value]_)
 
 If no argument is specified, computes the magnitude of the target vector.
 
@@ -1565,7 +1565,7 @@ a.mag(10); // a
 a; // { x: 6, y: 8 }
 ```
 
-<a name="vec-mult" href="#vec-mult">#</a> vec.**mult**(_m_)
+<a name="vec-mult" href="#vec-mult">#</a> _vec_.**mult**(_m_)
 
 Multiplies the specified component's x and y by the specified _value_, and returns a new vector.
 
@@ -1576,7 +1576,7 @@ a; // { x: 3, y: 4 }
 b; // { x: 6, y: 8 }
 ```
 
-<a name="vec-neg" href="#vec-neg">#</a> vec.**neg**()
+<a name="vec-neg" href="#vec-neg">#</a> _vec_.**neg**()
 
 Negates the target vector's x and y component, and returns it.
 
@@ -1586,7 +1586,7 @@ a.neg(); // a
 a; // { x: -3, y: -4 }
 ```
 
-<a name="vec-negX" href="#vec-negX">#</a> vec.**negX**()
+<a name="vec-negX" href="#vec-negX">#</a> _vec_.**negX**()
 
 Negates the target vector's x component, and returns it.
 
@@ -1596,7 +1596,7 @@ a.negX(); // a
 a; // { x: -3, y: 4 }
 ```
 
-<a name="vec-negY" href="#vec-negY">#</a> vec.**negY**()
+<a name="vec-negY" href="#vec-negY">#</a> _vec_.**negY**()
 
 Negates the target vector's y component, and returns it.
 
@@ -1606,7 +1606,7 @@ a.negY(); // a
 a; // { x: 3, y: -4 }
 ```
 
-<a name="vec-norm" href="#vec-norm">#</a> vec.**norm**()
+<a name="vec-norm" href="#vec-norm">#</a> _vec_.**norm**()
 
 Normalizes the target vector, and returns it.
 
@@ -1616,7 +1616,7 @@ a.norm(); // a
 a; // { x: 0.6, y: 0.8 }
 ```
 
-<a name="vec-set" href="#vec-set">#</a> vec.**set**(_x[, y]_)
+<a name="vec-set" href="#vec-set">#</a> _vec_.**set**(_x[, y]_)
 
 If only one argument is specified and it is a vector instance, sets the target vector's x and y component with the source _vector's_ x and y component, and returns the target vector.
 
@@ -1635,7 +1635,7 @@ a.set(3, 4); // a
 a; // { x: 3, y: 4 }
 ```
 
-<a name="vec-setX" href="#vec-setX">#</a> vec.**setX**(_x_)
+<a name="vec-setX" href="#vec-setX">#</a> _vec_.**setX**(_x_)
 
 Sets the target vector's x component with the specified _x_, and returns it.
 
@@ -1645,7 +1645,7 @@ a.setX(3); // a
 a; // { x: 3, y: 2 }
 ```
 
-<a name="vec-setY" href="#vec-setY">#</a> vec.**setY**(_y_)
+<a name="vec-setY" href="#vec-setY">#</a> _vec_.**setY**(_y_)
 
 Sets the target vector's y component with the specified _y_, and returns it.
 
@@ -1655,7 +1655,7 @@ a.setY(3); // a
 a; // { x: 1, y: 3 }
 ```
 
-<a name="vec-sub" href="#vec-sub">#</a> vec.**sub**(_a_)
+<a name="vec-sub" href="#vec-sub">#</a> _vec_.**sub**(_a_)
 
 Subtracts the target vector with the specified vector and returns the target vector.
 
