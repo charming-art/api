@@ -21,7 +21,7 @@ export function oscillationDone() {
       const x = r * Math.cos(theta);
       const y = r * Math.sin(theta);
       group.append(cm.link, { x: 0, y: 0, x1: x, y1: y });
-      group.append(cm.circle, { x, y, r: 16 });
+      group.append(cm.circle, { x, y, r: 16, fill: "#000" });
     });
 
   return app.call(dispose).call(stats).call(frame).start();

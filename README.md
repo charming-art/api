@@ -120,29 +120,228 @@ document.body.appendChild(app.render());
 
 <a name="cm-app" href="#cm-app">#</a> cm.**app**(_[options]_)
 
-<a name="app-data" href="#app-data">#</a> app.**data**(_value_)
+Constructs a new app with the specified _options_. If no argument is specified, constructs with default options.
 
-<a name="app-datum" href="#app-datum">#</a> app.**datum**(_value_)
+All the apps support the following options:
+
+- **width** - the outer width of the app, number in pixels
+- **height** - the outer height of the app, number in pixels
+- **frameRate** - the number of frames to draw per second
+- **renderer** - the [renderer](#renderer) to draw shapes and handle events, defaults to [canvas](cm-canvas) renderer
+
+```js
+const app = cm.app({
+  width: 600,
+  height: 400,
+  renderer: cm.canvas(),
+});
+```
+
+The _width_ and _height_ options can also be specified as strings representing the number of columns and rows respectively when using a [terminal](#cm-terminal) renderer for apps.
+
+```js
+const app = cm.app({
+  width: "30",
+  height: "20",
+  renderer: await cm.terminal(),
+});
+```
+
+Apps with [terminal](#cm-terminal) renderer support the extra options:
+
+- **fontSize** - the font size used to render text, see [CSS font-size](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
+- **fontWeight** - the font weight used to render text, see [CSS font-weight](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
+- **fontFamily** - the font family used to render text, see [CSS font-family](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
+- **mode** - the render mode, _single_ or _double_, defaults to _single_
+
+```js
+const app = cm.app({
+  renderer: await cm.terminal(),
+  fontSize: 20,
+  fontWeight: "bold",
+  fontFamily: "Georgia, serif",
+  mode: "double",
+});
+```
+
+If _mode_ is _single_, a cell in terminal renders both single-width and double-width character once . If _mode_ is _double_, a cell in terminal renders single-width character twice and double-width character once.
+
+Single-width characters include characters like _A_, _a_, _1_, _@_, etc,. Double-width characters are characters include characters like _中_, _🚀_ and strings made of two single-width characters like _AB_. Double mode aims to address the overlapping issues that arise from the inconsistent widths of single-width and double-width characters.
+
+<a name="app-data" href="#app-data">#</a> app.**data**(_data_)
+
+Appends a new flow with the specified array of _data_ to the root flow of app, returning the new flow.
+
+```js
+app.data([1, 2, 3]);
+```
+
+<a name="app-datum" href="#app-datum">#</a> app.**datum**(_datum_)
+
+Appends a new flow with an array containing the specified _datum_ to the root flow app, returning the new flow.
+
+```js
+app.datum(1);
+```
+
+The shorthand is thus equivalent to:
+
+```js
+app.data([1]);
+```
 
 <a name="app-append" href="#app-append">#</a> app.**append**(_shape[, options]_)
 
+Appends a shape with the specified options to this app, returning the new flow that contains the shape. Each shape has its own options, and different shape types support different options. See the respective [shape](#shape) type for details.
+
+```js
+app.append(cm.circle, { x: 100, y: 100, r: 50, fill: "orange" });
+```
+
 <a name="app-render" href="#app-render">#</a> app.**render**()
+
+Renders shapes in flows to canvas and removes existing flows, returning this app.
+
+```js
+app.append(cm.circle, {
+  x: cm.random(50, 100),
+  y: cm.random(50, 100),
+  r: 25,
+  fill: "orange",
+});
+
+app.render();
+
+app.append(cm.circle, {
+  x: cm.random(50, 100),
+  y: cm.random(50, 100),
+  r: 25,
+  fill: "steelblue",
+});
+
+app.render();
+```
 
 <a name="app-start" href="#app-start">#</a> app.**start**()
 
+Starts this app and returns it, firing [_update_](#event-update) event repeatedly until calling [app.stop](#app-stop). This allows this app to invoke the update callback every delay milliseconds, which is controlled by the [frameCount](#cm-app) option. Note that [app.render](#app-render) will be invoked automatically at the end of each frame, so there is no need to call it explicitly. For example, to draw a moving rect:
+
+```js
+let x = 0;
+
+function update() {
+  app.append(cm.rect, {
+    x: x++,
+    y: 0,
+    width: 100,
+    height: 50,
+  });
+}
+
+app.on("update", update);
+app.start();
+```
+
 <a name="app-stop" href="#app-stop">#</a> app.**stop**()
+
+Stops this app and returns it, cancelling firing [_update_](#event-update), thereby stops the animation.
+
+```js
+app.on("update", update);
+app.start();
+
+// Stops animation after 5 seconds.
+setTimeout(() => app.stop(), 5000);
+```
 
 <a name="app-dispose" href="#app-dispose">#</a> app.**dispose**()
 
+Disposes this app and returns it, stopping the timer to firing [_update_](#event-update) event and removing all event listeners.
+
+```js
+app.on("update", update);
+app.on("mouseMove", mouseMove);
+app.dispose();
+```
+
 <a name="app-node" href="#app-node">#</a> app.**node**()
+
+Returns the [canvas element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) for drawing shapes.
+
+```js
+document.body.append(app.node());
+```
 
 <a name="app-prop" href="#app-prop">#</a> app.**prop**(_name_)
 
-<a name="app-on" href="#app-on">#</a> app.**on**(_name, callback_)
+Returns the property with the _specified_ name for this app. See the respective [property](#prop) name for details.
 
-<a name="app-call" href="#app-call">#</a> app.**call**(_callback[, arguments…]_)
+```js
+app.prop("width"); // 640
+```
 
-<a name="app-textBBox" href="#app-textBBox">#</a> app.**textBBox**(_options_)
+<a name="app-on" href="#app-on">#</a> app.**on**(_type, listener_)
+
+Adds a _listener_ for the specified event _type_. Multiple listeners can be registered to receive the same event.
+
+```js
+function mouseMove() {}
+
+function mouseMove1() {}
+
+app.on("mouseMove", mouseMove).on("mouseMove", mouseMove1);
+```
+
+See the respective [event](#event) type for details.
+
+<a name="app-call" href="#app-call">#</a> app.**call**(_callback[, ...argument]_)
+
+Calls the specified _function_ on this app with any optional _arguments_ and returns this app. This is equivalent to calling the function by hand but avoids to break method chaining. For example, to draw two concentric circles in a reusable function:
+
+```js
+function ring(app, { x, y, r, r1, fill, fill1 }) {
+  app.append(cm.circle, { x, y, r, fill });
+  app.append(cm.circle, { x, y, r1, fill2 });
+}
+
+ring(app, {
+  x: 100,
+  y: 100,
+  r: 25,
+  r1: 50,
+  fill: "orange",
+  fill1: "steelblue",
+});
+```
+
+Instead of invoking this function directly on app, now say:
+
+```js
+app.call(ring, {
+  x: 100,
+  y: 100,
+  r: 25,
+  r1: 50,
+  fill: "orange",
+  fill2: "steelblue",
+});
+```
+
+<a name="app-textBBox" href="#app-textBBox">#</a> app.**textBBox**(_text_, _textOptions_)
+
+Computes the bounding box for the specified _text_ with the specified [_textOptions_](#cm-text). The returned bounding box has the following properties:
+
+- **x** - the x coordinate of the text
+- **y** - the y coordinate of the text
+- **width** - the width of the text
+- **height** - the height of the text
+
+```js
+const bbox = app.textBBox("hello world", {
+  fontSize: 20,
+  fontWeight: "bold",
+});
+```
 
 ### Flow
 
@@ -189,7 +388,7 @@ app.render();
 Returns a promise resolved to a terminal renderer, drawing shapes in a terminal like context.
 
 ```js
-cm.app({
+const app = cm.app({
   renderer: await cm.terminal(),
 });
 ```
@@ -501,14 +700,14 @@ app.call(measure);
 
 <a name="prop-width" href="#prop-width">#</a> app.**prop**(_"width"_)
 
-If the renderer is not terminal, returns the width of the app in pixel.
+If the renderer is not terminal, returns the width of this app in pixel.
 
 ```js
 const app = cm.app();
 app.prop("width"); // 640;
 ```
 
-If the renderer is [terminal](#cm-terminal), returns the width of the app in cell.
+If the renderer is [terminal](#cm-terminal), returns the width of this app in cell.
 
 ```js
 const app = cm.app({ renderer: await cm.terminal() });
@@ -517,14 +716,14 @@ app.prop("width"); // 71
 
 <a name="prop-height" href="#prop-height">#</a> app.**prop**(_"height"_)
 
-If the renderer is not [terminal](#cm-terminal), returns the height of the app in pixel.
+If the renderer is not [terminal](#cm-terminal), returns the height of this app in pixel.
 
 ```js
 const app = cm.app();
 app.prop("height"); // 480;
 ```
 
-If the renderer is [terminal](#cm-terminal), returns the height of the app in cell.
+If the renderer is [terminal](#cm-terminal), returns the height of this app in cell.
 
 ```js
 const app = cm.app({ renderer: await cm.terminal() });
@@ -533,7 +732,7 @@ app.prop("height"); // 26
 
 <a name="prop-frameCount" href="#prop-frameCount">#</a> app.**prop**(_"frameCount"_)
 
-Returns the number of frames that have been displayed since the app started. For example, to draw a moving rect:
+Returns the number of frames that have been displayed since this app started. For example, to draw a moving rect:
 
 ```js
 app.on("update", () =>
@@ -572,7 +771,7 @@ app.prop("mouseY"); // 0
 
 <a name="prop-mode" href="#prop-mode">#</a> app.**prop**(_"mode"_)
 
-Returns the rendering mode of the app, which is only for app with a [terminal](#cm-terminal) renderer.
+Returns the rendering mode of this app, which is only for app with a [terminal](#cm-terminal) renderer.
 
 ```js
 const app = cm.app({ renderer: await cm.terminal() });
@@ -581,7 +780,7 @@ app.prop("mode"); // "single"
 
 <a name="prop-pixelWidth" href="#prop-pixelWidth">#</a> app.**prop**(_"pixelWidth"_)
 
-Returns the computed width of the app in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
+Returns the computed width of this app in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
 
 ```js
 const app = cm.app({ renderer: await cm.terminal() });
@@ -590,7 +789,7 @@ app.prop("pixelWidth"); // 639
 
 <a name="prop-pixelHeight" href="#prop-pixelHeight">#</a> app.**prop**(_"pixelHeight"_)
 
-Returns the computed height of the app in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
+Returns the computed height of this app in pixel, which is only for app with a [terminal](#cm-terminal) renderer.
 
 ```js
 const app = cm.app({ renderer: await cm.terminal() });
