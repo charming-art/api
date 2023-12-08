@@ -345,19 +345,153 @@ const bbox = app.textBBox("hello world", {
 
 ### Flow
 
-<a name="flow-append" href="#flow-append">#</a> _flow_.**append**(_shape[, options]_)
+<a name="flow-data" href="#flow-data">#</a> _flow_.**data**(_data_)
 
-<a name="flow-data" href="#flow-data">#</a> _flow_.**data**(_value_)
+Returns a new flow that contains this specified _data_. The _data_ is specified for each group in this flow.
+
+If the specified _data_ is an array of arbitrary values(e.g. number of objects), sets _[data]_ as the group of this flow.
+
+```js
+const group = app.append(cm.group, {
+  width: app.prop("width") / 3,
+  height: app.prop("heigh") / 3,
+});
+
+group.data([1, 2, 3]);
+```
+
+If the flow has multiple groups(such as [flow.data](#flow-data) followed by [app.data](#app-data)), then data should typically be specified as a function. The function will be evaluated for each group in order, being passed the group's parent datum(_d_), the group index(_i_), all the groups(_data_) and this flow(_flow_).
+
+```js
+app.data(matrix).data((d, i, data, flow) => {});
+```
+
+For example, to draw a matrix of characters in a terminal:
+
+```js
+const matrix = [
+  [" +", "-", "+ "],
+  [" |", cm.wch("🚀"), "| "],
+  [" +", "-", "+ "],
+];
+
+app
+  .data(matrix)
+  .append(cm.group, { y: (_, i) => i })
+  .data((d) => d)
+  .append(cm.point, {
+    y: 0,
+    x: (_, i) => i,
+    stroke: (d) => cm.cfb(d),
+  });
+```
 
 <a name="flow-datum" href="#flow-datum">#</a> _flow_.**datum**(_value_)
 
+Like [flow.data](#flow-data), except receive a _value_ instead of an array of data.
+
+```js
+flow.datum(1);
+
+// Equivalent
+flow.data([1]);
+```
+
 <a name="flow-process" href="#flow-process">#</a> _flow_.**process**(_process, options_)
+
+Processes the data of this flow with the specified _process_ function receiving the specified _options_, returning a flow with the processed data. It provide a convenient mechanism to manipulate data before calling [flow.append](#flow-append) to bind it with shapes.
+
+For example, to draw a particle system with two shape types:
+
+```js
+const groups = app
+  .data(particles)
+  .process(cm.push, createParticle)
+  .process(cm.eachRight, removeDied)
+  .process(cm.each, decay)
+  .process(cm.each, move);
+
+groups.process(cm.filter, isCircle).append(cm.circle, {});
+groups.process(cm.filter, isSquare).append(cm.rect, {});
+```
+
+See the respective [process function](#process) for details.
+
+<a name="flow-append" href="#flow-append">#</a> _flow_.**append**(_shape[, options]_)
+
+Appends and binds shapes with the data of this flow, returning a flow with shapes. Shapes are created by the specified _shape_ function with the specified _options_.
+
+Shape function interprets attribute values and invokes the renderer of this flow to draw shapes. See the respective [shape function](#shape) for details. Each shape's options are typically specified as a object with corresponding attribute name.
+
+For each attribute, if the _value_ is constant, all the shapes are given the same attribute value; otherwise, if the _value_ is a function, it is evaluated for each datum, in order, being passed the current datum(_d_), the current index(_i_), the data(_data_) and this flow(_flow_). The function's return value is then used to set each shapes' attribute.
+
+```js
+const flow = app.data([1, 2, 3]);
+
+flow.append(cm.circle, {
+  x: (d) => d * 100,
+  y: (d) => d * 100,
+  fill: "red",
+});
+```
 
 <a name="flow-transform" href="#flow-transform">#</a> _flow_.**transform**(_transform, options_)
 
-<a name="flow-call" href="#flow-call">#</a> _flow_.**call**(_callback[, arguments…]_)
+Transforms shapes' attribute values with the specified _transform_ function receiving the specified _options_, returning a flow with the transformed attribute values. It provide a convenient mechanism to manipulate attribute values after calling [flow.append](#flow-append) to binding data with shapes.
+
+For example, to map abstract values produced by [Math.sin](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sin) into visual values, drawing a sine wave:
+
+```js
+app
+  .data(cm.range(50, cm.TWO_PI))
+  .append(cm.circle, {
+    x: (d) => d,
+    y: (d) => Math.sin(d),
+    r: 20,
+    fill: "rgba(175, 175, 175, 0.5)",
+    stroke: "#000",
+    strokeWidth: 1,
+  })
+  .transform(cm.mapPosition);
+```
+
+See the respective [transform function](#transform) for details.
+
+<a name="flow-call" href="#flow-call">#</a> _flow_.**call**(_callback[, ...argument]_)
+
+Like [app.call](#app-call), except calls on this flow.
+
+```js
+function scaleRadius(flow) {
+  flow.transform(cm.mapAttrs, {
+    r: { range: [10, 15] },
+  });
+}
+
+app
+  .data([1, 2, 3, 4])
+  .append(cm.circle, {
+    x: 100,
+    y: 100,
+    r: (d) => d,
+    fill: "steelblue",
+  })
+  .call(scaleRadius);
+```
 
 <a name="flow-app" href="#flow-app">#</a> _flow_.**app**()
+
+Returns this app. It helps define some pure functions relaying some properties of this app.
+
+```js
+function scale(d, i, data, flow) {
+  const app = flow.app();
+  const width = app.prop("width");
+  return d * width;
+}
+
+app.data([0.1, 0.2, 0.3]).process(cm.map, scale);
+```
 
 ### Renderer
 
