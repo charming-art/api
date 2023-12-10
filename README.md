@@ -329,7 +329,7 @@ app.call(ring, {
 
 <a name="app-textBBox" href="#app-textBBox">#</a> _app_.**textBBox**(_text_, _textOptions_)
 
-Computes the bounding box for the specified _text_ with the specified [_textOptions_](#cm-text). The returned bounding box has the following properties:
+Computes the bounding box for the specified [_textOptions_](#cm-text). The returned bounding box has the following properties:
 
 - **x** - the x coordinate of the text
 - **y** - the y coordinate of the text
@@ -337,7 +337,8 @@ Computes the bounding box for the specified _text_ with the specified [_textOpti
 - **height** - the height of the text
 
 ```js
-const bbox = app.textBBox("hello world", {
+const bbox = app.textBBox({
+  text: "hello world",
   fontSize: 20,
   fontWeight: "bold",
 });
