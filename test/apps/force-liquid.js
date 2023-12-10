@@ -16,7 +16,7 @@ export function forceLiquid() {
       velocity: cm.vec(),
       acceleration: cm.vec(),
       mass: cm.random(1, 5),
-    })
+    }),
   );
 
   const liquid = {
@@ -61,5 +61,5 @@ export function forceLiquid() {
         });
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

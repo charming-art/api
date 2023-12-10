@@ -11,10 +11,7 @@ function updateParticles(flow) {
       acceleration: cm.vec(0, 0.05),
       lifespan: 255,
     }))
-    .process(
-      cm.eachRight,
-      (d, i, array) => d.lifespan < 0 && array.splice(i, 1)
-    )
+    .process(cm.eachRight, (d, i, array) => d.lifespan < 0 && array.splice(i, 1))
     .process(cm.each, (d) => (d.lifespan -= 2))
     .process(cm.each, (d) => {
       d.velocity.add(d.acceleration);
@@ -67,5 +64,5 @@ export function particleClusters() {
       });
     });
 
-  return app.call(dispose).call(frame).call(stats).start();
+  return app.call(dispose).call(frame).call(stats).start().node();
 }

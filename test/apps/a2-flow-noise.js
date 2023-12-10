@@ -22,15 +22,12 @@ export function a2FlowNoise() {
 
   const vertices = cm.range(120).map(() =>
     object({
-      location: cm.vec(
-        cm.random(app.prop("width")),
-        cm.random(app.prop("height"))
-      ),
+      location: cm.vec(cm.random(app.prop("width")), cm.random(app.prop("height"))),
       velocity: cm.vec(),
       r: 4,
       maxSpeed: cm.random(2, 5),
       maxForce: cm.random(0.1, 0.5),
-    })
+    }),
   );
 
   const initFields = () => {
@@ -119,11 +116,5 @@ export function a2FlowNoise() {
     initFields();
   }
 
-  return app
-    .on("update", update)
-    .on("mouseClick", mouseClick)
-    .call(dispose)
-    .call(frame)
-    .call(stats)
-    .start();
+  return app.on("update", update).on("mouseClick", mouseClick).call(dispose).call(frame).call(stats).start().node();
 }

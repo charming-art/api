@@ -81,5 +81,5 @@ export function matterFallingPolygons() {
     Engine.update(engine);
   }
 
-  return app.on("update", update).call(dispose).call(stats).call(frame).start();
+  return app.on("update", update).call(dispose).call(stats).call(frame).start().node();
 }

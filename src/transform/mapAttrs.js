@@ -13,7 +13,7 @@ function applyScale(value, options) {
       const map = scale(domain, range, rest);
       const scaled = V.map(map);
       return [key, scaled];
-    })
+    }),
   );
 }
 

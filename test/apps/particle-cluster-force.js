@@ -49,7 +49,7 @@ export function particleClusterForce() {
             location: cm.vec(app.prop("width") / 2, 50),
             lifespan: 255,
             velocity: cm.vec(cm.random(-1, 1), cm.random(-2, 0)),
-          })
+          }),
         )
         .process(cm.eachRight, fadeOut)
         .process(cm.each, applyRepeller)
@@ -70,5 +70,5 @@ export function particleClusterForce() {
         });
     });
 
-  return app.call(dispose).call(frame).call(stats).start();
+  return app.call(dispose).call(frame).call(stats).start().node();
 }

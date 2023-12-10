@@ -16,5 +16,5 @@ export async function terminalText() {
     fontFamily: cm.fontGhost(),
   });
 
-  return app.call(dispose).start();
+  return app.call(dispose).start().node();
 }

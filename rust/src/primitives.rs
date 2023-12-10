@@ -1,7 +1,7 @@
 extern crate wasm_bindgen;
 use crate::{
-    globals::{Shape, Vertex},
     backend::Backend,
+    globals::{Shape, Vertex},
 };
 use wasm_bindgen::prelude::*;
 

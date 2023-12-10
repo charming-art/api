@@ -11,7 +11,7 @@ export function regularNumbers() {
     .cross(
       cm.range(1 + Math.log(N) / Math.log(2)),
       cm.range(1 + Math.log(N) / Math.log(3)),
-      cm.range(1 + Math.log(N) / Math.log(5))
+      cm.range(1 + Math.log(N) / Math.log(5)),
     )
     .filter((d) => value(d) <= N);
 
@@ -44,7 +44,7 @@ export function regularNumbers() {
             [i, j, k],
           ],
         ])
-        .filter(([n]) => Math.min(...n) >= 0)
+        .filter(([n]) => Math.min(...n) >= 0),
     )
     .append(cm.link, {
       x: ([n]) => x(n),
@@ -77,5 +77,5 @@ export function regularNumbers() {
     })
     .call(applyScale);
 
-  return app.call(dispose).render();
+  return app.call(dispose).render().node();
 }

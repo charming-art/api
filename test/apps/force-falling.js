@@ -16,7 +16,7 @@ export function forceFalling() {
       velocity: cm.vec(),
       acceleration: cm.vec(),
       mass: cm.random(1, 5),
-    })
+    }),
   );
 
   const applyGravity = force((d) => cm.vec(0, 0.1).mult(d.mass));
@@ -47,5 +47,5 @@ export function forceFalling() {
         });
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

@@ -35,5 +35,5 @@ export function app$start() {
   this._emitter.emit("beforeAll");
   if (!this._stop) tick.call(this);
   this._stop = false;
-  return this.node();
+  return this;
 }

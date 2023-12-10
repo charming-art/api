@@ -47,5 +47,5 @@ export function randomCurve() {
     if (sigma > 2 || sigma < 0.3) step *= -1;
   });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

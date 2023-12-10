@@ -62,10 +62,7 @@ export function oscillationSpring2() {
     .on("update", () => {
       const group = app.append(cm.group, { x: app.prop("width") / 2, y: 0 });
 
-      group
-        .datum(bob)
-        .call(updateBob, { dragging, spring, anchor })
-        .call(drawBob, { dragging });
+      group.datum(bob).call(updateBob, { dragging, spring, anchor }).call(drawBob, { dragging });
 
       group.datum(anchor).append(cm.rect, {
         x: (d) => d.location.x - 5,
@@ -79,5 +76,5 @@ export function oscillationSpring2() {
     .on("mouseDown", () => (dragging = true))
     .on("mouseUp", () => (dragging = false));
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

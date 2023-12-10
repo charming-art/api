@@ -16,7 +16,7 @@ export function forceDancing() {
       velocity: cm.vec(),
       acceleration: cm.vec(),
       mass: cm.random(0.1, 5),
-    })
+    }),
   );
 
   const applyGravity = force(cm.vec(0, 0.2));
@@ -45,5 +45,5 @@ export function forceDancing() {
         });
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

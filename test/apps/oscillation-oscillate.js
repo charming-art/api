@@ -18,12 +18,11 @@ export function oscillationOscillate() {
         x: app.prop("width") / 2,
         y: app.prop("height") / 2,
       });
-      const x =
-        amplitude * Math.cos((cm.TWO_PI * app.prop("frameCount")) / period);
+      const x = amplitude * Math.cos((cm.TWO_PI * app.prop("frameCount")) / period);
       const y = 0;
       group.append(cm.link, { x: 0, y: 0, x1: x, y1: y });
       group.append(cm.circle, { x, y, r: 16, fill: "black" });
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

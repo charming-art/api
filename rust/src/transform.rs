@@ -1,7 +1,7 @@
 extern crate wasm_bindgen;
 use crate::{
-    matrix3::{matrix3_rotate, matrix3_scale, matrix3_transform, matrix3_translate},
     backend::Backend,
+    matrix3::{matrix3_rotate, matrix3_scale, matrix3_transform, matrix3_translate},
 };
 use wasm_bindgen::prelude::*;
 

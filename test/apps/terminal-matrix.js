@@ -23,5 +23,5 @@ export async function terminalMatrix() {
       stroke: (d) => cm.cfb(d),
     });
 
-  return app.call(dispose).render();
+  return app.call(dispose).render().node();
 }

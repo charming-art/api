@@ -38,5 +38,5 @@ export function curveLineMaurerRose() {
       domainY: [-1, 1],
     });
 
-  return app.call(dispose).render();
+  return app.call(dispose).render().node();
 }

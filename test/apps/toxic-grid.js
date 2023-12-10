@@ -65,5 +65,5 @@ export function toxicGrid() {
     });
   }
 
-  return app.on("update", update).call(dispose).call(stats).call(frame).start();
+  return app.on("update", update).call(dispose).call(stats).call(frame).start().node();
 }

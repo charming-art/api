@@ -116,5 +116,6 @@ export function a2Wandering() {
     .call(dispose)
     .call(stats)
     .call(frame)
-    .start();
+    .start()
+    .node();
 }

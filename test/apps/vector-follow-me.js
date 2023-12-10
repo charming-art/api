@@ -10,10 +10,7 @@ export function vectorFollowMe() {
   });
 
   const movers = cm.range(20, () => ({
-    location: cm.vec(
-      cm.random(app.prop("width")),
-      cm.random(app.prop("height"))
-    ),
+    location: cm.vec(cm.random(app.prop("width")), cm.random(app.prop("height"))),
     velocity: cm.vec(),
     acceleration: cm.vec(),
     speed: 8,
@@ -25,18 +22,11 @@ export function vectorFollowMe() {
       app
         .data(movers)
         .process(cm.each, ({ location, velocity, acceleration, speed }) => {
-          const dir = cm
-            .vec(app.prop("mouseX"), app.prop("mouseY"))
-            .sub(location)
-            .norm()
-            .mult(0.5);
+          const dir = cm.vec(app.prop("mouseX"), app.prop("mouseY")).sub(location).norm().mult(0.5);
 
           acceleration.set(dir);
 
-          location
-            .add(velocity.add(acceleration).clamp(speed))
-            .clampX(app.prop("width"))
-            .clampY(app.prop("height"));
+          location.add(velocity.add(acceleration).clamp(speed)).clampX(app.prop("width")).clampY(app.prop("height"));
         })
         .append(cm.circle, {
           x: (d) => d.location.x,
@@ -47,5 +37,5 @@ export function vectorFollowMe() {
         });
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

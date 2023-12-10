@@ -21,5 +21,5 @@ export function curveCircleClover() {
       r: { range: [1, 15] },
     });
 
-  return app.call(dispose).render();
+  return app.call(dispose).render().node();
 }

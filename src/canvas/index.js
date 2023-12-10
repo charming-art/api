@@ -11,16 +11,7 @@ function canvas$node() {
   return this._context.canvas;
 }
 
-function canvas$circle({
-  stroke,
-  strokeWidth,
-  fill,
-  x,
-  y,
-  r,
-  fillOpacity,
-  strokeOpacity,
-}) {
+function canvas$circle({ stroke, strokeWidth, fill, x, y, r, fillOpacity, strokeOpacity }) {
   const context = this._context;
   stroke = normalizeColor(stroke, strokeOpacity);
   fill = normalizeColor(fill, fillOpacity);
@@ -37,19 +28,7 @@ function canvas$circle({
   return this;
 }
 
-function canvas$rect({
-  stroke,
-  fill,
-  x,
-  y,
-  width,
-  height,
-  rotate,
-  anchor,
-  fillOpacity,
-  strokeOpacity,
-  strokeWidth,
-}) {
+function canvas$rect({ stroke, fill, x, y, width, height, rotate, anchor, fillOpacity, strokeOpacity, strokeWidth }) {
   if (anchor === "center") {
     x = x - width / 2;
     y = y - height / 2;
@@ -72,27 +51,14 @@ function canvas$rect({
   return this;
 }
 
-function canvas$line({
-  stroke,
-  strokeWidth,
-  x,
-  y,
-  x1,
-  y1,
-  rotate,
-  transformOrigin = "start",
-}) {
+function canvas$line({ stroke, strokeWidth, x, y, x1, y1, rotate, transformOrigin = "start" }) {
   const context = this._context;
   context.save();
   context.beginPath();
 
   if (rotate) {
     const [mx, my] =
-      transformOrigin === "center"
-        ? [(x + x1) / 2, (y + y1) / 2]
-        : transformOrigin === "end"
-        ? [x1, y1]
-        : [x, y];
+      transformOrigin === "center" ? [(x + x1) / 2, (y + y1) / 2] : transformOrigin === "end" ? [x1, y1] : [x, y];
     context.translate(mx, my);
     context.rotate(rotate);
     context.translate(-mx, -my);
@@ -108,20 +74,7 @@ function canvas$line({
   return this;
 }
 
-function canvas$triangle({
-  x,
-  y,
-  x1,
-  y1,
-  x2,
-  y2,
-  fill,
-  stroke,
-  strokeWidth,
-  rotate,
-  translateX,
-  translateY,
-}) {
+function canvas$triangle({ x, y, x1, y1, x2, y2, fill, stroke, strokeWidth, rotate, translateX, translateY }) {
   const context = this._context;
   context.save();
   if (translateX || translateY) context.translate(translateX, translateY);
@@ -141,16 +94,7 @@ function canvas$triangle({
 }
 
 // @TODO More command.
-function canvas$path({
-  x = 0,
-  y = 0,
-  d,
-  stroke = "#000",
-  strokeOpacity,
-  fill,
-  fillOpacity,
-  strokeWidth,
-}) {
+function canvas$path({ x = 0, y = 0, d, stroke = "#000", strokeOpacity, fill, fillOpacity, strokeWidth }) {
   stroke = normalizeColor(stroke, strokeOpacity);
   fill = normalizeColor(fill, fillOpacity);
   const context = this._context;
@@ -205,15 +149,7 @@ function canvas$clear({ fill }) {
   return this;
 }
 
-function canvas$polygon({
-  x: X,
-  y: Y,
-  fill,
-  stroke,
-  strokeWidth,
-  fillOpacity,
-  strokeOpacity,
-}) {
+function canvas$polygon({ x: X, y: Y, fill, stroke, strokeWidth, fillOpacity, strokeOpacity }) {
   stroke = normalizeColor(stroke, strokeOpacity);
   fill = normalizeColor(fill, fillOpacity);
   const context = this._context;

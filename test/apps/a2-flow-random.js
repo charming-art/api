@@ -68,5 +68,5 @@ export function a2FlowRandom() {
     angle: Math.PI / 6,
   });
 
-  return app.call(dispose).call(frame).render();
+  return app.call(dispose).call(frame).render().node();
 }

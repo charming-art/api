@@ -36,9 +36,7 @@ export function oscillationBeesSandBombs() {
         d: (d) => {
           const [x, y] = d;
           const now = app.prop("frameCount") / 200;
-          const l =
-            ((Math.hypot(x, y) + Math.atan2(y, x) / (Math.PI * 2) - now) % 1) *
-            -360;
+          const l = ((Math.hypot(x, y) + Math.atan2(y, x) / (Math.PI * 2) - now) % 1) * -360;
           projection.rotate([0, l, -l]);
           const context = cm.pathArray();
           path.context(context)(circle);
@@ -56,10 +54,5 @@ export function oscillationBeesSandBombs() {
     });
   }
 
-  return cm
-    .app({ width: width, height: width })
-    .on("update", draw)
-    .call(dispose)
-    .call(stats)
-    .start();
+  return cm.app({ width: width, height: width }).on("update", draw).call(dispose).call(stats).start().node();
 }

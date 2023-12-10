@@ -39,5 +39,5 @@ export function oscillationWaveSnake() {
         });
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

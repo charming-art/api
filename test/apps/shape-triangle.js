@@ -23,5 +23,5 @@ export function shapeTriangle() {
       fill: (_, i) => (i ? "steelblue" : "orange"),
     });
 
-  return app.call(dispose).call(frame).render();
+  return app.call(dispose).call(frame).render().node();
 }

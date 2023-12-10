@@ -20,5 +20,5 @@ export function randomWalk() {
     else x -= 1;
   });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

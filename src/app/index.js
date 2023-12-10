@@ -16,14 +16,7 @@ import { canvas } from "../canvas/index.js";
 import { Node } from "../node.js";
 import { Flow } from "../flow/index.js";
 
-function App({
-  width = 640,
-  height = 480,
-  renderer = canvas(),
-  frameRate = 60,
-  dpi = null,
-  ...rest
-} = {}) {
+function App({ width = 640, height = 480, renderer = canvas(), frameRate = 60, dpi = null, ...rest } = {}) {
   const root = new Node();
   const flow = new Flow([[0]], [0], root, this);
   const emitter = new Emitter();

@@ -1,8 +1,8 @@
 extern crate wasm_bindgen;
 use crate::{
+    backend::Backend,
     globals::{Color, Edge, Matrix3, Point, Vector3, Vertex, CELL_SIZE, NULL_VALUE},
     matrix3::{matrix3_identity, matrix3_transform},
-    backend::Backend,
 };
 use std::{cmp, ptr};
 use wasm_bindgen::prelude::*;

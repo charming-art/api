@@ -21,13 +21,10 @@ export function oscillationSquareAttract() {
 
   const movers = cm.range(20, () =>
     object({
-      location: cm.vec(
-        cm.random(app.prop("width")),
-        cm.random(app.prop("height"))
-      ),
+      location: cm.vec(cm.random(app.prop("width")), cm.random(app.prop("height"))),
       velocity: cm.vec(cm.random(), cm.random()),
       mass: cm.random(2, 5),
-    })
+    }),
   );
 
   const applyAttraction = attraction(attractor);
@@ -66,5 +63,5 @@ export function oscillationSquareAttract() {
         });
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

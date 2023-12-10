@@ -12,9 +12,7 @@ export async function terminalWhiteNoise() {
   const w = app.prop("width");
   const h = app.prop("height");
 
-  const characters = cm
-    .cross(cm.range(w), cm.range(h))
-    .map((d) => ({ x: d[0], y: d[1] }));
+  const characters = cm.cross(cm.range(w), cm.range(h)).map((d) => ({ x: d[0], y: d[1] }));
 
   const textOptions = {
     text: "Charming",
@@ -55,5 +53,5 @@ export async function terminalWhiteNoise() {
       });
   }
 
-  return app.on("update", update).call(dispose).call(stats).start();
+  return app.on("update", update).call(dispose).call(stats).start().node();
 }

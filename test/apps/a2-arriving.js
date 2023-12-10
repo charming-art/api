@@ -27,9 +27,7 @@ function update(app, context) {
 
   app
     .datum(target)
-    .process(cm.each, (d) =>
-      d.location.set(app.prop("mouseX"), app.prop("mouseY"))
-    )
+    .process(cm.each, (d) => d.location.set(app.prop("mouseX"), app.prop("mouseY")))
     .append(cm.circle, {
       x: (d) => d.location.x,
       y: (d) => d.location.y,
@@ -90,5 +88,6 @@ export function a2Arriving() {
     .call(dispose)
     .call(stats)
     .call(frame)
-    .start();
+    .start()
+    .node();
 }

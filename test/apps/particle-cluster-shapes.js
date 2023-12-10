@@ -39,10 +39,7 @@ export function particleClusterShapes() {
           lifespan: 255,
           type: Math.random() < 0.5 ? 1 : 0,
         })
-        .process(
-          cm.eachRight,
-          (d, i, array) => d.lifespan < 0 && array.splice(i, 1)
-        )
+        .process(cm.eachRight, (d, i, array) => d.lifespan < 0 && array.splice(i, 1))
         .process(cm.each, (d) => (d.lifespan -= 2))
         .process(cm.each, (d) => {
           d.velocity.add(d.acceleration);
@@ -65,5 +62,5 @@ export function particleClusterShapes() {
         .transform(cm.mapAttrs, scaleOptions);
     });
 
-  return app.call(dispose).call(frame).call(stats).start();
+  return app.call(dispose).call(frame).call(stats).start().node();
 }

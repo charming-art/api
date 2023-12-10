@@ -16,5 +16,5 @@ export async function terminalPoint() {
     x += 1;
   });
 
-  return app.call(dispose).start();
+  return app.call(dispose).start().node();
 }

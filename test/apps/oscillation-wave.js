@@ -30,5 +30,5 @@ export function oscillationWave() {
         });
     });
 
-  return app.call(dispose).call(frame).call(stats).start();
+  return app.call(dispose).call(frame).call(stats).start().node();
 }

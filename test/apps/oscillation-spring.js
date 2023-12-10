@@ -34,9 +34,9 @@ export function oscillationSpring() {
             r: 20,
             fill: cm.rgb(175),
             stroke: cm.rgb(0),
-          })
+          }),
         );
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

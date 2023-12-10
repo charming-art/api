@@ -24,5 +24,5 @@ export function oscillationDone() {
       group.append(cm.circle, { x, y, r: 16, fill: "#000" });
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

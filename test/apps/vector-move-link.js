@@ -22,5 +22,5 @@ export function vectorMoveLink() {
     });
   });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

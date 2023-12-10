@@ -12,15 +12,12 @@ export function forceEverything() {
 
   const movers = Array.from({ length: 20 }, () =>
     object({
-      location: cm.vec(
-        cm.random(app.prop("width")),
-        cm.random(app.prop("height"))
-      ),
+      location: cm.vec(cm.random(app.prop("width")), cm.random(app.prop("height"))),
       velocity: cm.vec(cm.random(-1, 1), cm.random(-1, 1)),
       acceleration: cm.vec(),
       mass: cm.random(2, 5),
       G: 0.4,
-    })
+    }),
   );
 
   const update = location();
@@ -34,7 +31,7 @@ export function forceEverything() {
           app
             .data(movers)
             .process(cm.filter, (j) => i !== j)
-            .process(cm.each, (j) => attraction(j)(i))
+            .process(cm.each, (j) => attraction(j)(i)),
         )
         .process(cm.each, update)
         .append(cm.circle, {
@@ -47,5 +44,5 @@ export function forceEverything() {
         });
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

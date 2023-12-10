@@ -12,10 +12,7 @@ export function oscillationOscillateMultiple() {
   const oscillators = cm.range(20, () => ({
     angle: cm.vec(),
     velocity: cm.vec(cm.random(-0.05, 0.05), cm.random(-0.05, 0.05)),
-    amplitude: cm.vec(
-      cm.random(app.prop("width") / 2),
-      cm.random(app.prop("height") / 2)
-    ),
+    amplitude: cm.vec(cm.random(app.prop("width") / 2), cm.random(app.prop("height") / 2)),
   }));
 
   app
@@ -39,9 +36,9 @@ export function oscillationOscillateMultiple() {
             stroke: "#000",
             fill: cm.rgb(175),
             fillOpacity: 0.5,
-          })
+          }),
         );
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

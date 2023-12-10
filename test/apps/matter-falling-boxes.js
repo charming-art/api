@@ -67,15 +67,12 @@ export function matterFallingBoxes() {
 
     app.append(cm.clear, { fill: "#fff" });
 
-    app
-      .data(boxes)
-      .process(cm.eachRight, checkBox)
-      .append(cm.rect, rectOptions);
+    app.data(boxes).process(cm.eachRight, checkBox).append(cm.rect, rectOptions);
 
     app.data(boundaries).append(cm.rect, rectOptions);
 
     Engine.update(engine);
   }
 
-  return app.on("update", update).call(dispose).call(stats).call(frame).start();
+  return app.on("update", update).call(dispose).call(stats).call(frame).start().node();
 }

@@ -30,7 +30,7 @@ export function randomNoise(octaves = 4, seed = 0) {
     return lerp(
       v,
       lerp(u, grad2(p[A], x, y), grad2(p[B], x - 1, y)),
-      lerp(u, grad2(p[A + 1], x, y - 1), grad2(p[B + 1], x - 1, y - 1))
+      lerp(u, grad2(p[A + 1], x, y - 1), grad2(p[B + 1], x - 1, y - 1)),
     );
   };
 

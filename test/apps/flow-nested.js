@@ -36,5 +36,5 @@ export function flowNested() {
     fill: "orange",
   });
 
-  return app.call(dispose).render();
+  return app.call(dispose).render().node();
 }

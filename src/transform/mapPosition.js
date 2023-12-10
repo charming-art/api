@@ -13,7 +13,7 @@ export function mapPosition(
     padding = 0,
     keysX = ["x", "x1"],
     keysY = ["y", "y1"],
-  } = {}
+  } = {},
 ) {
   const app = flow.app();
   const width = app.prop("width");

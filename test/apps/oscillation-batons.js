@@ -24,5 +24,5 @@ export function oscillationBatons() {
         .call((d) => d.append(cm.circle, { x: 80, y: 0, r: 5, fill: "black" }));
     });
 
-  return app.call(dispose).call(stats).call(frame).start();
+  return app.call(dispose).call(stats).call(frame).start().node();
 }

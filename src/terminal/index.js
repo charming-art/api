@@ -21,8 +21,7 @@ export const NULL_VALUE = 0xffffffff;
 export const CELL_SIZE = 4;
 
 // https://github.com/xtermjs/xterm.js/blob/096fe171356fc9519e0a6b737a98ca82d0587e91/src/browser/renderer/shared/Constants.ts#LL14C1-L14C1
-export const TEXT_BASELINE =
-  isFireFox || isLegacyEdge ? "bottom" : "ideographic";
+export const TEXT_BASELINE = isFireFox || isLegacyEdge ? "bottom" : "ideographic";
 
 function measureText(text, styles) {
   const span = document.createElement("span");
@@ -83,18 +82,8 @@ function bboxOf(matrix, { x, y, textAlign, textBaseline }) {
   const lines = matrix.split("\n");
   const height = lines.length;
   const width = Math.max(...lines.map((l) => l.length));
-  const startX =
-    textAlign === "left"
-      ? x - width
-      : textAlign === "center"
-      ? x - width / 2
-      : x;
-  const startY =
-    textBaseline === "bottom"
-      ? y - height
-      : textBaseline === "middle"
-      ? y - height / 2
-      : y;
+  const startX = textAlign === "left" ? x - width : textAlign === "center" ? x - width / 2 : x;
+  const startY = textBaseline === "bottom" ? y - height : textBaseline === "middle" ? y - height / 2 : y;
   return { lines, x: startX, y: startY, width, height };
 }
 
@@ -143,15 +132,7 @@ function terminal$point({ x, y, stroke }) {
   this._backend.point(x, y);
 }
 
-function terminal$text({
-  x,
-  y,
-  text,
-  fill,
-  textAlign = "start",
-  textBaseline = "top",
-  fontFamily = fontStandard(),
-}) {
+function terminal$text({ x, y, text, fill, textAlign = "start", textBaseline = "top", fontFamily = fontStandard() }) {
   const matrix = textSync(text, { font: fontFamily });
   const {
     x: startX,
@@ -201,15 +182,7 @@ function terminal$clear({ fill = "#000" }) {
 }
 
 function terminal$char(char, i, j, fg, bg, wide = false) {
-  const {
-    width: cols,
-    mode,
-    cellWidth,
-    cellHeight,
-    fontWeight,
-    fontSize,
-    fontFamily,
-  } = this._props;
+  const { width: cols, mode, cellWidth, cellHeight, fontWeight, fontSize, fontFamily } = this._props;
 
   const x = cellWidth * i;
   const y = cellHeight * j;
@@ -242,11 +215,7 @@ function terminal$char(char, i, j, fg, bg, wide = false) {
 export function terminal$render() {
   const bufferPtr = this._backend.render();
   const { width: cols, height: rows } = this._props;
-  const buffer = new Uint32Array(
-    this._memory.buffer,
-    bufferPtr,
-    cols * rows * CELL_SIZE
-  );
+  const buffer = new Uint32Array(this._memory.buffer, bufferPtr, cols * rows * CELL_SIZE);
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
       const index = (cols * i + j) * CELL_SIZE;
@@ -301,10 +270,7 @@ function terminal$init({
   const computedWidth = computedCols * cellWidth;
   const computedHeight = computedRows * cellHeight;
   const context = context2d(computedWidth, computedHeight);
-  const buffer = Array.from(
-    { length: computedCols * computedRows },
-    () => null
-  );
+  const buffer = Array.from({ length: computedCols * computedRows }, () => null);
   context.canvas.classList.add(TERMINAL_CLASS);
   const backend = Backend.new(computedCols, computedRows);
   Object.assign(this._props, {
@@ -356,9 +322,7 @@ Object.defineProperties(Terminal.prototype, {
 });
 
 export async function terminal() {
-  const module = await init(
-    typeof wasm === "function" ? await wasm() : undefined
-  );
+  const module = await init(typeof wasm === "function" ? await wasm() : undefined);
   const { memory } = module;
   return new Terminal(memory);
 }
