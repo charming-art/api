@@ -10,7 +10,7 @@ export function forceDancing() {
     height: 200,
   });
 
-  const movers = cm.range(25, () =>
+  const movers = cm.range(25).map(() =>
     object({
       location: cm.vec(),
       velocity: cm.vec(),

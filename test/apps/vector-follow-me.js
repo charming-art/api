@@ -9,7 +9,7 @@ export function vectorFollowMe() {
     height: 200,
   });
 
-  const movers = cm.range(20, () => ({
+  const movers = cm.range(20).map(() => ({
     location: cm.vec(cm.random(app.prop("width")), cm.random(app.prop("height"))),
     velocity: cm.vec(),
     acceleration: cm.vec(),

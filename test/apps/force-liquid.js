@@ -10,7 +10,7 @@ export function forceLiquid() {
     height: 200,
   });
 
-  const movers = cm.range(25, () =>
+  const movers = cm.range(25).map(() =>
     object({
       location: cm.vec(cm.random(0, app.prop("width")), 0),
       velocity: cm.vec(),

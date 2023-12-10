@@ -49,7 +49,7 @@ export function a2FlowRandom() {
 
   const noise = cm.randomNoise(4);
   const scale = cm.scaleLinear([0, 1], [0, cm.TWO_PI]);
-  const fields = cm.range(cols * rows, (_, d) => {
+  const fields = cm.range(cols * rows).map((_, d) => {
     const i = d % cols;
     const j = (d / cols) | 0;
     return scale(noise(j * 0.1, i * 0.1));

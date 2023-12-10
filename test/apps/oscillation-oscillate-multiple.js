@@ -9,7 +9,7 @@ export function oscillationOscillateMultiple() {
     height: 200,
   });
 
-  const oscillators = cm.range(20, () => ({
+  const oscillators = cm.range(20).map(() => ({
     angle: cm.vec(),
     velocity: cm.vec(cm.random(-0.05, 0.05), cm.random(-0.05, 0.05)),
     amplitude: cm.vec(cm.random(app.prop("width") / 2), cm.random(app.prop("height") / 2)),
