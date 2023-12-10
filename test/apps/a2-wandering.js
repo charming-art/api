@@ -78,20 +78,23 @@ function update(app, context) {
     y1: (d) => d.target.y,
   });
 
-  groups.append(cm.triangle, {
-    translateX: (d) => d.location.x,
-    translateY: (d) => d.location.y,
-    rotate: (d) => d.velocity.angle(),
-    x: (d) => d.r * 2,
-    y: 0,
-    x1: (d) => -d.r * 2,
-    y1: (d) => -d.r,
-    x2: (d) => -d.r * 2,
-    y2: (d) => d.r,
-    fill: cm.rgb(175),
-    stroke: cm.rgb(0),
-    strokeWidth: 2,
-  });
+  groups
+    .append(cm.group, {
+      x: (d) => d.location.x,
+      y: (d) => d.location.y,
+      rotate: (d) => d.velocity.angle(),
+    })
+    .append(cm.triangle, {
+      x: (d) => d.r * 2,
+      y: 0,
+      x1: (d) => -d.r * 2,
+      y1: (d) => -d.r,
+      x2: (d) => -d.r * 2,
+      y2: (d) => d.r,
+      fill: cm.rgb(175),
+      stroke: cm.rgb(0),
+      strokeWidth: 2,
+    });
 }
 
 export function a2Wandering() {

@@ -74,10 +74,9 @@ function canvas$line({ stroke, strokeWidth, x, y, x1, y1, rotate, transformOrigi
   return this;
 }
 
-function canvas$triangle({ x, y, x1, y1, x2, y2, fill, stroke, strokeWidth, rotate, translateX, translateY }) {
+function canvas$triangle({ x, y, x1, y1, x2, y2, fill, stroke, strokeWidth, rotate }) {
   const context = this._context;
   context.save();
-  if (translateX || translateY) context.translate(translateX, translateY);
   if (rotate) context.rotate(rotate);
   context.beginPath();
   if (stroke) context.strokeStyle = stroke;

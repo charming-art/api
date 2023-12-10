@@ -6,21 +6,13 @@ function renderNode(renderer, node, dimension, index = 0) {
   if (!children.length) return;
   for (const i of I) {
     if (value) {
-      const { x: X = [], y: Y = [], translateX: TX = [], translateY: TY = [], rotate: R = [] } = value;
+      const { x: X = [], y: Y = [], rotate: R = [] } = value;
       const x = X[i] ?? 0;
       const y = Y[i] ?? 0;
       const r = R[i];
-      const tx = TX[i];
-      const ty = TY[i];
       renderer.save();
-      if (tx || ty) {
-        renderer.translate(tx ?? 0, ty ?? 0);
-        if (r !== undefined) renderer.rotate(r);
-        renderer.translate(x, y);
-      } else {
-        renderer.translate(x, y);
-        if (r !== undefined) renderer.rotate(r);
-      }
+      renderer.translate(x, y);
+      if (r !== undefined) renderer.rotate(r);
     }
     for (const child of children) renderNode(renderer, child, dimension, i);
     if (value) renderer.restore();

@@ -41,10 +41,12 @@ function update(app, context) {
     .datum(a2)
     .process(cm.each, arrive)
     .process(cm.each, update)
-    .append(cm.triangle, {
-      translateX: (d) => d.location.x,
-      translateY: (d) => d.location.y,
+    .append(cm.group, {
+      x: (d) => d.location.x,
+      y: (d) => d.location.y,
       rotate: (d) => d.velocity.angle(),
+    })
+    .append(cm.triangle, {
       x: (d) => d.r * 2,
       y: 0,
       x1: (d) => -d.r * 2,
