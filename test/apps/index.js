@@ -45,3 +45,4 @@ export { terminalPoint } from "./terminal-point.js";
 export { terminalText } from "./terminal-text.js";
 export { regularNumbers } from "./regular-numbers.js";
 export { terminalWhiteNoise } from "./terminal-white-noise.js";
+export { curveCircles } from "./curve-circles.js";

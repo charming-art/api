@@ -2,6 +2,7 @@ export function circle(renderer, I, value) {
   const {
     x: X,
     y: Y,
+    position: P = [],
     r: R,
     fill: F = [],
     stroke: S = [],
@@ -13,8 +14,8 @@ export function circle(renderer, I, value) {
   } = value;
   for (const i of I) {
     renderer.circle({
-      x: X[i],
-      y: Y[i],
+      x: P[i] ? P[i][0] : X[i],
+      y: P[i] ? P[i][1] : Y[i],
       r: R[i],
       fill: F[i],
       stroke: S[i],
