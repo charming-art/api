@@ -18,8 +18,8 @@ export function mapPosition(
   const app = flow.app();
   const width = app.prop("width");
   const height = app.prop("height");
-  const rangeX = [padding, width - padding * 2];
-  const rangeY = [padding, height - padding * 2];
+  const rangeX = [padding, width - padding];
+  const rangeY = [padding, height - padding];
 
   if (reverseX) rangeX.reverse();
   if (reverseY) rangeY.reverse();
