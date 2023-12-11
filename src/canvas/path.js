@@ -14,6 +14,7 @@ export function canvas$path({ x = 0, y = 0, d, stroke = "#000", strokeOpacity, f
   for (const [type, ...params] of d) {
     if (type === "M") context.moveTo(...params);
     else if (type === "L") context.lineTo(...params);
+    else if (type ==="Z") context.closePath();
   }
   if (fill) context.fill();
   if (stroke) context.stroke();

@@ -19,6 +19,7 @@ export function curveLineMaurerRose() {
       y: (i) => Math.sin(n * d * i) * Math.sin(d * i),
       stroke: "black",
       strokeWidth: 0.33,
+      close: true,
     })
     .transform(cm.mapPosition, {
       domainX: [-1, 1],
@@ -32,6 +33,7 @@ export function curveLineMaurerRose() {
       y: (i) => Math.sin(n * i) * Math.sin(i),
       stroke: "red",
       strokeWidth: 2.5,
+      close: true,
     })
     .transform(cm.mapPosition, {
       domainX: [-1, 1],
