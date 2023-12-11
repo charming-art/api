@@ -1,8 +1,5 @@
 export function triangle(renderer, I, value) {
-  if (renderer.triangles) {
-    renderer.triangles(I, value);
-    return;
-  }
+  if (renderer.triangles) return renderer.triangles(I, value);
   const {
     x: X,
     y: Y,

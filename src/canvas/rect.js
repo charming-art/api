@@ -1,4 +1,4 @@
-import { normalizeColor } from "./normalize.js";
+import { normalizeColorString } from "../color.js";
 
 export function canvas$rect({
   stroke,
@@ -17,8 +17,8 @@ export function canvas$rect({
     x = x - width / 2;
     y = y - height / 2;
   }
-  stroke = normalizeColor(stroke, strokeOpacity);
-  fill = normalizeColor(fill, fillOpacity);
+  stroke = normalizeColorString(stroke, strokeOpacity);
+  fill = normalizeColorString(fill, fillOpacity);
   const context = this._context;
   context.save();
   context.translate(x + width / 2, y + height / 2);

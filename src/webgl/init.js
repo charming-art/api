@@ -1,4 +1,5 @@
 import { vertex as triangleVertex, fragment as triangleFragment } from "./triangles.js";
+import { vertex as circleVertex, fragment as circleFragment } from "./circles.js";
 import { contextGL } from "../context.js";
 
 function createShader(gl, type, source) {
@@ -34,7 +35,12 @@ function compileProgram(gl, vertexSource, fragmentSource) {
 export function webgl$init({ width, height, dpi = null }) {
   const gl = contextGL(width, height, dpi);
   const triangle = compileProgram(gl, triangleVertex, triangleFragment);
+  const circle = compileProgram(gl, circleVertex, circleFragment);
   Object.assign(this._props, { width, height });
-  Object.assign(this, { _gl: gl, _triangle: triangle });
+  Object.assign(this, {
+    _gl: gl,
+    _triangle: triangle,
+    _circle: circle,
+  });
   return this;
 }

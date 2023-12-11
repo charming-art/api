@@ -1,9 +1,9 @@
 import { NULL_VALUE } from "./constant.js";
-import { rgb } from "d3-color";
+import { normalizeColor } from "../color.js";
 
 function encodeColor(color) {
   if (color === NULL_VALUE || color === null) return NULL_VALUE;
-  const { r, g, b } = rgb(color);
+  const [r, g, b] = normalizeColor(color);
   return b + (g << 8) + (r << 16);
 }
 

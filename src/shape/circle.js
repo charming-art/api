@@ -1,4 +1,5 @@
 export function circle(renderer, I, value) {
+  if (renderer.circles) return renderer.circles(I, value);
   const {
     x: X,
     y: Y,

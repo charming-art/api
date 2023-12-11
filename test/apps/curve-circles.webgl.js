@@ -1,12 +1,11 @@
 import * as cm from "../../src/index.js";
 import { dispose } from "../dispose.js";
-import { frame } from "../frame.js";
 import { stats } from "../stats.js";
 
-export function curveCircles() {
+export function curveCirclesWebGL() {
   const width = 700;
   const height = 700;
-  const count = 4000;
+  const count = 10000;
 
   function update(app) {
     const time = app.prop("frameCount") / 50;
@@ -34,5 +33,15 @@ export function curveCircles() {
       .transform(cm.mapAttrs, { r: { range: [24, 96] } });
   }
 
-  return cm.app({ width, height }).on("update", update).call(dispose).call(stats).call(frame).start().node();
+  return cm
+    .app({
+      width,
+      height,
+      renderer: cm.webgl(),
+    })
+    .on("update", update)
+    .call(dispose)
+    .call(stats)
+    .start()
+    .node();
 }

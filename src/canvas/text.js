@@ -1,4 +1,4 @@
-import { normalizeColor } from "./normalize.js";
+import { normalizeColorString } from "../color.js";
 
 export function canvas$text({
   text,
@@ -15,8 +15,8 @@ export function canvas$text({
   fontSize = 14,
   fontWeight = "normal",
 }) {
-  stroke = normalizeColor(stroke, strokeOpacity);
-  fill = normalizeColor(fill, fillOpacity);
+  stroke = normalizeColorString(stroke, strokeOpacity);
+  fill = normalizeColorString(fill, fillOpacity);
   const context = this._context;
   context.save();
   if (stroke) context.strokeStyle = stroke;

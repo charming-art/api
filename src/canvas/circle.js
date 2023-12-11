@@ -1,9 +1,9 @@
-import { normalizeColor } from "./normalize.js";
+import { normalizeColorString } from "../color.js";
 
 export function canvas$circle({ stroke, strokeWidth, fill, x, y, r, fillOpacity, strokeOpacity }) {
   const context = this._context;
-  stroke = normalizeColor(stroke, strokeOpacity);
-  fill = normalizeColor(fill, fillOpacity);
+  stroke = normalizeColorString(stroke, strokeOpacity);
+  fill = normalizeColorString(fill, fillOpacity);
   context.save();
   context.beginPath();
   if (stroke) context.strokeStyle = stroke;

@@ -1,7 +1,11 @@
 import { textSync } from "figlet";
 import { standard as fontStandard } from "../font/standard.js";
-import { normalizeColor } from "./normalize.js";
 import { bboxOf } from "./textBBox.js";
+
+function normalizeColor(color, width, height) {
+  if (typeof color === "function") return color(width, height);
+  return () => color;
+}
 
 export function terminal$text({
   x,

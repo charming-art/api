@@ -1,9 +1,9 @@
-import { normalizeColor } from "./normalize.js";
+import { normalizeColorString } from "../color.js";
 
 // @TODO More command.
 export function canvas$path({ x = 0, y = 0, d, stroke = "#000", strokeOpacity, fill, fillOpacity, strokeWidth }) {
-  stroke = normalizeColor(stroke, strokeOpacity);
-  fill = normalizeColor(fill, fillOpacity);
+  stroke = normalizeColorString(stroke, strokeOpacity);
+  fill = normalizeColorString(fill, fillOpacity);
   const context = this._context;
   context.save();
   context.strokeStyle = stroke;

@@ -1,8 +1,8 @@
-import { normalizeColor } from "./normalize.js";
+import { normalizeColorString } from "../color.js";
 
 export function canvas$polygon({ x: X, y: Y, fill, stroke, strokeWidth, fillOpacity, strokeOpacity }) {
-  stroke = normalizeColor(stroke, strokeOpacity);
-  fill = normalizeColor(fill, fillOpacity);
+  stroke = normalizeColorString(stroke, strokeOpacity);
+  fill = normalizeColorString(fill, fillOpacity);
   const context = this._context;
   context.save();
   context.beginPath();
