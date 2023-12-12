@@ -361,7 +361,7 @@ const group = app.append(cm.group, {
 group.data([1, 2, 3]);
 ```
 
-If the flow has multiple groups(such as [flow.data](#flow-data) followed by [app.data](#app-data)), then data should typically be specified as a function. The function will be evaluated for each group in order, being passed the group's parent datum(_d_), the group index(_i_), all the groups(_data_) and this flow(_flow_).
+If the flow has multiple groups(such as [flow.data](#flow-data) followed by [app.data](#app-data)), then _data_ should typically be specified as a function. The function will be evaluated for each group in order, being passed the group's parent datum(_d_), the group index(_i_), all the groups(_data_) and this flow(_flow_).
 
 ```js
 app.data(matrix).data((d, i, data, flow) => {});
@@ -389,7 +389,7 @@ app
 
 <a name="flow-datum" href="#flow-datum">#</a> _flow_.**datum**(_value_)
 
-Like [flow.data](#flow-data), except receive a _value_ instead of an array of data.
+Like [flow.data](#flow-data), except receives a _value_ instead of an array of data.
 
 ```js
 flow.datum(1);
@@ -580,13 +580,108 @@ app.render();
 
 <a name="cm-each" href="#cm-each">#</a> _cm_.**each**
 
+Calls the specified _function_ on each datum of a flow, and returns a new flow that contains the data. The function is being passed the current datum(_d_), the current index(_i_), the current group(_data_) and the flow(_flow_).
+
+```js
+const data = [
+  { name: "Locke", number: 4 },
+  { name: "Reyes", number: 8 },
+  { name: "Ford", number: 15 },
+  { name: "Jarrah", number: 16 },
+  { name: "Shephard", number: 23 },
+  { name: "Kwon", number: 42 },
+];
+
+app.data(data).process(cm.each, (d) => d.number * 2);
+```
+
 <a name="cm-eachRight" href="#cm-eachRight">#</a> _cm_.**eachRight**
+
+Like [cm.each](#cm-each), except iterates from right to left.
+
+```js
+const data = [
+  { name: "Locke", number: 4 },
+  { name: "Reyes", number: 8 },
+  { name: "Ford", number: 15 },
+  { name: "Jarrah", number: 16 },
+  { name: "Shephard", number: 23 },
+  { name: "Kwon", number: 42 },
+];
+
+app.data(data).process(cm.eachRight, (d, i, data) => {
+  if (d.number > 30) data.splice(i, 1);
+});
+```
 
 <a name="cm-filter" href="#cm-filter">#</a> _cm_.**filter**
 
+Calls the specified _function_ on each datum of a flow, and returns a new flow that contains the data meeting true condition. The function is being passed the current datum(_d_), the current index(_i_), the current group(_data_) and the flow(_flow_).
+
+```js
+const data = [
+  { name: "Locke", number: 4 },
+  { name: "Reyes", number: 8 },
+  { name: "Ford", number: 15 },
+  { name: "Jarrah", number: 16 },
+  { name: "Shephard", number: 23 },
+  { name: "Kwon", number: 42 },
+];
+
+app.data(data).process(cm.filter, (d) => d.number % 2 === 0);
+```
+
 <a name="cm-map" href="#cm-map">#</a> _cm_.**map**
 
+Calls the specified _function_ on each datum of a flow, and returns a new flow that contains the new data. The function is being passed the current datum(_d_), the current index(_i_), the current group(_data_) and the flow(_flow_).
+
+```js
+const data = [
+  { name: "Locke", number: 4 },
+  { name: "Reyes", number: 8 },
+  { name: "Ford", number: 15 },
+  { name: "Jarrah", number: 16 },
+  { name: "Shephard", number: 23 },
+  { name: "Kwon", number: 42 },
+];
+
+app.data(data).process(cm.map, (d) => ({ ...d, number: d.number * 2 }));
+```
+
 <a name="cm-push" href="#cm-push">#</a> _cm_.**push**
+
+Appends the specified _datum_ to a flow, and returns a new flow that contains the new datum.
+
+If _datum_ is not a function, appends it to all groups.
+
+```js
+const data = [
+  { name: "Locke", number: 4 },
+  { name: "Reyes", number: 8 },
+  { name: "Ford", number: 15 },
+  { name: "Jarrah", number: 16 },
+  { name: "Shephard", number: 23 },
+  { name: "Kwon", number: 42 },
+];
+
+app.data(data).process(cm.push, { name: "Jim", number: 25 });
+```
+
+If the flow has multiple groups(such as [flow.data](#flow-data) followed by [app.data](#app-data)), then _datum_ should typically be specified as a function. The function will be evaluated for each group in order, being passed the group(_group_), the group index(_i_), all the groups(_data_) and this flow(_flow_).
+
+```js
+const matrix = [
+  [" +", "-", "+ "],
+  [" |", cm.wch("🚀"), "| "],
+  [" +", "-", "+ "],
+];
+
+app
+  .data(matrix)
+  .append(cm.group, { y: (_, i) => i })
+  .data((d) => d)
+  .process(cm.push, (group, i, groups) => ` ${i}`);
+```
 
 ### Shape
 
@@ -619,12 +714,10 @@ app.render();
 Maps abstract attributes to visual attributes with scales. Each scale's options are specified as a nested options object with the corresponding attribute name.
 
 ```js
-app
-  .append(cm.circle, { x: (d) => d[0], y: (d) => d[1] })
-  .transform(cm.mapAttrs, {
-    x: {}, // scale for x attribute
-    y: {}, // scale for y attribute
-  });
+app.append(cm.circle, { x: (d) => d[0], y: (d) => d[1] }).transform(cm.mapAttrs, {
+  x: {}, // scale for x attribute
+  y: {}, // scale for y attribute
+});
 ```
 
 A scale's domain is typically inferred automatically. You can custom a scale explicitly using these options:
@@ -634,14 +727,12 @@ A scale's domain is typically inferred automatically. You can custom a scale exp
 - **range** - visual values, typically _[min, max]_
 
 ```js
-app
-  .append(cm.circle, { x: (d) => d[0], y: (d) => d[1] })
-  .transform(cm.mapAttrs, {
-    x: {
-      scale: cm.scaleLog,
-      range: [0, app.prop("height")],
-    },
-  });
+app.append(cm.circle, { x: (d) => d[0], y: (d) => d[1] }).transform(cm.mapAttrs, {
+  x: {
+    scale: cm.scaleLog,
+    range: [0, app.prop("height")],
+  },
+});
 ```
 
 <a name="cm-mapPosition" href="#cm-mapPosition">#</a> _cm_.**mapPosition**
@@ -659,13 +750,11 @@ For x attributes, such as x and x1, the scale's range is _[0, app.prop("width")]
 - **padding** - space between shapes and border, defaults to 0
 
 ```js
-app
-  .append(cm.line, { x: (d) => d[0], y: (d) => d[0] })
-  .transform(cm.mapPosition, {
-    scaleX: cm.scaleLog,
-    reverseY: true,
-    padding: 15,
-  });
+app.append(cm.line, { x: (d) => d[0], y: (d) => d[0] }).transform(cm.mapPosition, {
+  scaleX: cm.scaleLog,
+  reverseY: true,
+  padding: 15,
+});
 ```
 
 ### Scale
@@ -876,7 +965,7 @@ app.on("update", () =>
     y: 0,
     width: 10,
     height: 10,
-  })
+  }),
 );
 ```
 
