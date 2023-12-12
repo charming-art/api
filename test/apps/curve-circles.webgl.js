@@ -6,6 +6,7 @@ export function curveCirclesWebGL() {
   const width = 700;
   const height = 700;
   const count = 10000;
+  const theta = cm.range(count, 0, cm.TWO_PI);
 
   function update(app) {
     const time = app.prop("frameCount") / 50;
@@ -14,7 +15,7 @@ export function curveCirclesWebGL() {
     app.append(cm.clear, { fill: "black" });
 
     app
-      .data(cm.range(count, 0, cm.TWO_PI))
+      .data(theta)
       .append(cm.circle, {
         x: (d) => Math.cos(d) * dist(d),
         y: (d) => Math.sin(d) * dist(d),
@@ -26,7 +27,6 @@ export function curveCirclesWebGL() {
           const b = 0.6 + 0.4 * Math.cos(th - (Math.PI * 2.0) / 3.0);
           return cm.rgb(r * 255, g * 255, b * 255);
         },
-        fill: "transparent",
         strokeOpacity: (0.15 * 2000) / count,
       })
       .transform(cm.mapPosition, { padding: 100 })

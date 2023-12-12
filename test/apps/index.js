@@ -47,3 +47,4 @@ export { regularNumbers } from "./regular-numbers.js";
 export { terminalWhiteNoise } from "./terminal-white-noise.js";
 export { curveCircles } from "./curve-circles.js";
 export { curveCirclesWebGL } from "./curve-circles.webgl.js";
+export { curveCirclesGLSLWebGL } from "./curve-circles-glsl.webgl.js";

@@ -3,6 +3,7 @@ import { Node } from "../node.js";
 
 export function valueOf(data, options) {
   const values = Object.entries(options).map(([key, value]) => {
+    if (typeof value === "object" && !value.extract) return [key, value];
     const v = typeof value === "function" ? value : () => value;
     const V = data.map(v);
     return [key, V];
@@ -19,6 +20,7 @@ export function flow$append(render, options) {
     render,
     options,
     value: valueOf(group, options),
+    group,
   }));
   const node = new Node(values, [], parent);
   parent._children.push(node);

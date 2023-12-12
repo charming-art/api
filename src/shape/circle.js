@@ -1,5 +1,5 @@
-export function circle(renderer, I, value) {
-  if (renderer.circles) return renderer.circles(I, value);
+export function circle(renderer, I, value, options, group) {
+  if (renderer.circles) return renderer.circles(I, value, group);
   const {
     x: X,
     y: Y,

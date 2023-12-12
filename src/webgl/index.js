@@ -7,7 +7,8 @@ import { webgl$circles } from "./circles.js";
 function WebGL() {
   Object.defineProperties(this, {
     _gl: { value: null, writable: true },
-    _triangle: { value: null, writable: true },
+    _triangle: { value: new Map() },
+    _circle: { value: new Map() },
     _props: { value: {}, writable: true },
   });
 }

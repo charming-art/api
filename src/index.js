@@ -55,3 +55,4 @@ export { ghost as fontGhost } from "./font/ghost.js";
 export { standard as fontStandard } from "./font/standard.js";
 export { rainbowX as gradientRainBowX } from "./gradient/rainbowX.js";
 export { sineBowX as gradientSineBowX } from "./gradient/sinebowX.js";
+export { glsl } from "./helper/glsl.js";

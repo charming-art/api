@@ -7,6 +7,7 @@ export function curveCircles() {
   const width = 700;
   const height = 700;
   const count = 4000;
+  const theta = cm.range(count, 0, cm.TWO_PI);
 
   function update(app) {
     const time = app.prop("frameCount") / 50;
@@ -15,7 +16,7 @@ export function curveCircles() {
     app.append(cm.clear, { fill: "black" });
 
     app
-      .data(cm.range(count, 0, cm.TWO_PI))
+      .data(theta)
       .append(cm.circle, {
         x: (d) => Math.cos(d) * dist(d),
         y: (d) => Math.sin(d) * dist(d),

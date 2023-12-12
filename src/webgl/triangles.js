@@ -1,4 +1,5 @@
 import { color as d3Color } from "d3-color";
+import { getProgram } from "./program";
 
 export const vertex = `
   attribute vec2 a_position;
@@ -22,7 +23,9 @@ export const fragment = `
 `;
 
 export function webgl$triangles(I, value) {
-  const { _gl: gl, _triangle: program } = this;
+  const { _gl: gl, _triangle: map } = this;
+
+  const program = getProgram(gl, map, vertex, fragment);
 
   gl.useProgram(program);
 

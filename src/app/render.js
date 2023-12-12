@@ -1,7 +1,7 @@
 function renderNode(renderer, node, dimension, index = 0) {
   const data = node._data[index];
-  const { render, I, value, options } = data;
-  render(renderer, I, value, options);
+  const { render, I, value, options, group } = data;
+  render(renderer, I, value, options, group);
   const children = node._children;
   if (!children.length) return;
   for (const i of I) {
