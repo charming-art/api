@@ -685,29 +685,273 @@ app
 
 ### Shape
 
+Appends shapes to canvas, most of shapes support the following attributes:
+
+- **fill** - the fill color
+- **fillOpacity** - fill opacity (a number between 0 and 1)
+- **stroke** - stroke color
+- **strokeWidth** - stroke width (in pixels)
+- **strokeOpacity** - stroke opacity (a number between 0 and 1)
+
 <a name="cm-point" href="#cm-point">#</a> _cm_.**point**
+
+Appends dots positioned in _x_ and _y_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- **x** - the horizontal position, in pixels or in cells
+- **y** - the vertical position, in pixels or in cells
+
+```js
+app.append(cm.point, { x: 10, y: 10 });
+```
 
 <a name="cm-link" href="#cm-link">#</a> _cm_.**link**
 
+Appends straight lines between two points _[x, y]_ and _[x1, y1]_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- **x** - the starting horizontal position, in pixels or in cells
+- **y** - the starting vertical position, in pixels or in cells
+- **x1** - the ending horizontal position, in pixels or in cells
+- **y1** - the ending vertical position, in pixels or in cells
+- **rotate** - the rotation angle in degrees clockwise
+- **transformOrigin** - the position of the origin point for rotation, defaults to _start_; _center_ and _end_
+
+```js
+app.append(cm.link, { x: 0, y: 0, x1: 100, y1: 100 });
+```
+
 <a name="cm-rect" href="#cm-rect">#</a> _cm_.**rect**
+
+Appends rectangles defined by _x_, _y_, _width_ and _height_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- **x** - the horizontal position, in pixels or cells
+- **y** - the vertical position, in pixels or cells
+- **width** - the rectangle width, in pixels or cells
+- **height** - the rectangle height, in pixels or cells
+- **anchor** - how to position the rectangle, defaults to _start_; _center_
+- **rotate** - the rotation angle in degrees clockwise
+
+```js
+app.append(cm.rect, { x: 10, y: 10, width: 50, height: 40 });
+```
 
 <a name="cm-circle" href="#cm-circle">#</a> _cm_.**circle**
 
+Appends circles positioned in _x_ and _y_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- **x** - the horizontal position, in pixels or cells
+- **y** - the vertical position, in pixels or cells
+- **r** - the circle radius, in pixels or cells
+
+```js
+app.append(cm.circle, { x: 50, y: 50, r: 30 });
+```
+
 <a name="cm-triangle" href="#cm-triangle">#</a> _cm_.**triangle**
+
+Appends triangles defined by _x_, _y_, _x1_, _y1_, _x2_, _y2_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- **x** - the first horizontal position, in pixels or cells
+- **y** - the first vertical position, in pixels or cells
+- **x1** - the second horizontal position, in pixels or cells
+- **y1** - the second vertical position, in pixels or cells
+- **x2** - the third horizontal position, in pixels or cells
+- **y2** - the third vertical position, in pixels or cells
+
+```js
+app.append(cm.triangle, { x: 0, y: 0, x1: 10, y1: 0, x2: 10, y2: 10 });
+```
 
 <a name="cm-polygon" href="#cm-polygon">#</a> _cm_.**polygon**
 
+Appends polygons defined by _x_ and _y_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- **x** - the horizontal positions of control points, in pixels or cells clockwise
+- **y** - the vertical positions of control points, in pixels or cells clockwise
+
+If appends one polygon defined by a column of _x_ and a of _y_, assigns columns to its x and y attribute respectively.
+
+```js
+app.append(cm.polygon, {
+  x: [0, 10, 10],
+  y: [0, 0, 10],
+});
+```
+
+If only appends one polygon defined by an array of points _[x, y]_ or objects, assigns accessors return number to its x and y attribute respectively.
+
+```js
+const polygon = [
+  [0, 0],
+  [10, 0],
+  [10, 10],
+];
+
+app.data(polygon).append(cm.polygon, {
+  d => d[0],
+  d => d[1],
+})
+```
+
+If appends multiple polygons defined by an array of objects, assigns accessors returns an array of numbers to its x and y attribute respectively.
+
+```js
+const polygons = [
+  { X: [0, 10, 10], Y: [0, 0, 10] },
+  { X: [20, 30, 30], Y: [0, 0, 10] },
+];
+
+app.data(polygons).append(cm.polygon, {
+  d => d.X,
+  d => d.Y,
+})
+```
+
 <a name="cm-line" href="#cm-line">#</a> _cm_.**line**
+
+Appends draw two-dimensional lines defined by _x_ and _y_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- **x** - the horizontal positions of control points, in pixels or cells
+- **y** - the vertical positions of control points, in pixels or cells
+
+If appends one line defined by a column of _x_ and a of _y_, assigns columns to its x and y attribute respectively.
+
+```js
+app.append(cm.line, {
+  x: [0, 10, 20],
+  y: [10, 5, 15],
+});
+```
+
+If only appends one line defined by an array of points _[x, y]_ or objects, assigns accessors return number to its x and y attribute respectively.
+
+```js
+const line = [
+  [0, 10],
+  [10, 5],
+  [20, 15],
+];
+
+app.data(line).append(cm.line, {
+  d => d[0],
+  d => d[1],
+})
+```
+
+If appends multiple lines defined by an array of objects, assigns accessors returns an array of numbers to its x and y attribute respectively.
+
+```js
+const lines = [
+  { X: [0, 10, 20], Y: [10, 5, 15] },
+  { X: [20, 40, 35], Y: [10, 5, 15] },
+];
+
+app.data(lines).append(cm.line, {
+  d => d.X,
+  d => d.Y,
+})
+```
 
 <a name="cm-path" href="#cm-path">#</a> _cm_.**path**
 
+Appends path defined by _d_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- _d_: an array of [path commands](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d)
+
+If appends one path, assigns the specified path commands to its d attribute.
+
+```js
+app.append(cm.path, {
+  d: [["M", 0, 0], ["L", 10, 0], ["L", 10, 10], ["Z"]],
+});
+```
+
+If appends multiple paths, assigns accessors returns an array of path commands to its d attribute.
+
+```js
+const paths = [
+  [["M", 0, 0], ["L", 10, 0], ["L", 10, 10], ["Z"]],
+  [["M", 10, 0], ["L", 20, 10], ["L", 20, 10], ["Z"]],
+];
+
+app.data(paths).append(cm.path, { d: (d) => d });
+```
+
 <a name="cm-text" href="#cm-text">#</a> _cm_.**text**
+
+Appends texts at given position in _x_ and _y_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- **x** - the horizontal position
+- **y** - the vertical position
+- **text** - the text contents (a string)
+- **fontSize** - the font size in pixels; defaults to 10
+- **fontFamily** - the font name
+- **fontWeight** - the [font weight](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight), defaults to normal
+- **textBaseline** - the line anchor for vertical position; _top_, _bottom_, or _middle_
+- **textAlign** - the [text align](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align) for horizontal position; _start_, _end_, or _middle_
 
 <a name="cm-group" href="#cm-group">#</a> _cm_.**group**
 
+Appends groups at given position in _x_ and _y_. In addition to the [standard shape attributes](#shape), the following attributes are supported:
+
+- **y** - the horizontal position
+- **x** - the vertical position
+- **rotate** - the rotation angle in degrees clockwise
+
+All the child shapes are applied translate(_x_, _y_) and rotate(_rotate_) transformations.
+
+```js
+const group = app.group({
+  width: 100,
+  height: 100,
+});
+
+group.append(cm.point, {
+  x: 0,
+  y: 0,
+  r: 10,
+});
+```
+
 <a name="cm-clear" href="#cm-clear">#</a> _cm_.**clear**
 
-<a name="cm-shape" href="#cm-shape">#</a> _cm_.**shape**
+Appends clear shape to clear the canvas background with the _specified_ color. The following attributes are supported:
+
+- **fill** - the clear color
+
+<a name="cm-composite-shape" href="#cm-composite-shape">#</a> **function**(_flow_, _value_)
+
+Defines a composite shape by a _function_, passing the current flow(_flow_) and attribute value(_value_).
+
+```js
+// Defines a composite shape.
+function arrow(flow, { length, angle, x, y, rotate, ...options }) {
+  const group = flow.append(cm.group, { x, y, rotate });
+  const l1 = length.map((d) => d / 2);
+  const l2 = length.map((d) => -d / 2);
+  const a1 = angle.map((d) => d);
+  const a2 = angle.map((d) => -d);
+  group.append(cm.link, { x: l2, y: 0, x1: l1, y1: 0, ...options });
+  group.append(cm.link, { x: 0, y: 0, x1: l1, y1: 0, rotate: a2, transformOrigin: "end", ...options });
+  group.append(cm.link, { x: 0, y: 0, x1: l1, y1: 0, rotate: a1, transformOrigin: "end", ...options });
+}
+
+// Uses a composite shape.
+app
+  .data(fields)
+  .append(arrow, {
+    x: (d) => d.x * size + size / 2,
+    y: (d) => d.y * size + size / 2,
+    length: size * 0.8,
+    angle: Math.PI / 6,
+    rotate: (d) => d.value,
+  })
+  .transform(cm.mapAttrs, {
+    rotate: {
+      domain: [0, 1],
+      range: [0, cm.TWO_PI],
+    },
+  });
+```
 
 ### Transform
 
@@ -716,10 +960,15 @@ app
 Maps abstract attributes to visual attributes with scales. Each scale's options are specified as a nested options object with the corresponding attribute name.
 
 ```js
-app.append(cm.circle, { x: (d) => d[0], y: (d) => d[1] }).transform(cm.mapAttrs, {
-  x: {}, // scale for x attribute
-  y: {}, // scale for y attribute
-});
+app
+  .append(cm.circle, {
+    x: (d) => d[0],
+    y: (d) => d[1],
+  })
+  .transform(cm.mapAttrs, {
+    x: {}, // scale for x attribute
+    y: {}, // scale for y attribute
+  });
 ```
 
 A scale's domain is typically inferred automatically. You can custom a scale explicitly using these options:
@@ -729,12 +978,17 @@ A scale's domain is typically inferred automatically. You can custom a scale exp
 - **range** - visual values, typically _[min, max]_
 
 ```js
-app.append(cm.circle, { x: (d) => d[0], y: (d) => d[1] }).transform(cm.mapAttrs, {
-  x: {
-    scale: cm.scaleLog,
-    range: [0, app.prop("height")],
-  },
-});
+app
+  .append(cm.circle, {
+    x: (d) => d[0],
+    y: (d) => d[1],
+  })
+  .transform(cm.mapAttrs, {
+    x: {
+      scale: cm.scaleLog,
+      range: [0, app.prop("height")],
+    },
+  });
 ```
 
 <a name="cm-mapPosition" href="#cm-mapPosition">#</a> _cm_.**mapPosition**
@@ -752,11 +1006,16 @@ For x attributes, such as x and x1, the scale's range is _[0, app.prop("width")]
 - **padding** - space between shapes and border, defaults to 0
 
 ```js
-app.append(cm.line, { x: (d) => d[0], y: (d) => d[0] }).transform(cm.mapPosition, {
-  scaleX: cm.scaleLog,
-  reverseY: true,
-  padding: 15,
-});
+app
+  .append(cm.line, {
+    x: (d) => d[0],
+    y: (d) => d[0],
+  })
+  .transform(cm.mapPosition, {
+    scaleX: cm.scaleLog,
+    reverseY: true,
+    padding: 15,
+  });
 ```
 
 ### Scale
