@@ -1,7 +1,7 @@
 {
   "name": "@charming-art/charming",
   "version": "0.0.2",
-  "description": "The data-driven language for creative coding and ASCII art.",
+  "description": "The high performance data-driven language for creative coding and ASCII art.",
   "author": {
     "name": "pearmini",
     "url": "https://github.com/pearmini"

@@ -1,6 +1,6 @@
 export function glsl(strings, ...params) {
   return {
-    extract: false,
+    preserve: true,
     strings,
     params,
   };

@@ -2,7 +2,7 @@
 
 > WIP
 
-The data-driven language for creative coding and ASCII art.
+The high performance data-driven language for creative coding and ASCII art.
 
 - [Why is Charming](#why-is-charming)
 - [Examples](https://observablehq.com/d/2f9bf9f52cb24090)
@@ -76,20 +76,20 @@ app
     r: { range: [1, 15] },
   });
 
-document.body.appendChild(app.render());
+document.body.appendChild(app.render().node());
 ```
 
 ## Why is Charming?
 
-### Charming supports ASCII art
-
 ### Charming is data-driven
 
+### Charming is high performance
+
+### Charming supports ASCII art
+
+### Charming is composable
+
 ### Charming prefers functional programming
-
-### Charming will be high performance
-
-### Charming will be composable
 
 ### Charming embraces existing libraries
 
@@ -706,6 +706,8 @@ app
 <a name="cm-group" href="#cm-group">#</a> _cm_.**group**
 
 <a name="cm-clear" href="#cm-clear">#</a> _cm_.**clear**
+
+<a name="cm-shape" href="#cm-shape">#</a> _cm_.**shape**
 
 ### Transform
 
