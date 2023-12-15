@@ -1,6 +1,8 @@
 import { Flow } from "./index.js";
 
 export function flow$data(data) {
+  if (arguments.length === 0) return this._groups;
+
   if (typeof data !== "function") {
     return new Flow([data], data, this._parent, this._app);
   }

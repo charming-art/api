@@ -184,7 +184,7 @@ Appends a new flow with the specified array of _data_ to the root flow of app, r
 app.data([1, 2, 3]);
 ```
 
-<a name="app-datum" href="#app-datum">#</a> _app_.**datum**(_datum_)
+<a name="app-datum" href="#app-datum">#</a> _app_.**datum**(_[datum]_)
 
 Appends a new flow with an array containing the specified _datum_ to the root flow app, returning the new flow.
 
@@ -196,6 +196,12 @@ The shorthand is thus equivalent to:
 
 ```js
 app.data([1]);
+```
+
+If no argument is specified, return groups of this app:
+
+```js
+app.datum(); // [[1]]
 ```
 
 <a name="app-append" href="#app-append">#</a> _app_.**append**(_shape[, options]_)
@@ -356,7 +362,7 @@ const bbox = app.textBBox({
 
 Binding data to shapes.
 
-<a name="flow-data" href="#flow-data">#</a> _flow_.**data**(_data_)
+<a name="flow-data" href="#flow-data">#</a> _flow_.**data**(_[data]_)
 
 Returns a new flow that contains this specified _data_. The _data_ is specified for each group in this flow.
 
@@ -395,6 +401,12 @@ app
     x: (_, i) => i,
     stroke: (d) => cm.cfb(d),
   });
+```
+
+If no argument is specified, return groups of this app:
+
+```js
+app.data(); // [...]
 ```
 
 <a name="flow-datum" href="#flow-datum">#</a> _flow_.**datum**(_value_)
