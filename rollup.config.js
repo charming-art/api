@@ -19,6 +19,16 @@ const umd = {
   onwarn,
 };
 
+const core = {
+  input: "src/core.js",
+  output: {
+    format: "umd",
+    name: "cm",
+  },
+  plugins: [commonjs(), polyfill(), node()],
+  onwarn,
+};
+
 export default [
   {
     input: "src/index.js",
@@ -45,5 +55,20 @@ export default [
       file: "dist/cm.umd.min.js",
     },
     plugins: [...umd.plugins, terser()],
+  },
+  {
+    ...core,
+    output: {
+      ...umd.output,
+      file: "dist/cm.core.umd.js",
+    },
+  },
+  {
+    ...core,
+    output: {
+      ...umd.output,
+      file: "dist/cm.core.umd.min.js",
+    },
+    plugins: [...core.plugins, terser()],
   },
 ];
