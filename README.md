@@ -101,28 +101,30 @@ document.body.appendChild(app.render().node());
 
 The core concepts of Charming, which are included in [core build](./src/core.js):
 
-- [App](#app)
-- [Flow](#flow)
-- [Process](#process)
-- [Shape](#shape)
-- [Transform](#transform)
-- [Scale](#scale)
-- [Event](#event)
-- [Prop](#prop)
+- [App](#app) - rendering app to DOM and animating it
+- [Flow](#flow) - binding data to shapes
+- [Process](#process) - preparing data to be rendered
+- [Shape](#shape) - appending geometric elements to canvas
+- [Transform](#transform) - deriving shape attribute values
+- [Scale](#scale) - mapping abstract data to visual representation
+- [Event](#event) - handling hooks and events
+- [Prop](#prop) - returning properties of app
 
 The advanced concepts of Charming, which are included in [full build](./src/index.js):
 
-- [Renderer](#renderer)
-- [Color](#color)
-- [Array](#array)
-- [Math](#math)
-- [Constant](#constant)
-- [Font](#font)
-- [Gradient](#gradient)
-- [Helper](#helper)
-- [Vector](#vector)
+- [Renderer](#renderer) - different rendering technologies and styles
+- [Color](#color) - defining colors for shapes
+- [Array](#array) - array generation and manipulation
+- [Math](#math) - processing numbers, randomness, etc.
+- [Constant](#constant) - useful constants
+- [Font](#font) - fonts for ASCII art text
+- [Gradient](#gradient) - gradient fills for ASCII art text
+- [Helper](#helper) - useful unities
+- [Vector](#vector) - basics for simulating physical laws
 
 ### App
+
+Rendering app to DOM and animating it.
 
 <a name="cm-app" href="#cm-app">#</a> _cm_.**app**(_[options]_)
 
@@ -352,6 +354,8 @@ const bbox = app.textBBox({
 
 ### Flow
 
+Binding data to shapes.
+
 <a name="flow-data" href="#flow-data">#</a> _flow_.**data**(_data_)
 
 Returns a new flow that contains this specified _data_. The _data_ is specified for each group in this flow.
@@ -502,6 +506,8 @@ app.data([0.1, 0.2, 0.3]).process(cm.map, scale);
 
 ### Process
 
+Preparing data to be rendered.
+
 <a name="cm-each" href="#cm-each">#</a> _cm_.**each**
 
 Calls the specified _function_ on each datum of a flow, and returns a new flow that contains the data. The function is being passed the current datum(_d_), the current index(_i_), the current group(_data_) and the flow(_flow_).
@@ -609,7 +615,7 @@ app
 
 ### Shape
 
-Appends shapes to canvas, most of shapes support the following attributes:
+Appending geometric elements to canvas, most of shapes support the following attributes:
 
 - **fill** - the fill color
 - **fillOpacity** - fill opacity (a number between 0 and 1)
@@ -879,6 +885,8 @@ app
 
 ### Transform
 
+Deriving shape attribute values.
+
 <a name="cm-mapAttrs" href="#cm-mapAttrs">#</a> _cm_.**mapAttrs**
 
 Maps abstract attributes to visual attributes with scales. Each scale's options are specified as a nested options object with the corresponding attribute name.
@@ -944,6 +952,8 @@ app
 
 ### Scale
 
+Mapping abstract data to visual representation.
+
 <a name="cm-scaleLinear" href="#cm-scaleLinear">#</a> _cm_.**scaleLinear**(_domain, range_)
 
 Constructs a new linear scale with the specified _domain_ and _range_. Linear scales map a continuous, quantitative to a continuous output using a linear transformation.
@@ -975,6 +985,8 @@ const scale = cm.scaleLog([1, 10], [0, 960]);
 ```
 
 ### Event
+
+Handling hooks and events.
 
 <a name="event-update" href="#event-update">#</a> _app_.**on**(_"update", callback_)
 
@@ -1106,6 +1118,8 @@ app.call(measure);
 ```
 
 ### Prop
+
+Returning properties of app.
 
 <a name="prop-width" href="#prop-width">#</a> _app_.**prop**(_"width"_)
 
@@ -1252,6 +1266,8 @@ app.prop("fontWeight"); // "normal"
 
 ### Renderer
 
+Different rendering technologies and styles.
+
 <a name="cm-canvas" href="#cm-canvas">#</a> _cm_.**canvas()**
 
 Constructs a canvas renderer, drawing shapes with [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). It is the default renderer for [app](#cm-app) and there is no need to specify it explicitly.
@@ -1334,6 +1350,8 @@ app.render();
 
 ### Color
 
+Defining colors for shapes.
+
 <a name="cm-rgb" href="#cm-rgb">#</a> _cm_.**rgb**(_r[, g[, b]]_)
 
 Returns a string representing the color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value).
@@ -1390,6 +1408,8 @@ app.append(cm.rect, {
 
 ### Array
 
+Array generation and manipulation.
+
 <a name="cm-range" href="#cm-range">#</a> _cm_.**range**(_count[, start[, end]]_)
 
 Returns an array of exactly _count_ uniformly-spaced values between _start_ and _end_. If _start_ is not specified, it defaults to 0. If _end_ is not specified, it defaults to 1.
@@ -1423,6 +1443,8 @@ cm.extent(people, (d) => d.age); // [10, 30]
 ```
 
 ### Math
+
+Processing numbers, randomness, etc.
 
 <a name="cm-clamp" href="#cm-clamp">#</a> _cm_.**clamp**(_value, min, max_)
 
@@ -1477,6 +1499,8 @@ cm.randomNormal(30, 10)(); // 31.94829616303788
 
 ### Constant
 
+Useful constants.
+
 <a name="cm-two-pi" href="#cm-two-pi">#</a> _cm_.**TWO_PI**
 
 It is twice the ratio of the circumference of a circle to its diameter.
@@ -1486,6 +1510,8 @@ Math.cos(cm.TOW_PI); // 1
 ```
 
 ### Font
+
+Fonts for ASCII art text.
 
 <a name="cm-fontStandard" href="#cm-fontStandard">#</a> _cm_.**fontStandard**()
 
@@ -1515,6 +1541,8 @@ app.append(cm.text, {
 
 ### Gradient
 
+Gradient fills for ASCII art text.
+
 <a name="cm-gradientRainBowX" href="#cm-gradientRainBowX">#</a> _cm_.**gradientRainBowX**()
 
 Returns the fill attribute with the vertical rainbow gradient.
@@ -1542,6 +1570,8 @@ app.append(cm.text, {
 <img src="./img/cm-gradientSineBowX.png" width=800 alt="cm-gradientSineBowX">
 
 ### Helper
+
+Useful unities.
 
 <a name="cm-pathArray" href="#cm-pathArray">#</a> _cm_.**pathArray**()
 
@@ -1577,6 +1607,8 @@ context.toArray(); // [["M", 0, 0], ["L", 10, 0], ["L", 10, 10], ["Z"]]
 ```
 
 ### Vector
+
+Basics for simulating physical laws.
 
 <a name="cm-vec" href="#cm-vec">#</a> _cm_.**vec**(_[x[, y]]_)
 
