@@ -1,12 +1,27 @@
 # Charming: Charming Computing
 
-> WIP
+**Charming** is a free, open-source, creative code language for Charming Computing, which means making arts by computational algorithm. It has data-driven, concise, inclusive, yet expressive API inspired by [G2.js](https://github.com/antvis/G2), [D3.js](https://github.com/d3) and [P5.js](https://p5js.org/).
 
-The high performance data-driven language for creative coding and ASCII art.
+The data-driven API style endows Charming with the potential for high performance, as it can take advantage of WebGL's [batch rendering](https://developer.mozilla.org/en-US/docs/Web/API/ANGLE_instanced_arrays/drawArraysInstancedANGLE) capabilities: rendering hundreds to thousands of instanced elements with just a single draw call. At the same time, some GLSL properties can be defined to offload expensive calculations to the GPU, thereby significantly increasing the frame rate.
 
-- [Why is Charming](#why-is-charming)
-- [Examples](https://observablehq.com/d/2f9bf9f52cb24090)
-- [API Reference](#api-reference)
+<img alt="example-circles-glsl-code" src="./img/example-circles-glsl-code.png" height="420px" style="margin-right:1em"/><img alt="example-circles-glsl" src="./img/example-circles-glsl.gif" height="420px"/>
+
+In addition to high performance, Charming also focus on making ASCII art accessible for artists, designers, educators, beginners, and anyone else! It provided a consistent API for both styles, and the [terminal canvas](./src/terminal/) for ASCII art is embedded in JavaScript and uses a [software renderer](./rust/) written in Rust compiled to WASM, to gain high performance hopefully.
+
+<img alt="example-white-noise-code" src="./img/example-white-noise-code.png" height="430px" style="margin-right:1em"/><img alt="example-white-noise" src="./img/example-white-noise.gif" height="430px"/>
+
+Our hope with Charming is that you spend less time wrangling the machinery of programming and more time "using computing to tell stories". Or put more simply: **with Charming, you'll express more, more easily.** If you are new to Charming, we highly recommend first reading these tutorials to introduce Charming's [inspiration](#why-is-charming) and core concepts:
+
+- [App](#app) - rendering app to DOM and animating it
+- [Flow](#flow) - binding data to shapes
+- [Process](#process) - preparing data to be rendered
+- [Shape](#shape) - appending geometric elements to canvas
+- [Transform](#transform) - deriving shape attribute values
+- [Scale](#scale) - mapping abstract data to visual representation
+- [Event](#event) - handling hooks and events
+- [Prop](#prop) - returning properties of the app
+
+And there are [a plenty of examples](https://observablehq.com/d/2f9bf9f52cb24090) to get started with.
 
 ## Installing
 
@@ -30,7 +45,7 @@ In vanilla HTML, Charming can be imported as an ES module, say from jsDelivr:
 
 ```html
 <script type="module">
-  import * as cm from "https://cdn.jsdelivr.net/npm/@charming-art/charming@0.0.2/+esm";
+  import * as cm from "https://cdn.jsdelivr.net/npm/@charming-art/charming/+esm";
 
   const app = cm.app();
 
@@ -43,7 +58,7 @@ In vanilla HTML, Charming can be imported as an ES module, say from jsDelivr:
 Charming is also available as a UMD bundle for legacy browsers.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@charming-art/charming@0.0.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@charming-art/charming"></script>
 <script>
   const app = cm.app();
 
