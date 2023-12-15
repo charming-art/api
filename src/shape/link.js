@@ -1,9 +1,11 @@
+import { define } from "./define.js";
+
 const defaults = {
   stroke: "#000",
   strokeWidth: 1,
 };
 
-export function link(renderer, I, value) {
+export const link = define((renderer, I, value) => {
   const {
     x: X,
     y: Y,
@@ -27,4 +29,4 @@ export function link(renderer, I, value) {
       ...(SW[i] && { strokeWidth: SW[i] }),
     });
   }
-}
+});

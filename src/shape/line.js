@@ -1,4 +1,6 @@
-export function line(renderer, I, value, options) {
+import { define } from "./define.js";
+
+export const line = define((renderer, I, value, options) => {
   const { close = false } = options;
   const { x: X, y: Y, stroke: S = [], strokeWidth: SW = [] } = value;
   const first = I[0];
@@ -11,4 +13,4 @@ export function line(renderer, I, value, options) {
     stroke: S[first],
     strokeWidth: SW[first],
   });
-}
+});

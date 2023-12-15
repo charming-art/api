@@ -3,9 +3,9 @@ import { Flow } from "../flow/index.js";
 function renderNode(renderer, node, dimension, index, app) {
   const data = node._data[index];
   const { render, I, value, options, group } = data;
-  const { composite } = render;
+  const { builtin } = render;
   const children = node._children;
-  if (composite) {
+  if (!builtin) {
     node._children = [];
     const flow = new Flow([I], I, node, app);
     render(flow, value);
@@ -13,7 +13,7 @@ function renderNode(renderer, node, dimension, index, app) {
     if (!children.length) return;
     for (const child of children) renderNode(renderer, child, dimension, 0, app);
   }
-  if (!composite) render(renderer, I, value, options, group);
+  if (builtin) render(renderer, I, value, options, group);
   if (!children.length) return;
   for (const i of I) {
     if (value) {

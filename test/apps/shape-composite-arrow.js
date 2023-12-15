@@ -2,7 +2,7 @@ import * as cm from "../../src/index.js";
 import { dispose } from "../dispose.js";
 import { frame } from "../frame.js";
 
-const arrow = cm.shape((flow, { length, angle, x, y, rotate, ...options }) => {
+function arrow(flow, { length, angle, x, y, rotate, ...options }) {
   const group = flow.append(cm.group, { x, y, rotate });
   const halfLengthPos = length.map((d) => d / 2);
   const halfLengthNeg = length.map((d) => -d / 2);
@@ -36,11 +36,11 @@ const arrow = cm.shape((flow, { length, angle, x, y, rotate, ...options }) => {
     transformOrigin: "end",
     ...options,
   });
-});
+}
 
-const arrowRed = cm.shape((flow, options) => {
+function arrowRed(flow, options) {
   flow.append(arrow, { ...options, stroke: "red" });
-});
+}
 
 export function shapeCompositeArrow() {
   const width = 640,

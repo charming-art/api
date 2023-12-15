@@ -1,4 +1,6 @@
-export function rect(renderer, I, value) {
+import { define } from "./define.js";
+
+export const rect = define((renderer, I, value) => {
   const {
     x: X = [],
     y: Y = [],
@@ -27,4 +29,4 @@ export function rect(renderer, I, value) {
       ...(R[i] && { rotate: R[i] }),
     });
   }
-}
+});

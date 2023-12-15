@@ -13,7 +13,6 @@ export { polygon } from "./shape/polygon.js";
 export { point } from "./shape/point.js";
 export { path } from "./shape/path.js";
 export { text } from "./shape/text.js";
-export { shape } from "./shape/shape.js";
 export { linear as scaleLinear } from "./scale/linear.js";
 export { sqrt as scaleSqrt } from "./scale/sqrt.js";
 export { log as scaleLog } from "./scale/log.js";

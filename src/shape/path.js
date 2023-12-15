@@ -1,4 +1,6 @@
-export function path(renderer, I, value) {
+import { define } from "./define.js";
+
+export const path = define((renderer, I, value) => {
   const {
     x: X = [],
     y: Y = [],
@@ -21,4 +23,4 @@ export function path(renderer, I, value) {
       strokeWidth: SW[i],
     });
   }
-}
+});

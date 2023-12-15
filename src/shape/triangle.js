@@ -1,4 +1,6 @@
-export function triangle(renderer, I, value) {
+import { define } from "./define.js";
+
+export const triangle = define((renderer, I, value) => {
   if (renderer.triangles) return renderer.triangles(I, value);
   const {
     x: X,
@@ -26,4 +28,4 @@ export function triangle(renderer, I, value) {
       rotate: R[i],
     });
   }
-}
+});

@@ -1,4 +1,6 @@
-export function circle(renderer, I, value, options, group) {
+import { define } from "./define.js";
+
+export const circle = define((renderer, I, value, options, group) => {
   if (renderer.circles) return renderer.circles(I, value, group);
   const {
     x: X,
@@ -26,4 +28,4 @@ export function circle(renderer, I, value, options, group) {
       fontFamily: FF[i],
     });
   }
-}
+});

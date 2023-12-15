@@ -1,4 +1,6 @@
-export function text(renderer, I, value) {
+import { define } from "./define.js";
+
+export const text = define((renderer, I, value) => {
   const {
     text: T = [],
     x: X = [],
@@ -27,4 +29,4 @@ export function text(renderer, I, value) {
       fontFamily: FF[i],
     });
   }
-}
+});

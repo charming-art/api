@@ -1,4 +1,6 @@
-export function polygon(renderer, I, value) {
+import { define } from "./define.js";
+
+export const polygon = define((renderer, I, value) => {
   const {
     x: X = [],
     y: Y = [],
@@ -19,4 +21,4 @@ export function polygon(renderer, I, value) {
       strokeWidth: SW[i],
     });
   }
-}
+});
