@@ -99,14 +99,20 @@ document.body.appendChild(app.render().node());
 
 ## API Reference
 
+The core concepts of Charming, which are included in [core build](./src/core.js):
+
 - [App](#app)
 - [Flow](#flow)
-- [Renderer](#renderer)
+- [Process](#process)
 - [Shape](#shape)
 - [Transform](#transform)
 - [Scale](#scale)
 - [Event](#event)
 - [Prop](#prop)
+
+The advanced concepts of Charming, which are included in [full build](./src/index.js):
+
+- [Renderer](#renderer)
 - [Color](#color)
 - [Array](#array)
 - [Math](#math)
@@ -493,88 +499,6 @@ function scale(d, i, data, flow) {
 
 app.data([0.1, 0.2, 0.3]).process(cm.map, scale);
 ```
-
-### Renderer
-
-<a name="cm-canvas" href="#cm-canvas">#</a> _cm_.**canvas()**
-
-Constructs a canvas renderer, drawing shapes with [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). It is the default renderer for [app](#cm-app) and there is no need to specify it explicitly.
-
-```js
-const app = cm.app({
-  height: 200,
-  renderer: cm.canvas(), // not necessary
-});
-
-app.append(cm.circle, {
-  x: 100,
-  y: 100,
-  r: 50,
-  fill: "orange",
-});
-
-app.render();
-```
-
-<img src="./img/cm-canvas.png" width=640>
-
-<a name="cm-terminal" href="#cm-terminal">#</a> _cm_.**terminal()**
-
-Returns a promise resolved to a terminal renderer, drawing shapes in a terminal like context.
-
-```js
-const app = cm.app({
-  renderer: await cm.terminal(),
-});
-```
-
-Shapes drawn by terminal renders are (typically) not positioned in literal pixels, or colored in literal colors, as in a conventional graphics system. Instead they are positioned in count of terminal's cell and colored by [characters](#cm-cfb).
-
-```js
-const app = cm.app({
-  mode: "double",
-  renderer: await cm.terminal(),
-});
-
-app
-  .data(cm.range(240, 0, Math.PI * 2))
-  .append(cm.group, {
-    x: app.prop("width") / 2,
-    y: app.prop("height") / 2,
-  })
-  .append(cm.point, {
-    x: (t) => 10 * Math.cos(t) * Math.cos(t * 3),
-    y: (t) => 10 * Math.sin(t) * Math.cos(t * 3),
-    stroke: cm.cfb(cm.wch("🌟")),
-  });
-
-app.render();
-```
-
-<img src="./img/cm-terminal-shape.png" width=640 />
-
-Moreover, it draws ASCII text powered by [figlet.js](https://github.com/patorjk/figlet.js).
-
-```js
-const app = cm.app({
-  width: 800,
-  height: 200,
-  mode: "double",
-  renderer: await cm.terminal(),
-});
-
-app.append(cm.text, {
-  x: app.prop("width") / 2,
-  y: app.prop("height") / 2,
-  text: "charming",
-  textBaseline: "middle",
-  textAlign: "center",
-});
-
-app.render();
-```
-
-<img src="./img/cm-terminal-text.png" width=800 />
 
 ### Process
 
@@ -1325,6 +1249,88 @@ Returns the font weight used to render text, which is only for app with a [termi
 const app = cm.app({ renderer: await cm.terminal() });
 app.prop("fontWeight"); // "normal"
 ```
+
+### Renderer
+
+<a name="cm-canvas" href="#cm-canvas">#</a> _cm_.**canvas()**
+
+Constructs a canvas renderer, drawing shapes with [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). It is the default renderer for [app](#cm-app) and there is no need to specify it explicitly.
+
+```js
+const app = cm.app({
+  height: 200,
+  renderer: cm.canvas(), // not necessary
+});
+
+app.append(cm.circle, {
+  x: 100,
+  y: 100,
+  r: 50,
+  fill: "orange",
+});
+
+app.render();
+```
+
+<img src="./img/cm-canvas.png" width=640>
+
+<a name="cm-terminal" href="#cm-terminal">#</a> _cm_.**terminal()**
+
+Returns a promise resolved to a terminal renderer, drawing shapes in a terminal like context.
+
+```js
+const app = cm.app({
+  renderer: await cm.terminal(),
+});
+```
+
+Shapes drawn by terminal renders are (typically) not positioned in literal pixels, or colored in literal colors, as in a conventional graphics system. Instead they are positioned in count of terminal's cell and colored by [characters](#cm-cfb).
+
+```js
+const app = cm.app({
+  mode: "double",
+  renderer: await cm.terminal(),
+});
+
+app
+  .data(cm.range(240, 0, Math.PI * 2))
+  .append(cm.group, {
+    x: app.prop("width") / 2,
+    y: app.prop("height") / 2,
+  })
+  .append(cm.point, {
+    x: (t) => 10 * Math.cos(t) * Math.cos(t * 3),
+    y: (t) => 10 * Math.sin(t) * Math.cos(t * 3),
+    stroke: cm.cfb(cm.wch("🌟")),
+  });
+
+app.render();
+```
+
+<img src="./img/cm-terminal-shape.png" width=640 />
+
+Moreover, it draws ASCII text powered by [figlet.js](https://github.com/patorjk/figlet.js).
+
+```js
+const app = cm.app({
+  width: 800,
+  height: 200,
+  mode: "double",
+  renderer: await cm.terminal(),
+});
+
+app.append(cm.text, {
+  x: app.prop("width") / 2,
+  y: app.prop("height") / 2,
+  text: "charming",
+  textBaseline: "middle",
+  textAlign: "center",
+});
+
+app.render();
+```
+
+<img src="./img/cm-terminal-text.png" width=800 />
 
 ### Color
 
