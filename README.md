@@ -135,15 +135,43 @@ In addition to the mentioned features, Charming also incorporates best practices
 
 It is important to emphasize that Charming will not forget the core value of P5.js: **be beginner friendly**. Beyond keeping the API concise and intuitive, Charming will put strong emphasis on teaching, which is the most impactful aspect of tool building.
 
-### Charming is declarative and data-driven
+### Charming is declarative
+
+Charming's atomic operand is **flow**: a container hold data and shapes. **Operators** act on flow, modifying content. The instance _app_, creating by _cm.app_, also serving as a namespace, provides _datum_ and _data_ methods for creating flows and placing values into them.
+
+Any number of **operators** can be applied to selected data. The **process** operators pipe data through a series of pure functions to prepare data for rendering, such _cm.map_, _cm.each_, and _cm.filter_. The **append** operators add a new shape for each processed datum in this flow, extracting columns of data and assigning them to shape attributes, thus allowing the the convenient creation of nested structures. The **transform** operators derives and modifies extracted shape attribute values before committing to the **renderer**.
+
+Charming supports method chaining for brevity when applying multiple operators: the operator return value is a new flow. This allows authoring computational art declaratively and a clear relationship between the raw data and the drawn graphics can be seen through the declared operators.
+
+For example, to draw circles positioned a curve function, while radius and index maintaining a positive correlation:
+
+```js
+import * as cm from "@charming-art/charming";
+
+const app = cm.app({
+  width: 640,
+  height: 640,
+});
+
+app
+  .data(cm.range(240))
+  .process(cm.map, (_, i, data) => (i * Math.PI * 2) / data.length)
+  .append(cm.circle, {
+    x: (t) => Math.cos(t) * Math.cos(t * 3),
+    y: (t) => Math.sin(t) * Math.cos(t * 3),
+    r: (_, i) => i,
+  })
+  .transform(cm.mapPosition, { padding: 15 })
+  .transform(cm.mapAttrs, { r: { range: [1, 15] } });
+
+document.body.appendChild(app.render().node());
+```
 
 ### Charming is high performance
 
 ### Charming supports ASCII art
 
 ### Charming is composable
-
-### Charming prefers functional programming
 
 ### Charming embraces existing libraries
 
