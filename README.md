@@ -72,6 +72,8 @@ Charming is also available as a UMD bundle for legacy browsers.
 
 ## Quick Examples
 
+<img src="./img/example-clover.png" width=640 />
+
 ```js
 import * as cm from "@charming-art/charming";
 
@@ -94,6 +96,27 @@ app
   });
 
 document.body.appendChild(app.render().node());
+```
+
+<img src="./img/example-ascii-text.png" />
+
+```js
+const app = cm.app({
+  width,
+  renderer: await cm.terminal(),
+});
+
+app.append(cm.text, {
+  text: "hello world",
+  x: app.prop("width") / 2,
+  y: app.prop("height") / 2,
+  fill: cm.gradientSineBowX(),
+  textAlign: "center",
+  textBaseline: "middle",
+  fontFamily: cm.fontGhost(),
+});
+
+document.body.appendChild(app.render().node(()));
 ```
 
 ## Why is Charming?
