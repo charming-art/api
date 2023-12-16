@@ -4,11 +4,11 @@
 
 The data-driven API style endows Charming with the potential for **high performance**, as it can take advantage of WebGL's [batch rendering](https://developer.mozilla.org/en-US/docs/Web/API/ANGLE_instanced_arrays/drawArraysInstancedANGLE) technique: rendering hundreds to thousands of objects or elements with just a single draw call. At the same time, some GLSL properties can be defined to offload expensive calculations to the GPU, thereby significantly increasing the FPS.
 
-<img alt="example-circles-glsl-code" src="./img/example-circles-glsl-code.png" height="420px" style="margin-right:1em"/><img alt="example-circles-glsl" src="./img/example-circles-glsl.gif" height="420px"/>
+<a href="https://observablehq.com/d/86d2c1fe79fac300"><img alt="example-circles-glsl-code" src="./img/example-circles-glsl-code.png" height="420px" style="margin-right:1em"/></a><img alt="example-circles-glsl" src="./img/example-circles-glsl.gif" height="420px"/>
 
 In addition to high performance, Charming also focus on making **ASCII art** accessible for artists, designers, educators, beginners, and anyone else! It provided a consistent API for both styles, and the [terminal canvas](./src/terminal/) for ASCII art is embedded in JavaScript and uses a [software renderer](./rust/) written in Rust compiled to WASM, to gain high performance hopefully.
 
-<img alt="example-white-noise-code" src="./img/example-white-noise-code.png" height="430px" style="margin-right:1em"/><img alt="example-white-noise" src="./img/example-white-noise.gif" height="430px"/>
+<a href="https://observablehq.com/d/9e951c5e9d721ef5"><img alt="example-white-noise-code" src="./img/example-white-noise-code.png" height="430px" style="margin-right:1em"/></a><img alt="example-white-noise" src="./img/example-white-noise.gif" height="430px"/>
 
 Charming also put strong emphasis on **lightweight**: the core bundle is just 23kb minified. ([Smaller libraries have smaller carbon footprint!](https://observablehq.com/@mrchrisadams/carbon-footprint-of-sending-data-around)) With that in mind, Charming is designed to be flexible and incrementally adoptable. It is also means that Charming is **beginner friendly**, because you don't have to start by diving to complex concepts: think of it as a collection of syntactic sugars for [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API).
 
