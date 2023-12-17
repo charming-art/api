@@ -185,7 +185,7 @@ By decoupling specification (the what) from execution (the how), Charming can us
 
 In addition to optimizing rendering, Charming further enhances performance by offloading expensive computations to the GPU, thereby optimizing calculation efficiency. **GLSL attributes** can be conveniently defined using _cm.glsl_, a tagged template literal specifically for GLSL that supports the interpolation of dynamic and non-serializable _JavaScript numbers_. Each GLSL attribute ought to be encapsulated within a GLSL function that carries the _name_ of the corresponding attribute. This function is invoked with each data item(_d_) hold by the flow and is expected to return a _value_ of the specified attribute type. Charming enables moving expensive computations into GLSL attributes, which are then compiled into shader programs, allowing the GPU to handle these operations efficiently.
 
-For example, to render specific number of circles while dynamically updating their positions, strokes and radii using trigonometric functions. While the Canvas renderer can maintain 60 FPS for up to _5.5k_ circles, the WebGL renderer can sustain the same 60 FPS for as many as _22k_ circles. Moreover, when faced with the task of rendering _100k_ circles, the WebGL renderer fails to draw them, but WebGL combined with GLSL attributes can still manage to render at a reduced frame rate of 10 FPS.
+[For example](https://observablehq.com/d/86d2c1fe79fac300), to render specific number of circles while dynamically updating their positions, strokes and radii using trigonometric functions. While the Canvas renderer can maintain 60 FPS for up to _5.5k_ circles, the WebGL renderer can sustain the same 60 FPS for as many as _22k_ circles. Moreover, when faced with the task of rendering _100k_ circles, the WebGL renderer fails to draw them, but WebGL combined with GLSL attributes can still manage to render at a reduced frame rate of 10 FPS.
 
 ```js
 import * as cm from "@charming-art/charming";
@@ -251,7 +251,7 @@ Charming is designed to offer users a broader spectrum of artistic expression. T
 
 Charming introduces the **terminal renderer**, enabling users to create ASCII art as effortlessly as they would with traditional art forms. Instead of using pixels, this renderer takes a unique approach by shifting the coordinate system from pixels to cells, allowing shapes to be rendered into printable characters and emojis. Each 'cell' in the ASCII art can be defined by a _character (ch)_, with a _foreground color (fg)_ and _background color (bg)_, vastly enhancing the expressive potential compared to the traditional color encoding methods.
 
-For example, to draw text in the style of ASCII art and render points into random characters to simulate white noise effect:
+[For example](https://observablehq.com/d/9e951c5e9d721ef5), to draw text in the style of ASCII art and render points into random characters to simulate white noise effect:
 
 ```js
 let characters;
@@ -306,6 +306,52 @@ function update(app) {
 In addition to supporting ASCII Art, Charming will also be able to support a variety of styles in the future, such as [hand-drawn](https://github.com/rough-stuff/rough) style. Why not have a little fun? Life' not just about work, you know.
 
 ### Charming is composable
+
+Inspired by component philosophy in [React](https://react.dev/), Charming makes it easy to define custom composite shape through pure function, such as this arrow shape:
+
+```js
+function arrow(flow, { length, angle, x, y, rotate, ...options }) {
+  const group = flow.append(cm.group, { x, y, rotate });
+  const l1 = length.map((d) => d / 2);
+  const l2 = length.map((d) => -d / 2);
+  const a1 = angle.map((d) => d);
+  const a2 = angle.map((d) => -d);
+  group.append(cm.link, { x: l2, y: 0, x1: l1, y1: 0, ...options });
+  group.append(cm.link, { x: 0, y: 0, x1: l1, y1: 0, rotate: a2, transformOrigin: "end", ...options });
+  group.append(cm.link, { x: 0, y: 0, x1: l1, y1: 0, rotate: a1, transformOrigin: "end", ...options });
+}
+```
+
+You can use this composite shape like any built-in shape. [For example](https://observablehq.com/d/82d4b52694a7f370), to draw a flow field:
+
+```js
+app
+  .data(fields)
+  // Use arrow shape.
+  .append(arrow, {
+    x: (d) => d.x * size + size / 2,
+    y: (d) => d.y * size + size / 2,
+    length: size * 0.8,
+    angle: Math.PI / 6,
+    rotate: (d) => d.value,
+  })
+  .transform(cm.mapAttrs, {
+    rotate: { range: [0, cm.TWO_PI] },
+  });
+```
+
+<img src="./img/example-noise.png" width=640 />
+
+Simple components gain power through composition, you can even define more complex shape to extend Charming's abilities. [For example](https://observablehq.com/@pearmini/bar), to define and use a barY shape to plot a bar chart:
+
+```js
+app.data(data).append(barY, {
+  x: (d) => d.letter,
+  y: (d) => d.frequency,
+});
+```
+
+<img src="./img/example-bar.png"  />
 
 ### Charming is beginner friendly
 
