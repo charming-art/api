@@ -12,7 +12,7 @@ In addition to high performance, Charming focuses on making **ASCII art** access
 
 Moreover, Charming also puts strong emphasis on **lightweight**: the [core bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.core.umd.min.js) is just 23kb minified. ([Smaller libraries have smaller carbon footprint!](https://observablehq.com/@mrchrisadams/carbon-footprint-of-sending-data-around)) With that in mind, Charming is designed to be flexible, incrementally adoptable and supports fully [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking). It's also means that Charming is **beginner friendly**, because you don't have to start by diving into complex concepts: think of it as a collection of syntactic sugars for [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API).
 
-Most importantly, our hope with Charming is that you spend less time wrangling the machinery of programming and more time "using computing to tell stories". Or put more simply: **with Charming, you'll express more, more easily.** If you are new to Charming, we highly recommend first reading this article to introduce Charming's [inspiration](#why-is-charming) and core concepts:
+Most importantly, our hope with Charming is that you spend less time wrangling the machinery of programming and more time "using computing to tell stories". Or put more simply: **with Charming, you'll express more, more easily.** If you are new to Charming, we highly recommend first reading this article to introduce Charming's [inspiration and features](#why-is-charming), as well as core concepts:
 
 - [App](#app) - rendering app to DOM and animating it
 - [Flow](#flow) - binding data to shapes
@@ -180,6 +180,67 @@ document.body.appendChild(app.render().node());
 <img src="./img/example-clover.png" width=640 />
 
 ### Charming is high performance
+
+By decoupling specification (the what) from execution (the how), Charming can use **WebGL** to render shapes. Compared to traditional rendering technologies like Canvas, where each shape requires an individual draw call, WebGL's [batch rendering](https://developer.mozilla.org/en-US/docs/Web/API/ANGLE_instanced_arrays/drawArraysInstancedANGLE) technique allows for the rendering of hundreds or even thousands of similar objects in a single draw call. This cuts down communication overhead between the CPU and GPU, thus enhancing rendering efficiency. Batch rendering is particularly well-suited for computational art, as algorithms often generate a large number of similar graphics. Meanwhile Charming's _flow_ operand is perfect for batch rendering, as it naturally groups similar objects together without introducing additional overhead.
+
+In addition to optimizing rendering, Charming further enhances performance by offloading expensive computations to the GPU, thereby optimizing calculation efficiency. **GLSL attributes** can be conveniently defined using _cm.glsl_, a tagged template literal specifically for GLSL that supports the interpolation of dynamic and non-serializable _JavaScript numbers_. Each GLSL attribute ought to be encapsulated within a GLSL function that carries the _name_ of the corresponding attribute. This function is invoked with each data item(_d_) hold by the flow and is expected to return a _value_ of the specified attribute type. Charming enables moving expensive computations into GLSL attributes, which are then compiled into shader programs, allowing the GPU to handle these operations efficiently.
+
+For example, to render specific number of circles while dynamically updating their positions, strokes and radii using trigonometric functions. While the Canvas renderer can maintain 60 FPS for up to _5.5k_ circles, the WebGL renderer can sustain the same 60 FPS for as many as _22k_ circles. Moreover, when faced with the task of rendering _100k_ circles, the WebGL renderer fails to draw them, but WebGL combined with GLSL attributes can still manage to render at a reduced frame rate of 10 FPS.
+
+```js
+import * as cm from "@charming-art/charming";
+
+const width = 700;
+const height = 700;
+const count = 20000;
+const theta = cm.range(count, 0, cm.TWO_PI);
+const app = cm.app({
+  width,
+  height,
+  renderer: cm.webgl(), // Use WebGL renderer.
+});
+
+app.on("update", update).start();
+
+function update(app) {
+  const time = app.prop("frameCount") / 50;
+  const scale = 300;
+
+  app.append(cm.clear, { fill: "black" });
+
+  app
+    // Bind angles.
+    .data(theta)
+    // Define a set of GLSL attributes and interpolate certain
+    // JavaScript constants or variables into them.
+    .append(cm.circle, {
+      position: cm.glsl`vec2 position(float theta) {
+        vec2 xy = vec2(cos(theta), sin(theta)) * (0.6 + 0.2 * cos(theta * 6.0 + cos(theta * 8.0 + ${time})));
+        return xy * ${scale} + vec2(${width / 2}, ${height / 2});
+      }`,
+      r: cm.glsl`float r(float theta) {
+        float d = 0.2 + 0.12 * cos(theta * 9.0 - ${time} * 2.0);
+        return d * ${scale};
+      }`,
+      stroke: cm.glsl`vec4 stroke(float theta) {
+        float th = 8.0 * theta + ${time} * 2.0;
+        vec3 rgb = 0.6 + 0.4 * vec3(
+          cos(th),
+          cos(th - ${Math.PI} / 3.0),
+          cos(th - ${Math.PI} * 2.0 / 3.0)
+        );
+        return vec4(rgb, 0.0);
+      }`,
+      strokeOpacity: cm.glsl`float strokeOpacity(float theta) {
+        return 0.15 * 2000.0 / ${count};
+      }`,
+    });
+}
+```
+
+<img alt="example-circles-glsl" src="./img/example-circles-glsl.gif" height="420px"/>
+
+Please note that _cm.webgl_ is currently in the experimental stage, having only implemented the circle shape as a proof of concept. The implementation for the remaining shapes is expected to be released soon.
 
 ### Charming supports ASCII art
 

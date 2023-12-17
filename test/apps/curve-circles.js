@@ -6,7 +6,7 @@ import { stats } from "../stats.js";
 export function curveCircles() {
   const width = 700;
   const height = 700;
-  const count = 4000;
+  const count = 5500;
   const theta = cm.range(count, 0, cm.TWO_PI);
 
   function update(app) {
