@@ -395,6 +395,8 @@ document.body.append(node);
 
 ### Compared to P5.js
 
+While Charming try it best to minimize the learning curve, it must be acknowledged that P5.js remains more accessible to beginners, particularly those with no prior programming experience. Thus this convince bring some issues for advanced project, such as namespace pollution, large bundle size and additional overhead introduced by Friendly Error System (FES). Therefore, for those who are new to programming or JavaScript, P5.js is still the best starting point. For others, Charming seems to be a more promising option.
+
 ### Compared to D3.js
 
 ## API Reference
