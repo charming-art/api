@@ -355,6 +355,42 @@ app.data(data).append(barY, {
 
 ### Charming is beginner friendly
 
+Although Charming provides some high-level abstractions and modules, such as _flow_, _transform_, and _scale_, beginners are not required to understand them at all. They can simply regard it as a collection of syntactic sugar for the [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API), with a conventional control flow.
+
+For example, to draw some random circles:
+
+```js
+for (let i = 0; i < 100; i++) {
+  const x = Math.random() * app.prop("width");
+  const y = Math.random() * app.prop("height");
+  const r = Math.random() * 255;
+  const g = Math.random() * 255;
+  const b = Math.random() * 255;
+  app.append(cm.circle, {
+    x,
+    y,
+    r: 30,
+    fill: `rgb(${r}, ${g}, ${b})`,
+  });
+}
+```
+
+Beginners can learn new concepts progressively to increase efficiency as they master the basics, gradually unlocking the full potential of Charming. It is also possible for Charming to provide some wrappers to reduce the learning curve in the future.
+
+```js
+import * as cm from "@charming-art/charming";
+
+const node = cm.render({
+  width: 600,
+  height: 300,
+  draw: (app) => {
+    app.append(cm.rect, { x: 0, y: 0, width: 100, height: 50 });
+  },
+});
+
+document.body.append(node);
+```
+
 ### Charming embraces existing libraries
 
 ### Compared to P5.js
