@@ -215,7 +215,10 @@ function update(app) {
     // JavaScript constants or variables into them.
     .append(cm.circle, {
       position: cm.glsl`vec2 position(float theta) {
-        vec2 xy = vec2(cos(theta), sin(theta)) * (0.6 + 0.2 * cos(theta * 6.0 + cos(theta * 8.0 + ${time})));
+        vec2 xy = vec2(
+          cos(theta), 
+          sin(theta)) * (0.6 + 0.2 * cos(theta * 6.0 + cos(theta * 8.0 + ${time}))
+        );
         return xy * ${scale} + vec2(${width / 2}, ${height / 2});
       }`,
       r: cm.glsl`float r(float theta) {
@@ -243,6 +246,64 @@ function update(app) {
 Please note that _cm.webgl_ is currently in the experimental stage, having only implemented the circle shape as a proof of concept. The implementation for the remaining shapes is expected to be released soon.
 
 ### Charming supports ASCII art
+
+Charming is designed to offer users a broader spectrum of artistic expression. This is grounded in the belief that creativity lies in changing the relationship between content and form, thereby shifting the user's perception of information, as noted by John Maeda. Supporting **ASCII art** is a good example, which is the art form came into being during the early days of computers when graphic displays were limited or non-existent.
+
+Charming introduces the **terminal renderer**, enabling users to create ASCII art as effortlessly as they would with traditional art forms. Instead of using pixels, this renderer takes a unique approach by shifting the coordinate system from pixels to cells, allowing shapes to be rendered into printable characters and emojis. Each 'cell' in the ASCII art can be defined by a _character (ch)_, with a _foreground color (fg)_ and _background color (bg)_, vastly enhancing the expressive potential compared to the traditional color encoding methods.
+
+For example, to draw text in the style of ASCII art and render points into random characters to simulate white noise effect:
+
+```js
+let characters;
+const app = cm.app({
+  width: 600,
+  height: 400,
+  // Use terminal renderer.
+  renderer: await cm.terminal(),
+});
+
+app.on("update", update).start();
+
+function update(app) {
+  const width = app.prop("width");
+  const height = app.prop("height");
+
+  if (!characters) {
+    characters = cm.cross(cm.range(width), cm.range(height)).map((d) => ({ x: d[0], y: d[1] }));
+  }
+
+  app.append(cm.clear, { fill: "black" });
+
+  // Append text in the style of ASCII art.
+  app.append(cm.text, {
+    text: "Charming",
+    x: width / 2,
+    y: height / 2,
+    textAlign: "center",
+    textBaseline: "middle",
+    fill: cm.gradientRainBowX(), // Define gradient color.
+  });
+
+  // Append points rendered into characters.
+  app
+    .data(characters)
+    .process(cm.each, (d) => {
+      if (d.lifespan) return d.lifespan--;
+      d.stroke = cm.cfb(cm.randomChar());
+      d.lifespan = cm.randomInt(3, 10);
+    })
+    .process(cm.filter, (d) => cm.random(10) < 0.7)
+    .append(cm.point, {
+      x: (d) => d.x,
+      y: (d) => d.y,
+      stroke: (d) => d.stroke,
+    });
+}
+```
+
+<img alt="example-white-noise" src="./img/example-white-noise.gif" height="430px"/>
+
+In addition to supporting ASCII Art, Charming will also be able to support a variety of styles in the future, such as [hand-drawn](https://github.com/rough-stuff/rough) style. Why not have a little fun? Life' not just about work, you know.
 
 ### Charming is composable
 
