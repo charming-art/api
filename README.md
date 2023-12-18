@@ -395,9 +395,11 @@ document.body.append(node);
 
 ### Compared to P5.js
 
-While Charming try it best to minimize the learning curve, it must be acknowledged that P5.js remains more accessible to beginners, particularly those with no prior programming experience. Thus this convince bring some issues for advanced project, such as namespace pollution, large bundle size and additional overhead introduced by Friendly Error System (FES). Therefore, for those who are new to programming or JavaScript, P5.js is still the best starting point. For others, Charming seems to be a more promising option.
+While Charming try it best to minimize the learning curve, it must be acknowledged that P5.js remains more accessible to beginners, particularly those with no prior programming experience. Thus this convince bring some issues for advanced project, such as namespace pollution, large bundle size and additional overhead introduced by the Friendly Error System (FES). Therefore, for those who are new to programming or JavaScript, P5.js is still the best starting point. For others, Charming seems to be a more promising option.
 
 ### Compared to D3.js
+
+D3.js is great, great of all time. In fact, Charming is able to work seamlessly with most of helper modules from D3.js, such as [d3-array](https://github.com/d3/d3-scale) and [d3-scale](https://github.com/d3/d3-scale), and it is encouraged to do so. But [d3-selection](https://github.com/d3/d3-selection) is an exception, which can be considered the "renderer" for D3's ecosystem. It is built on SVG, which excels at interactive visualizations but is less suited for animations commonly used in computational art, owing to performance constraints. Although, in theory, d3-selection can work with any rendering technology that implements the [SVG standard](https://www.w3.org/TR/SVG2/), the complexity of the standard would inevitably introduce additional runtime overhead and increase the bundle size. In a word, for the majority of visualizations, D3.js is the preferred choice, while for computational art or performance-centric visualizations, Charming.js is the better option.
 
 ## API Reference
 
