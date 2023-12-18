@@ -353,7 +353,9 @@ app.data(data).append(barY, {
 
 <img src="./img/example-bar-chart.png"  />
 
-### Charming is lightweight
+### Charming is lightweight but extensible
+
+Charming is lightweight because it focuses solely on one thing: drawing shapes driven by data, with the minified [core bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.core.umd.min.js) coming it at just 23kb. The other features are exposed as helper modules and can be adopted incrementally. Each modules have a thoughtfully designed interface, letting users plug in their own functions for processors, transforms, shapes...even custom renderers. In the future, there is potential to expand Charming with the development of various plugins, including a physics engine, plotting library, computational geometry toolkit, and image processing modules.
 
 ### Charming is beginner friendly
 
