@@ -1,58 +1,27 @@
 import { range } from "../array/range.js";
 import { normalizeColor } from "../color.js";
-import { getProgram } from "./program.js";
+import {
+  getProgram,
+  hasGLSLAttribute,
+  bindAttribute,
+  bindUniform,
+  variable,
+  defineGlobalAttributes,
+  defineLocalAttributes,
+} from "./program.js";
 
-function name(key, j) {
-  return `_${key}_${j}`;
-}
-
-function definedFunctionAttribute(attribute) {
-  const [key, value] = attribute;
-  const { strings, params } = value;
-  const uniforms = params.map((_, j) => `uniform float ${name(key, j)};`).join("\n");
-  let _ = uniforms + "\n" + strings[0];
-  for (let i = 1, n = strings.length; i < n; ++i) {
-    _ += name(key, i - 1) + strings[i];
-  }
-  return _;
-}
-
-function defineArrayAttribute(attribute) {
-  const [key] = attribute;
-  const descriptor = attributeDescriptors[key];
-  if (!descriptor) throw new Error(`Unknown attribute: ${key}`);
-  return `attribute ${descriptor.type} _${key};`;
-}
-
-function defineAttribute(attribute) {
-  const [, value] = attribute;
-  if (Array.isArray(value)) return defineArrayAttribute(attribute);
-  else return definedFunctionAttribute(attribute);
-}
-
-function defineComputeAttribute(attribute) {
-  const [key] = attribute;
-  const descriptor = attributeDescriptors[key];
-  if (!descriptor) throw new Error(`Unknown attribute: ${key}`);
-  return `${descriptor.type} _${key} = ${key}(a_datum);`;
-}
-
-function createVertexShaderSource(value) {
-  const values = Object.entries(value).map(defineAttribute);
-  const computes = Object.entries(value)
-    .filter(([, value]) => !Array.isArray(value))
-    .map(defineComputeAttribute);
+function createVertexShaderSource(descriptors, value) {
   const { position, strokeOpacity } = value;
   const xy = position ? "_position + a_vertex * _r" : "vec2(_x, _y) + a_vertex * _r";
   const so = strokeOpacity ? "_strokeOpacity" : "1.0";
   return `
-    ${values.join("\n")}
+    ${defineGlobalAttributes(descriptors, value)}
     attribute vec2 a_vertex;
     attribute float a_datum;
     uniform vec2 u_resolution;
     varying vec4 v_stroke;
     void main() {
-      ${computes.join("\n")}
+      ${defineLocalAttributes(descriptors, value)}
       // Use computed attributes
       vec2 xy = ${xy};
       vec2 scale = xy / u_resolution;
@@ -71,31 +40,6 @@ function createFragmentShaderSource() {
       gl_FragColor = v_stroke;
     }
   `;
-}
-
-function bindAttribute(
-  gl,
-  program,
-  ext,
-  { name, data, size = 1, divisor = 0, normalize = false, stride = 0, offset = 0, type = gl.FLOAT },
-) {
-  const loc = gl.getAttribLocation(program, name);
-  const radiusBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, radiusBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
-  gl.vertexAttribPointer(loc, size, type, normalize, stride, offset);
-  gl.enableVertexAttribArray(loc);
-  ext.vertexAttribDivisorANGLE(loc, divisor);
-}
-
-function bindUniform(gl, program, { name, data }) {
-  const resolutionLoc = gl.getUniformLocation(program, name);
-  if (data.length === 1) gl.uniform1f(resolutionLoc, ...data);
-  if (data.length === 2) gl.uniform2f(resolutionLoc, ...data);
-}
-
-function hasGLSLAttribute(value) {
-  return Object.values(value).some((d) => !Array.isArray(d));
 }
 
 const attributeDescriptors = {
@@ -121,7 +65,7 @@ const attributeDescriptors = {
 export function webgl$circles(I, value, data) {
   const { _gl: gl, _circle: map } = this;
   const { count = 100, ...rest } = value;
-  const vertex = createVertexShaderSource(rest);
+  const vertex = createVertexShaderSource(attributeDescriptors, rest);
   const fragment = createFragmentShaderSource();
   const program = getProgram(gl, map, vertex, fragment);
 
@@ -159,7 +103,7 @@ export function webgl$circles(I, value, data) {
       bindAttribute(gl, program, ext, { name, data, size, type: gl[glType], normalize, divisor: 1 });
     } else {
       const { params } = value;
-      const uniforms = params.map((d, j) => ({ name: name(key, j), data: [d] }));
+      const uniforms = params.map((d, j) => ({ name: variable(key, j), data: [d] }));
       for (const { name, data } of uniforms) bindUniform(gl, program, { name, data });
     }
   }

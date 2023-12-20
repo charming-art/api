@@ -28,10 +28,79 @@ export function getProgram(gl, map, vertex, fragment) {
 }
 
 export function compileProgram(gl, vertexSource, fragmentSource) {
-  // Create GLSL shaders, upload the GLSL source, compile the shaders.
   const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexSource);
   const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
-
-  // Link the two shaders into a program.
   return createProgram(gl, vertexShader, fragmentShader);
+}
+
+export function variable(key, j) {
+  return `_${key}_${j}`;
+}
+
+export function bindAttribute(
+  gl,
+  program,
+  ext,
+  { name, data, size = 1, divisor = 0, normalize = false, stride = 0, offset = 0, type = gl.FLOAT },
+) {
+  const loc = gl.getAttribLocation(program, name);
+  const radiusBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, radiusBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+  gl.vertexAttribPointer(loc, size, type, normalize, stride, offset);
+  gl.enableVertexAttribArray(loc);
+  ext.vertexAttribDivisorANGLE(loc, divisor);
+}
+
+export function bindUniform(gl, program, { name, data }) {
+  const resolutionLoc = gl.getUniformLocation(program, name);
+  if (data.length === 1) gl.uniform1f(resolutionLoc, ...data);
+  if (data.length === 2) gl.uniform2f(resolutionLoc, ...data);
+}
+
+export function hasGLSLAttribute(value) {
+  return Object.values(value).some((d) => !Array.isArray(d));
+}
+
+export function defineFunctionAttribute(descriptors, attribute) {
+  const [key, value] = attribute;
+  const { strings, params } = value;
+  const uniforms = params.map((_, j) => `uniform float ${variable(key, j)};`).join("\n");
+  let _ = uniforms + "\n" + strings[0];
+  for (let i = 1, n = strings.length; i < n; ++i) {
+    _ += variable(key, i - 1) + strings[i];
+  }
+  return _;
+}
+
+export function defineArrayAttribute(descriptors, attribute) {
+  const [key] = attribute;
+  const descriptor = descriptors[key];
+  if (!descriptor) throw new Error(`Unknown attribute: ${key}`);
+  return `attribute ${descriptor.type} _${key};`;
+}
+
+export function defineComputeAttribute(descriptors, attribute) {
+  const [key] = attribute;
+  const descriptor = descriptors[key];
+  if (!descriptor) throw new Error(`Unknown attribute: ${key}`);
+  return `${descriptor.type} _${key} = ${key}(a_datum);`;
+}
+
+export function defineAttribute(descriptors, attribute) {
+  const [, value] = attribute;
+  if (Array.isArray(value)) return defineArrayAttribute(descriptors, attribute);
+  else return defineFunctionAttribute(descriptors, attribute);
+}
+
+export function defineGlobalAttributes(descriptors, value) {
+  const values = Object.entries(value).map((d) => defineAttribute(descriptors, d));
+  return values.join("\n");
+}
+
+export function defineLocalAttributes(descriptors, value) {
+  const computes = Object.entries(value)
+    .filter(([, value]) => !Array.isArray(value))
+    .map((d) => defineComputeAttribute(descriptors, d));
+  return computes.join("\n");
 }

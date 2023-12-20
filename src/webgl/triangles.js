@@ -1,31 +1,35 @@
 import { color as d3Color } from "d3-color";
 import { getProgram } from "./program";
 
-export const vertex = `
-  attribute vec2 a_position;
-  attribute vec4 a_color;
-  uniform vec2 u_resolution;
-  varying vec4 v_color;
-  void main() {
-    vec2 scale = a_position / u_resolution;
-    vec2 clipSpace = scale * 2.0 - 1.0;
-    gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-    v_color = a_color;
-  }
-`;
+function createVertexShaderSource() {
+  return `
+    attribute vec2 a_position;
+    attribute vec4 a_color;
+    uniform vec2 u_resolution;
+    varying vec4 v_color;
+    void main() {
+      vec2 scale = a_position / u_resolution;
+      vec2 clipSpace = scale * 2.0 - 1.0;
+      gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+      v_color = a_color;
+    }
+  `;
+}
 
-export const fragment = `
-  precision mediump float;
-  varying vec4 v_color;
-  void main() {
-    gl_FragColor = v_color;
-  }
-`;
+function createFragmentShaderSource() {
+  return `
+    precision mediump float;
+    varying vec4 v_color;
+    void main() {
+      gl_FragColor = v_color;
+    }
+  `;
+}
 
 export function webgl$triangles(I, value) {
   const { _gl: gl, _triangle: map } = this;
 
-  const program = getProgram(gl, map, vertex, fragment);
+  const program = getProgram(gl, map, createVertexShaderSource(), createFragmentShaderSource());
 
   gl.useProgram(program);
 
