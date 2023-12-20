@@ -1,6 +1,6 @@
 # Charming: Charming Computing
 
-> Charming is still in testing; the APIs are not fully implemented and may not be stable.
+> On my programming journey, two tools have shaped me: [Processing](https://www.processing.org/) and [D3.js](https://d3js.org/). The former makes coding fun, while the latter makes coding elegant. What about Charming? Let's see...
 
 **Charming** is a free, open-source, creative code language for Charming Computing, which means making arts by computational algorithm. It has **declarative**, **data-driven**, concise, inclusive, yet expressive API inspired by [G2.js](https://github.com/antvis/G2), [D3.js](https://github.com/d3) and [P5.js](https://p5js.org/).
 
@@ -26,6 +26,9 @@ Most importantly, our hope with Charming is that you spend less time wrangling t
 - [Prop](#prop) - returning properties of the app
 
 And there are [a plenty of examples](https://observablehq.com/d/2f9bf9f52cb24090) to get started with.
+
+> [!WARNING]
+> Charming is still in testing; the APIs are not fully implemented and may not be stable.
 
 ## Installing
 
