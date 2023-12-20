@@ -5,9 +5,9 @@ import {
   hasGLSLAttribute,
   bindAttribute,
   bindUniform,
-  variable,
   defineGlobalAttributes,
   defineLocalAttributes,
+  bindVariables,
 } from "./program.js";
 
 function createVertexShaderSource(descriptors, value) {
@@ -90,23 +90,13 @@ export function webgl$circles(I, value, data) {
     divisor: 0,
     data: new Float32Array(range(count, 0, Math.PI * 2).flatMap((i) => [Math.cos(i), Math.sin(i)])),
   });
+
   bindUniform(gl, program, {
     name: "u_resolution",
     data: [gl.canvas.width / devicePixelRatio, gl.canvas.height / devicePixelRatio],
   });
 
-  for (const [key, value] of Object.entries(rest)) {
-    if (Array.isArray(value)) {
-      const { size, glType, normalize, map } = attributeDescriptors[key];
-      const data = map(value);
-      const name = `_${key}`;
-      bindAttribute(gl, program, ext, { name, data, size, type: gl[glType], normalize, divisor: 1 });
-    } else {
-      const { params } = value;
-      const uniforms = params.map((d, j) => ({ name: variable(key, j), data: [d] }));
-      for (const { name, data } of uniforms) bindUniform(gl, program, { name, data });
-    }
-  }
+  bindVariables(gl, program, ext, attributeDescriptors, rest);
 
   ext.drawArraysInstancedANGLE(gl.LINE_LOOP, 0, count, I.length);
 }

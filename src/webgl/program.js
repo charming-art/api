@@ -33,8 +33,12 @@ export function compileProgram(gl, vertexSource, fragmentSource) {
   return createProgram(gl, vertexShader, fragmentShader);
 }
 
-export function variable(key, j) {
+export function uniformName(key, j) {
   return `_${key}_${j}`;
+}
+
+export function attributeName(key) {
+  return `_${key}`;
 }
 
 export function bindAttribute(
@@ -58,6 +62,21 @@ export function bindUniform(gl, program, { name, data }) {
   if (data.length === 2) gl.uniform2f(resolutionLoc, ...data);
 }
 
+export function bindVariables(gl, program, ext, descriptors, values) {
+  for (const [key, value] of Object.entries(values)) {
+    if (Array.isArray(value)) {
+      const { size, glType, normalize, map } = descriptors[key];
+      const data = map(value);
+      const name = attributeName(key);
+      bindAttribute(gl, program, ext, { name, data, size, type: gl[glType], normalize, divisor: 1 });
+    } else {
+      const { params } = value;
+      const uniforms = params.map((d, j) => ({ name: uniformName(key, j), data: [d] }));
+      for (const { name, data } of uniforms) bindUniform(gl, program, { name, data });
+    }
+  }
+}
+
 export function hasGLSLAttribute(value) {
   return Object.values(value).some((d) => !Array.isArray(d));
 }
@@ -65,10 +84,10 @@ export function hasGLSLAttribute(value) {
 export function defineFunctionAttribute(descriptors, attribute) {
   const [key, value] = attribute;
   const { strings, params } = value;
-  const uniforms = params.map((_, j) => `uniform float ${variable(key, j)};`).join("\n");
+  const uniforms = params.map((_, j) => `uniform float ${uniformName(key, j)};`).join("\n");
   let _ = uniforms + "\n" + strings[0];
   for (let i = 1, n = strings.length; i < n; ++i) {
-    _ += variable(key, i - 1) + strings[i];
+    _ += uniformName(key, i - 1) + strings[i];
   }
   return _;
 }
@@ -77,14 +96,14 @@ export function defineArrayAttribute(descriptors, attribute) {
   const [key] = attribute;
   const descriptor = descriptors[key];
   if (!descriptor) throw new Error(`Unknown attribute: ${key}`);
-  return `attribute ${descriptor.type} _${key};`;
+  return `attribute ${descriptor.type} ${attributeName(key)};`;
 }
 
 export function defineComputeAttribute(descriptors, attribute) {
   const [key] = attribute;
   const descriptor = descriptors[key];
   if (!descriptor) throw new Error(`Unknown attribute: ${key}`);
-  return `${descriptor.type} _${key} = ${key}(a_datum);`;
+  return `${descriptor.type} ${attributeName(key)} = ${key}(a_datum);`;
 }
 
 export function defineAttribute(descriptors, attribute) {
