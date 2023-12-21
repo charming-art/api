@@ -3,6 +3,7 @@ import { webgl$init } from "./init.js";
 import { webgl$clear } from "./clear.js";
 import { webgl$triangles } from "./triangles.js";
 import { webgl$circles } from "./circles.js";
+import { webgl$rects } from "./rects.js";
 
 function WebGL() {
   Object.defineProperties(this, {
@@ -18,6 +19,7 @@ Object.defineProperties(WebGL.prototype, {
   init: { value: webgl$init },
   triangles: { value: webgl$triangles },
   circles: { value: webgl$circles },
+  rects: { value: webgl$rects },
   clear: { value: webgl$clear },
 });
 

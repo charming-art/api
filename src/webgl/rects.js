@@ -1,4 +1,3 @@
-import { range } from "../array/range.js";
 import { normalizeColor } from "../color.js";
 import {
   getProgram,
@@ -11,23 +10,20 @@ import {
 } from "./program.js";
 
 function createVertexShaderSource(descriptors, value) {
-  const { position, strokeOpacity } = value;
-  const xy = position ? "_position + a_vertex * _r" : "vec2(_x, _y) + a_vertex * _r";
-  const so = strokeOpacity ? "_strokeOpacity" : "1.0";
   return `
     ${defineGlobalAttributes(descriptors, value)}
     attribute vec2 a_vertex;
     attribute float a_datum;
     uniform vec2 u_resolution;
-    varying vec4 v_stroke;
+    varying vec4 v_fill;
     void main() {
       ${defineLocalAttributes(descriptors, value)}
       // Use computed attributes
-      vec2 xy = ${xy};
+      vec2 xy = vec2(_x, _y) + a_vertex * vec2(_width, _height);
       vec2 scale = xy / u_resolution;
       vec2 clipSpace = scale * 2.0 - 1.0;
       gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-      v_stroke = vec4(_stroke.r, _stroke.g, _stroke.b, ${so});
+      v_fill = _fill;
     }
   `;
 }
@@ -35,9 +31,9 @@ function createVertexShaderSource(descriptors, value) {
 function createFragmentShaderSource() {
   return `
     precision mediump float;
-    varying vec4 v_stroke;
+    varying vec4 v_fill;
     void main() {
-      gl_FragColor = v_stroke;
+      gl_FragColor = v_fill;
     }
   `;
 }
@@ -45,27 +41,22 @@ function createFragmentShaderSource() {
 const attributeDescriptors = {
   x: { type: "float", size: 1, glType: "FLOAT", normalize: false, map: (value) => new Float32Array(value) },
   y: { type: "float", size: 1, glType: "FLOAT", normalize: false, map: (value) => new Float32Array(value) },
-  position: { type: "vec2", size: 2, glType: "FLOAT", map: (value) => new Float32Array(value) },
-  stroke: {
+  width: { type: "float", size: 1, glType: "FLOAT", normalize: false, map: (value) => new Float32Array(value) },
+  height: { type: "float", size: 1, glType: "FLOAT", normalize: false, map: (value) => new Float32Array(value) },
+  fill: {
     type: "vec4",
     size: 4,
     glType: "UNSIGNED_BYTE",
     normalize: true,
     map: (value) => new Uint8Array(value.flatMap((d) => normalizeColor(d))),
   },
-  strokeOpacity: {
-    type: "float",
-    glType: "UNSIGNED_BYTE",
-    normalize: true,
-    map: (value) => new Uint8Array(value.map((d) => (d * 255) | 0)),
-  },
-  r: { type: "float", size: 1, glType: "FLOAT", map: (value) => new Float32Array(value), normalize: false },
 };
 
-export function webgl$circles(I, value, data) {
+export function webgl$rects(I, value, data) {
   const { _gl: gl, _circle: map } = this;
-  const { count = 100, ...rest } = value;
-  const vertex = createVertexShaderSource(attributeDescriptors, rest);
+  const { x, y, width, height, fill } = value;
+  const accepts = { x, y, width, height, fill };
+  const vertex = createVertexShaderSource(attributeDescriptors, accepts);
   const fragment = createFragmentShaderSource();
   const program = getProgram(gl, map, vertex, fragment);
 
@@ -88,7 +79,7 @@ export function webgl$circles(I, value, data) {
     name: "a_vertex",
     size: 2,
     divisor: 0,
-    data: new Float32Array(range(count, 0, Math.PI * 2).flatMap((i) => [Math.cos(i), Math.sin(i)])),
+    data: new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]),
   });
 
   bindUniform(gl, program, {
@@ -96,7 +87,7 @@ export function webgl$circles(I, value, data) {
     data: [gl.canvas.width / devicePixelRatio, gl.canvas.height / devicePixelRatio],
   });
 
-  bindVariables(gl, program, ext, attributeDescriptors, rest);
+  bindVariables(gl, program, ext, attributeDescriptors, accepts);
 
-  ext.drawArraysInstancedANGLE(gl.LINE_LOOP, 0, count, I.length);
+  ext.drawArraysInstancedANGLE(gl.TRIANGLE_STRIP, 0, 4, I.length);
 }

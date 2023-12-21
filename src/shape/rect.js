@@ -1,6 +1,7 @@
 import { define } from "./define.js";
 
 export const rect = define((renderer, I, value) => {
+  if (renderer.rects) return renderer.rects(I, value);
   const {
     x: X = [],
     y: Y = [],
