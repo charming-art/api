@@ -7,15 +7,18 @@ import {
   defineGlobalAttributes,
   defineLocalAttributes,
   bindVariables,
+  defineFunctionAttribute,
 } from "./program.js";
 
 function createVertexShaderSource(descriptors, value) {
+  const { fill } = value;
+  const [fillVarying, fillAssignment] = Array.isArray(fill) ? ["varying vec4 v_fill;", " v_fill = _fill;"] : ["", ""];
   return `
     ${defineGlobalAttributes(descriptors, value)}
     attribute vec2 a_vertex;
     attribute float a_datum;
     uniform vec2 u_resolution;
-    varying vec4 v_fill;
+    ${fillVarying}
     void main() {
       ${defineLocalAttributes(descriptors, value)}
       // Use computed attributes
@@ -23,22 +26,29 @@ function createVertexShaderSource(descriptors, value) {
       vec2 scale = xy / u_resolution;
       vec2 clipSpace = scale * 2.0 - 1.0;
       gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-      v_fill = _fill;
+      ${fillAssignment}
     }
   `;
 }
 
-function createFragmentShaderSource() {
+function createFragmentShaderSource(descriptors, value) {
+  const newDescriptors = {
+    ...descriptors,
+    fill: { ...descriptors.fill, onlyUniform: false },
+  };
+  const { fill } = value;
+  const globalFill = fill ? defineFunctionAttribute(newDescriptors, ["fill", fill]) : "varying vec4 v_fill;";
+  const fragColor = fill ? `fill(gl_FragCoord.xy, gl_FragColor)` : "v_fill";
   return `
     precision mediump float;
-    varying vec4 v_fill;
+    ${globalFill}
     void main() {
-      gl_FragColor = v_fill;
+      gl_FragColor = ${fragColor};
     }
   `;
 }
 
-const attributeDescriptors = {
+const attributes = {
   x: { type: "float", size: 1, glType: "FLOAT", normalize: false, map: (value) => new Float32Array(value) },
   y: { type: "float", size: 1, glType: "FLOAT", normalize: false, map: (value) => new Float32Array(value) },
   width: { type: "float", size: 1, glType: "FLOAT", normalize: false, map: (value) => new Float32Array(value) },
@@ -49,15 +59,17 @@ const attributeDescriptors = {
     glType: "UNSIGNED_BYTE",
     normalize: true,
     map: (value) => new Uint8Array(value.flatMap((d) => normalizeColor(d))),
+    onlyUniform: true,
   },
 };
 
 export function webgl$rects(I, value, data) {
   const { _gl: gl, _circle: map } = this;
   const { x, y, width, height, fill } = value;
-  const accepts = { x, y, width, height, fill };
-  const vertex = createVertexShaderSource(attributeDescriptors, accepts);
-  const fragment = createFragmentShaderSource();
+  const vertexVariables = { x, y, width, height, fill };
+  const fragmentVariables = { ...(!Array.isArray(fill) && { fill }) };
+  const vertex = createVertexShaderSource(attributes, vertexVariables);
+  const fragment = createFragmentShaderSource(attributes, fragmentVariables);
   const program = getProgram(gl, map, vertex, fragment);
 
   gl.useProgram(program);
@@ -67,7 +79,7 @@ export function webgl$rects(I, value, data) {
 
   const ext = gl.getExtension("ANGLE_instanced_arrays");
 
-  if (hasGLSLAttribute(value)) {
+  if (hasGLSLAttribute(value, attributes)) {
     bindAttribute(gl, program, ext, {
       name: "a_datum",
       data: new Float32Array(data),
@@ -87,7 +99,7 @@ export function webgl$rects(I, value, data) {
     data: [gl.canvas.width / devicePixelRatio, gl.canvas.height / devicePixelRatio],
   });
 
-  bindVariables(gl, program, ext, attributeDescriptors, accepts);
+  bindVariables(gl, program, ext, attributes, vertexVariables);
 
   ext.drawArraysInstancedANGLE(gl.TRIANGLE_STRIP, 0, 4, I.length);
 }

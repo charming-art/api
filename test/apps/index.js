@@ -50,4 +50,5 @@ export { curveCirclesWebGL } from "./curve-circles.webgl.js";
 export { curveCirclesGLSLWebGL } from "./curve-circles-glsl.webgl.js";
 export { shapeCompositeArrow } from "./shape-composite-arrow.js";
 export { visDot } from "./vis-dot.js";
+export { shapeRectFillWebGL } from "./shape-rect-fill.webgl.js";
 export { shapeRectWebGL } from "./shape-rect.webgl.js";

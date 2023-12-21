@@ -42,7 +42,7 @@ function createFragmentShaderSource() {
   `;
 }
 
-const attributeDescriptors = {
+const attributes = {
   x: { type: "float", size: 1, glType: "FLOAT", normalize: false, map: (value) => new Float32Array(value) },
   y: { type: "float", size: 1, glType: "FLOAT", normalize: false, map: (value) => new Float32Array(value) },
   position: { type: "vec2", size: 2, glType: "FLOAT", map: (value) => new Float32Array(value) },
@@ -65,7 +65,7 @@ const attributeDescriptors = {
 export function webgl$circles(I, value, data) {
   const { _gl: gl, _circle: map } = this;
   const { count = 100, ...rest } = value;
-  const vertex = createVertexShaderSource(attributeDescriptors, rest);
+  const vertex = createVertexShaderSource(attributes, rest);
   const fragment = createFragmentShaderSource();
   const program = getProgram(gl, map, vertex, fragment);
 
@@ -76,7 +76,7 @@ export function webgl$circles(I, value, data) {
 
   const ext = gl.getExtension("ANGLE_instanced_arrays");
 
-  if (hasGLSLAttribute(value)) {
+  if (hasGLSLAttribute(value, attributes)) {
     bindAttribute(gl, program, ext, {
       name: "a_datum",
       data: new Float32Array(data),
@@ -96,7 +96,7 @@ export function webgl$circles(I, value, data) {
     data: [gl.canvas.width / devicePixelRatio, gl.canvas.height / devicePixelRatio],
   });
 
-  bindVariables(gl, program, ext, attributeDescriptors, rest);
+  bindVariables(gl, program, ext, attributes, rest);
 
   ext.drawArraysInstancedANGLE(gl.LINE_LOOP, 0, count, I.length);
 }

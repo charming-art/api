@@ -71,23 +71,43 @@ export function bindVariables(gl, program, ext, descriptors, values) {
       bindAttribute(gl, program, ext, { name, data, size, type: gl[glType], normalize, divisor: 1 });
     } else {
       const { params } = value;
-      const uniforms = params.map((d, j) => ({ name: uniformName(key, j), data: [d] }));
+      const uniforms = params
+        .map((d, j) => ({ name: uniformName(key, j), data: [d] }))
+        .filter((d) => typeof d.data[0] === "number"); // Filter functions.
       for (const { name, data } of uniforms) bindUniform(gl, program, { name, data });
     }
   }
 }
 
-export function hasGLSLAttribute(value) {
-  return Object.values(value).some((d) => !Array.isArray(d));
+export function hasGLSLAttribute(value, descriptors) {
+  return Object.entries(value).some(([key, value]) => !Array.isArray(value) && descriptors[key].onlyUniform !== true);
 }
 
+// TODO Defined nested functions.
+// TODO Params for nested functions.
 export function defineFunctionAttribute(descriptors, attribute) {
   const [key, value] = attribute;
+  const { onlyUniform = false } = descriptors[key];
   const { strings, params } = value;
-  const uniforms = params.map((_, j) => `uniform float ${uniformName(key, j)};`).join("\n");
-  let _ = uniforms + "\n" + strings[0];
+
+  const uniforms = params
+    .map((d, j) => [d, `uniform float ${uniformName(key, j)};`])
+    .filter(([d]) => typeof d === "number") // Filter function.
+    .map((d) => d[1])
+    .join("\n");
+
+  const regex = /(float|bool|int|void|vec[234])\s+(\w+)\s*\(/g;
+  const functions = params.filter((d) => typeof d !== "number").map((d) => d.strings.join("-"));
+  const functionNames = functions.map((d) => regex.exec(d)[2]);
+
+  // Define function in fragment shader.
+  if (onlyUniform) return uniforms;
+
+  let _ = uniforms + "\n" + functions + "\n" + strings[0];
   for (let i = 1, n = strings.length; i < n; ++i) {
-    _ += uniformName(key, i - 1) + strings[i];
+    const param = params[i - 1];
+    const name = typeof param === "number" ? uniformName(key, i - 1) : functionNames.shift();
+    _ += name + strings[i];
   }
   return _;
 }
@@ -120,6 +140,7 @@ export function defineGlobalAttributes(descriptors, value) {
 export function defineLocalAttributes(descriptors, value) {
   const computes = Object.entries(value)
     .filter(([, value]) => !Array.isArray(value))
+    .filter(([key]) => descriptors[key].onlyUniform !== true)
     .map((d) => defineComputeAttribute(descriptors, d));
   return computes.join("\n");
 }
