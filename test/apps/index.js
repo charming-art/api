@@ -52,3 +52,5 @@ export { shapeCompositeArrow } from "./shape-composite-arrow.js";
 export { visDot } from "./vis-dot.js";
 export { shapeRectFillWebGL } from "./shape-rect-fill.webgl.js";
 export { shapeRectWebGL } from "./shape-rect.webgl.js";
+export { terminalCharacterMatrix } from "./terminal-character-matrix.js";
+

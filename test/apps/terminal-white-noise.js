@@ -35,10 +35,8 @@ export async function terminalWhiteNoise() {
       .data(characters)
       .process(cm.each, (d) => {
         if (d.lifespan) return d.lifespan--;
-        const seed = cm.random(32, 127);
-        const ch = String.fromCharCode(seed);
-        d.stroke = cm.cfb(ch);
-        d.lifespan = cm.random(3, 10) | 0;
+        d.stroke = cm.cfb(cm.randomChar());
+        d.lifespan = cm.randomInt(3, 10);
       })
       .process(cm.filter, (d) => {
         if (outside(d)) return true;

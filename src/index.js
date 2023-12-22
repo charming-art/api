@@ -6,6 +6,8 @@ export { webgl } from "./webgl/index.js";
 export { terminal } from "./terminal/index.js";
 export { clamp } from "./math/clamp.js";
 export { random } from "./math/random.js";
+export { randomChar } from "./math/randomChar.js";
+export { randomInt } from "./math/randomInt.js";
 export { randomNoise } from "./math/randomNoise.js";
 export { randomNormal } from "./math/randomNormal.js";
 export { range } from "./array/range.js";
