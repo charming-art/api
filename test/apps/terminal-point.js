@@ -12,7 +12,7 @@ export async function terminalPoint() {
     const i = x % app.prop("width");
     const j = (x / app.prop("width")) | 0;
     app.append(cm.clear, { fill: "#000" });
-    app.append(cm.point, { x: i, y: j, stroke: cm.cfb("@") });
+    app.append(cm.point, { x: i, y: j, stroke0: "@" });
     x += 1;
   });
 

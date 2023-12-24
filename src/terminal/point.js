@@ -15,7 +15,7 @@ function encodeChar(ch) {
 }
 
 function cfb(color) {
-  const { ch, fg = "#000", bg = null } = color;
+  const { ch = " ", fg = "#000", bg = null } = color;
   const [n, n1 = NULL_VALUE] = encodeChar(ch);
   return [n, n1, encodeColor(fg), encodeColor(bg)];
 }

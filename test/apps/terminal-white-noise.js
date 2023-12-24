@@ -35,7 +35,7 @@ export async function terminalWhiteNoise() {
       .data(characters)
       .process(cm.each, (d) => {
         if (d.lifespan) return d.lifespan--;
-        d.stroke = cm.cfb(cm.randomChar());
+        d.ch = cm.randomChar();
         d.lifespan = cm.randomInt(3, 10);
       })
       .process(cm.filter, (d) => {
@@ -47,7 +47,7 @@ export async function terminalWhiteNoise() {
       .append(cm.point, {
         x: (d) => d.x,
         y: (d) => d.y,
-        stroke: (d) => d.stroke,
+        stroke0: (d) => d.ch,
       });
   }
 

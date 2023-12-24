@@ -4,6 +4,6 @@ function transform(x) {
   return x;
 }
 
-export function linear(domain, range) {
-  return continuous(domain, range, { transform });
+export function linear(domain, range, options) {
+  return continuous(domain, range, { ...options, transform });
 }

@@ -20,7 +20,7 @@ export async function terminalMatrix() {
     .append(cm.point, {
       y: 0,
       x: (_, i) => i,
-      stroke: (d) => cm.cfb(d),
+      stroke0: (d) => d,
     });
 
   return app.call(dispose).render().node();

@@ -48,7 +48,7 @@ export function shapeCompositeArrow() {
     size = 16,
     cols = width / size,
     rows = height / size,
-    noise = cm.randomNoise(4),
+    noise = cm.randomNoise(),
     fields = cm.cross(cm.range(cols), cm.range(rows)).map(([x, y]) => ({ x, y, value: noise(y * 0.1, x * 0.1) }));
 
   const app = cm.app({ width, height });

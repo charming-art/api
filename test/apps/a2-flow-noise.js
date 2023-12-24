@@ -31,12 +31,11 @@ export function a2FlowNoise() {
   );
 
   const initFields = () => {
-    const noise = cm.randomNoise(4, cm.random(10000));
-    const scale = cm.scaleLinear([0, 1], [0, cm.TWO_PI]);
+    const noise = cm.randomNoise(0, cm.TWO_PI);
     for (let m = 0; m < fields.length; m++) {
       const i = m % cols;
       const j = (m / cols) | 0;
-      fields[m] = scale(noise(j * 0.1, i * 0.1));
+      fields[m] = noise(j * 0.1, i * 0.1);
     }
   };
 

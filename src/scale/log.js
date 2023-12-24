@@ -4,6 +4,6 @@ function transform(x) {
   return Math.log(x);
 }
 
-export function log(domain, range) {
-  return continuous(domain, range, { transform });
+export function log(domain, range, options = {}) {
+  return continuous(domain, range, { ...options, transform });
 }
