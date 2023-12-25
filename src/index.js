@@ -1,7 +1,7 @@
 export * from "./core.js";
-export { cfb } from "./color/cfb.js";
-export { rgb } from "./color/rgb.js";
-export { wch } from "./color/wch.js";
+export { cfb } from "./attribute/cfb.js";
+export { wch } from "./attribute/wch.js";
+export { glsl } from "./attribute/glsl.js";
 export { webgl } from "./webgl/index.js";
 export { terminal } from "./terminal/index.js";
 export { clamp } from "./math/clamp.js";
@@ -35,4 +35,3 @@ export { ghost as fontGhost } from "./font/ghost.js";
 export { standard as fontStandard } from "./font/standard.js";
 export { rainbowX as gradientRainBowX } from "./gradient/rainbowX.js";
 export { sineBowX as gradientSineBowX } from "./gradient/sinebowX.js";
-export { glsl } from "./helper/glsl.js";

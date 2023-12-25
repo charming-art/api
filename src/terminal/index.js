@@ -6,6 +6,8 @@ import { terminal$char } from "./char.js";
 import { terminal$render } from "./render.js";
 import { terminal$point } from "./point.js";
 import { terminal$text } from "./text.js";
+import { terminal$rect } from "./rect.js";
+import { terminal$line } from "./line.js";
 import { terminal$clear } from "./clear.js";
 import { terminal$save } from "./save.js";
 import { terminal$restore } from "./restore.js";
@@ -31,6 +33,8 @@ Object.defineProperties(Terminal.prototype, {
   char: { value: terminal$char },
   render: { value: terminal$render },
   point: { value: terminal$point },
+  rect: { value: terminal$rect },
+  line: { value: terminal$line },
   text: { value: terminal$text },
   clear: { value: terminal$clear },
   save: { value: terminal$save },

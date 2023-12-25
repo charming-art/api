@@ -13,6 +13,7 @@ export const text = define((renderer, I, value) => {
     textBaseline: TB = [],
     textAlign: TA = [],
     fontFamily: FF = [],
+    fontSize: FS = [],
   } = value;
   for (const i of I) {
     renderer.text({
@@ -27,6 +28,7 @@ export const text = define((renderer, I, value) => {
       textBaseline: TB[i],
       textAlign: TA[i],
       fontFamily: FF[i],
+      fontSize: FS[i],
     });
   }
 });

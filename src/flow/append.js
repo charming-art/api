@@ -3,6 +3,7 @@ import { Node } from "../node.js";
 
 export function valueOf(data, options) {
   const values = Object.entries(options).map(([key, value]) => {
+    if (typeof value === "object" && value.constant) return [key, value.value];
     if (typeof value === "object" && value.preserve) return [key, value];
     if (Array.isArray(value)) return [key, value];
     const v = typeof value === "function" ? value : () => value;

@@ -14,9 +14,10 @@ export function terminal$text({
   fill,
   textAlign = "start",
   textBaseline = "top",
+  fontSize = "normal",
   fontFamily = fontStandard(),
 }) {
-  const matrix = textSync(text, { font: fontFamily });
+  const matrix = fontSize === "large" ? textSync(text + "", { font: fontFamily }) : text + "";
   const {
     x: startX,
     y: startY,

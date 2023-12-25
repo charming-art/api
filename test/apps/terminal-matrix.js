@@ -3,9 +3,9 @@ import { dispose } from "../dispose.js";
 
 export async function terminalMatrix() {
   const app = cm.app({
+    cols: 3,
+    rows: 3,
     mode: "double",
-    width: "3",
-    height: "3",
     renderer: await cm.terminal(),
   });
 

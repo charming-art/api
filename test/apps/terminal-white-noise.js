@@ -21,6 +21,7 @@ export async function terminalWhiteNoise() {
     textAlign: "center",
     textBaseline: "middle",
     fill: cm.gradientRainBowX(),
+    fontSize: "large",
   };
   const bbox = app.textBBox(textOptions);
   const { x: tx, y: ty, width: tw, height: th } = bbox;

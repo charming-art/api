@@ -14,6 +14,7 @@ export async function terminalText() {
     textAlign: "center",
     textBaseline: "middle",
     fontFamily: cm.fontGhost(),
+    fontSize: "large",
   });
 
   return app.call(dispose).start().node();

@@ -54,3 +54,4 @@ export { shapeRectFillWebGL } from "./shape-rect-fill.webgl.js";
 export { shapeRectWebGL } from "./shape-rect.webgl.js";
 export { terminalCharacterMatrix } from "./terminal-character-matrix.js";
 export { terminalFire } from "./terminal-fire.js";
+export { terminalBar } from "./terminal-bar.js";

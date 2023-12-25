@@ -35,6 +35,8 @@ function measureText(text, styles) {
 export function terminal$init({
   width,
   height,
+  cols: _cols,
+  rows: _rows,
   mode = "single",
   fontFamily = "courier-new, courier, monospace",
   fontSize = 15,
@@ -47,10 +49,10 @@ export function terminal$init({
   });
   const cellWidth = mode === "double" ? tw * 2 : tw;
   const cellHeight = th;
-  const cols = typeof width === "number" ? undefined : width;
-  const rows = typeof height === "number" ? undefined : height;
-  const computedCols = dimensionOf(cols, Number.parseFloat(width), cellWidth);
-  const computedRows = dimensionOf(rows, Number.parseFloat(height), cellHeight);
+  const cols = _cols ?? undefined;
+  const rows = _rows ?? undefined;
+  const computedCols = dimensionOf(cols, width, cellWidth);
+  const computedRows = dimensionOf(rows, height, cellHeight);
   const computedWidth = computedCols * cellWidth;
   const computedHeight = computedRows * cellHeight;
   const context = context2d(computedWidth, computedHeight);
