@@ -1,6 +1,5 @@
 import * as cm from "../../src/index.js";
 import { dispose } from "../dispose.js";
-import { stats } from "../stats.js";
 
 function barX(
   flow,
@@ -110,5 +109,5 @@ export async function terminalBar() {
     textAlign: "left",
   });
 
-  return app.call(dispose).call(stats).render().node();
+  return app.call(dispose).render().node();
 }

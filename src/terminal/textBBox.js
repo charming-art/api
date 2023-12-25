@@ -10,6 +10,11 @@ export function bboxOf(matrix, { x, y, textAlign, textBaseline }) {
   return { lines, x: startX, y: startY, width, height };
 }
 
+export function textOf(text, font) {
+  if (typeof text === "object" && text.type === "figlet") return textSync(text.text + "", { font });
+  return text + "";
+}
+
 export function terminal$textBBox({
   text,
   fontFamily = fontStandard(),
@@ -18,9 +23,7 @@ export function terminal$textBBox({
   x = 0,
   y = 0,
 } = {}) {
-  const matrix = textSync(text, {
-    font: fontFamily,
-  });
+  const matrix = textOf(text, fontFamily);
   const bbox = bboxOf(matrix, { textAlign, textBaseline, x, y });
   return { x: bbox.x, y: bbox.y, width: bbox.width, height: bbox.height };
 }
