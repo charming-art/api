@@ -8,13 +8,12 @@ export async function terminalText() {
   });
 
   app.append(cm.text, {
-    text: "hello world",
+    text: cm.figlet("hello world"),
     x: app.prop("width") / 2,
     y: app.prop("height") / 2,
     textAlign: "center",
     textBaseline: "middle",
     fontFamily: cm.fontGhost(),
-    fontSize: "large",
   });
 
   return app.call(dispose).start().node();

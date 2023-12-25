@@ -7,6 +7,11 @@ function normalizeColor(color, width, height) {
   return () => color;
 }
 
+function textOf(text, font) {
+  if (typeof text === "object" && text.type === "figlet") return textSync(text.text + "", { font });
+  return text + "";
+}
+
 export function terminal$text({
   x,
   y,
@@ -14,10 +19,9 @@ export function terminal$text({
   fill,
   textAlign = "start",
   textBaseline = "top",
-  fontSize = "normal",
   fontFamily = fontStandard(),
 }) {
-  const matrix = fontSize === "large" ? textSync(text + "", { font: fontFamily }) : text + "";
+  const matrix = textOf(text, fontFamily);
   const {
     x: startX,
     y: startY,

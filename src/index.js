@@ -1,6 +1,7 @@
 export * from "./core.js";
 export { cfb } from "./attribute/cfb.js";
 export { wch } from "./attribute/wch.js";
+export { figlet } from "./attribute/figlet.js";
 export { glsl } from "./attribute/glsl.js";
 export { webgl } from "./webgl/index.js";
 export { terminal } from "./terminal/index.js";

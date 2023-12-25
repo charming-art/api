@@ -105,8 +105,7 @@ export async function terminalBar() {
   app.append(cm.text, {
     x: marginX + plotWidth,
     y: marginY + plotHeight,
-    fontSize: "large",
-    text: "2023",
+    text: cm.figlet("2023"),
     textBaseline: "bottom",
     textAlign: "left",
   });

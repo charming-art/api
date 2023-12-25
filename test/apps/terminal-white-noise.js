@@ -15,13 +15,12 @@ export async function terminalWhiteNoise() {
   const characters = cm.cross(cm.range(w), cm.range(h)).map((d) => ({ x: d[0], y: d[1] }));
 
   const textOptions = {
-    text: "Charming",
+    text: cm.figlet("Charming"),
     x: w / 2,
     y: h / 2,
     textAlign: "center",
     textBaseline: "middle",
     fill: cm.gradientRainBowX(),
-    fontSize: "large",
   };
   const bbox = app.textBBox(textOptions);
   const { x: tx, y: ty, width: tw, height: th } = bbox;
