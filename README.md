@@ -111,7 +111,7 @@ const app = cm.app({
 });
 
 app.append(cm.text, {
-  text: "hello world",
+  text: cm.figlet("hello world"),
   x: app.prop("width") / 2,
   y: app.prop("height") / 2,
   fill: cm.gradientSineBowX(),
@@ -280,7 +280,7 @@ function update(app) {
 
   // Append text in the style of ASCII art.
   app.append(cm.text, {
-    text: "Charming",
+    text: cm.figlet("Charming"),
     x: width / 2,
     y: height / 2,
     textAlign: "center",
@@ -423,7 +423,7 @@ The core concepts of Charming, which are included in [core bundle](https://cdn.j
 The advanced concepts of Charming, which are included in [full bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.umd.min.js):
 
 - [Renderer](#renderer) - different rendering technologies and styles
-- [Color](#color) - defining colors for shapes
+- [Attribute](#attribute) - defining attributes for shapes
 - [Array](#array) - array generation and manipulation
 - [Math](#math) - processing numbers, randomness, etc.
 - [Constant](#constant) - useful constants
@@ -455,18 +455,10 @@ const app = cm.app({
 });
 ```
 
-The _width_ and _height_ options can also be specified as strings representing the number of columns and rows respectively when using a [terminal](#cm-terminal) renderer for apps.
-
-```js
-const app = cm.app({
-  width: "30",
-  height: "20",
-  renderer: await cm.terminal(),
-});
-```
-
 Apps with [terminal](#cm-terminal) renderer support the extra options:
 
+- **cols** - the number of columns, with a priority level higher than the _width_
+- **rows** - the number of rows, with a priority level higher than the _height_
 - **fontSize** - the font size used to render text, see [CSS font-size](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size)
 - **fontWeight** - the font weight used to render text, see [CSS font-weight](https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight)
 - **fontFamily** - the font family used to render text, see [CSS font-family](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family)
@@ -474,6 +466,8 @@ Apps with [terminal](#cm-terminal) renderer support the extra options:
 
 ```js
 const app = cm.app({
+  cols: 30,
+  rows: 30,
   renderer: await cm.terminal(),
   fontSize: 20,
   fontWeight: "bold",
@@ -1670,9 +1664,9 @@ app.render();
 
 <img src="./img/cm-terminal-text.png" width=800 />
 
-### Color
+### Attribute
 
-Defining colors for shapes.
+Defining Attributes for shapes.
 
 <a name="cm-rgb" href="#cm-rgb">#</a> _cm_.**rgb**(_r[, g[, b]]_)
 
@@ -1725,6 +1719,75 @@ app.append(cm.rect, {
   width: 10,
   height: 5,
   fill: cm.cfb(cm.wch("😊")),
+});
+```
+
+<a name="cm-constant" href="#cm-constant">#</a> _cm_.**constant**(_value_)
+
+Defines a attribute with the specified constant _value_, which is useful for defining some non-data-driven options for [composite shape](#cm-composite-shape).
+
+```js
+app.data(["A", "B", "C"]).append(bar, {
+  x: (d) => d,
+  y: (_, i) => i,
+  axis: cm.constant(false),
+  colors: cm.constant(["yellow", "red"]),
+});
+
+function bar(
+  flow,
+  {
+    x, // ["A", "B", "C"]
+    y, // [0, 1, 2]
+    axis, // false
+    colors, // ["yellow", "red"]
+  },
+) {
+  // ...
+}
+```
+
+<a name="cm-glsl" href="#cm-glsl">#</a> _cm_.**glsl**
+
+Defines a attribute with the specified [GLSL](<https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)>) function through template literals. The name of the function should match the assigned attribute, being passed the current datum(_d_), returning value with corresponding type.
+
+```js
+const r = cm.glsl`float r(float theta) {
+  float d = 0.2 + 0.12 * cos(theta * 9.0 - 2.0);
+  return d * 300.0;
+}`;
+
+app.data(theta).append(cm.circle, { r });
+```
+
+Some numbers can also be interpolated:
+
+```js
+const scale = 300;
+const width = 640;
+const height = 480;
+const position = cm.glsl`vec2 position(float theta) {
+  vec2 xy = vec2(
+    cos(theta), 
+    sin(theta)) * (0.6 + 0.2 * cos(theta * 6.0 + cos(theta * 8.0 + ${time}))
+  );
+  return xy * ${scale} + vec2(${width / 2}, ${height / 2});
+}`;
+
+app.data(theta).append(cm.circle, { position });
+```
+
+<a name="cm-figlet" href="#cm-figlet">#</a> _cm_.**figlet**(_text_)
+
+Defines a figlet text with the specified _text_ for [terminal renderer](#cm-terminal).
+
+```js
+const app = cm.app({
+  renderer: await cm.terminal(),
+});
+
+app.append(cm.text, {
+  text: cm.figlet("Charming"),
 });
 ```
 
@@ -1789,15 +1852,24 @@ cm.random(10); // 3.747820060823679
 cm.random(2, 10); // 6.649642684087617
 ```
 
-<img src="./img/cm-random.png" width=600 alt="cm-random">
+<a name="cm-randomInt" href="#cm-randomInt">#</a> _cm_.**randomInt**(_[min[, max]]_)
 
-<a name="cm-randomNoise" href="#cm-randomNoise">#</a> _cm_.**randomNoise**(_[octaves[, seed]]_)
+Like `cm.random`, expect returns integers.
 
-Returns a function for generating random numbers with a smooth, continuous random-like distribution, commonly referred to as [Perlin Noise](https://en.wikipedia.org/wiki/Perlin_noise).
+```js
+cm.randomInt(0, 10); // 5
+```
 
-The layers of noise is _octaves_ and increasing the number of octaves results in a more variable sequence. If _octaves_ is not specified, it defaults to 0.
+<a name="cm-randomNoise" href="#cm-randomNoise">#</a> _cm_.**randomNoise**(_min[, max[, options]]_)
 
-A _seed_ can be specified as a real number or as any integer. Two generators instanced with the same seed and octaves generate the same sequence. If _seed_ is not specified, it defaults to 0.
+Returns a function with the specified _options_ for generating random numbers with a smooth, continuous random-like distribution, commonly referred to as [Perlin Noise](https://en.wikipedia.org/wiki/Perlin_noise), which is within range _\[min, max\)_. If _min_ is not specified, it defaults to 0; if _max_ is not specified, it defaults to 1.
+
+Supports following options:
+
+- **octaves** - layers of noise, default to 4.
+- **seed** - a real number or as any integer, defaults to random number.
+
+Increasing the number of octaves results in a more variable sequence, and two generators instanced with the same seed and octaves generate the same sequence.
 
 The returned function accept two parameters: _x_ is x coordinate in noise space; _y_ is y coordinate in noise space.
 
@@ -1818,6 +1890,14 @@ cm.randomNormal(30, 10)(); // 31.94829616303788
 ```
 
 <img src="./img/cm-randomNormal.png" width=600 alt="cm-randomNormal">
+
+<a name="cm-randomChar" href="#cm-randomChar">#</a> _cm_.**randomChar**()
+
+Returns a random printable and non-empty character.
+
+```js
+cm.randomChar(); // 'A'
+```
 
 ### Constant
 
