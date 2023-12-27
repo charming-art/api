@@ -86,7 +86,7 @@ const app = cm.app({
 
 app
   .data(cm.range(240))
-  .process(cm.map, (_, i, data) => (i * Math.PI * 2) / data.length)
+  .process(cm.map, (_, i, data) => (i * Math.PI) / data.length)
   .append(cm.circle, {
     x: (t) => Math.cos(t) * Math.cos(t * 3),
     y: (t) => Math.sin(t) * Math.cos(t * 3),
@@ -94,7 +94,7 @@ app
   })
   .transform(cm.mapPosition, { padding: 15 })
   .transform(cm.mapAttrs, {
-    r: { range: [1, 15] },
+    r: { range: [8, 20] },
   });
 
 document.body.appendChild(app.render().node());
@@ -165,7 +165,7 @@ app
   // Create a flow containing an array of indices: [0, 1, 2, ..., 239].
   .data(cm.range(240))
   // Transform indices to angles.
-  .process(cm.map, (_, i, data) => (i * Math.PI * 2) / data.length)
+  .process(cm.map, (_, i, data) => (i * Math.PI) / data.length)
   // Bind shapes with angles, and invoke the callback on each angle
   // to extract columns for each attribute.
   .append(cm.circle, {
@@ -177,7 +177,7 @@ app
   // visual canvas dimensions with padding setting to 15.
   .transform(cm.mapPosition, { padding: 15 })
   // Map abstract radius(r) column to visual values range from 1 to 15.
-  .transform(cm.mapAttrs, { r: { range: [1, 15] } });
+  .transform(cm.mapAttrs, { r: { range: [8, 20] } });
 
 // Render shapes to canvas and mount it to the document's body.
 document.body.appendChild(app.render().node());

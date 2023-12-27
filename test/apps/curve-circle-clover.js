@@ -1,4 +1,5 @@
 import * as cm from "../../src/index.js";
+import { interpolateRainbow } from "d3-scale-chromatic";
 import { dispose } from "../dispose.js";
 
 export function curveCircleClover() {
@@ -8,17 +9,18 @@ export function curveCircleClover() {
   });
 
   app
-    .data(cm.range(240))
-    .process(cm.map, (_, i, a) => (i * Math.PI * 2) / a.length)
+    .data(cm.range(120))
+    .process(cm.map, (_, i, a) => i * (Math.PI / a.length))
     .append(cm.circle, {
       x: (t) => Math.cos(t) * Math.cos(t * 3),
       y: (t) => Math.sin(t) * Math.cos(t * 3),
-      r: (_, i) => i,
+      r: (t) => t,
+      fill: (t) => t,
     })
+    .transform(cm.mapPosition, { padding: 20 })
     .transform(cm.mapAttrs, {
-      x: { range: [15, app.prop("width") - 30] },
-      y: { range: [15, app.prop("height") - 30] },
-      r: { range: [1, 15] },
+      r: { range: [8, 20] },
+      fill: { interpolate: interpolateRainbow },
     });
 
   return app.call(dispose).render().node();

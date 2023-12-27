@@ -1,10 +1,16 @@
-export function continuous(domain, range, { transform, unknown, interpolate = (d) => d }) {
+function interpolateNumber(a, b) {
+  return (t) => a * (1 - t) + t * b;
+}
+
+function normalizeNumber(a, b) {
+  return (n) => (b - a === 0 ? 0.5 : (n - a) / (b - a));
+}
+
+export function continuous(domain, [r, r1] = [0, 1], { transform, unknown, interpolate = interpolateNumber(r, r1) }) {
   const [d, d1] = domain.map(transform);
-  const [r, r1] = range;
+  const normalize = normalizeNumber(d, d1);
   return (x) => {
     if (x === null || Number.isNaN(x)) return unknown;
-    const n = transform(x);
-    const t = d1 - d === 0 ? 0.5 : (n - d) / (d1 - d);
-    return interpolate(r * (1 - t) + t * r1);
+    return interpolate(normalize(transform(x)));
   };
 }
