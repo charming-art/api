@@ -409,7 +409,7 @@ D3.js is great, great of all time. In fact, Charming is able to work seamlessly 
 
 ## API Reference
 
-The core concepts of Charming, which are included in [core bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.core.umd.min.js):
+The core modules of Charming, which are included in [core bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.core.umd.min.js):
 
 - [App](#app) - rendering app to DOM and animating it
 - [Flow](#flow) - binding data to shapes
@@ -419,11 +419,15 @@ The core concepts of Charming, which are included in [core bundle](https://cdn.j
 - [Scale](#scale) - mapping abstract data to visual representation
 - [Event](#event) - handling hooks and events
 - [Prop](#prop) - returning properties of the app
-
-The advanced concepts of Charming, which are included in [full bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.umd.min.js):
-
-- [Renderer](#renderer) - different rendering technologies and styles
 - [Attribute](#attribute) - defining attributes for shapes
+
+The other modules are included in [full bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.umd.min.js). Different renderers and related modules will be placed in the following separate modules:
+
+- [WebGL](#webgl) - WebGL renderer and related helpers
+- [Terminal](#terminal) - Terminal renderer and related helpers
+
+For common problems, Charming provides a series of optional modules encapsulate reusable solutions, increasing efficiency and alleviating the burden of common tasks:
+
 - [Array](#array) - array generation and manipulation
 - [Math](#math) - processing numbers, randomness, etc.
 - [Constant](#constant) - useful constants
@@ -661,6 +665,28 @@ const bbox = app.textBBox({
   fontWeight: "bold",
 });
 ```
+
+<a name="cm-canvas" href="#cm-canvas">#</a> _cm_.**canvas()**
+
+Constructs a canvas renderer, drawing shapes with [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). It is the default renderer for [app](#cm-app) and there is no need to specify it explicitly.
+
+```js
+const app = cm.app({
+  height: 200,
+  renderer: cm.canvas(), // not necessary
+});
+
+app.append(cm.circle, {
+  x: 100,
+  y: 100,
+  r: 50,
+  fill: "orange",
+});
+
+app.render();
+```
+
+<img src="./img/cm-canvas.png" width=640>
 
 ### Flow
 
@@ -1580,31 +1606,96 @@ const app = cm.app({ renderer: await cm.terminal() });
 app.prop("fontWeight"); // "normal"
 ```
 
-### Renderer
+### Attribute
 
-Different rendering technologies and styles.
+Defining Attributes for shapes.
 
-<a name="cm-canvas" href="#cm-canvas">#</a> _cm_.**canvas()**
+<a name="cm-rgb" href="#cm-rgb">#</a> _cm_.**rgb**(_r[, g[, b]]_)
 
-Constructs a canvas renderer, drawing shapes with [CanvasRenderingContext2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). It is the default renderer for [app](#cm-app) and there is no need to specify it explicitly.
+Returns a string representing the color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value).
+
+```js
+cm.rgb(234, 260, 180); // 'rgb(234, 260, 180)'
+```
+
+If only on argument is specified, sets all channels to the same _value_.
+
+```js
+cm.rgb(100); // 'rgb(100, 100, 100)'
+```
+
+<a name="cm-constant" href="#cm-constant">#</a> _cm_.**constant**(_value_)
+
+Defines a attribute with the specified constant _value_, which is useful for defining some non-data-driven options for [composite shape](#cm-composite-shape).
+
+```js
+app.data(["A", "B", "C"]).append(bar, {
+  x: (d) => d,
+  y: (_, i) => i,
+  axis: cm.constant(false),
+  colors: cm.constant(["yellow", "red"]),
+});
+
+function bar(
+  flow,
+  {
+    x, // ["A", "B", "C"]
+    y, // [0, 1, 2]
+    axis, // false
+    colors, // ["yellow", "red"]
+  },
+) {
+  // ...
+}
+```
+
+### WebGL
+
+WebGL renderer and related helpers.
+
+<a name="cm-webgl" href="#cm-webgl">#</a> _cm_.**terminal()**
+
+Returns a WebGL renderer, rendering shapes by WebGL.
 
 ```js
 const app = cm.app({
-  height: 200,
-  renderer: cm.canvas(), // not necessary
+  renderer: cm.webgl(),
 });
-
-app.append(cm.circle, {
-  x: 100,
-  y: 100,
-  r: 50,
-  fill: "orange",
-});
-
-app.render();
 ```
 
-<img src="./img/cm-canvas.png" width=640>
+<a name="cm-glsl" href="#cm-glsl">#</a> _cm_.**glsl**
+
+Defines a attribute with the specified [GLSL](<https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)>) function through template literals. The name of the function should match the assigned attribute, being passed the current datum(_d_), returning value with corresponding type.
+
+```js
+const r = cm.glsl`float r(float theta) {
+  float d = 0.2 + 0.12 * cos(theta * 9.0 - 2.0);
+  return d * 300.0;
+}`;
+
+app.data(theta).append(cm.circle, { r });
+```
+
+Some numbers can also be interpolated:
+
+```js
+const scale = 300;
+const width = 640;
+const height = 480;
+const position = cm.glsl`vec2 position(float theta) {
+  vec2 xy = vec2(
+    cos(theta), 
+    sin(theta)) * (0.6 + 0.2 * cos(theta * 6.0 + cos(theta * 8.0 + ${time}))
+  );
+  return xy * ${scale} + vec2(${width / 2}, ${height / 2});
+}`;
+
+app.data(theta).append(cm.circle, { position });
+```
+
+### Terminal
+
+Terminal renderer and related helpers.
 
 <a name="cm-terminal" href="#cm-terminal">#</a> _cm_.**terminal()**
 
@@ -1664,24 +1755,6 @@ app.render();
 
 <img src="./img/cm-terminal-text.png" width=800 />
 
-### Attribute
-
-Defining Attributes for shapes.
-
-<a name="cm-rgb" href="#cm-rgb">#</a> _cm_.**rgb**(_r[, g[, b]]_)
-
-Returns a string representing the color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value).
-
-```js
-cm.rgb(234, 260, 180); // 'rgb(234, 260, 180)'
-```
-
-If only on argument is specified, sets all channels to the same _value_.
-
-```js
-cm.rgb(100); // 'rgb(100, 100, 100)'
-```
-
 <a name="cm-cfb" href="#cm-cfb">#</a> _cm_.**cfb**(_ch[, f[, b]]_)
 
 Returns a terminal color object, which is only for app with a [terminal](#cm-terminal) renderer. A terminal color comprises the following three channels:
@@ -1722,61 +1795,6 @@ app.append(cm.rect, {
 });
 ```
 
-<a name="cm-constant" href="#cm-constant">#</a> _cm_.**constant**(_value_)
-
-Defines a attribute with the specified constant _value_, which is useful for defining some non-data-driven options for [composite shape](#cm-composite-shape).
-
-```js
-app.data(["A", "B", "C"]).append(bar, {
-  x: (d) => d,
-  y: (_, i) => i,
-  axis: cm.constant(false),
-  colors: cm.constant(["yellow", "red"]),
-});
-
-function bar(
-  flow,
-  {
-    x, // ["A", "B", "C"]
-    y, // [0, 1, 2]
-    axis, // false
-    colors, // ["yellow", "red"]
-  },
-) {
-  // ...
-}
-```
-
-<a name="cm-glsl" href="#cm-glsl">#</a> _cm_.**glsl**
-
-Defines a attribute with the specified [GLSL](<https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)>) function through template literals. The name of the function should match the assigned attribute, being passed the current datum(_d_), returning value with corresponding type.
-
-```js
-const r = cm.glsl`float r(float theta) {
-  float d = 0.2 + 0.12 * cos(theta * 9.0 - 2.0);
-  return d * 300.0;
-}`;
-
-app.data(theta).append(cm.circle, { r });
-```
-
-Some numbers can also be interpolated:
-
-```js
-const scale = 300;
-const width = 640;
-const height = 480;
-const position = cm.glsl`vec2 position(float theta) {
-  vec2 xy = vec2(
-    cos(theta), 
-    sin(theta)) * (0.6 + 0.2 * cos(theta * 6.0 + cos(theta * 8.0 + ${time}))
-  );
-  return xy * ${scale} + vec2(${width / 2}, ${height / 2});
-}`;
-
-app.data(theta).append(cm.circle, { position });
-```
-
 <a name="cm-figlet" href="#cm-figlet">#</a> _cm_.**figlet**(_text_)
 
 Defines a figlet text with the specified _text_ for [terminal renderer](#cm-terminal).
@@ -1790,6 +1808,58 @@ app.append(cm.text, {
   text: cm.figlet("Charming"),
 });
 ```
+
+<a name="cm-fontStandard" href="#cm-fontStandard">#</a> _cm_.**fontStandard**()
+
+Parses and returns the standard font for the fontFamily attribute.
+
+```js
+app.append(cm.text, {
+  // ...
+  fontFamily: cm.fontStandard(),
+});
+```
+
+<img src="./img/cm-fontStandard.png" width=800 alt="cm-fontStandard">
+
+<a name="cm-fontGhost" href="#cm-fontGhost">#</a> _cm_.**fontGhost**()
+
+Parses and returns the ghost font for the fontFamily attribute.
+
+```js
+app.append(cm.text, {
+  // ...
+  fontFamily: cm.fontGhost(),
+});
+```
+
+<img src="./img/cm-fontGhost.png" width=800 alt="cm-fontGhost">
+
+<a name="cm-gradientRainBowX" href="#cm-gradientRainBowX">#</a> _cm_.**gradientRainBowX**()
+
+Returns the fill attribute with the vertical rainbow gradient.
+
+```js
+app.append(cm.text, {
+  // ...
+  fill: cm.gradientRainBowX(),
+});
+```
+
+<img src="./img/cm-gradientRainBowX.png" width=800 alt="cm-gradientRainBowX">
+
+<a name="cm-gradientSineBowX" href="#cm-gradientSineBowX">#</a> _cm_.**gradientSineBowX**()
+
+Returns the fill attribute with the vertical sinebox gradient.
+
+```js
+app.append(cm.text, {
+  // ...
+  fill: cm.gradientRainBowX(),
+});
+```
+
+<img src="./img/cm-gradientSineBowX.png" width=800 alt="cm-gradientSineBowX">
 
 ### Array
 
@@ -1910,66 +1980,6 @@ It is twice the ratio of the circumference of a circle to its diameter.
 ```js
 Math.cos(cm.TOW_PI); // 1
 ```
-
-### Font
-
-Fonts for ASCII art text.
-
-<a name="cm-fontStandard" href="#cm-fontStandard">#</a> _cm_.**fontStandard**()
-
-Parses and returns the standard font for the fontFamily attribute.
-
-```js
-app.append(cm.text, {
-  // ...
-  fontFamily: cm.fontStandard(),
-});
-```
-
-<img src="./img/cm-fontStandard.png" width=800 alt="cm-fontStandard">
-
-<a name="cm-fontGhost" href="#cm-fontGhost">#</a> _cm_.**fontGhost**()
-
-Parses and returns the ghost font for the fontFamily attribute.
-
-```js
-app.append(cm.text, {
-  // ...
-  fontFamily: cm.fontGhost(),
-});
-```
-
-<img src="./img/cm-fontGhost.png" width=800 alt="cm-fontGhost">
-
-### Gradient
-
-Gradient fills for ASCII art text.
-
-<a name="cm-gradientRainBowX" href="#cm-gradientRainBowX">#</a> _cm_.**gradientRainBowX**()
-
-Returns the fill attribute with the vertical rainbow gradient.
-
-```js
-app.append(cm.text, {
-  // ...
-  fill: cm.gradientRainBowX(),
-});
-```
-
-<img src="./img/cm-gradientRainBowX.png" width=800 alt="cm-gradientRainBowX">
-
-<a name="cm-gradientSineBowX" href="#cm-gradientSineBowX">#</a> _cm_.**gradientSineBowX**()
-
-Returns the fill attribute with the vertical sinebox gradient.
-
-```js
-app.append(cm.text, {
-  // ...
-  fill: cm.gradientRainBowX(),
-});
-```
-
-<img src="./img/cm-gradientSineBowX.png" width=800 alt="cm-gradientSineBowX">
 
 ### Helper
 
