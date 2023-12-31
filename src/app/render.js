@@ -15,7 +15,7 @@ function renderNode(renderer, node, dimension, index, app) {
   }
   if (builtin) render(renderer, I, value, options, group);
   if (!children.length) return;
-  for (const i of I) {
+  for (let i = 0; i < I.length; i++) {
     if (value) {
       const { x: X = [], y: Y = [], rotate: R = [] } = value;
       const x = X[i] ?? 0;

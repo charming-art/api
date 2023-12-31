@@ -55,3 +55,4 @@ export { shapeRectWebGL } from "./shape-rect.webgl.js";
 export { terminalCharacterMatrix } from "./terminal-character-matrix.js";
 export { terminalFire } from "./terminal-fire.js";
 export { terminalBar } from "./terminal-bar.js";
+export { shapeCompositeArrowColor } from "./shape-composite-arrow-color.js";
