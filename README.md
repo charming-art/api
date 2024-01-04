@@ -2,19 +2,23 @@
 
 > Charming is still in testing; the APIs are not fully implemented and may not be stable.
 
-**Charming** is a free, open-source, creative coding language for Charming Computing, which means making arts by computational algorithm. It has **declarative**, **data-driven**, concise, inclusive, yet expressive API inspired by [G2.js](https://github.com/antvis/G2), [D3.js](https://github.com/d3) and [P5.js](https://p5js.org/).
+**Charming** short for _Charming Computing_, is a free, open-source, creative coding language for computational and ASCII art with high performance. It has a declarative, concise, yet expressive API inspired by [G2.js](https://github.com/antvis/G2), [D3.js](https://github.com/d3) and [P5.js](https://p5js.org/).
 
-The data-driven API style provides Charming with the potential for **high performance**, as it can take advantage of WebGL's [batch rendering](https://developer.mozilla.org/en-US/docs/Web/API/ANGLE_instanced_arrays/drawArraysInstancedANGLE) technique: rendering hundreds to thousands of objects or elements with just a single draw call. At the same time, some GLSL functions can be defined to offload expensive calculations to the GPU, thereby significantly increasing the FPS. It may also implement a [WebGPU](https://www.w3.org/TR/webgpu/) renderer in the future to accomplish this more easily with Compute Shader.
+Charming is built on the observation that both visualization and generative art are, to some extent, data-driven. Therefore, it provides a flow-based API for processing data, as well as appending and transforming shapes. Charming also supports batch rendering of 2D primitives using a [WebGL renderer](https://observablehq.com/d/db16249bd7174a24), and defines some [GLSL functions](https://observablehq.com/d/86d2c1fe79fac300) to offload expensive computations to the GPU. Additionally, a [terminal renderer](https://observablehq.com/d/8152c4d46e22d446) for ASCII art, embedded in JavaScript, utilizes a software rasterizer written in Rust and compiled to WASM, aiming to achieve high performance.
 
-<a href="https://observablehq.com/d/86d2c1fe79fac300"><img alt="example-circles-glsl-code" src="./img/example-circles-glsl-code.png" height="420px" style="margin-right:1em"/></a><img alt="example-circles-glsl" src="./img/example-circles-glsl.gif" height="420px"/>
+My hope with Charming is that you spend less time wrangling the machinery of programming and more time "using computing to tell stories". Or put more simply: **with Charming, you'll express more, more easily.**
 
-In addition to high performance, Charming focuses on making **ASCII art** accessible for artists, designers, educators, beginners, and anyone else! It provided a consistent API for both styles, and the [terminal canvas](./src/terminal/) for ASCII art is embedded in JavaScript and uses a [software rasterizer](./rust/) written in Rust compiled to WASM, to gain high performance hopefully.
+<a href="https://observablehq.com/d/2f9bf9f52cb24090"><img alt="examples" src="./img/examples.png" /></a>
 
-<a href="https://observablehq.com/d/9e951c5e9d721ef5"><img alt="example-white-noise-code" src="./img/example-white-noise-code.png" height="430px" style="margin-right:1em"/></a><img alt="example-white-noise" src="./img/example-white-noise.gif" height="430px"/>
+## Links
 
-Moreover, Charming also puts strong emphasis on **lightweight**: the [core bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.core.umd.min.js) is just 25kb minified. With that in mind, Charming is designed to be flexible, incrementally adoptable and supports fully [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking). It's also means that Charming is **beginner friendly**, because you don't have to start by diving into complex concepts: think of it as a collection of syntactic sugars for [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API).
+If you are new to Charming, I highly recommend first reading following links to get started with:
 
-Most importantly, my hope with Charming is that you spend less time wrangling the machinery of programming and more time "using computing to tell stories". Or put more simply: **with Charming, you'll express more, more easily.** If you are new to Charming, we highly recommend first reading this article to introduce Charming's [inspiration and features](#why-is-charming), as well as core concepts:
+- [What is Charming](https://observablehq.com/d/477368f7e5423ff6) - a brief introduction
+- [Why Charming](https://observablehq.com/d/535654add5972bd2) - inspiration
+- [How is Charming](https://observablehq.com/d/c5e87fb195e2166d) - features
+
+And there are [a plenty of examples](https://observablehq.com/d/2f9bf9f52cb24090) to learn from, as well as [API reference](#api-reference) and core concepts:
 
 - [App](#app) - rendering app to DOM and animating it
 - [Flow](#flow) - binding data to shapes
@@ -25,7 +29,7 @@ Most importantly, my hope with Charming is that you spend less time wrangling th
 - [Event](#event) - handling hooks and events
 - [Prop](#prop) - returning properties of the app
 
-And there are [a plenty of examples](https://observablehq.com/d/2f9bf9f52cb24090) to get started with.
+If you want to have a comprehensive understanding of Charming, such as design choice, discussion and future work, you can skip links above and read [Charming: Charming Computing](https://observablehq.com/d/dd59b4c4f9f1d9d3) directly.
 
 ## Installing
 
@@ -122,290 +126,6 @@ app.append(cm.text, {
 
 document.body.appendChild(app.render().node(()));
 ```
-
-## Why is Charming?
-
-> On my programming journey, two tools have shaped me: [Processing](https://www.processing.org/) and [D3.js](https://d3js.org/). The former makes coding fun, while the latter makes coding elegant. What about Charming? Let's see...
-
-As I began my journey into computational art, I found [P5.js](https://p5js.org/) and [Processing](https://processing.org/) to be excellent starting points. Their artist-centered APIs really helped me get stuff drawn onto the screen quick and easy, allowing me to focus on creative expression. And I quickly publish a series of artworks on [OpenProcessing](https://openprocessing.org/user/144707?view=sketches&o=25), instead of spending time on wondering why the computer didn't work as I expected, before my time or patience run out. Additionally, I also designed a creative coding language [Charming.py](https://github.com/charming-art/charming-py) with the same style of APIs, for ASCII art in the terminal.
-
-However, when I became a front-end engineer in the field of visualization, I noticed a distinct shift in programming paradigms for both visualization grammars and front-end frameworks: from **imperative** to **declarative**. Declarative grammars can accelerate development, facilitate retargeting across platforms, and allow language-level optimizations. While P5.js, as the computational art framework for the web, is still imperative and I found myself using it less and less as I tasted the benefits of declarative programming. So I began to ponder whether it was possible to design and implement a declarative grammar specifically for computational art or creative coding?
-
-After about two year's experience developing and maintaining the new 5.0 version of [G2](https://github.com/antvis/G2), I learned a lot from the complete process of designing a new grammar. At the same time, I had observed a commonality between visualization and generative art: they are both **data-driven** to some extent. The difference is that visualization(information visualization more specifically) is typically driven by data derived from daily life activities, while computational art is driven by data generated by algorithm or computing.
-
-Building on this observation, I established the foundational structure of Charming's declarative grammar, and as I progressed, I discovered additional advantages. Declarative grammar decouple specification (the what) from execution (the how). This approach not only make code more predictable, but also diversifies the underlying rendering implementations. For example, it enables 2D primitives to utilize WebGL for improved performance instead of the conventional Canvas, and it allows shapes to be transformed into ASCII art by a terminal renderer, thereby broadening the spectrum of possible artistic expressions.
-
-In addition to the mentioned features, Charming also incorporates best practices from G2.js and valuable parts from [D3.js](https://d3js.org/). Furthermore, it address and mitigate some common issues found in P5.js, including namespace pollution, excessive bundle size, and restrictions on API usage contexts.
-
-It is important to emphasize that Charming remains committed to P5.js's core principle: **to be beginner friendly**. Beyond keeping the APIs concise and intuitive, Charming will place a significant focus on teaching, recognizing it as the most influential facet of tool building.
-
-### Charming is declarative
-
-Charming's atomic operand is **flow**: a container hold data and shapes. **Operators** act on flow, modifying content. The instance _app_, creating by _cm.app_, also serving as a namespace, provides _datum_ and _data_ methods for creating flows and placing values into them.
-
-Any number of **operators** can be applied to selected data. The **process** operators pipe data through a series of pure functions to prepare data for rendering, such _cm.map_, _cm.each_, and _cm.filter_. The **append** operators add a new shape for each processed datum in this flow, extracting columns of data and assigning them to shape attributes, thus allowing the the convenient creation of nested structures. The **transform** operators derives and modifies extracted shape attribute values before committing to the **renderer**.
-
-Charming supports method chaining for brevity when applying multiple operators: the operator return value is a new flow. This allows authoring computational art declaratively and a clear relationship between the raw data and the drawn graphics can be seen through the declared operators.
-
-For example, to draw circles positioned by a curve function, with radius and index maintaining a positive correlation:
-
-<img src="./img/example-clover.png" width=640 />
-
-```js
-// Import the methods from the charming module into the namespace cm.
-import * as cm from "@charming-art/charming";
-
-// Create a app.
-const app = cm.app({
-  width: 640,
-  height: 640,
-});
-
-app
-  // Create a flow containing an array of indices: [0, 1, 2, ..., 239].
-  .data(cm.range(240))
-  // Transform indices to angles.
-  .process(cm.map, (_, i, data) => (i * Math.PI) / data.length)
-  // Bind shapes with angles, and invoke the callback on each angle
-  // to extract columns for each attribute.
-  .append(cm.circle, {
-    x: (t) => Math.cos(t) * Math.cos(t * 3),
-    y: (t) => Math.sin(t) * Math.cos(t * 3),
-    r: (_, i) => i,
-  })
-  // Map abstract positions(x, y) attribute columns to
-  // visual canvas dimensions with padding setting to 15.
-  .transform(cm.mapPosition, { padding: 15 })
-  // Map abstract radius(r) column to visual values range from 1 to 15.
-  .transform(cm.mapAttrs, { r: { range: [8, 20] } });
-
-// Render shapes to canvas and mount it to the document's body.
-document.body.appendChild(app.render().node());
-```
-
-### Charming is high performance
-
-By decoupling specification (the what) from execution (the how), Charming can use **WebGL** to render shapes. Compared to traditional rendering technologies like Canvas, where each shape requires an individual draw call, WebGL's [batch rendering](https://developer.mozilla.org/en-US/docs/Web/API/ANGLE_instanced_arrays/drawArraysInstancedANGLE) technique allows for the rendering of hundreds or even thousands of similar objects in a single draw call. This cuts down communication overhead between the CPU and GPU, thus enhancing rendering efficiency. Batch rendering is particularly well-suited for computational art, as algorithms often generate a large number of similar graphics. Meanwhile Charming's _flow_ operand is perfect for batch rendering, as it naturally groups similar objects together without introducing additional overhead.
-
-In addition to optimizing rendering, Charming further enhances performance by offloading expensive computations to the GPU, thereby optimizing calculation efficiency. **GLSL functions** can be conveniently defined using _cm.glsl_, a tagged template literal specifically for GLSL that supports the interpolation of dynamic and non-serializable _JavaScript numbers_. Each shape attribute ought to be encapsulated within a GLSL function that carries the _name_ of the corresponding attribute. This function is invoked with each data item(_d_) hold by the flow and is expected to return a _value_ of the specified attribute type. Charming enables moving expensive computations into GLSL attributes, which are then compiled into shader programs, allowing the GPU to handle these operations efficiently.
-
-[For example](https://observablehq.com/d/86d2c1fe79fac300), to render specific number of circles while dynamically updating their positions, strokes and radii using trigonometric functions. While the Canvas renderer can maintain 60 FPS for up to _5.5k_ circles, the WebGL renderer can sustain the same 60 FPS for as many as _22k_ circles. Moreover, when faced with the task of rendering _100k_ circles, the WebGL renderer fails to draw them, but WebGL combined with GLSL attributes can still manage to render at a reduced frame rate of 10 FPS.
-
-<img alt="example-circles-glsl" src="./img/example-circles-glsl.gif" height="420px"/>
-
-```js
-import * as cm from "@charming-art/charming";
-
-const width = 700;
-const height = 700;
-const count = 20000;
-const theta = cm.range(count, 0, cm.TWO_PI);
-const app = cm.app({
-  width,
-  height,
-  renderer: cm.webgl(), // Use WebGL renderer.
-});
-
-app.on("update", update).start();
-
-function update(app) {
-  const time = app.prop("frameCount") / 50;
-  const scale = 300;
-
-  app.append(cm.clear, { fill: "black" });
-
-  app
-    // Bind angles.
-    .data(theta)
-    // Define a set of GLSL attributes and interpolate certain
-    // JavaScript constants or variables into them.
-    .append(cm.circle, {
-      position: cm.glsl`vec2 position(float theta) {
-        vec2 xy = vec2(
-          cos(theta), 
-          sin(theta)) * (0.6 + 0.2 * cos(theta * 6.0 + cos(theta * 8.0 + ${time}))
-        );
-        return xy * ${scale} + vec2(${width / 2}, ${height / 2});
-      }`,
-      r: cm.glsl`float r(float theta) {
-        float d = 0.2 + 0.12 * cos(theta * 9.0 - ${time} * 2.0);
-        return d * ${scale};
-      }`,
-      stroke: cm.glsl`vec4 stroke(float theta) {
-        float th = 8.0 * theta + ${time} * 2.0;
-        vec3 rgb = 0.6 + 0.4 * vec3(
-          cos(th),
-          cos(th - ${Math.PI} / 3.0),
-          cos(th - ${Math.PI} * 2.0 / 3.0)
-        );
-        return vec4(rgb, 0.0);
-      }`,
-      strokeOpacity: cm.glsl`float strokeOpacity(float theta) {
-        return 0.15 * 2000.0 / ${count};
-      }`,
-    });
-}
-```
-
-Please note that _cm.webgl_ is currently in the experimental stage, having only implemented the circle shape as a proof of concept. The implementation for the remaining shapes is expected to be released soon.
-
-### Charming supports ASCII art
-
-Charming is designed to offer users a broader spectrum of artistic expression. This is grounded in the belief that creativity lies in changing the relationship between content and form, thereby shifting the user's perception of information, as noted by John Maeda. Supporting **ASCII art** is a good example, which is the art form came into being during the early days of computers when graphic displays were limited or non-existent.
-
-Charming introduces the **terminal renderer**, enabling users to create ASCII art as effortlessly as they would with traditional art forms. Instead of using pixels, this renderer takes a unique approach by shifting the coordinate system from pixels to cells, allowing shapes to be rendered into printable characters and emojis. Each 'cell' in the ASCII art can be defined by a _character (ch)_, with a _foreground color (fg)_ and _background color (bg)_, vastly enhancing the expressive potential compared to the traditional color encoding methods.
-
-[For example](https://observablehq.com/d/9e951c5e9d721ef5), to draw text in the style of ASCII art and render points into random characters to simulate white noise effect:
-
-<img alt="example-white-noise" src="./img/example-white-noise.gif" height="430px"/>
-
-```js
-let characters;
-const app = cm.app({
-  width: 600,
-  height: 400,
-  // Use terminal renderer.
-  renderer: await cm.terminal(),
-});
-
-app.on("update", update).start();
-
-function update(app) {
-  const width = app.prop("width");
-  const height = app.prop("height");
-
-  if (!characters) {
-    characters = cm.cross(cm.range(width), cm.range(height)).map((d) => ({ x: d[0], y: d[1] }));
-  }
-
-  app.append(cm.clear, { fill: "black" });
-
-  // Append text in the style of ASCII art.
-  app.append(cm.text, {
-    text: cm.figlet("Charming"),
-    x: width / 2,
-    y: height / 2,
-    textAlign: "center",
-    textBaseline: "middle",
-    fill: cm.gradientRainBowX(), // Define gradient color.
-  });
-
-  // Append points rendered into characters.
-  app
-    .data(characters)
-    .process(cm.each, (d) => {
-      if (d.lifespan) return d.lifespan--;
-      d.stroke = cm.cfb(cm.randomChar());
-      d.lifespan = cm.randomInt(3, 10);
-    })
-    .process(cm.filter, (d) => cm.random(10) < 0.7)
-    .append(cm.point, {
-      x: (d) => d.x,
-      y: (d) => d.y,
-      stroke: (d) => d.stroke,
-    });
-}
-```
-
-In addition to supporting ASCII Art, Charming will also be able to support a variety of styles in the future, such as [hand-drawn](https://github.com/rough-stuff/rough) style. Why not have a little fun? Life' not just about work, you know.
-
-### Charming is composable
-
-Inspired by the component philosophy in [React](https://react.dev/), Charming makes it easy to define custom composite shape through pure function, such as this arrow shape:
-
-```js
-function arrow(flow, { length, angle, x, y, rotate, ...options }) {
-  const group = flow.append(cm.group, { x, y, rotate });
-  const l1 = length.map((d) => d / 2);
-  const l2 = length.map((d) => -d / 2);
-  const a1 = angle.map((d) => d);
-  const a2 = angle.map((d) => -d);
-  group.append(cm.link, { x: l2, y: 0, x1: l1, y1: 0, ...options });
-  group.append(cm.link, { x: 0, y: 0, x1: l1, y1: 0, rotate: a2, transformOrigin: "end", ...options });
-  group.append(cm.link, { x: 0, y: 0, x1: l1, y1: 0, rotate: a1, transformOrigin: "end", ...options });
-}
-```
-
-This composite shape can be used like any built-in shape. [For example](https://observablehq.com/d/82d4b52694a7f370), to draw a flow field:
-
-<img src="./img/example-noise.png" width=640 />
-
-```js
-app
-  .data(fields)
-  // Use arrow shape.
-  .append(arrow, {
-    x: (d) => d.x * size + size / 2,
-    y: (d) => d.y * size + size / 2,
-    length: size * 0.8,
-    angle: Math.PI / 6,
-    rotate: (d) => d.value,
-  })
-  .transform(cm.mapAttrs, {
-    rotate: { range: [0, cm.TWO_PI] },
-  });
-```
-
-Simple components gain power through composition, more complex shape can be defined to extend Charming's features while maintaining a consistent API style and cohesive architecture. [For example](https://observablehq.com/@pearmini/bar), to define and use a barY shape to plot a bar chart:
-
-<img src="./img/example-bar-chart.png"  />
-
-```js
-app.data(data).append(barY, {
-  x: (d) => d.letter,
-  y: (d) => d.frequency,
-});
-```
-
-### Charming is lightweight but extensible
-
-Charming is lightweight because it focuses solely on one thing: drawing shapes driven by data, with the minified [core bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.core.umd.min.js) coming it at just 25kb. The other features are exposed as helper modules and can be adopted incrementally. Each modules have a thoughtfully designed interface, letting users plug in their own functions or objects for processors, transforms, shapes...even custom renderers. In the future, there is possibility to expand Charming with the development of various plugins, including a physics engine, plotting library, computational geometry toolkit, and image processing module.
-
-### Charming is beginner friendly
-
-Although Charming provides some high-level abstractions and modules, such as _flow_, _transform_, and _scale_, beginners are not required to understand them at all. They can simply regard it as a collection of syntactic sugar for the [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API), with a conventional control flow.
-
-For example, to draw some random circles:
-
-```js
-for (let i = 0; i < 100; i++) {
-  const x = Math.random() * app.prop("width");
-  const y = Math.random() * app.prop("height");
-  const r = Math.random() * 255;
-  const g = Math.random() * 255;
-  const b = Math.random() * 255;
-  app.append(cm.circle, {
-    x,
-    y,
-    r: 30,
-    fill: `rgb(${r}, ${g}, ${b})`,
-  });
-}
-```
-
-Beginners can learn new concepts progressively to increase efficiency as they master the basics, gradually unlocking the full potential of Charming. It is also possible for Charming to provide some wrappers to reduce the learning curve in the future:
-
-```js
-import * as cm from "@charming-art/charming";
-
-const node = cm.render({
-  width: 600,
-  height: 300,
-  draw: (app) => {
-    app.append(cm.rect, { x: 0, y: 0, width: 100, height: 50 });
-  },
-});
-
-document.body.append(node);
-```
-
-### Compared to P5.js
-
-While Charming try it best to minimize the learning curve, it must be acknowledged that P5.js remains more accessible to beginners, particularly for those with no prior programming experience. Thus this convince bring some issues for advanced projects, such as namespace pollution, large bundle size and additional overhead introduced by the Friendly Error System (FES). Therefore, for those who are new to programming or JavaScript, P5.js is still the best starting point. For others, Charming seems to be a more promising option.
-
-### Compared to D3.js
-
-D3.js is great, great of all time. In fact, Charming is able to work seamlessly with most of helper modules from D3.js, such as [d3-array](https://github.com/d3/d3-scale) and [d3-scale](https://github.com/d3/d3-scale), and it is encouraged to do so. But [d3-selection](https://github.com/d3/d3-selection) is an exception, which can be considered the "renderer" for D3's ecosystem. It is built on SVG, which excels at interactive visualizations but is less suited for animation-based computational art, owing to performance constraints. Although, in theory, d3-selection can work with any rendering technology that implements the [SVG standard](https://www.w3.org/TR/SVG2/), the complexity of the standard would inevitably introduce additional runtime overhead and increase the bundle size. In a word, for the majority of visualizations, D3.js is the preferred choice, while for computational art or performance-centric visualizations, Charming.js may be the better option.
 
 ## API Reference
 
