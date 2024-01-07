@@ -106,7 +106,7 @@ export async function terminalBar() {
     y: marginY + plotHeight,
     text: cm.figlet("2023"),
     textBaseline: "bottom",
-    textAlign: "left",
+    textAlign: "end",
   });
 
   return app.call(dispose).render().node();

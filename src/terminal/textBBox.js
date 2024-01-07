@@ -5,7 +5,7 @@ export function bboxOf(matrix, { x, y, textAlign, textBaseline }) {
   const lines = matrix.split("\n");
   const height = lines.length;
   const width = Math.max(...lines.map((l) => l.length));
-  const startX = textAlign === "left" ? x - width : textAlign === "center" ? x - width / 2 : x;
+  const startX = textAlign === "end" ? x - width : textAlign === "center" ? x - width / 2 : x;
   const startY = textBaseline === "bottom" ? y - height : textBaseline === "middle" ? y - height / 2 : y;
   return { lines, x: startX, y: startY, width, height };
 }
