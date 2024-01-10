@@ -32,7 +32,7 @@ function tick() {
 }
 
 export function app$start() {
-  this._emitter.emit("beforeAll");
+  this._emitter.emit("beforeAll", this);
   if (!this._stop) tick.call(this);
   this._stop = false;
   return this;

@@ -4,7 +4,7 @@ const colorByValue = new Map();
 
 export function rgba(value) {
   if (colorByValue.has(value)) return colorByValue.get(value);
-  const color = d3Color(value);
+  const color = d3Color(value).rgb();
   colorByValue.set(value, color);
   return color;
 }

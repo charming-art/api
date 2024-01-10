@@ -22,4 +22,5 @@ export { push } from "./process/push.js";
 export { mapAttrs } from "./transform/mapAttrs.js";
 export { mapPosition } from "./transform/mapPosition.js";
 export { rgb } from "./attribute/rgb.js";
+export { hsl } from "./attribute/hsl.js";
 export { constant } from "./attribute/constant.js";
