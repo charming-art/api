@@ -1,58 +1,105 @@
 import { linear } from "../scale/linear.js";
 import { random } from "./random.js";
 
-// https://observablehq.com/@mbostock/perlin-noise
-function grad2(i, x, y) {
-  const v = i & 1 ? y : x;
-  return i & 2 ? -v : v;
+const PERLIN_YWRAPB = 4;
+const PERLIN_YWRAP = 1 << PERLIN_YWRAPB;
+const PERLIN_ZWRAPB = 8;
+const PERLIN_ZWRAP = 1 << PERLIN_ZWRAPB;
+const PERLIN_SIZE = 4095;
+
+function scaledCosine(i) {
+  return 0.5 * (1.0 - Math.cos(i * Math.PI));
 }
 
-function fade(t) {
-  return t * t * t * (t * (t * 6 - 15) + 10);
-}
-
-function lerp(t, a, b) {
-  return a + t * (b - a);
-}
-
-export function randomNoise(lo = -1, hi = 1, { octaves = 4, seed = random(100000) } = {}) {
-  // prettier-ignore
-  const P = Uint8Array.of(151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208,89,18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180)
-  const p = new Uint8Array(512);
-  const map = linear([-1, 1], [lo, hi]);
-  for (let i = 0; i < 256; ++i) p[i] = p[i + 256] = P[i];
-
-  const perlin2 = (x, y) => {
-    const xi = Math.floor(x);
-    const yi = Math.floor(y);
-    const X = xi & 255;
-    const Y = yi & 255;
-    const u = fade((x -= xi));
-    const v = fade((y -= yi));
-    const A = p[X] + Y;
-    const B = p[X + 1] + Y;
-    return lerp(
-      v,
-      lerp(u, grad2(p[A], x, y), grad2(p[B], x - 1, y)),
-      lerp(u, grad2(p[A + 1], x, y - 1), grad2(p[B + 1], x - 1, y - 1)),
-    );
+function randomLcg(seed) {
+  const m = 4294967296;
+  const a = 1664525;
+  const c = 1013904223;
+  let z = (seed == null ? Math.random() * m : seed) >>> 0;
+  return () => {
+    z = (a * z + c) % m;
+    return z / m;
   };
+}
 
-  const normalize = (x0, y0) => {
-    let total = 0;
-    let frequency = 1;
-    let amplitude = 1;
-    let value = 0;
-    const x = x0 + seed;
-    const y = y0 + seed;
-    for (let i = 0; i < octaves; ++i) {
-      value += perlin2(x * frequency, y * frequency) * amplitude;
-      total += amplitude;
-      amplitude *= 0.5;
-      frequency *= 2;
+function noiseSeed(seed) {
+  const random = randomLcg(seed);
+  const perlin = new Array(PERLIN_SIZE + 1);
+  for (let i = 0; i < PERLIN_SIZE + 1; i++) {
+    perlin[i] = random();
+  }
+  return perlin;
+}
+
+// Adapting from P5.js
+// @see https://github.com/processing/p5.js/blob/1e6b0caa1e8a8dff3280917d2fd9a84d2e7126ba/src/math/noise.js#L200
+export function randomNoise(lo = 0, hi = 1, { octaves = 4, seed = random(100000), falloff = 0.5 } = {}) {
+  const map = linear([0, 1], [lo, hi]);
+  const perlin = noiseSeed(seed);
+
+  const noise = (x, y = 0, z = 0) => {
+    if (x < 0) x = -x;
+    if (y < 0) y = -y;
+    if (z < 0) z = -z;
+
+    let xi = Math.floor(x),
+      yi = Math.floor(y),
+      zi = Math.floor(z);
+    let xf = x - xi;
+    let yf = y - yi;
+    let zf = z - zi;
+    let rxf, ryf;
+
+    let r = 0;
+    let ampl = 0.5;
+
+    let n1, n2, n3;
+
+    for (let o = 0; o < octaves; o++) {
+      let of = xi + (yi << PERLIN_YWRAPB) + (zi << PERLIN_ZWRAPB);
+
+      rxf = scaledCosine(xf);
+      ryf = scaledCosine(yf);
+
+      n1 = perlin[of & PERLIN_SIZE];
+      n1 += rxf * (perlin[(of + 1) & PERLIN_SIZE] - n1);
+      n2 = perlin[(of + PERLIN_YWRAP) & PERLIN_SIZE];
+      n2 += rxf * (perlin[(of + PERLIN_YWRAP + 1) & PERLIN_SIZE] - n2);
+      n1 += ryf * (n2 - n1);
+
+      of += PERLIN_ZWRAP;
+      n2 = perlin[of & PERLIN_SIZE];
+      n2 += rxf * (perlin[(of + 1) & PERLIN_SIZE] - n2);
+      n3 = perlin[(of + PERLIN_YWRAP) & PERLIN_SIZE];
+      n3 += rxf * (perlin[(of + PERLIN_YWRAP + 1) & PERLIN_SIZE] - n3);
+      n2 += ryf * (n3 - n2);
+
+      n1 += scaledCosine(zf) * (n2 - n1);
+
+      r += n1 * ampl;
+      ampl *= falloff;
+      xi <<= 1;
+      xf *= 2;
+      yi <<= 1;
+      yf *= 2;
+      zi <<= 1;
+      zf *= 2;
+
+      if (xf >= 1.0) {
+        xi++;
+        xf--;
+      }
+      if (yf >= 1.0) {
+        yi++;
+        yf--;
+      }
+      if (zf >= 1.0) {
+        zi++;
+        zf--;
+      }
     }
-    return value / total;
+    return r;
   };
 
-  return (x0 = 0, y0 = 0) => map(normalize(x0, y0));
+  return (x0 = 0, y0 = 0, z0 = 0) => map(noise(x0, y0, z0));
 }
