@@ -4,9 +4,11 @@
 
 **Charming**, short for _Charming Computing_, is a free, open-source creative coding language designed for computational and ASCII art, offering high performance. It has a declarative, concise, yet expressive API inspired by [G2.js](https://github.com/antvis/G2), [D3.js](https://github.com/d3) and [P5.js](https://p5js.org/).
 
-Charming is built on the observation that both visualization and generative art are, to some extent, data-driven. Therefore, it provides a flow-based API for processing data, as well as appending and transforming shapes. Charming also supports batch rendering of 2D primitives using a [WebGL renderer](https://observablehq.com/d/db16249bd7174a24), and defines some [GLSL functions](https://observablehq.com/d/86d2c1fe79fac300) to offload expensive computations to the GPU. Additionally, a [terminal renderer](https://observablehq.com/d/8152c4d46e22d446) for ASCII art, embedded in JavaScript, utilizes a software rasterizer written in Rust and compiled to WASM, aiming to achieve high performance.
+Charming is built on the observation that both visualization and generative art are, to some extent, data-driven. Therefore, it provides a novel [flow-based](cm-flow) API for processing data, appending and transforming shapes. Charming also supports batch rendering of 2D primitives using a [WebGL renderer](https://observablehq.com/d/db16249bd7174a24), and defining some [GLSL functions](https://observablehq.com/d/86d2c1fe79fac300) to offload expensive computations to the GPU. Additionally, a [terminal renderer](https://observablehq.com/d/8152c4d46e22d446) for ASCII art, embedded in JavaScript, utilizes a software rasterizer written in Rust and compiled to WASM, aiming to achieve high performance. Charming also puts strong emphasis on extensible, composable, beginner-friendly and lightweight (25kb minified [core bundle](https://cdn.jsdelivr.net/npm/@charming-art/charming/dist/cm.core.umd.min.js)).
 
-Charming also puts strong emphasis on lightweight, extensible, composable and beginner-friendly. My hope with Charming is that you spend less time wrangling the machinery of programming and more time "using computing to tell stories". Or put more simply: **With Charming, you'll express more, and more easily.**
+If you are new to programming or JavaScript, P5 is still a good starting point, otherwise you should consider Charming. My hope with Charming is that you spend less time wrangling the machinery of programming and more time "using computing to tell stories". Or put more simply: **With Charming, you'll express more, and more easily.**
+
+D3 is the GOAT for visualization, let's make Charming the D3 of computational art.
 
 <a href="https://observablehq.com/d/2f9bf9f52cb24090"><img alt="examples" src="./img/examples.png" /></a>
 
@@ -28,6 +30,7 @@ And there are [a plenty of examples](https://observablehq.com/d/2f9bf9f52cb24090
 - [Scale](#scale) - mapping abstract data to visual representation
 - [Event](#event) - handling hooks and events
 - [Prop](#prop) - returning properties of the app
+- [Attribute](#attribute) - defining attributes for shapes
 
 If you want to have a comprehensive understanding of Charming, such as design choice, discussion and future work, you can skip links above and read [Charming: Charming Computing](https://observablehq.com/d/dd59b4c4f9f1d9d3) directly.
 
