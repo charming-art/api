@@ -1330,7 +1330,7 @@ Defining Attributes for shapes.
 
 <a name="cm-rgb" href="#cm-rgb">#</a> _cm_.**rgb**(_r[, g[, b]]_)
 
-Returns a string representing the color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value).
+Returns a string representing the RGB color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value).
 
 ```js
 cm.rgb(234, 260, 180); // 'rgb(234, 260, 180)'
@@ -1340,6 +1340,14 @@ If only on argument is specified, sets all channels to the same _value_.
 
 ```js
 cm.rgb(100); // 'rgb(100, 100, 100)'
+```
+
+<a name="cm-hsl" href="#cm-hsl">#</a> _cm_.**hsl**(_h[, s[, l]]_)
+
+Returns a string representing the HSL color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value).
+
+```js
+cm.hsl(234, 50, 50); // 'hsl(234, 50%, 50%)'
 ```
 
 <a name="cm-constant" href="#cm-constant">#</a> _cm_.**constant**(_value_)
@@ -1655,7 +1663,8 @@ Returns a function with the specified _options_ for generating random numbers wi
 Supports following options:
 
 - **octaves** - layers of noise, default to 4.
-- **seed** - a real number or as any integer, defaults to random number.
+- **seed** - seed for generated sequence, a real number or as any integer, defaults to random number.
+- **falloff** - falloff factor for each octave, a real number or as any integer, defaults to 0.5.
 
 Increasing the number of octaves results in a more variable sequence, and two generators instanced with the same seed and octaves generate the same sequence.
 
