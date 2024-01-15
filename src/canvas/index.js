@@ -16,6 +16,7 @@ import { canvas$mouseclick } from "./mouseclick.js";
 import { canvas$rotate } from "./rotate.js";
 import { canvas$save } from "./save.js";
 import { canvas$restore } from "./restore.js";
+import { canvas$textBBox } from "./textBBox.js";
 
 function Canvas() {
   Object.defineProperties(this, {
@@ -46,6 +47,7 @@ Object.defineProperties(Canvas.prototype, {
   rotate: { value: canvas$rotate },
   save: { value: canvas$save },
   restore: { value: canvas$restore },
+  textBBox: { value: canvas$textBBox },
 });
 
 export function canvas(options) {

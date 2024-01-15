@@ -57,3 +57,4 @@ export { terminalFire } from "./terminal-fire.js";
 export { terminalBar } from "./terminal-bar.js";
 export { shapeCompositeArrowColor } from "./shape-composite-arrow-color.js";
 export { randomDragon } from "./random-dragon.js";
+export { curveBrokenHeart } from "./curve-broken-heart.js";

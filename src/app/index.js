@@ -1,4 +1,5 @@
 import { app$data } from "./data.js";
+import { app$app } from "./app.js";
 import { app$datum } from "./datum.js";
 import { app$node } from "./node.js";
 import { app$render } from "./render.js";
@@ -61,6 +62,7 @@ Object.defineProperties(App.prototype, {
   prop: { value: app$prop },
   on: { value: app$on },
   textBBox: { value: app$textBBox },
+  app: { value: app$app },
 });
 
 export function app(options) {

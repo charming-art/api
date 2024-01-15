@@ -19,6 +19,7 @@ export { eachRight } from "./process/eachRight.js";
 export { filter } from "./process/filter.js";
 export { map } from "./process/map.js";
 export { push } from "./process/push.js";
+export { derive } from "./process/derive.js";
 export { mapAttrs } from "./transform/mapAttrs.js";
 export { mapPosition } from "./transform/mapPosition.js";
 export { rgb } from "./attribute/rgb.js";

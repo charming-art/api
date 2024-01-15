@@ -21,10 +21,10 @@ export function canvas$text({
   context.save();
   if (stroke) context.strokeStyle = stroke;
   if (strokeWidth) context.lineWidth = strokeWidth;
-  if (fill) context.fill = fill;
+  if (fill) context.fillStyle = fill;
   if (textAlign) context.textAlign = textAlign;
   if (textBaseline) context.textBaseline = textBaseline;
-  context.font = `${fontWeight} ${fontSize}px ${fontFamily ?? ""}`.trim();
+  context.font = `${fontWeight} ${fontSize}px ${fontFamily}`.trim();
   context.fillText(text, x, y);
   context.restore();
 }

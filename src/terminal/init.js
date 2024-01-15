@@ -1,34 +1,12 @@
 import { context2d } from "../context.js";
 import { Backend } from "../backend/index.js";
+import { measureText } from "../measure.js";
 
 export const TERMINAL_CLASS = "charming-terminal";
 
 function dimensionOf(count, pixel, unit) {
   if (count === undefined) return (pixel / unit) | 0;
   return count;
-}
-
-function measureText(text, styles) {
-  const span = document.createElement("span");
-
-  // Hide span.
-  span.style.visibility = "hidden";
-  span.style.position = "absolute";
-  span.style.display = "inline-block";
-  span.style.left = "-9999em";
-  span.style.top = "0";
-  span.style.lineHeight = "normal";
-  span.setAttribute("aria-hidden", true);
-
-  // Font attributes.
-  span.style.fontSize = `${styles.fontSize}px`;
-  span.style.fontFamily = styles.fontFamily;
-
-  span.innerHTML = text;
-  document.body.appendChild(span);
-
-  const bbox = span.getBoundingClientRect();
-  return { width: bbox.width, height: Math.ceil(bbox.height) };
 }
 
 // Default options from: https://github.com/xtermjs/xterm.js/blob/ac0207bf2e8a923d0cff95cc383f6f3e36a2e923/src/common/services/OptionsService.ts#LL12C1-L12C1
