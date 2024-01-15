@@ -1,6 +1,6 @@
 {
   "name": "@charming-art/charming",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "The declarative language for creative coding and ASCII art with high performance.",
   "author": {
     "name": "pearmini",
