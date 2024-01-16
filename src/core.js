@@ -13,6 +13,7 @@ export { text } from "./shape/text.js";
 export { linear as scaleLinear } from "./scale/linear.js";
 export { sqrt as scaleSqrt } from "./scale/sqrt.js";
 export { log as scaleLog } from "./scale/log.js";
+export { ordinal as scaleOrdinal } from "./scale/ordinal.js";
 export { canvas } from "./canvas/index.js";
 export { each } from "./process/each.js";
 export { eachRight } from "./process/eachRight.js";

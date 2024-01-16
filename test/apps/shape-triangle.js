@@ -20,7 +20,13 @@ export function shapeTriangle() {
       y1: (d) => d[3],
       x2: (d) => d[4],
       y2: (d) => d[5],
-      fill: (_, i) => (i ? "steelblue" : "orange"),
+      fill: (_, i) => i,
+    })
+    .transform(cm.mapAttrs, {
+      fill: {
+        scale: cm.scaleOrdinal,
+        range: ["steelblue", "orange"],
+      },
     });
 
   return app.call(dispose).call(frame).render().node();

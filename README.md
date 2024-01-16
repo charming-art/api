@@ -1041,10 +1041,22 @@ scale(0.81); // 90
 
 <a name="cm-scaleLog" href="#cm-scaleLog">#</a> _cm_.**scaleLog**(_domain, range_)
 
-Constructs a new log scale with the specified domain and range. Log scales are similar to [linear scale](#cm-scaleLinear), except a logarithmic transform transform is applied to the input domain value before the output range is computed.
+Constructs a new log scale with the specified _domain_ and _range_. Log scales are similar to [linear scale](#cm-scaleLinear), except a logarithmic transform transform is applied to the input domain value before the output range is computed.
 
 ```js
 const scale = cm.scaleLog([1, 10], [0, 960]);
+```
+
+<a name="cm-scaleOrdinal" href="#cm-scaleOrdinal">#</a> _cm_.**scaleOrdinal**(_domain, range_)
+
+Constructs a new ordinal scale with the specified _domain_ and _range_. Unlike [linear scale](cm-scaleLinear), ordinal scales have a discrete domain and range. Given a _value_ in the input domain, returns the corresponding in the output range.
+
+```js
+const scale = cm.scaleOrdinal(["A", "B", "C"], ["steelblue", "yellow", "red"]);
+
+scale("A"); // "steelblue"
+scale("B"); // "yellow"
+scale("C"); // "red"
 ```
 
 ### Event
