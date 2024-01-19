@@ -27,4 +27,4 @@ export { vecNeg, vecNegX, vecNegY } from "./vector/neg.js";
 export { vecInX, vecInY } from "./vector/in.js";
 export { vecAngle } from "./vector/angle.js";
 export { vecFromAngle } from "./vector/fromAngle.js";
-export { pathArray } from "./helper/pathArray.js";
+export { pathContext } from "./helper/pathContext.js";

@@ -38,7 +38,7 @@ export function oscillationBeesSandBombs() {
           const now = app.prop("frameCount") / 200;
           const l = ((Math.hypot(x, y) + Math.atan2(y, x) / (Math.PI * 2) - now) % 1) * -360;
           projection.rotate([0, l, -l]);
-          const context = cm.pathArray();
+          const context = cm.pathContext();
           path.context(context)(circle);
           return context.toArray();
         },

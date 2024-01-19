@@ -58,3 +58,4 @@ export { terminalBar } from "./terminal-bar.js";
 export { shapeCompositeArrowColor } from "./shape-composite-arrow-color.js";
 export { randomDragon } from "./random-dragon.js";
 export { curveBrokenHeart } from "./curve-broken-heart.js";
+export { curvePatternSymbols } from "./curve-pattern-symbols.js";

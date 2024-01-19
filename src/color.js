@@ -17,7 +17,7 @@ export function normalizeColor(color, opacity) {
 }
 
 export function normalizeColorString(color, opacity) {
-  if (color === undefined) return color;
+  if (typeof color !== "string") return color;
   const [r, g, b, a] = normalizeColor(color, opacity);
   return `rgba(${r},${g},${b},${a / 255})`;
 }
