@@ -99,6 +99,8 @@ export async function curvePatternSymbols() {
           return context.toArray();
         },
         fill: fill,
+        stroke: "black",
+        strokeWidth: 2,
       });
   }
 

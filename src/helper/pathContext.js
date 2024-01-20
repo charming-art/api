@@ -5,7 +5,7 @@ function appendArray(strings) {
   for (let i = 1, n = strings.length; i < n; i++) {
     command.push(arguments[i]);
     const string = strings[i];
-    if (string !== ",") {
+    if (string !== "," && string !== "") {
       if (string.startsWith(",")) {
         const numbers = string
           .split(",")
@@ -18,6 +18,7 @@ function appendArray(strings) {
       }
     }
   }
+  this._.push(command);
 }
 
 class PathContext extends Path {
