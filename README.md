@@ -641,6 +641,26 @@ const data = [
 app.data(data).process(cm.map, (d) => ({ ...d, number: d.number * 2 }));
 ```
 
+<a name="cm-derive" href="#cm-derive">#</a> _cm_.**derive**
+
+Calls _value_ on each datum of a flow to derive a new field _key_ for each entries of the specified object, and returns a new flow that contains the new data. The value is being passed the current datum(_d_), the current index(_i_), the current group(_data_) and the flow(_flow_).
+
+```js
+const data = [
+  { name: "Locke", number: 4 },
+  { name: "Reyes", number: 8 },
+  { name: "Ford", number: 15 },
+  { name: "Jarrah", number: 16 },
+  { name: "Shephard", number: 23 },
+  { name: "Kwon", number: 42 },
+];
+
+app.data(data).process(cm.derive, {
+  double: (d) => d.name * 2,
+  upper: (d) => d.name.toUpperCase(),
+});
+```
+
 <a name="cm-push" href="#cm-push">#</a> _cm_.**push**
 
 Appends the specified _datum_ to a flow, and returns a new flow that contains the new datum.
