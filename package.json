@@ -1,7 +1,7 @@
 {
   "name": "@charming-art/charming",
-  "version": "0.0.7",
-  "description": "The declarative language for creative coding and ASCII art with high performance.",
+  "version": "0.0.8",
+  "description": "The declarative language for computational art with high performance.",
   "author": {
     "name": "pearmini",
     "url": "https://github.com/pearmini"
