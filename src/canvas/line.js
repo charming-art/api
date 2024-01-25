@@ -13,7 +13,7 @@ export function canvas$line({ stroke, strokeWidth, strokeCap, x, y, x1, y1, rota
 
   if (stroke) context.strokeStyle = stroke;
   if (strokeWidth) context.lineWidth = strokeWidth;
-  if (strokeCap) context.lineCap = 'round';
+  if (strokeCap) context.lineCap = strokeCap;
   context.moveTo(x, y);
   context.lineTo(x1, y1);
   if (stroke) context.stroke();
