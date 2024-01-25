@@ -726,6 +726,7 @@ Appends straight lines between two points _[x, y]_ and _[x1, y1]_. In addition t
 - **x1** - the ending horizontal position, in pixels or in cells
 - **y1** - the ending vertical position, in pixels or in cells
 - **rotate** - the rotation angle in degrees clockwise
+- **strokeCap** - the shape of end points, defaults to _butt_; _round_ and _square_
 - **transformOrigin** - the position of the origin point for rotation, defaults to _start_; _center_ and _end_
 
 ```js

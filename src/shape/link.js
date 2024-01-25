@@ -13,6 +13,7 @@ export const link = define((renderer, I, value) => {
     y1: Y1,
     stroke: S = [],
     strokeWidth: SW = [],
+    strokeCap: SC = [],
     rotate: R = [],
     transformOrigin: TO = [],
   } = value;
@@ -27,6 +28,7 @@ export const link = define((renderer, I, value) => {
       transformOrigin: TO[i],
       ...(S[i] && { stroke: S[i] }),
       ...(SW[i] && { strokeWidth: SW[i] }),
+      ...(SC[i] && { strokeCap: SC[i] }),
     });
   }
 });

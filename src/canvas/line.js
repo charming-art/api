@@ -1,4 +1,4 @@
-export function canvas$line({ stroke, strokeWidth, x, y, x1, y1, rotate, transformOrigin = "start" }) {
+export function canvas$line({ stroke, strokeWidth, strokeCap, x, y, x1, y1, rotate, transformOrigin = "start" }) {
   const context = this._context;
   context.save();
   context.beginPath();
@@ -13,6 +13,7 @@ export function canvas$line({ stroke, strokeWidth, x, y, x1, y1, rotate, transfo
 
   if (stroke) context.strokeStyle = stroke;
   if (strokeWidth) context.lineWidth = strokeWidth;
+  if (strokeCap) context.lineCap = 'round';
   context.moveTo(x, y);
   context.lineTo(x1, y1);
   if (stroke) context.stroke();
