@@ -51,7 +51,7 @@ export async function terminalCharacterMatrix() {
       .append(cm.point, {
         x: 0,
         y: (_, i) => i,
-        stroke0: d => d,
+        stroke0: (d) => d,
         stroke1: "#6EBD41",
       });
   }

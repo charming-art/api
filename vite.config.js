@@ -1,3 +1,4 @@
+import path from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -9,4 +10,5 @@ export default defineConfig({
   },
   server: { port: "8080" },
   build: { outDir: "../" },
+  test: { globalSetup: path.resolve("./server.js") },
 });
