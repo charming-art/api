@@ -1,5 +1,8 @@
 <script type="module">
   import * as apps from "./apps/index.js";
+  import * as shapes from "./shapes/index.js";
+
+  const demos = Object.fromEntries([...Object.entries(shapes), ...Object.entries(apps)]);
 
   // Tool
   const tool = document.createElement("div");
@@ -14,13 +17,13 @@
     history.pushState({ value }, "", `?name=${value}`);
     render();
   });
-  const options = Object.keys(apps).map(createOption);
+  const options = Object.keys(demos).map(createOption);
   tool.append(select);
   select.append(...options);
 
   // Init app name.
   const initialValue = new URL(location).searchParams.get("name");
-  if (apps[initialValue]) select.value = initialValue;
+  if (demos[initialValue]) select.value = initialValue;
 
   let preClear = null;
   let preNode = null;
@@ -65,7 +68,7 @@
   async function render() {
     if (typeof preClear === "function") preClear();
     if (isNode(preNode)) preNode.remove();
-    const fn = apps[select.value];
+    const fn = demos[select.value];
     preNode = await fn();
     if (isNode(preNode)) {
       document.body.appendChild(preNode);

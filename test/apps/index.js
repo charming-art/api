@@ -1,4 +1,3 @@
-export { _canvasCircle } from "./_canvas-circle.js";
 export { curveCircleClover } from "./curve-circle-clover.js";
 export { curveLineMaurerRose } from "./curve-line-maurer-rose.js";
 export { vectorCircleBouncing } from "./vector-circle-bouncing.js";

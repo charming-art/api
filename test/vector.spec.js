@@ -1,7 +1,7 @@
 import * as cm from "../src/index.js";
 import { describe, expect, test } from "vitest";
 
-describe("vec", () => {
+describe("vector", () => {
   test("cm.vec()", () => {
     const v = cm.vec();
     expect(v.x).toBe(0);
