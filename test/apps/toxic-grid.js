@@ -1,7 +1,7 @@
 import * as cm from "../../src/index.js";
-import { frame } from "../frame.js";
-import { dispose } from "../dispose.js";
-import { stats } from "../stats.js";
+import { frame } from "../utils/frame.js";
+import { dispose } from "../utils/dispose.js";
+import { stats } from "../utils/stats.js";
 import { physics2d, geom } from "toxiclibsjs";
 const { Vec2D } = geom;
 const { VerletPhysics2D, VerletParticle2D, VerletSpring2D } = physics2d;

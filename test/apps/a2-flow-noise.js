@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
-import { force, location, object } from "../force.js";
-import { frame } from "../frame.js";
-import { stats } from "../stats.js";
+import { dispose } from "../utils/dispose.js";
+import { force, location, object } from "../utils/force.js";
+import { frame } from "../utils/frame.js";
+import { stats } from "../utils/stats.js";
 
 export function a2FlowNoise() {
   const app = cm.app({

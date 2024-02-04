@@ -1,10 +1,11 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
+import { dispose } from "../utils/dispose.js";
+import { frame } from "../utils/frame.js";
 
-export function flowNested() {
+export function _canvasNested() {
   const app = cm.app({
     width: 640,
-    height: 640,
+    height: 200,
   });
 
   const groups = app.data([[0, 5, 10], [1, 6], [2]]).append(cm.group, {
@@ -36,5 +37,5 @@ export function flowNested() {
     fill: "orange",
   });
 
-  return app.call(dispose).render().node();
+  return app.call(dispose).call(frame).render().node();
 }

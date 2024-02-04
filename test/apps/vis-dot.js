@@ -1,5 +1,5 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
+import { dispose } from "../utils/dispose.js";
 
 function dot(flow, { x, y, marginLeft = 40, marginTop = 30, marginRight = 0, marginBottom = 30 }) {
   const app = flow.app();

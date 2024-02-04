@@ -1,6 +1,6 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
-import { stats } from "../stats.js";
+import { dispose } from "../utils/dispose.js";
+import { stats } from "../utils/stats.js";
 
 function updateString(d, i, array, flow) {
   const app = flow.app();

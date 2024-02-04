@@ -1,5 +1,5 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
+import { dispose } from "../utils/dispose.js";
 
 function circle(context, size) {
   const r = size / 2;
@@ -76,7 +76,7 @@ function pattern(patternElement) {
   });
 }
 
-export async function curvePatternSymbols() {
+export async function generalPatternSymbols() {
   const size = 640;
   const n = 2;
   const cellSize = 640 / n;

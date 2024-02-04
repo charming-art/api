@@ -4,7 +4,7 @@ import * as fs from "fs";
 import pixelmatch from "pixelmatch";
 import { PNG } from "pngjs";
 import * as shapes from "./shapes/index.js";
-import { createBrowser, createPage, app } from "./browser.js";
+import { createBrowser, createPage, app } from "./utils/browser.js";
 
 const CLASS_NAME = "charming-node";
 

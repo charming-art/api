@@ -1,7 +1,7 @@
 import * as cm from "../../src/index.js";
 import { interpolateCool } from "d3-scale-chromatic";
-import { dispose } from "../dispose.js";
-import { stats } from "../stats.js";
+import { dispose } from "../utils/dispose.js";
+import { stats } from "../utils/stats.js";
 
 function updateFire(fire) {
   const h = fire.length;

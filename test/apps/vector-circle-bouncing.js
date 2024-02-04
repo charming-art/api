@@ -1,7 +1,7 @@
 import * as cm from "../../src/index.js";
-import { frame } from "../frame.js";
-import { dispose } from "../dispose.js";
-import { stats } from "../stats.js";
+import { frame } from "../utils/frame.js";
+import { dispose } from "../utils/dispose.js";
+import { stats } from "../utils/stats.js";
 
 export function vectorCircleBouncing() {
   const app = cm.app({

@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
-import { stats } from "../stats.js";
+import { dispose } from "../utils/dispose.js";
+import { stats } from "../utils/stats.js";
 
-export function curveCirclesGLSLWebGL() {
+export function generalCirclesGLSLWebGL() {
   const width = 700;
   const height = 700;
   const count = 22000;

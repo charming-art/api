@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
-import { frame } from "../frame.js";
-import { dispose } from "../dispose.js";
+import { frame } from "../utils/frame.js";
+import { dispose } from "../utils/dispose.js";
 
-export function shapeTriangle() {
+export function _canvasTriangle() {
   const app = cm.app({
     width: 600,
     height: 200,

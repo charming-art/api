@@ -1,9 +1,9 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
-import { frame } from "../frame.js";
-import { stats } from "../stats.js";
+import { dispose } from "../utils/dispose.js";
+import { frame } from "../utils/frame.js";
+import { stats } from "../utils/stats.js";
 
-export function curveCircles() {
+export function generalCircles() {
   const width = 700;
   const height = 700;
   const count = 5500;

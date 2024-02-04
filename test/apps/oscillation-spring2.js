@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
-import { object, location, force } from "../force.js";
-import { frame } from "../frame.js";
-import { stats } from "../stats.js";
+import { dispose } from "../utils/dispose.js";
+import { object, location, force } from "../utils/force.js";
+import { frame } from "../utils/frame.js";
+import { stats } from "../utils/stats.js";
 
 function updateBob(d, { dragging, anchor, spring }) {
   const applyGravity = (d) => cm.vec(0, 1).mult(d.mass);

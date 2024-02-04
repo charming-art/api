@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
-import { force, object, location } from "../force.js";
-import { frame } from "../frame.js";
-import { stats } from "../stats.js";
+import { dispose } from "../utils/dispose.js";
+import { force, object, location } from "../utils/force.js";
+import { frame } from "../utils/frame.js";
+import { stats } from "../utils/stats.js";
 
 export function oscillationCar() {
   const app = cm.app({

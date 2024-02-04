@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
+import { dispose } from "../utils/dispose.js";
 
 // @see https://observablehq.com/@recifs/a-rose-is-a-rose
-export function curveLineMaurerRose() {
+export function generalLineMaurerRose() {
   const n = 10;
   const d = 17;
   const angles = cm.range(360, 0, 360).map((d) => (d * Math.PI) / 180);

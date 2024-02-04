@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
-import { frame } from "../frame.js";
-import { dispose } from "../dispose.js";
+import { frame } from "../utils/frame.js";
+import { dispose } from "../utils/dispose.js";
 
-export function shapeTriangleWebGL() {
+export function _webglRect() {
   const app = cm.app({
     width: 600,
     height: 200,
@@ -11,16 +11,14 @@ export function shapeTriangleWebGL() {
 
   app
     .data([
-      [10, 10, 100, 10, 100, 100],
-      [210, 10, 300, 10, 300, 100],
+      [0, 0, 50, 25],
+      [100, 100, 50, 25],
     ])
-    .append(cm.triangle, {
+    .append(cm.rect, {
       x: (d) => d[0],
       y: (d) => d[1],
-      x1: (d) => d[2],
-      y1: (d) => d[3],
-      x2: (d) => d[4],
-      y2: (d) => d[5],
+      width: (d) => d[2],
+      height: (d) => d[3],
       fill: (_, i) => (i ? "steelblue" : "orange"),
     });
 

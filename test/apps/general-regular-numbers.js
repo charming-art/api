@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
+import { dispose } from "../utils/dispose.js";
 
 // @see https://observablehq.com/@fil/regular-numbers
-export function regularNumbers() {
+export function generalRegularNumbers() {
   const N = 511;
   const x = ([i, j, k]) => 0.5 * i + 2 * j - 3.6 * k;
   const value = ([i, j, k]) => 2 ** i * 3 ** j * 5 ** k;

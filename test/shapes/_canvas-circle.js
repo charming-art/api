@@ -1,5 +1,6 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
+import { dispose } from "../utils/dispose.js";
+import { frame } from "../utils/frame.js";
 
 export function _canvasCircle() {
   const app = cm.app({
@@ -14,5 +15,5 @@ export function _canvasCircle() {
     fill: "orange",
   });
 
-  return app.call(dispose).render().node();
+  return app.call(dispose).call(frame).render().node();
 }

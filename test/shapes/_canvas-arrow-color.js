@@ -1,7 +1,7 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
+import { dispose } from "../utils/dispose.js";
 import { interpolateViridis } from "d3-scale-chromatic";
-import { frame } from "../frame.js";
+import { frame } from "../utils/frame.js";
 
 function arrow(flow, { length, angle, x, y, rotate, ...options }) {
   const group = flow.append(cm.group, { x, y, rotate });
@@ -39,13 +39,13 @@ function arrow(flow, { length, angle, x, y, rotate, ...options }) {
   });
 }
 
-export function shapeCompositeArrowColor() {
+export function _canvasArrowColor() {
   const width = 640,
     height = 240,
     size = 16,
     cols = width / size,
     rows = height / size,
-    noise = cm.randomNoise(),
+    noise = cm.randomNoise(0, 1, { seed: 1 }),
     fields = cm.cross(cm.range(cols), cm.range(rows)).map(([x, y]) => ({ x, y, value: noise(y * 0.1, x * 0.1) }));
 
   const app = cm.app({ width, height });

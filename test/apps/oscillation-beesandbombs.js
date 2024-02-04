@@ -1,7 +1,7 @@
 import * as d3 from "d3-geo";
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
-import { stats } from "../stats.js";
+import { dispose } from "../utils/dispose.js";
+import { stats } from "../utils/stats.js";
 
 // @see https://observablehq.com/d/a741f9a27e8c0e73
 export function oscillationBeesSandBombs() {

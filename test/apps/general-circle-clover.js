@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
 import { interpolateRainbow } from "d3-scale-chromatic";
-import { dispose } from "../dispose.js";
+import { dispose } from "../utils/dispose.js";
 
-export function curveCircleClover() {
+export function generalCircleClover() {
   const app = cm.app({
     width: 640,
     height: 640,

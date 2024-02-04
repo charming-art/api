@@ -1,7 +1,7 @@
 import * as cm from "../../src/index.js";
-import { dispose } from "../dispose.js";
-import { frame } from "../frame.js";
-import { stats } from "../stats.js";
+import { dispose } from "../utils/dispose.js";
+import { frame } from "../utils/frame.js";
+import { stats } from "../utils/stats.js";
 
 function noiseRadius(theta, radius, time, noise) {
   const s = noise(Math.cos(theta) + 1, Math.sin(theta) + 1, time) + 1;
@@ -101,7 +101,7 @@ function drawTexts(flow, { chars, x, y, radius, time, noise, ...font }) {
     });
 }
 
-export function curveBrokenHeart() {
+export function generalBrokenHeart() {
   let width = 640,
     height = 640,
     count = 200,
