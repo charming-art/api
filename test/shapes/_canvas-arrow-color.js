@@ -2,6 +2,7 @@ import * as cm from "../../src/index.js";
 import { dispose } from "../utils/dispose.js";
 import { interpolateViridis } from "d3-scale-chromatic";
 import { frame } from "../utils/frame.js";
+import { snapshot } from "../utils/snapshot.js";
 
 function arrow(flow, { length, angle, x, y, rotate, ...options }) {
   const group = flow.append(cm.group, { x, y, rotate });
@@ -66,5 +67,5 @@ export function _canvasArrowColor() {
       stroke: { interpolate: interpolateViridis },
     });
 
-  return app.call(dispose).call(frame).render().node();
+  return app.call(dispose).call(frame).call(snapshot).render().node();
 }

@@ -1,6 +1,7 @@
 import * as cm from "../../src/index.js";
 import { frame } from "../utils/frame.js";
 import { dispose } from "../utils/dispose.js";
+import { snapshot } from "../utils/snapshot.js";
 
 export function _webglRect() {
   const app = cm.app({
@@ -22,5 +23,5 @@ export function _webglRect() {
       fill: (_, i) => (i ? "steelblue" : "orange"),
     });
 
-  return app.call(dispose).call(frame).render().node();
+  return app.call(dispose).call(snapshot).call(frame).render().node();
 }

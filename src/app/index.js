@@ -48,9 +48,6 @@ function App({ width = 640, height = 480, renderer = canvas(), frameRate = 60, d
   maybe(this._renderer, "mousedown", () => emitter.emit("mouseDown", this));
   maybe(this._renderer, "mouseup", () => emitter.emit("mouseUp", this));
   maybe(this._renderer, "mouseclick", () => emitter.emit("mouseClick", this));
-
-  const node = maybe(this._renderer, "node");
-  node.classList.add("charming-node");
 }
 
 Object.defineProperties(App.prototype, {

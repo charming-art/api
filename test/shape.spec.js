@@ -5,8 +5,7 @@ import pixelmatch from "pixelmatch";
 import { PNG } from "pngjs";
 import * as shapes from "./shapes/index.js";
 import { createBrowser, createPage, app } from "./utils/browser.js";
-
-const CLASS_NAME = "charming-node";
+import { CLASS_NAME } from "./utils/snapshot.js";
 
 async function screenshot(page, path) {
   const { x, y, width, height } = await page.evaluate(
