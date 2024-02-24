@@ -1,6 +1,7 @@
 import { canvas$init } from "./init.js";
 import { canvas$node } from "./node.js";
 import { canvas$circle } from "./circle.js";
+import { canvas$point } from "./point.js";
 import { canvas$rect } from "./rect.js";
 import { canvas$line } from "./line.js";
 import { canvas$triangle } from "./triangle";
@@ -31,6 +32,7 @@ function Canvas() {
 Object.defineProperties(Canvas.prototype, {
   init: { value: canvas$init },
   node: { value: canvas$node },
+  point: { value: canvas$point },
   circle: { value: canvas$circle },
   rect: { value: canvas$rect },
   line: { value: canvas$line },
