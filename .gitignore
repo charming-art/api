@@ -4,4 +4,3 @@ yarn.lock
 package-lock.json
 dist
 cache
-docs/.vitepress/lib
