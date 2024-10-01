@@ -46,6 +46,10 @@ export default defineConfig({
       {
         text: "Lodash",
         link: "/lodash",
+        items: [
+          { text: "What is Lodash?", link: "/lodash/what-is-lodash" },
+          { text: "Getting started", link: "/lodash/getting-started" },
+        ],
       },
       {
         text: "API Index",
