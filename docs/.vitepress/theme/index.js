@@ -1,7 +1,7 @@
 import DefaultTheme from "vitepress/theme";
 import Layout from "genji-theme-vitepress";
 import { h } from "vue";
-import "../lib/charming-cell.umd.min.js";
+import "../../../dist/charming.umd.min.js";
 
 // More props: https://genji-md.dev/reference/props
 const props = {
