@@ -15,13 +15,10 @@ hero:
       link: /what-is-charming
 
 features:
-  - title: Flow
-    details: The functional JavaScript API for graphics.
-    link: /flow
-  - title: Cell
-    details: The P5 like JavaScript API for ASCII art.
-    link: /cell
-  - title: Lodash
-    link: /lodash
-    details: The helpful utils for graphics and geometries.
+  - title: Declarative
+    details: The functional JavaScript API for graphics
+  - title: High Performance
+    details: Batch rendering with WebGPU
+  - title: Lightweight
+    details: Modular design
 ---
