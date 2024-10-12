@@ -29,6 +29,9 @@ importers:
       rollup:
         specifier: ^4.24.0
         version: 4.24.0
+      vite:
+        specifier: ^5.4.8
+        version: 5.4.8(terser@5.34.1)
       vitepress:
         specifier: ^1.4.0
         version: 1.4.0(@algolia/client-search@4.24.0)(postcss@8.4.47)(search-insights@2.17.2)(terser@5.34.1)
