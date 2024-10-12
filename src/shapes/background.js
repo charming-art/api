@@ -1,3 +1,3 @@
 export function background({fill}) {
-  return () => ({transform: (renderer) => renderer.background({fill})});
+  return (data) => ({...data, transform: (renderer) => renderer.background({fill})});
 }

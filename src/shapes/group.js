@@ -16,12 +16,12 @@ function mergeMatrix(I, PM = [], M = []) {
 
 function withTransform({x, y, rotate}, ...flows) {
   return (raw) => {
-    const {data, ...rest} = raw ?? {data: [0]};
+    const {data, x: px, y: py, rotate: protate, ...rest} = raw ?? {data: [0]};
     const I = Array.from({length: data.length}, (_, i) => i);
     const transform = (context, _, value) => {
       const {x: X = [], y: Y = [], rotate: R = []} = value;
       for (const flow of flows) {
-        const {I, transform, M: PM, ...rest} = flow(value);
+        const {I, transform, matrix: PM, ...rest} = flow(value);
         const M = I.map((i) => {
           const x = (raw ? X[i] : X[0]) ?? 0;
           const y = (raw ? Y[i] : Y[0]) ?? 0;
@@ -29,7 +29,7 @@ function withTransform({x, y, rotate}, ...flows) {
           return [translateMatrix(x, y), rotateMatrix(r)];
         });
         const NM = mergeMatrix(I, PM, M);
-        transform(context, I, {...rest, M: NM});
+        transform(context, I, {...rest, matrix: NM, I});
       }
     };
     return {
@@ -46,13 +46,13 @@ function withTransform({x, y, rotate}, ...flows) {
 
 function noTransform(...flows) {
   return (data) => {
-    const transform = (context) => {
+    const transform = (context, _, value) => {
       for (const flow of flows) {
-        const {I, transform, ...value} = flow(data);
-        transform(context, I, value);
+        const {I, transform, ...rest} = flow(value);
+        transform(context, I, rest);
       }
     };
-    return {transform};
+    return {...data, transform};
   };
 }
 
