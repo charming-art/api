@@ -1,5 +1,8 @@
 # Charming
 
+> [!NOTE]
+> The current next branch is implementing the new proposal API for production use. Please refer to the [main branch](https://github.com/charming-art/charming/tree/main) for the current release.
+
 The JavaScript library for tailored creative coding.
 
 - [Charming: Charming Computing](https://observablehq.com/d/dd59b4c4f9f1d9d3) - a detailed introduction
@@ -10,6 +13,3 @@ The JavaScript library for tailored creative coding.
 - [Examples](https://observablehq.com/d/18b3d6f3affff5bb) - for developing version
 
 <img alt="examples" src="./img/examples.png" />
-
-> [!NOTE]
-> The current next branch is implementing the new proposal API for production use. Please refer to the [main branch](https://github.com/charming-art/charming/tree/main) for the current release.
