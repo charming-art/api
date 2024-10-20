@@ -16,7 +16,7 @@ function mergeMatrix(I, PM = [], M = []) {
 
 function withTransform({x, y, rotate}, ...flows) {
   return (raw) => {
-    const {data, x: px, y: py, rotate: protate, ...rest} = raw ?? {data: [0]};
+    const {data = [0], x: px, y: py, rotate: protate, ...rest} = raw ?? {};
     const I = Array.from({length: data.length}, (_, i) => i);
     const transform = (context, _, value) => {
       const {x: X = [], y: Y = [], rotate: R = []} = value;
