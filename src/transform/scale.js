@@ -10,7 +10,7 @@ export function createScale(column, options) {
   return (value) => scale(value);
 }
 
-export function mapColumn(options) {
+export function scale(options) {
   return (data) => {
     const mapped = {};
     for (const [key, option] of Object.entries(options)) {

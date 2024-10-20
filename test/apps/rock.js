@@ -9,7 +9,7 @@ export function rock() {
       cm.flow(
         cm.range(10),
         cm.circle({x: 0, y: (_, i) => i, r: (_, i) => i}),
-        cm.mapColumn({
+        cm.scale({
           y: {range: [-250, 250]},
           r: {range: [5, 50]},
         }),
