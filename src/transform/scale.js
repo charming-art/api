@@ -14,10 +14,13 @@ export function scale(options) {
   return (data) => {
     const mapped = {};
     for (const [key, option] of Object.entries(options)) {
-      if (key in data) {
-        const column = data[key];
-        const map = createScale(column, option);
-        mapped[key] = column.map(map);
+      if (typeof option === "function") mapped[key] = option(data);
+      else {
+        if (key in data) {
+          const column = data[key];
+          const map = createScale(column, option);
+          mapped[key] = column.map(map);
+        }
       }
     }
     return {...data, ...mapped};
