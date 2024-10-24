@@ -16,7 +16,7 @@ export function render({width = 640, height = 480, renderer = canvas(), setup, l
   if (loop) {
     let observer;
     const id = setInterval(() => {
-      renderFlow(renderer, loop());
+      renderFlow(renderer, loop(renderer));
       if (node.parentNode && !observer) {
         const parent = node.parentNode;
         observer = new MutationObserver(() => {
