@@ -4,6 +4,8 @@ export {range} from "./range.js";
 export {map} from "./process/map.js";
 export {group} from "./shapes/group.js";
 export {circle} from "./shapes/circle.js";
+export {triangle} from "./shapes/triangle.js";
 export {background} from "./shapes/background.js";
 export {scale} from "./transform/scale.js";
 export {scaleLinear} from "./scale/scaleLinear.js";
+export {webgpu} from "./webgpu/index.js";

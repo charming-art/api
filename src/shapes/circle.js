@@ -1,8 +1,15 @@
 import {attribute} from "./attribute.js";
 
+function omit(options) {
+  delete options.x;
+  delete options.y;
+  delete options.rotate;
+}
+
 export function circle({x, y, fill, r}) {
-  return ({data = [0], x: px, y: py, rotate: protate, ...rest} = {}) => {
+  return ({data = [0], ...rest} = {}) => {
     const I = Array.from({length: data.length}, (_, i) => i);
+    omit(rest);
     return {
       ...rest,
       ...(x !== undefined && {x: I.map((i) => attribute(x, i, data))}),

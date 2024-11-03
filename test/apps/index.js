@@ -2,6 +2,7 @@ export {circles} from "./circles.js";
 export {circles2} from "./circles2.js";
 export {circles3} from "./circles3.js";
 export {circle} from "./circle.js";
+export {triangle} from "./triangle.js";
 export {pandas} from "./pandas.js";
 export {rings} from "./rings.js";
 export {grid} from "./grid.js";
