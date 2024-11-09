@@ -1,21 +1,40 @@
 function createTriangleRenderPipeline(device, presentationFormat) {
-  const module = device.createShaderModule({
+  const vsModule = device.createShaderModule({
     label: "our hardcoded black triangle shaders",
     code: `
+      struct outputWithColor {
+        @builtin(position) position: vec4f,
+        @location(0) color: vec4f,
+      };
+
       @vertex fn vs(
         @builtin(vertex_index) vertexIndex : u32
-      ) -> @builtin(position) vec4f {
+      ) -> outputWithColor {
         let pos = array(
           vec2f( 0.0,  0.5),  // top center
           vec2f(-0.5, -0.5),  // bottom left
           vec2f( 0.5, -0.5)   // bottom right
         );
 
-        return vec4f(pos[vertexIndex], 0.0, 1.0);
-      }
+        var color = array(
+          vec4f(0, 0, 0, 1),
+          vec4f(0, 0, 0, 1),
+          vec4f(0, 0, 0, 1)
+        );
 
-      @fragment fn fs() -> @location(0) vec4f {
-        return vec4f(0, 0, 0, 1);
+        var output: outputWithColor;
+        output.position = vec4f(pos[vertexIndex], 0.0, 1.0);
+        output.color = color[vertexIndex];
+        return output;
+      }
+    `,
+  });
+
+  const fsModule = device.createShaderModule({
+    label: "our hardcoded black triangle shaders",
+    code: `
+      @fragment fn fs(@location(0) color: vec4f) -> @location(0) vec4f {
+        return color;
       }
     `,
   });
@@ -23,11 +42,9 @@ function createTriangleRenderPipeline(device, presentationFormat) {
   return device.createRenderPipeline({
     label: "our hardcoded black triangle pipeline",
     layout: "auto",
-    vertex: {
-      module,
-    },
+    vertex: {module: vsModule},
     fragment: {
-      module,
+      module: fsModule,
       targets: [{format: presentationFormat}],
     },
   });
@@ -65,7 +82,7 @@ export function webgpu_triangle(I, value) {
   const triangleRenderPipeline = this._triangleRenderPipeline;
 
   const pipeline = triangleRenderPipeline ?? createTriangleRenderPipeline(device, presentationFormat);
-  const commandBuffer = createRenderTriangleCommand(device, pipeline, context)
+  const commandBuffer = createRenderTriangleCommand(device, pipeline, context);
   device.queue.submit([commandBuffer]);
 
   this._triangleRenderPipeline = pipeline;
