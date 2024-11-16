@@ -9,7 +9,7 @@ The JavaScript library for tailored creative coding.
 - [What is Charming](https://observablehq.com/d/477368f7e5423ff6) - a brief introduction
 - [Why Charming](https://observablehq.com/d/535654add5972bd2) - motivation
 - [How is Charming](https://observablehq.com/d/c5e87fb195e2166d) - features
-- [Examples](https://observablehq.com/d/2f9bf9f52cb24090) - for the released version
-- [Examples](https://observablehq.com/d/18b3d6f3affff5bb) - for the developing version
+- [Released Examples](https://observablehq.com/d/2f9bf9f52cb24090) - for the released version
+- [Developing Examples](https://observablehq.com/d/18b3d6f3affff5bb) - for the developing version
 
 <img alt="examples" src="./img/examples.png" />
