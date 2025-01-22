@@ -3,7 +3,7 @@
 ```js eval t=module
 import {shape, reactive, $} from "charmingjs";
 
-const [scope] = cm.reactive().let("x", 0).join();
+const [scope] = reactive().let("x", 0).join();
 
 requestAnimationFrame(animate);
 
@@ -14,7 +14,7 @@ function animate() {
 
 const svg = shape.svg({width: 200, height: 50}, [
   shape.circle({
-    cx: cm.$(() => scope.x),
+    cx: $(() => scope.x),
     cy: 25,
     r: 20,
   }),
