@@ -7,6 +7,17 @@ import * as cm from "../../../src/index.js";
 const props = {
   Theme: DefaultTheme,
   library: {cm},
+  transform: {
+    module(code) {
+      const lines = code.split("\n");
+      lines.pop();
+      lines.shift();
+      lines.unshift("const {$, reactive, shape} = cm;");
+      lines.push("return svg;");
+      const newCode = lines.join("\n");
+      return `(() => {${newCode}})()`;
+    },
+  },
 };
 
 export default {

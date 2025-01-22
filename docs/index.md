@@ -1,24 +1,23 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
   name: "Charming"
-  text: "The JavaScript library for tailored creative coding"
-  tagline: Create expressive sketches with concise code
+  text: "The JavaScript library for reactive SVG manipulation"
+  tagline: "Craft dynamic and expressive SVGs with minimal effort"
   actions:
     - theme: brand
       text: Get Started
       link: /getting-started
     - theme: alt
-      text: What is Charming?
+      text: Learn More
       link: /what-is-charming
 
 features:
-  - title: Declarative
-    details: The functional JavaScript API for graphics
-  - title: High Performance
-    details: Batch rendering with WebGPU
-  - title: Lightweight
-    details: Modular design
+  - title: Declarative Syntax
+    details: Write SVGs intuitively using pure function calls.
+  - title: Reactive Updates
+    details: Fine-grained reactivity ensures seamless, data-driven updates.
+  - title: Modular Design
+    details: Build reusable components with Charming's composable architecture.
 ---
