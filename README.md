@@ -13,7 +13,7 @@ const [scope] = reactive().let("x", 0).join();
 requestAnimationFrame(animate);
 
 function animate() {
-  scope.x = Math.sin(Date.now() / 1000) * 200;
+  scope.x = Math.abs(Math.sin(Date.now() / 1000)) * 200;
   requestAnimationFrame(animate);
 }
 
