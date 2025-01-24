@@ -1,0 +1,10 @@
+:root {
+  --vp-home-hero-name-background: -webkit-linear-gradient(315deg, #00adb5 25%, #393e46);
+  --vp-home-hero-name-color: transparent;
+}
+
+:root {
+  --vp-c-indigo-1: #005559;
+  --vp-c-indigo-2: #00797f;
+  --vp-c-indigo-3: #00adb5;
+}

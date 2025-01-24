@@ -7,6 +7,7 @@ export default defineConfig({
   description: "The JavaScript library for expressive creative coding",
   cleanUrls: true,
   extends: config,
+  head: [["link", { rel: "icon", type: "image/png", href: "/logo.png" }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -27,5 +28,6 @@ export default defineConfig({
       },
     ],
     socialLinks: [{icon: "github", link: "https://github.com/charming-art/charming"}],
+    logo: "/logo.svg",
   },
 });

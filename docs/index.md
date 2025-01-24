@@ -5,6 +5,9 @@ hero:
   name: "Charming"
   text: "The JavaScript library for reactive SVG manipulation"
   tagline: "Craft dynamic and expressive SVGs with minimal effort"
+  image:
+    src: /logo.svg
+    alt: Charming
   actions:
     - theme: brand
       text: Get Started
