@@ -4,8 +4,6 @@
 npm install charmingjs
 ```
 
-# Getting Started
-
 There are several way to using Charming.
 
 ## Installing from Package Manager
