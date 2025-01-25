@@ -42,7 +42,7 @@ const svg = shape.svg({width: 100, height: 100}, [
 document.body.append(svg);
 ```
 
-Please refer to [Charming Shape](/charming-shape) from more information.
+Please refer to [Charming Shape](/charming-shape) for more information.
 
 ## Charming uses reactivity for dynamics
 
