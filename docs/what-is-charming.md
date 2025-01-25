@@ -5,20 +5,20 @@
 Charming is useful for crafting dynamic and expressive generative art and visualization with minimal effort. Here’s a quick example to give you a sense of Charming:
 
 ```js eval t=module
-import {shape, reactive, $} from "charmingjs";
+import {shape, flow, $} from "charmingjs";
 
-const [scope] = reactive().let("x", 0).join();
+const [state] = flow().let("x", 0).join();
 
 requestAnimationFrame(animate);
 
 function animate() {
-  scope.x = Math.abs(Math.sin(Date.now() / 1000) * 200);
+  state.x = Math.abs(Math.sin(Date.now() / 1000) * 200);
   requestAnimationFrame(animate);
 }
 
 const svg = shape.svg({width: 200, height: 50}, [
   shape.circle({
-    cx: $(() => scope.x),
+    cx: $(() => state.x),
     cy: 25,
     r: 20,
   }),
