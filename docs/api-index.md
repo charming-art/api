@@ -1,12 +1,12 @@
 # API Index
 
-## Building SVG
+## [Charming Shape](/charming-shape)
 
-Building SVG with pure function calls.
+Creating SVGs with pure function calls.
 
 - [_cm_.**shape**](/charming-shape#cm-shape) - create a SVG with the specified attributes and child nodes.
 
-## Applying Reactivity
+## [Charming Reactivity](/charming-reactivity)
 
 Applying fine-grained state observation.
 
