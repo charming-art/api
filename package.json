@@ -1,6 +1,6 @@
 {
   "name": "charmingjs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "The JavaScript library for reactive SVG manipulation",
   "author": {
     "name": "Bairui SU",
