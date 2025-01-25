@@ -1,5 +1,7 @@
 # Charming
 
+<img src="./img/logo.svg" width="256" alt="logo">
+
 > [!NOTE]
 > The current next branch is implementing the new proposal API for production use. Please refer to the [main branch](https://github.com/charming-art/charming/tree/main) for the current release.
 
