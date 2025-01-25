@@ -7,15 +7,14 @@ import "./custom.css";
 // More props: https://genji-md.dev/reference/props
 const props = {
   Theme: DefaultTheme,
-  library: {cm},
+  library: {cm, shape: cm.shape},
   transform: {
     module(code) {
-      const lines = code.split("\n");
-      lines.pop();
-      lines.shift();
-      lines.unshift("const {$, reactive, shape} = cm;");
-      lines.push("return svg;");
-      const newCode = lines.join("\n");
+      let newCode = code
+        .replace("import {", "const {")
+        .replace(`from "charmingjs"`, "= cm")
+        .replace(`document.body.append(svg);`, "return svg;");
+      if (!newCode.includes("return svg;")) newCode += "return svg;";
       return `(() => {${newCode}})()`;
     },
   },

@@ -7,7 +7,8 @@ export default defineConfig({
   description: "The JavaScript library for expressive creative coding",
   cleanUrls: true,
   extends: config,
-  head: [["link", { rel: "icon", type: "image/png", href: "/logo.png" }]],
+  head: [["link", {rel: "icon", type: "image/png", href: "/logo.png"}]],
+  appearance: false,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -24,6 +25,13 @@ export default defineConfig({
           {text: "What is Charming?", link: "/what-is-charming"},
           {text: "Getting started", link: "/getting-started"},
           {text: "API Index", link: "/api-index"},
+        ],
+      },
+      {
+        text: "Reference",
+        items: [
+          {text: "Charming Shape", link: "/charming-shape"},
+          {text: "Charming Reactivity", link: "/charming-reactivity"},
         ],
       },
     ],
