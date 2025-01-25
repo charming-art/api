@@ -2,9 +2,9 @@
 layout: home
 
 hero:
-  name: "Charming"
-  text: "The JavaScript library for reactive SVG manipulation"
-  tagline: "Craft dynamic and expressive SVGs with minimal effort"
+  name: Charming
+  text: The JavaScript library for dynamic SVGs
+  tagline: Craft expressive generative art and visualization with minimal effort
   image:
     src: /logo.svg
     alt: Charming
@@ -13,7 +13,7 @@ hero:
       text: Get Started
       link: /getting-started
     - theme: alt
-      text: Learn More
+      text: What is Charming
       link: /what-is-charming
 
 features:
@@ -22,5 +22,5 @@ features:
   - title: Reactive Updates
     details: Fine-grained reactivity ensures seamless, data-driven updates.
   - title: Modular Design
-    details: Build reusable components with Charming's composable architecture.
+    details: Build reusable components with composable architecture.
 ---

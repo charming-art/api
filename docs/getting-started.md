@@ -10,13 +10,25 @@ There are several way to using Charming.
 
 Charming is typically installed via a package manager such as Yarn or NPM.
 
-```bash
-yarn add charmingjs
+::: code-group
+
+```sh [npm]
+$ npm add -S charmingjs
 ```
 
-```bash
-npm install charmingjs
+```sh [pnpm]
+$ pnpm add -S charmingjs
 ```
+
+```sh [yarn]
+$ yarn add -S charmingjs
+```
+
+```sh [bun]
+$ bun add -S charmingjs
+```
+
+:::
 
 Charming can then imported as a namespace:
 
