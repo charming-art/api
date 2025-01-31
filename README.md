@@ -8,26 +8,26 @@
 The JavaScript library for reactive SVG manipulation.
 
 ```js
-import {shape, flow, $} from "charmingjs";
+import {svg, flow, $} from "charmingjs";
 
-const [state] = flow().let("x", 0).join();
+const [vars] = flow().let("x", 0).join();
 
 requestAnimationFrame(animate);
 
 function animate() {
-  state.x = Math.abs(Math.sin(Date.now() / 1000)) * 200;
+  vars.x = Math.abs(Math.sin(Date.now() / 1000)) * 200;
   requestAnimationFrame(animate);
 }
 
-const svg = shape.svg({width: 200, height: 50}, [
-  shape.circle({
-    cx: $(() => state.x),
+const node = svg.svg({width: 200, height: 50}, [
+  svg.circle({
+    cx: $(() => vars.x),
     cy: 25,
     r: 20,
   }),
 ]);
 
-document.body.append(svg);
+document.body.append(node);
 ```
 
 ## Resources 📚

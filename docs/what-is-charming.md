@@ -5,49 +5,49 @@
 Charming is useful for crafting dynamic and expressive generative art and visualization with minimal effort. Here’s a quick example to give you a sense of Charming:
 
 ```js eval t=module
-import {shape, flow, $} from "charmingjs";
+import {svg, flow, $} from "charmingjs";
 
-const [state] = flow().let("x", 0).join();
+const [vars] = flow().let("x", 0).join();
 
 requestAnimationFrame(animate);
 
 function animate() {
-  state.x = Math.abs(Math.sin(Date.now() / 1000) * 200);
+  vars.x = Math.abs(Math.sin(Date.now() / 1000) * 200);
   requestAnimationFrame(animate);
 }
 
-const svg = shape.svg({width: 200, height: 50}, [
-  shape.circle({
-    cx: $(() => state.x),
+const node = svg.svg({width: 200, height: 50}, [
+  svg.circle({
+    cx: $(() => vars.x),
     cy: 25,
     r: 20,
   }),
 ]);
 
-document.body.append(svg);
+document.body.append(node);
 ```
 
-## Charming creates SVGs
+## Based on SVG
 
-Charming provides a declarative way to creating SVGs with pure function calls. A _shape_ proxy object exported to **create SVG elements directly**. For example, to create a white circle in a black background:
+Charming provides a declarative way to creating SVG with pure function calls. A _shape_ proxy object exported to **create SVG elements directly**. For example, to create a white circle in a black background:
 
 ```js eval t=module
-import {shape} from "charmingjs";
+import {svg} from "charmingjs";
 
-const svg = shape.svg({width: 100, height: 100}, [
-  shape.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-  shape.circle({cx: 50, cy: 50, r: 40, fill: "white"}),
+const node = svg.svg({width: 100, height: 100}, [
+  svg.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
+  svg.circle({cx: 50, cy: 50, r: 40, fill: "white"}),
 ]);
 
-document.body.append(svg);
+document.body.append(node);
 ```
 
-Please refer to [Charming Shape](/charming-shape) for more information.
+Please refer to [Charming DOM](/charming-dom) for more information.
 
-## Charming uses reactivity for dynamics
+## Uses reactivity for dynamics
 
-## Charming is composable
+## Composable
 
-## Charming is a collection of tools
+## A collection of tools
 
-## Charming works with D3
+## Built and works with D3

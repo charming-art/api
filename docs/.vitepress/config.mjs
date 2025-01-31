@@ -30,7 +30,7 @@ export default defineConfig({
       {
         text: "Reference",
         items: [
-          {text: "Charming Shape", link: "/charming-shape"},
+          {text: "Charming DOM", link: "/charming-dom"},
           {text: "Charming Flow", link: "/charming-flow"},
         ],
       },
