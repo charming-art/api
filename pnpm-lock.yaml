@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       echox:
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^0.0.4
+        version: 0.0.4
     devDependencies:
       '@rollup/plugin-node-resolve':
         specifier: ^15.3.1
@@ -1010,8 +1010,8 @@ packages:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
     engines: {node: '>=6.0.0'}
 
-  echox@0.0.3:
-    resolution: {integrity: sha512-OlOuhsy01IdhQ3sJ/0j0QohEBzTRJ7GujFcBt0l0egkF1mUmsC9v69gvjqUGZCN0WND2ZH+J5Ee9j6qBPs0wMA==}
+  echox@0.0.4:
+    resolution: {integrity: sha512-m+kk/zJXkfEc+ILsJUVrQIZb4Ye+a0yEKegXS8y4l+J7uEIgKXEZKyUNgelqL3bWhXRuUI5tHvazkYdn8BYKzg==}
 
   emoji-regex-xs@1.0.0:
     resolution: {integrity: sha512-LRlerrMYoIDrT6jgpeZ2YYl/L8EulRTt5hQcYjy5AInh7HWXKimpqx68aknBFpGL2+/IcogTcaydJEgaTmOpDg==}
@@ -2660,7 +2660,7 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
-  echox@0.0.3: {}
+  echox@0.0.4: {}
 
   emoji-regex-xs@1.0.0: {}
 
