@@ -31,7 +31,7 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
-    "echox": "^0.0.2"
+    "echox": "^0.0.3"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.3.1",
@@ -39,10 +39,11 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "genji-theme-vitepress": "^0.2.6",
+    "jsdom": "^26.0.0",
     "prettier": "^3.4.2",
-    "rollup": "^4.31.0",
-    "vitepress": "^1.6.1",
-    "vitest": "^3.0.3"
+    "rollup": "^4.32.1",
+    "vitepress": "^1.6.3",
+    "vitest": "^3.0.4"
   },
   "publishConfig": {
     "access": "public"
