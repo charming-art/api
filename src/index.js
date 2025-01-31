@@ -1,1 +1,3 @@
-export {svg as shape, reactive as flow, $} from "echox";
+export {html, $} from "echox";
+export {svg} from "./svg.js";
+export {flow} from "./flow.js";
