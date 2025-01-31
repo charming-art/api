@@ -1,6 +1,6 @@
 {
   "name": "charmingjs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The JavaScript library for reactive SVG manipulation",
   "author": {
     "name": "Bairui SU",
@@ -25,10 +25,10 @@
     "test:js": "vitest",
     "test:lint": "eslint src test",
     "test:format": "prettier --check src test",
-    "build": "rm -rf dist && rollup -c",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "prepublishOnly":"rm -rf dist && rollup -c"
   },
   "dependencies": {
     "echox": "^0.0.3"
