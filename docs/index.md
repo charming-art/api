@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: Charming
-  text: The JavaScript library for dynamic SVGs
-  tagline: Craft expressive generative art and visualization with minimal effort
+  text: The JavaScript library for generative art based on SVG
+  tagline: Craft expressive generative art with minimal effort
   image:
     src: /logo.svg
     alt: Charming
@@ -18,7 +18,7 @@ hero:
 
 features:
   - title: Declarative Syntax
-    details: Write SVGs intuitively using pure function calls.
+    details: Write SVG intuitively using pure function calls.
   - title: Reactive Updates
     details: Fine-grained reactivity ensures seamless, data-driven updates.
   - title: Modular Design
