@@ -1,3 +1,3 @@
-export {html, $} from "echox";
-export {svg} from "./svg.js";
+export {$} from "echox";
+export {svg, html} from "./dom.js";
 export {flow} from "./flow.js";
