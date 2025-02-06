@@ -5,7 +5,7 @@
 > [!NOTE]
 > The current next branch is implementing the new proposal API for production use. Please refer to the [main branch](https://github.com/charming-art/charming/tree/main) for the current release.
 
-The JavaScript library for reactive SVG manipulation.
+The JavaScript library for generative art based on SVG.
 
 ```js
 import {svg, flow} from "charmingjs";
