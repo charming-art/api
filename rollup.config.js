@@ -8,6 +8,10 @@ const umd = {
     name: "cm",
   },
   plugins: [node()],
+  onwarn(message, warn) {
+    if (message.code === "CIRCULAR_DEPENDENCY") return;
+    warn(message);
+  },
 };
 
 export default [

@@ -31,6 +31,7 @@
     "prepublishOnly": "rm -rf dist && rollup -c"
   },
   "dependencies": {
+    "charmingjs-vector": "^0.0.2",
     "d3-timer": "^3.0.1",
     "echox": "^0.0.5"
   },
