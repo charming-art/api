@@ -16,7 +16,7 @@ function loop(state, _, callback, {frameRate} = {}) {
 
 function flow_on(key, callback, options) {
   const call = key === "loop" ? loop : event;
-  return this.observe((state) => {
+  return this.effect((state) => {
     return call(state, key, callback, options);
   });
 }

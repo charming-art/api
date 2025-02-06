@@ -1,6 +1,6 @@
 # API Index
 
-## [Charming Shape](/charming-dom)
+## [Charming DOM](/charming-dom)
 
 Creating SVG and HTML with pure function calls.
 
@@ -12,6 +12,9 @@ Creating SVG and HTML with pure function calls.
 Applying fine-grained state observation.
 
 - [_cm_.**flow**](/charming-flow#flow) - create a reactive scope, where store the declared states.
-- [_flow_.**let**](/charming-flow#flow-let) - declare a state.
+- [_flow_.**state**](/charming-flow#flow-state) - declare a state.
+- [_flow_.**computed**](/charming-flow#flow-computed) - derive a computed state.
+- [_flow_.**effect**](/charming-flow#flow-effect) - declare a effect.
 - [_flow_.**join**](/charming-flow#flow-join) - get the states from the reactive scope.
-- [_cm_.**$**](/charming-flow#$) - define a reactive callback.
+- [_state_.**select**](/charming-flow#state-select) - select a state and bind it with the view.
+- [_cm_.**component**](/charming-flow#component) - define a component.

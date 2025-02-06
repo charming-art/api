@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "d3-timer": "^3.0.1",
-    "echox": "^0.0.4"
+    "echox": "^0.0.5"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.3.1",
@@ -42,9 +42,9 @@
     "genji-theme-vitepress": "^0.2.6",
     "jsdom": "^26.0.0",
     "prettier": "^3.4.2",
-    "rollup": "^4.32.1",
+    "rollup": "^4.34.4",
     "vitepress": "^1.6.3",
-    "vitest": "^3.0.4"
+    "vitest": "^3.0.5"
   },
   "publishConfig": {
     "access": "public"
