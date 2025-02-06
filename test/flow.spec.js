@@ -1,5 +1,5 @@
 import * as cm from "../src/index.js";
-import {test, expect} from "vitest";
+import {test, expect, vi} from "vitest";
 import {sleep} from "./sleep.js";
 
 test("cm should export flow", () => {
@@ -87,4 +87,24 @@ test("flow.on(loop, callback, {frameRate}) should have expected frame rate", asy
 
   state.dispose();
   state2.dispose();
+});
+
+test("flow.on(...) should share a single event listener for all events with the same type and options", async () => {
+  const addEventListener = vi.spyOn(window, "addEventListener");
+  cm.flow()
+    .on("mousedown", () => {})
+    .on("mousedown", () => {})
+    .join();
+  expect(addEventListener).toHaveBeenCalledTimes(1);
+  addEventListener.mockRestore();
+});
+
+test("flow.on(...) should register multiple event listener with different options", async () => {
+  const addEventListener = vi.spyOn(window, "addEventListener");
+  cm.flow()
+    .on("mouseup", () => {}, {capture: true})
+    .on("mouseup", () => {}, false)
+    .join();
+  expect(addEventListener).toHaveBeenCalledTimes(2);
+  addEventListener.mockRestore();
 });
