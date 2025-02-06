@@ -9,7 +9,7 @@ test("cm should export flow", () => {
 test("flow.on(event, callback) should add event listener passing expected params", async () => {
   let click;
   const wait = new Promise((resolve) => (click = resolve));
-  const [state] = cm
+  const state = cm
     .flow()
     .on("click", (event, state) => click({state, event}))
     .join();
@@ -21,7 +21,7 @@ test("flow.on(event, callback) should add event listener passing expected params
 
 test("flow.on(even, callback) should remove event listener when disposed", async () => {
   let count = 0;
-  const [, dispose] = cm
+  const state = cm
     .flow()
     .on("click", () => count++)
     .join();
@@ -30,7 +30,7 @@ test("flow.on(even, callback) should remove event listener when disposed", async
   await sleep(0);
   expect(count).toBe(1);
 
-  dispose();
+  state.dispose();
 
   window.dispatchEvent(new MouseEvent("click"));
   await sleep(0);
@@ -40,7 +40,7 @@ test("flow.on(even, callback) should remove event listener when disposed", async
 test("flow.on(loop, callback) should have expected params", async () => {
   let next;
   const wait = new Promise((resolve) => (next = resolve));
-  const [state, dispose] = cm
+  const state = cm
     .flow()
     .on("loop", (event, state) => next({state, event}))
     .join();
@@ -48,12 +48,12 @@ test("flow.on(loop, callback) should have expected params", async () => {
   expect(s).toBe(state);
   expect(e.elapsed).toBeGreaterThan(0);
   expect(e.frameCount).toBe(1);
-  dispose();
+  state.dispose();
 });
 
 test("flow.on(loop, callback) should remove loop when disposed", async () => {
   let count = 0;
-  const [, dispose] = cm
+  const state = cm
     .flow()
     .on("loop", () => count++)
     .join();
@@ -61,7 +61,7 @@ test("flow.on(loop, callback) should remove loop when disposed", async () => {
   await sleep(100);
   expect(count).toBeGreaterThan(0);
 
-  dispose();
+  state.dispose();
 
   const start = count;
   await sleep(100);
@@ -72,19 +72,19 @@ test("flow.on(loop, callback, {frameRate}) should have expected frame rate", asy
   let count = 0;
   let count2 = 0;
 
-  const [, dispose] = cm
+  const state = cm
     .flow()
-    .on("loop", () => count++)
+    .on("loop", () => count++, {frameRate: 1})
     .join();
 
-  const [, dispose2] = cm
+  const state2 = cm
     .flow()
-    .on("loop", () => count2++, {frameRate: 60})
+    .on("loop", () => count2++, {frameRate: 120})
     .join();
 
   await sleep(200);
-  expect(count).toBeGreaterThan(count2);
+  expect(count2).toBeGreaterThan(count);
 
-  dispose();
-  dispose2();
+  state.dispose();
+  state2.dispose();
 });
