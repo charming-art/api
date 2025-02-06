@@ -18,3 +18,7 @@ Applying fine-grained state observation.
 - [_flow_.**join**](/charming-flow#flow-join) - get the states from the reactive scope.
 - [_state_.**select**](/charming-flow#state-select) - select a state and bind it with the view.
 - [_cm_.**component**](/charming-flow#component) - define a component.
+
+## [Charming Vector](/charming-vector)
+
+> WIP
