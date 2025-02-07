@@ -40,9 +40,58 @@ document.body.append(node);
 
 Please refer to [Charming DOM](/charming-dom) for more information.
 
+## Modern Transition
+
+```js eval code=false
+play = Inputs.button("Replay");
+```
+
+```js eval t=module,replayable
+import {svg, transition} from "charmingjs";
+
+const node = svg.svg({width: 100, height: 100}, [
+  svg.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
+  transition(
+    {
+      keyframes: [
+        {attr: {fill: "#E5B442", r: 0}, duration: 1000},
+        {attr: {fill: "#EE7A64", r: 40}, duration: 2000},
+      ],
+    },
+    [svg.circle({cx: 50, cy: 50, r: 40, fill: "#4B68C9"})],
+  ),
+]);
+
+document.body.append(node);
+```
+
 ## Uses reactivity for dynamics
 
 ## Composable
+
+<!-- ```js
+const Walker = component((props, flow) => {
+  const state = flow()
+    .let("x", props.x)
+    .let("y", props.y)
+    .on("loop", () => {
+      state.x += cm.random(-1, 1);
+      state.y += cm.random(-1, 1);
+    });
+  return svg.circle({cx: state.use("x"), cy: state.use("y")});
+});
+
+const walkers = cm.range(10).map(() =>
+  Walker({
+    x: cm.random(width),
+    y: cm.random(height),
+  }),
+);
+
+const node = svg.svg({}, walkers);
+
+document.body.append(node);
+``` -->
 
 ## A collection of tools
 

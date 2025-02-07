@@ -17,6 +17,12 @@ const props = {
       if (!newCode.includes("return node;")) newCode += "return node;";
       return `(() => {${newCode}})()`;
     },
+    replayable(code) {
+      return `(() => {
+        play;
+        return ${code};
+      })()`;
+    },
   },
 };
 
