@@ -8,6 +8,8 @@
 
 ## _flow_.**effect(_key, value_)** {#flow-effect}
 
+## _flow_.**on(_event, handler[, options]_)** {#flow-on}
+
 ## _flow_.**join()** {#flow-join}
 
 ## _state_.**select(selection)** {#state-select}
