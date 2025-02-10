@@ -15,9 +15,14 @@ Applying fine-grained state observation.
 - [_flow_.**state**](/charming-flow#flow-state) - declare a state.
 - [_flow_.**computed**](/charming-flow#flow-computed) - derive a computed state.
 - [_flow_.**effect**](/charming-flow#flow-effect) - declare a effect.
+- [_flow_.**on**](/charming-flow#flow-on) - listen to a event.
 - [_flow_.**join**](/charming-flow#flow-join) - get the states from the reactive scope.
 - [_state_.**select**](/charming-flow#state-select) - select a state and bind it with the view.
 - [_cm_.**component**](/charming-flow#component) - define a component.
+
+## [Charming Transition](/charming-transition)
+
+> WIP
 
 ## [Charming Vector](/charming-vector)
 
