@@ -15,7 +15,20 @@ export default defineConfig({
       {text: "Home", link: "/"},
       {
         text: "Examples",
-        link: "https://observablehq.com/d/18b3d6f3affff5bb",
+        items: [
+          {
+            text: "Gallery",
+            link: "https://observablehq.com/d/7d44ce51bb2199d2",
+          },
+          {
+            text: "The Code of Music",
+            link: "https://observablehq.com/d/18b3d6f3affff5bb",
+          },
+          {
+            text: "The Nature of Code",
+            link: "https://observablehq.com/d/e2d520e57e529fc0",
+          },
+        ],
       },
     ],
     sidebar: [
