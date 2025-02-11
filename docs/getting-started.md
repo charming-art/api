@@ -6,6 +6,10 @@ npm install charmingjs
 
 There are several way to using Charming.
 
+## Try Online
+
+Charming uses [Observable Notebook](https://observablehq.com/platform/notebooks) as its playground, try this [starter notebook](https://observablehq.com/d/7b4e552feea11ed3)!
+
 ## Installing from Package Manager
 
 Charming is typically installed via a package manager such as Yarn or NPM.
