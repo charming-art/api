@@ -1,24 +1,24 @@
-import {svg, html} from "../src/index.js";
+import {SVG, HTML} from "../src/index.js";
 import {test, expect} from "vitest";
 
 test("svg should create SVG elements", () => {
-  const el = svg.rect();
+  const el = SVG.rect();
   expect(el.tagName).toBe("rect");
 });
 
 test("svg should ignore then, next, and return", () => {
-  expect(svg.then).toBe(undefined);
-  expect(svg.next).toBe(undefined);
-  expect(svg.return).toBe(undefined);
+  expect(SVG.then).toBe(undefined);
+  expect(SVG.next).toBe(undefined);
+  expect(SVG.return).toBe(undefined);
 });
 
 test("html should create HTML elements", () => {
-  const el = html.div();
+  const el = HTML.div();
   expect(el.tagName).toBe("DIV");
 });
 
 test("html should ignore then, next, and return", () => {
-  expect(html.then).toBe(undefined);
-  expect(html.next).toBe(undefined);
-  expect(html.return).toBe(undefined);
+  expect(HTML.then).toBe(undefined);
+  expect(HTML.next).toBe(undefined);
+  expect(HTML.return).toBe(undefined);
 });

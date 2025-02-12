@@ -24,7 +24,7 @@ const moduleName = (name) => {
 // More props: https://genji-md.dev/reference/props
 const props = {
   Theme: DefaultTheme,
-  library: {cm: {...cm, ...extended}, svg: cm.svg, html: cm.html},
+  library: {cm: {...cm, ...extended}, SVG: cm.SVG, html: cm.HTML},
   transform: {
     module(code) {
       let newCode = code

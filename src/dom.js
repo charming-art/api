@@ -12,6 +12,6 @@ function exclude(proxy) {
   });
 }
 
-export const svg = exclude(_html("http://www.w3.org/2000/svg"));
+export const SVG = exclude(_html("http://www.w3.org/2000/svg"));
 
-export const html = exclude(_html);
+export const HTML = exclude(_html);

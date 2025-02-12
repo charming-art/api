@@ -8,15 +8,15 @@
 The JavaScript library for generative art based on SVG.
 
 ```js
-import {svg, flow} from "charmingjs";
+import {SVG, flow} from "charmingjs";
 
 const state = flow()
   .state("x", 0)
   .on("loop", () => (state.x = Math.abs(Math.sin(Date.now() / 1000)) * 200))
   .join();
 
-const node = svg.svg({width: 200, height: 50}, [
-  svg.circle({
+const node = SVG.svg({width: 200, height: 50}, [
+  SVG.circle({
     cx: state.select("x"),
     cy: 25,
     r: 20,
