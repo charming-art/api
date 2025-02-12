@@ -3,8 +3,8 @@ import * as cmVector from "charmingjs-vector";
 import {test, expect} from "vitest";
 
 test("cm should have expected exports", () => {
-  expect(cm.html).toBeDefined();
-  expect(cm.svg).toBeDefined();
+  expect(cm.HTML).toBeDefined();
+  expect(cm.SVG).toBeDefined();
   expect(cm.flow).toBeDefined();
   expect(cm.component).toBeDefined();
 

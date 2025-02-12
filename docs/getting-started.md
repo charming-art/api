@@ -48,7 +48,7 @@ In vanilla HTML, Charming can be imported as an ES module, say from jsDelivr:
 <script type="module">
   import * as cm from "https://cdn.jsdelivr.net/npm/charmingjs/+esm";
 
-  const node = cm.svg.svg();
+  const node = cm.SVG.svg();
 
   document.body.append(node);
 </script>
@@ -61,7 +61,7 @@ Charming is also available as a UMD bundle for legacy browsers.
 ```html
 <script src="https://cdn.jsdelivr.net/npm/charmingjs"></script>
 <script>
-  const svg = cm.svg.svg();
+  const svg = cm.SVG.svg();
 
   document.body.append(node);
 </script>

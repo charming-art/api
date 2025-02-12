@@ -4,8 +4,8 @@
 
 Creating SVG and HTML with pure function calls.
 
-- [_cm_.**svg**](/charming-dom#svg) - create a SVG element with the specified attributes and child nodes.
-- [_cm_.**html**](/charming-dom#html) - create a HTML element with the specified attributes and child nodes.
+- [_cm_.**SVG**](/charming-dom#SVG) - create SVG elements with the specified attributes and child nodes.
+- [_cm_.**HTML**](/charming-dom#HTML) - create HTML elements with the specified attributes and child nodes.
 
 ## [Charming Flow](/charming-flow)
 

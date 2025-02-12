@@ -5,15 +5,15 @@
 Charming lets you create dynamic and expressive generative art and visualizations effortlessly. Here's a quick example that give you a sense of Charming:
 
 ```js eval t=module
-import {svg, flow} from "charmingjs";
+import {SVG, flow} from "charmingjs";
 
 const state = flow()
   .state("x", 0)
   .on("loop", () => (state.x = Math.abs(Math.sin(Date.now() / 1000) * 200)))
   .join();
 
-const node = svg.svg({width: 200, height: 50}, [
-  svg.circle({
+const node = SVG.svg({width: 200, height: 50}, [
+  SVG.circle({
     cx: state.select("x"),
     cy: 25,
     r: 20,
@@ -28,11 +28,11 @@ document.body.append(node);
 Charming provides a declarative way to create SVG through pure function calls. It exports an _svg_ proxy object to **create SVG elements directly**. For example, to create a white circle on a black background:
 
 ```js eval t=module
-import {svg} from "charmingjs";
+import {SVG} from "charmingjs";
 
-const node = svg.svg({width: 100, height: 100}, [
-  svg.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-  svg.circle({cx: 50, cy: 50, r: 40, fill: "white"}),
+const node = SVG.svg({width: 100, height: 100}, [
+  SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
+  SVG.circle({cx: 50, cy: 50, r: 40, fill: "white"}),
 ]);
 
 document.body.append(node);
@@ -49,10 +49,10 @@ play = Inputs.button("Replay");
 ```
 
 ```js eval t=module,replayable
-import {svg, transition} from "charmingjs";
+import {SVG, transition} from "charmingjs";
 
-const node = svg.svg({width: 100, height: 100}, [
-  svg.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
+const node = SVG.svg({width: 100, height: 100}, [
+  SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
   transition(
     {
       keyframes: [
@@ -60,7 +60,7 @@ const node = svg.svg({width: 100, height: 100}, [
         {attr: {fill: "#EE7A64", r: 40}, duration: 2000},
       ],
     },
-    [svg.circle({cx: 50, cy: 50, r: 40, fill: "#4B68C9"})],
+    [SVG.circle({cx: 50, cy: 50, r: 40, fill: "#4B68C9"})],
   ),
 ]);
 
@@ -72,7 +72,7 @@ document.body.append(node);
 For dynamic features like interactions and animations, Charming uses a reactive state management concept called _Flow_. In a flow, you can define _states_, _computed states_, and _effects_, then bind them to SVG elements. When states change, the elements update automatically—no need to manually sync states and views. For instance, you can easily create a random walker that changes color on mouse hover:
 
 ```js eval t=module
-import {flow, random, constrain} from "charmingjs";
+import {SVG, flow, random, constrain} from "charmingjs";
 
 const width = 600;
 const height = 150;
@@ -90,8 +90,8 @@ const state = flow()
   })
   .join();
 
-const node = svg.svg({width, height}, [
-  svg.circle({
+const node = SVG.svg({width, height}, [
+  SVG.circle({
     cx: state.select("clampedX"),
     cy: state.select("clampedY"),
     fill: state.select("color"),
@@ -109,7 +109,7 @@ document.body.append(node);
 Components in Charming are reusable UI and logic elements. Using the _component_ function, you can define a function that accepts _props_ and _flow_ parameters to return SVG elements. For example, to define a random _walker component_:
 
 ```js eval t=moduleWalker
-import {component, random, constrain} from "charmingjs";
+import {SVG, component, random, constrain} from "charmingjs";
 
 const walker = component((props, flow) => {
   const {width, height} = props;
@@ -127,7 +127,7 @@ const walker = component((props, flow) => {
     })
     .join();
 
-  return svg.circle({
+  return SVG.circle({
     cx: state.select("clampedX"),
     cy: state.select("clampedY"),
     fill: state.select("color"),
@@ -141,12 +141,12 @@ const walker = component((props, flow) => {
 You can then use this _walker component_ like any other SVG element:
 
 ```js eval t=module
-import {svg} from "charmingjs";
+import {SVG} from "charmingjs";
 
 const width = 600;
 const height = 150;
 
-const node = svg.svg({width, height}, [
+const node = SVG.svg({width, height}, [
   walker({width, height}),
   walker({width, height}),
   walker({width, height}),
@@ -163,7 +163,7 @@ Note that the concept of a component is very similar to a class—both enable re
 What if we want to draw a random walker with a rectangle element? When using classes, we would typically use inheritance to override the display function. However, in Charming, you can define a _useWalker composition_ like this:
 
 ```js eval t=moduleUseWalker
-import {svg, random, constrain} from "charmingjs";
+import {SVG, random, constrain} from "charmingjs";
 
 const useWalker = (flow, width, height) =>
   flow()
@@ -183,12 +183,12 @@ const useWalker = (flow, width, height) =>
 You can then use this _useWalker composition_ in your square walker component:
 
 ```js eval t=moduleSquareWalker
-import {svg, component} from "charmingjs";
+import {SVG, component} from "charmingjs";
 
 const squareWalker = component((props, flow) => {
   const state = useWalker(flow, props.width, props.height);
 
-  return svg.rect({
+  return SVG.rect({
     x: state.select((state) => state.clampedX - 20),
     y: state.select((state) => state.clampedY - 20),
     fill: state.select("color"),
@@ -203,12 +203,12 @@ const squareWalker = component((props, flow) => {
 And draw two walkers like this:
 
 ```js eval t=module
-import {svg, range} from "charmingjs";
+import {SVG, range} from "charmingjs";
 
 const width = 600;
 const height = 150;
 
-const node = svg.svg({width, height}, [
+const node = SVG.svg({width, height}, [
   walker({width, height}),
   squareWalker({width, height}), // Use SquareWalker
 ]);
@@ -223,7 +223,7 @@ const squareWalker = component((props, flow) => {
   const walker = useWalker(flow, props.width, props.height);
   const hover = useHover(flow);
 
-  return svg.rect({
+  return SVG.rect({
     x: walker.select((state) => state.clampedX - 20),
     y: walker.select((state) => state.clampedY - 20),
     fill: walker.select("color"),
