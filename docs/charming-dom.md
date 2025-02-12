@@ -10,7 +10,7 @@ Creates an SVG element with the specified attributes and child nodes. The _svg_ 
 SVG = cm.SVG;
 ```
 
-Use _svg.tagName_ to create an element:
+Use _SVG.tagName_ to create an element:
 
 ```js
 SVG.svg(); // Create a svg element.
