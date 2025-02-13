@@ -14,4 +14,10 @@
 
 ## _state_.**select(selection)** {#state-select}
 
+## _state_.**map(key, callback)** {#state-map}
+
+## _state_.**update(key, callback)** {#state-update}
+
+## _state_.**dispose()** {#state-dispose}
+
 ## _cm_.**component(_key, value_)** {#component}
