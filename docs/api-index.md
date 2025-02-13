@@ -18,6 +18,9 @@ Applying fine-grained state observation.
 - [_flow_.**on**](/charming-flow#flow-on) - listen to a event.
 - [_flow_.**join**](/charming-flow#flow-join) - get the states from the reactive scope.
 - [_state_.**select**](/charming-flow#state-select) - select a state and bind it with the view.
+- [_state_.**map**](/charming-flow#state-map) - map an array into elements.
+- [_state_.**update**](/charming-flow#state-update) - update an array state.
+- [_state_.**dispose**](/charming-flow#state-dispose) - dispose a state.
 - [_cm_.**component**](/charming-flow#component) - define a component.
 
 ## [Charming Transition](/charming-transition)
