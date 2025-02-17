@@ -7,9 +7,11 @@ Charming lets you create dynamic and expressive generative art and visualization
 ```js eval t=module
 const SVG = cm.SVG;
 const state = cm.state({x: 0});
-const ticker = cm.ticker();
+const ticker = cm.ticker().on("animate", animate);
 
-ticker.on("animate", () => (state.x = Math.abs(Math.sin(Date.now() / 1000) * 200)));
+function animate() {
+  state.x = Math.abs(Math.sin(Date.now() / 1000) * 200);
+}
 
 const node = SVG.svg({width: 200, height: 50}, [
   SVG.circle({
