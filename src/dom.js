@@ -1,4 +1,4 @@
-import {html as _html} from "echox";
+import {HTML as _HTML} from "echox";
 
 // Exclude for Observable Notebook.
 // @see https://github.com/observablehq/runtime/issues/375
@@ -12,6 +12,6 @@ function exclude(proxy) {
   });
 }
 
-export const SVG = exclude(_html("http://www.w3.org/2000/svg"));
+export const SVG = exclude(_HTML("http://www.w3.org/2000/svg"));
 
-export const HTML = exclude(_html);
+export const HTML = exclude(_HTML);
