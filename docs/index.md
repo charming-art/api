@@ -4,7 +4,7 @@ layout: home
 hero:
   name: Charming
   text: The JavaScript library for generative art based on SVG
-  tagline: Craft expressive generative art with minimal effort
+  tagline: Craft expressive generative art with minimal effort or the most fun way to learn SVG
   image:
     src: /logo.svg
     alt: Charming
