@@ -9,10 +9,12 @@ Creating SVG and HTML with pure function calls.
 
 ## [Charming Flow](/charming-flow)
 
-Applying dynmics to static SVG and HTML.
+Applying dynamics to static SVG and HTML.
 
 - [_cm_.**state**](/charming-flow#state) - create reactive states.
-- [_cm_.**ticker**](/charming-flow#ticker) - craete a ticker.
+- [_cm_.**ticker**](/charming-flow#ticker) - create a ticker.
+- [_ticker_.**on**](/charming-flow#ticker-on) - listen a event.
+- [_ticker_.**dispose**](/charming-flow#ticker-dispose) - dispose the ticker.
 
 ## [Charming Transition](/charming-transition)
 
