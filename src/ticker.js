@@ -18,8 +18,9 @@ class Ticker {
     this._disposers = [];
   }
   on(type, callback, options = {}) {
-    const disposer = type === "animate" ? animate(callback, options) : event(event, callback, options);
+    const disposer = type === "animate" ? animate(callback, options) : event(type, callback, options);
     this._disposers.push(disposer);
+    return this;
   }
   dispose() {
     this._disposers.forEach((disposer) => disposer());
