@@ -5,16 +5,17 @@
 Charming lets you create dynamic and expressive generative art and visualizations effortlessly. Here's a quick example that give you a sense of Charming:
 
 ```js eval t=module
-import {SVG, flow} from "charmingjs";
+const SVG = cm.SVG;
+const state = cm.state({x: 0});
+const ticker = cm.ticker().on("animate", animate);
 
-const state = flow()
-  .state("x", 0)
-  .on("loop", () => (state.x = Math.abs(Math.sin(Date.now() / 1000) * 200)))
-  .join();
+function animate() {
+  state.x = Math.abs(Math.sin(Date.now() / 1000) * 200);
+}
 
 const node = SVG.svg({width: 200, height: 50}, [
   SVG.circle({
-    cx: state.select("x"),
+    cx: () => state.x,
     cy: 25,
     r: 20,
   }),
@@ -28,7 +29,7 @@ document.body.append(node);
 Charming provides a declarative way to create SVG through pure function calls. It exports an _svg_ proxy object to **create SVG elements directly**. For example, to create a white circle on a black background:
 
 ```js eval t=module
-import {SVG} from "charmingjs";
+const SVG = cm.SVG;
 
 const node = SVG.svg({width: 100, height: 100}, [
   SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
@@ -49,11 +50,11 @@ play = Inputs.button("Replay");
 ```
 
 ```js eval t=module,replayable
-import {SVG, transition} from "charmingjs";
+const SVG = cm.SVG;
 
 const node = SVG.svg({width: 100, height: 100}, [
   SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-  transition(
+  cm.transition(
     {
       keyframes: [
         {attr: {fill: "#E5B442", r: 0}, duration: 1000},
@@ -72,29 +73,31 @@ document.body.append(node);
 For dynamic features like interactions and animations, Charming uses a reactive state management concept called _Flow_. In a flow, you can define _states_, _computed states_, and _effects_, then bind them to SVG elements. When states change, the elements update automatically—no need to manually sync states and views. For instance, you can easily create a random walker that changes color on mouse hover:
 
 ```js eval t=module
-import {SVG, flow, random, constrain} from "charmingjs";
-
+const SVG = cm.SVG;
 const width = 600;
 const height = 150;
 
-const state = flow()
-  .state("x", width / 2)
-  .state("y", height / 2)
-  .state("isHovering", false)
-  .computed("clampedX", (state) => constrain(state.x, 0, width))
-  .computed("clampedY", (state) => constrain(state.y, 0, height))
-  .computed("color", (state) => (state.isHovering ? "#4DAAB3" : "black"))
-  .on("loop", (event, state) => {
-    state.x += random(-1, 1);
-    state.y += random(-1, 1);
-  })
-  .join();
+const state = cm.state({
+  x: width / 2,
+  y: height / 2,
+  isHovering: false,
+  clampedX: (state) => cm.constrain(state.x, 0, width),
+  clampedY: (state) => cm.constrain(state.y, 0, height),
+  color: (state) => (state.isHovering ? "#4DAAB3" : "black"),
+});
+
+const ticker = cm.ticker().on("animate", animate);
+
+function animate() {
+  state.x += cm.random(-1, 1);
+  state.y += cm.random(-1, 1);
+}
 
 const node = SVG.svg({width, height}, [
   SVG.circle({
-    cx: state.select("clampedX"),
-    cy: state.select("clampedY"),
-    fill: state.select("color"),
+    cx: () => state.clampedX,
+    cy: () => state.clampedY,
+    fill: () => state.color,
     r: 20,
     onmouseenter: () => (state.isHovering = true),
     onmouseleave: () => (state.isHovering = false),
@@ -104,159 +107,12 @@ const node = SVG.svg({width, height}, [
 document.body.append(node);
 ```
 
-## Component over class
-
-Components in Charming are reusable UI and logic elements. Using the _component_ function, you can define a function that accepts _props_ and _flow_ parameters to return SVG elements. For example, to define a random _walker component_:
-
-```js eval t=moduleWalker
-import {SVG, component, random, constrain} from "charmingjs";
-
-const walker = component((props, flow) => {
-  const {width, height} = props;
-
-  const state = flow()
-    .state("x", width / 2)
-    .state("y", height / 2)
-    .state("isHovering", false)
-    .computed("clampedX", (state) => constrain(state.x, 0, width))
-    .computed("clampedY", (state) => constrain(state.y, 0, height))
-    .computed("color", (state) => (state.isHovering ? "#4DAAB3" : "black"))
-    .on("loop", (event, state) => {
-      state.x += random(-1, 1);
-      state.y += random(-1, 1);
-    })
-    .join();
-
-  return SVG.circle({
-    cx: state.select("clampedX"),
-    cy: state.select("clampedY"),
-    fill: state.select("color"),
-    r: 20,
-    onmouseenter: () => (state.isHovering = true),
-    onmouseleave: () => (state.isHovering = false),
-  });
-});
-```
-
-You can then use this _walker component_ like any other SVG element:
-
-```js eval t=module
-import {SVG} from "charmingjs";
-
-const width = 600;
-const height = 150;
-
-const node = SVG.svg({width, height}, [
-  walker({width, height}),
-  walker({width, height}),
-  walker({width, height}),
-  walker({width, height}),
-]);
-
-document.body.append(node);
-```
-
-Note that the concept of a component is very similar to a class—both enable reusable and maintainable code. However, Charming favors components over classes, which we'll discuss next.
-
-## Composition over inheritance
-
-What if we want to draw a random walker with a rectangle element? When using classes, we would typically use inheritance to override the display function. However, in Charming, you can define a _useWalker composition_ like this:
-
-```js eval t=moduleUseWalker
-import {SVG, random, constrain} from "charmingjs";
-
-const useWalker = (flow, width, height) =>
-  flow()
-    .state("x", width / 2)
-    .state("y", height / 2)
-    .state("isHovering", false)
-    .computed("clampedX", (state) => constrain(state.x, 0, width))
-    .computed("clampedY", (state) => constrain(state.y, 0, height))
-    .computed("color", (state) => (state.isHovering ? "#4DAAB3" : "black"))
-    .on("loop", (event, state) => {
-      state.x += random(-1, 1);
-      state.y += random(-1, 1);
-    })
-    .join();
-```
-
-You can then use this _useWalker composition_ in your square walker component:
-
-```js eval t=moduleSquareWalker
-import {SVG, component} from "charmingjs";
-
-const squareWalker = component((props, flow) => {
-  const state = useWalker(flow, props.width, props.height);
-
-  return SVG.rect({
-    x: state.select((state) => state.clampedX - 20),
-    y: state.select((state) => state.clampedY - 20),
-    fill: state.select("color"),
-    width: 40,
-    height: 40,
-    onmouseenter: () => (state.isHovering = true),
-    onmouseleave: () => (state.isHovering = false),
-  });
-});
-```
-
-And draw two walkers like this:
-
-```js eval t=module
-import {SVG, range} from "charmingjs";
-
-const width = 600;
-const height = 150;
-
-const node = SVG.svg({width, height}, [
-  walker({width, height}),
-  squareWalker({width, height}), // Use SquareWalker
-]);
-
-document.body.append(node);
-```
-
-This pattern lets you break down common logic into separate, reusable compositions. For instance, you can extract hovering behavior into its own composition and implement it like this:
-
-```js
-const squareWalker = component((props, flow) => {
-  const walker = useWalker(flow, props.width, props.height);
-  const hover = useHover(flow);
-
-  return SVG.rect({
-    x: walker.select((state) => state.clampedX - 20),
-    y: walker.select((state) => state.clampedY - 20),
-    fill: walker.select("color"),
-    width: 40,
-    height: 40,
-    onmouseenter: hover.set(true),
-    onmouseleave: hover.set(false),
-  });
-});
-```
-
-With composition, you don't have to use multiple inheritance like this:
-
-```js
-class Hover() {}
-class HoverableWalker extends Hover() {}
-class SquareWalker extends HoverableWalker() {}
-```
-
-or
-
-```js
-class Hover() {}
-class Walker extends Hover() {}
-class SquareWalker extends Hover, Walker {}
-```
-
 ## A Collection of Tools
 
 Charming provides a set of modular tools that you can use together or independently. For example,
 
 - [Charming DOM](/charming-dom) - Creating SVG and HTML with pure function calls.
-- [Charming Flow](/charming-flow) - Applying fine-grained state observation.
+- [Charming Flow](/charming-flow) - Applying dynmics to static SVG and HTML.
 - [Charming Vector](/charming-vector) - Manipulating Euclidean vector.
 - ...
 

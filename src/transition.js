@@ -1,11 +1,10 @@
 import {selectAll} from "d3-selection";
 import "d3-transition";
-import {component} from "echox";
 
 // TODO: Add tests.
 // TODO: Handle multiple nodes.
-export const transition = component((props, flow) => {
-  const {keyframes, children} = props;
+export function transition(props, children) {
+  const {keyframes} = props;
   const node = children[0];
   const selection = selectAll([node]);
   let transition = selection;
@@ -20,7 +19,5 @@ export const transition = component((props, flow) => {
     for (const key in style) transition.style(key, style[key]);
   }
 
-  flow().effect(() => () => selection.interrupt());
-
   return node;
-});
+}
