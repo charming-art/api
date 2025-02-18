@@ -21,8 +21,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(d3-selection@3.0.0)
       echox:
-        specifier: ^0.0.7
-        version: 0.0.7
+        specifier: ^0.0.8
+        version: 0.0.8
     devDependencies:
       '@rollup/plugin-node-resolve':
         specifier: ^15.3.1
@@ -1063,8 +1063,8 @@ packages:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
 
-  echox@0.0.7:
-    resolution: {integrity: sha512-TyTLk4JI4L7ErY9TAcVyG7bYrml04ylanAd8iF+13n7PfjaJoVl6+AJT+cyzJnIl29BdctuwMEp2Qaj+i+npbg==}
+  echox@0.0.8:
+    resolution: {integrity: sha512-kfm7DEIoEr1GeEUwUz+QytZWsH6A7zDOpv+qK1F/bWV0d89jxu6nDJ+S1AqlhFIZaMhhNqnoEIuuKl2LAIMM8g==}
 
   emoji-regex-xs@1.0.0:
     resolution: {integrity: sha512-LRlerrMYoIDrT6jgpeZ2YYl/L8EulRTt5hQcYjy5AInh7HWXKimpqx68aknBFpGL2+/IcogTcaydJEgaTmOpDg==}
@@ -2789,7 +2789,7 @@ snapshots:
       es-errors: 1.3.0
       gopd: 1.2.0
 
-  echox@0.0.7: {}
+  echox@0.0.8: {}
 
   emoji-regex-xs@1.0.0: {}
 
