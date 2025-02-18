@@ -5,7 +5,6 @@
 Charming lets you create dynamic and expressive generative art and visualizations effortlessly. Here's a quick example that give you a sense of Charming:
 
 ```js eval t=module
-const SVG = cm.SVG;
 const state = cm.state({x: 0});
 const ticker = cm.ticker().on("animate", animate);
 
@@ -13,28 +12,22 @@ function animate() {
   state.x = Math.abs(Math.sin(Date.now() / 1000) * 200);
 }
 
-const node = SVG.svg({width: 200, height: 50}, [
-  SVG.circle({
-    cx: () => state.x,
-    cy: 25,
-    r: 20,
-  }),
-]);
+const node = cm.svg`<svg ${{width: 200, height: 50}}>
+  <circle ${{cx: () => state.x, cy: 25, r: 20}}></circle>
+</svg>`;
 
 document.body.append(node);
 ```
 
 ## Based on SVG
 
-Charming provides a declarative way to create SVG through pure function calls. It exports an _svg_ proxy object to **create SVG elements directly**. For example, to create a white circle on a black background:
+Charming provides a tagged template literal for building SVG with interpolated attributes. For example, to create a white circle on a black background:
 
 ```js eval t=module
-const SVG = cm.SVG;
-
-const node = SVG.svg({width: 100, height: 100}, [
-  SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-  SVG.circle({cx: 50, cy: 50, r: 40, fill: "white"}),
-]);
+const node = cm.svg`<svg ${{width: 100, height: 100}}>
+  <rect ${{x: 0, y: 0, width: 100, height: 100, fill: "black"}} />
+  <circle ${{cx: 50, cy: 50, r: 40, fill: "white"}} />
+</svg>`;
 
 document.body.append(node);
 ```
@@ -50,20 +43,18 @@ play = Inputs.button("Replay");
 ```
 
 ```js eval t=module,replayable
-const SVG = cm.SVG;
-
-const node = SVG.svg({width: 100, height: 100}, [
-  SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-  cm.transition(
+const node = cm.svg`<svg ${{width: 100, height: 100}}>
+  <rect ${{x: 0, y: 0, width: 100, height: 100, fill: "black"}} />
+  ${cm.transition(
     {
       keyframes: [
         {attr: {fill: "#E5B442", r: 0}, duration: 1000},
         {attr: {fill: "#EE7A64", r: 40}, duration: 2000},
       ],
     },
-    [SVG.circle({cx: 50, cy: 50, r: 40, fill: "#4B68C9"})],
-  ),
-]);
+    [cm.svg`<circle ${{cx: 50, cy: 50, r: 40, fill: "#4B68C9"}} />`],
+  )}
+</svg>`;
 
 document.body.append(node);
 ```
@@ -73,7 +64,6 @@ document.body.append(node);
 For dynamic features like interactions and animations, Charming uses a reactive state management concept called _Flow_. In a flow, you can define _states_, _computed states_, and _effects_, then bind them to SVG elements. When states change, the elements update automatically—no need to manually sync states and views. For instance, you can easily create a random walker that changes color on mouse hover:
 
 ```js eval t=module
-const SVG = cm.SVG;
 const width = 600;
 const height = 150;
 
@@ -93,16 +83,16 @@ function animate() {
   state.y += cm.random(-1, 1);
 }
 
-const node = SVG.svg({width, height}, [
-  SVG.circle({
+const node = cm.svg`<svg ${{width, height}}>
+  <circle ${{
     cx: () => state.clampedX,
     cy: () => state.clampedY,
     fill: () => state.color,
     r: 20,
     onmouseenter: () => (state.isHovering = true),
     onmouseleave: () => (state.isHovering = false),
-  }),
-]);
+  }}/>
+</svg>`;
 
 document.body.append(node);
 ```

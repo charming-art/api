@@ -1,6 +1,6 @@
 # Charming Flow
 
-## _cm_.**state()** {#state}
+## _cm_.**state(object)** {#state}
 
 ## _cm_.**ticker()** {#ticker}
 

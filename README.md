@@ -10,7 +10,6 @@ The JavaScript library for generative art based on SVG.
 ```js
 import * as cm from "charmingjs";
 
-const SVG = cm.SVG;
 const state = cm.state({x: 0});
 const ticker = cm.ticker().on("animate", animate);
 
@@ -18,13 +17,9 @@ function animate() {
   state.x = Math.abs(Math.sin(Date.now() / 1000) * 200);
 }
 
-const node = SVG.svg({width: 200, height: 50}, [
-  SVG.circle({
-    cx: () => state.x,
-    cy: 25,
-    r: 20,
-  }),
-]);
+const node = cm.svg`<svg ${{width: 200, height: 50}}>
+  <circle ${{cx: () => state.x, cy: 25, r: 20}}></circle>
+</svg>`;
 
 document.body.append(node);
 ```
