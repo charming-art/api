@@ -2,59 +2,64 @@
 
 Create SVG and HTML elements using pure function calls.
 
-## _cm_.**SVG.[tagName](_[attributes,] children_)** {#svg}
+## _cm_.**svg** {#svg}
 
-Creates an SVG element with the specified attributes and child nodes. The _svg_ object is used to create all SVG elements:
+A tagged template literal for building SVG with specified attributes and children.
 
-```js eval inspector=false
-SVG = cm.SVG;
-```
-
-Use _SVG.tagName_ to create an element:
+Create an element without attributes:
 
 ```js
-SVG.svg(); // Create a svg element.
-SVG.circle(); // Create a circle element.
-SVG.rect(); // Create a rect element.
+cm.svg`<svg></svg>`;
 ```
 
 Specify attributes as an object:
 
 ```js eval
-SVG.svg({width: 100, height: 100, style: "background:black"});
+cm.svg`<svg ${{width: 100, height: 100, style: "background:black"}}></svg>`;
+```
+
+Specify multiple attribute objects:
+
+```js eval
+cm.svg`<svg 
+  ${{width: 100, style: "background:black"}} 
+  ${{height: 100, style: "background:steelblue"}}
+></svg>`;
 ```
 
 Pass an array of elements as children:
 
 ```js eval
-SVG.svg({width: 100, height: 100, style: "background:black"}, [
-  // Add a circle SVG element as child
-  SVG.circle({cx: 50, cy: 50, r: 40, fill: "white"}),
-]);
+// Add a circle SVG element as child
+cm.svg`<svg ${{width: 100, height: 100, style: "background:black"}}>
+  <circle ${{cx: 50, cy: 50, r: 40, fill: "white"}} />
+</svg>`;
 ```
 
 Without attributes, specify child elements as an array:
 
 ```js eval
 // Without specify attributes
-SVG.svg([SVG.circle({cx: "50%", cy: "50%", r: 40, fill: "black"})]);
+cm.svg`<svg>
+  <circle ${{cx: "50%", cy: "50%", r: 40, fill: "black"}} />
+</svg>`;
 ```
 
 Here's how to render a list of elements:
 
 ```js eval
-SVG.svg(
-  [50, 100, 150, 200, 250].map((cx) =>
-    SVG.circle({
+cm.svg`<svg>${[50, 100, 150, 200, 250].map(
+  (cx) =>
+    cm.svg`<circle ${{
       cx,
       cy: "50%",
       r: 20,
       fill: "black",
-    }),
-  ),
-);
+    }}/>`,
+)}
+</svg>`;
 ```
 
-## _cm_.**HTML.[tagName](_[attributes,] children_)** {#HTML}
+## _cm_.**html**
 
-Similar to cm.SVG, but creates HTML elements instead of SVG elements.
+Similar to [cm.svg](#svg), but creates HTML elements instead of SVG elements.
