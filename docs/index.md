@@ -17,10 +17,10 @@ hero:
       link: /what-is-charming
 
 features:
-  - title: Declarative Syntax
-    details: Write SVG intuitively using pure function calls.
-  - title: Reactive Updates
-    details: Fine-grained reactivity ensures seamless, data-driven updates.
-  - title: Modular Design
-    details: Build reusable components with composable architecture.
+  - title: Based on SVG
+    details: TODO
+  - title: Fluid Transition
+    details: TODO
+  - title: Incremental Updates
+    details: TODO
 ---

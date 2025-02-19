@@ -1,86 +1,52 @@
-// Inspired by https://github.com/observablehq/htl/blob/main/src/index.js
-import {set} from "echox";
+import {HTML as _HTML} from "echox";
 
-const isObjectLiteral = (value) => value && value.toString === Object.prototype.toString;
+const isFunction = (v) => typeof v === "function";
 
-function renderHtml(string) {
-  const template = document.createElement("template");
-  template.innerHTML = string;
-  return document.importNode(template.content, true);
-}
+const isArray = Array.isArray;
 
-function renderSvg(string) {
-  const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  g.innerHTML = string;
-  return g;
-}
+const _SVG = _HTML("http://www.w3.org/2000/svg");
 
-function hypertext(render, postprocess) {
-  return function (strings, ...values) {
-    let string = "";
-    for (let i = 0; i < strings.length; i++) {
-      string += strings[i];
-      if (i < values.length) string += "::" + i;
+const create = (creator, name, data, options) => {
+  if (options === undefined) {
+    if (isArray(data)) data = {children: data};
+    const {children = [], decorators = [], ...props} = data;
+    const node = creator[name](props, children);
+    for (const {type, ...options} of decorators) type(node, options);
+    return node;
+  }
+  if (isArray(options)) options = {children: options};
+  const {children = [], decorators = [], ...props} = options;
+  return data.map((d, i, array) => {
+    const nodeProps = {};
+    for (const [k, v] of Object.entries(props)) nodeProps[k] = isFunction(v) ? v(d, i, array) : v;
+    const nodeChildren = children.map((c) => (isFunction(c) ? c(d, i, array) : c));
+    const node = creator[name](nodeProps, nodeChildren);
+    for (const decorator of decorators) {
+      const {type, ...decoratorProps} = isFunction(decorator) ? decorator(d, i, array) : decorator;
+      type(node, decoratorProps);
     }
-    const g = render(string);
+    return node;
+  });
+};
 
-    const walker = document.createTreeWalker(g, NodeFilter.SHOW_ELEMENT, null, false);
+const createSVG = create.bind(null, _SVG);
 
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      // Skip nodes that have already been processed.
-      if (node.__htl__) continue;
+const createHTML = create.bind(null, _HTML);
 
-      // For interpolate attributes.
-      const attributes = node.attributes;
-      const removeAttribute = [];
-      const props = {};
-      for (let i = 0; i < attributes.length; i++) {
-        const attribute = attributes[i];
-        const match = /::(\d+)/.exec(attribute.name);
-        if (match) {
-          const value = values[match[1]];
-          if (isObjectLiteral(value)) Object.assign(props, value);
-        }
-        removeAttribute.push(attribute);
-      }
-      for (const attribute of removeAttribute) node.removeAttribute(attribute.name);
+const proxy = (creator) => {
+  // Exclude for Observable Notebook.
+  // @see https://github.com/observablehq/runtime/issues/375
+  const keys = ["then", "next", "return"];
+  return new Proxy(Object.create(null), {
+    get: (_, name) => {
+      if (keys.includes(name)) return;
+      return (data, options) => {
+        return creator(name, data, options);
+      };
+    },
+  });
+};
 
-      // For interpolate children.
-      const children = [];
-      let interpolated = false;
-      for (let i = 0; i < node.childNodes.length; i++) {
-        const child = node.childNodes[i];
-        const nodes = Array.from(child.textContent.matchAll(/::(\d+)/g)).map((d) => values[+d[1]]);
-        if (nodes.length) {
-          interpolated = true;
-          children.push(...nodes);
-          node.removeChild(child);
-        } else {
-          children.push(child);
-        }
-      }
+export const SVG = proxy(createSVG);
 
-      if (interpolated) set(node, props, children);
-      else set(node, props);
-    }
-
-    const node = postprocess(g);
-    if (!node) return null;
-    return Object.assign(node, {__htl__: true});
-  };
-}
-
-export const svg = hypertext(renderSvg, (g) => {
-  if (g.firstChild === null) return null;
-  if (g.firstChild === g.lastChild) return g.removeChild(g.firstChild);
-  return g;
-});
-
-export const html = hypertext(renderHtml, (fragment) => {
-  if (fragment.firstChild === null) return null;
-  if (fragment.firstChild === fragment.lastChild) return fragment.removeChild(fragment.firstChild);
-  const span = document.createElement("span");
-  span.appendChild(fragment);
-  return span;
-});
+export const HTML = proxy(createHTML);

@@ -1,20 +1,12 @@
 # API Index
 
-## [Charming DOM](/charming-dom)
+## [Charming Render](/charming-render)
 
 Creating SVG and HTML with pure function calls.
 
-- [_cm_.**svg**](/charming-dom#svg) - create SVG elements with the specified attributes and child nodes.
-- [_cm_.**html**](/charming-dom#html) - create HTML elements with the specified attributes and child nodes.
-
-## [Charming Flow](/charming-flow)
-
-Applying dynamics to static SVG and HTML.
-
-- [_cm_.**state**](/charming-flow#state) - create reactive states.
-- [_cm_.**ticker**](/charming-flow#ticker) - create a ticker.
-- [_ticker_.**on**](/charming-flow#ticker-on) - listen a event.
-- [_ticker_.**dispose**](/charming-flow#ticker-dispose) - dispose the ticker.
+- [_cm_.**render**](/charming-render#render) - render a node.
+- [_cm_.**SVG**](/charming-render#svg) - create SVG elements with the specified attributes and child nodes.
+- [_cm_.**HTML**](/charming-render#html) - create HTML elements with the specified attributes and child nodes.
 
 ## [Charming Transition](/charming-transition)
 

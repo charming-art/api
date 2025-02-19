@@ -3,9 +3,8 @@ import "d3-transition";
 
 // TODO: Add tests.
 // TODO: Handle multiple nodes.
-export function transition(props, children) {
+export function transition(node, props) {
   const {keyframes} = props;
-  const node = children[0];
   const selection = selectAll([node]);
   let transition = selection;
 
