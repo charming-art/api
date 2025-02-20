@@ -102,8 +102,8 @@ document.body.append(node);
 Charming provides a set of modular tools that you can use together or independently. For example,
 
 - [Charming Render](/charming-render) - Creating SVG and HTML with pure function calls.
-- [Charming Flow](/charming-flow) - Applying dynmics to static SVG and HTML.
 - [Charming Vector](/charming-vector) - Manipulating Euclidean vector.
+- [Charming Transition](/charming-transition) - Applying transition to elements.
 - ...
 
 ## Built on and learn with D3
