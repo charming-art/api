@@ -11,6 +11,8 @@ const node = cm.render({
       cx: Math.abs(Math.sin(Date.now() / 1000) * 200),
       cy: 25,
       r: 20,
+      stroke: "red",
+      strokeWidth: 4,
     });
   },
 });
