@@ -1,4 +1,4 @@
-import * as cm from "../src/index.js";
+import * as cm from "../src/ticker.js";
 import {test, expect} from "vitest";
 import {sleep} from "./sleep.js";
 
