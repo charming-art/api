@@ -12,7 +12,7 @@ import * as cm from "charmingjs";
 
 const SVG = cm.SVG;
 
-const node = cm.render({
+const app = cm.render({
   width: 100,
   height: 100,
   draw: [
@@ -21,7 +21,7 @@ const node = cm.render({
   ],
 });
 
-document.body.append(node);
+document.body.append(root.app());
 ```
 
 ## Resources 📚
