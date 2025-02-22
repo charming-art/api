@@ -65,7 +65,8 @@ export function render(options) {
     patch(node, null, shapes);
   }
 
-  return Object.assign(node, {
+  return {
     dispose: () => tick.dispose(),
-  });
+    node: () => node,
+  };
 }

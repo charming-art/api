@@ -3,7 +3,7 @@
 **Charming** (or **Charming.js**) is a free, open-source JavaScript library that creates animated and interactive SVG. Charming lets you create dynamic and expressive generative art and visualizations effortlessly. Here's a quick example that give you a sense of Charming:
 
 ```js eval t=module
-const node = cm.render({
+const app = cm.render({
   width: 200,
   height: 50,
   draw: () => {
@@ -17,7 +17,7 @@ const node = cm.render({
   },
 });
 
-document.body.append(node);
+document.body.append(app.node());
 ```
 
 ## Based on SVG
@@ -25,7 +25,7 @@ document.body.append(node);
 Charming provides a tagged template literal for building SVG with interpolated attributes. For example, to create a white circle on a black background:
 
 ```js eval t=module
-const node = cm.render({
+const app = cm.render({
   width: 100,
   height: 100,
   draw: [
@@ -34,7 +34,7 @@ const node = cm.render({
   ],
 });
 
-document.body.append(node);
+document.body.append(app.node());
 ```
 
 Please refer to [Charming Render](/charming-render) for more information.
@@ -48,7 +48,7 @@ play = Inputs.button("Replay");
 ```
 
 ```js eval t=module,replayable
-const node = cm.render({
+const app = cm.render({
   width: 100,
   height: 100,
   draw: [
@@ -71,7 +71,7 @@ const node = cm.render({
   ],
 });
 
-document.body.append(node);
+document.body.append(app.node());
 ```
 
 ## Incremental Updates
@@ -84,7 +84,7 @@ const height = 150;
 let x = width / 2;
 let y = height / 2;
 
-const node = cm.render({
+const app = cm.render({
   width: 600,
   height: 150,
   draw: () => {
@@ -96,7 +96,7 @@ const node = cm.render({
   },
 });
 
-document.body.append(node);
+document.body.append(app.node());
 ```
 
 ## A Collection of Tools

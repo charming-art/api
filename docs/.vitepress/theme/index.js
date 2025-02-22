@@ -41,7 +41,7 @@ const props = {
       let newCode = code
         .replace("import {", "const {")
         .replace(`from "charmingjs"`, "= cm")
-        .replace(`document.body.append(node);`, "return node;");
+        .replace(`document.body.append(app.node());`, "return app.node();");
       return `(() => {${newCode}})()`;
     },
     replayable(code) {
