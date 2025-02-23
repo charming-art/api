@@ -34,6 +34,8 @@ function patch(node, prev, current) {
   node.replaceChildren(...childList);
 }
 
+export const drawRef = {current: null};
+
 export function render(options) {
   const {draw, loop = false, frameRate, ...rest} = options;
 
@@ -51,18 +53,19 @@ export function render(options) {
   const node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   set(node, style);
 
-  if (!loop) patch(node, null, draw());
-  else {
-    let prev = null;
-    tick.on(
-      "animate",
-      ({elapsed, frameCount}) => {
-        const current = draw({elapsed, frameCount, node});
-        patch(node, prev, current);
-        prev = current;
-      },
-      {frameRate},
-    );
+  let prev = null;
+  const next = (options) => {
+    const current = draw(options);
+    patch(node, prev, current);
+    prev = current;
+  };
+
+  if (!loop) {
+    drawRef.current = next;
+    next({});
+    drawRef.current = null;
+  } else {
+    tick.on("animate", (options) => next(options), {frameRate});
   }
 
   return {
