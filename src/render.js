@@ -35,7 +35,7 @@ function patch(node, prev, current) {
 }
 
 export function render(options) {
-  const {draw, frameRate, ...rest} = options;
+  const {draw, loop = false, frameRate, ...rest} = options;
 
   const tick = ticker();
   const style = {};
@@ -51,21 +51,18 @@ export function render(options) {
   const node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   set(node, style);
 
-  if (typeof draw === "function") {
+  if (!loop) patch(node, null, draw());
+  else {
     let prev = null;
     tick.on(
       "animate",
       ({elapsed, frameCount}) => {
-        const shape = draw({elapsed, frameCount, node});
-        const current = [shape].flat(Infinity);
+        const current = draw({elapsed, frameCount, node});
         patch(node, prev, current);
         prev = current;
       },
       {frameRate},
     );
-  } else {
-    const shapes = [draw].flat(Infinity);
-    patch(node, null, shapes);
   }
 
   return {
