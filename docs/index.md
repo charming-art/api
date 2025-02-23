@@ -11,10 +11,10 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /getting-started
+      link: /docs/getting-started
     - theme: alt
       text: What is Charming
-      link: /what-is-charming
+      link: /docs/what-is-charming
 
 features:
   - title: Based on SVG

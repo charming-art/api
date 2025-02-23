@@ -18,24 +18,26 @@ export default defineConfig({
         link: "https://observablehq.com/d/18b3d6f3affff5bb",
       },
     ],
-    sidebar: [
-      {
-        text: "Introduction",
-        items: [
-          {text: "What is Charming?", link: "/what-is-charming"},
-          {text: "Getting started", link: "/getting-started"},
-          {text: "API Index", link: "/api-index"},
-        ],
-      },
-      {
-        text: "Reference",
-        items: [
-          {text: "Charming Render", link: "/charming-render"},
-          {text: "Charming Vector", link: "/charming-vector"},
-          {text: "Charming Transition", link: "/charming-transition"},
-        ],
-      },
-    ],
+    sidebar: {
+      "/": [
+        {
+          text: "Introduction",
+          items: [
+            {text: "What is Charming?", link: "/docs/what-is-charming"},
+            {text: "Getting started", link: "/docs/getting-started"},
+            {text: "API Index", link: "/docs/api-index"},
+          ],
+        },
+        {
+          text: "Reference",
+          items: [
+            {text: "Charming Render", link: "/docs/charming-render"},
+            {text: "Charming Vector", link: "/docs/charming-vector"},
+            {text: "Charming Transition", link: "/docs/charming-transition"},
+          ],
+        },
+      ],
+    },
     socialLinks: [{icon: "github", link: "https://github.com/charming-art/charming"}],
     logo: "/logo.svg",
   },
