@@ -21,7 +21,7 @@ const app = cm.render({
   ],
 });
 
-document.body.append(root.app());
+document.body.append(app.node());
 ```
 
 ## Resources 📚
