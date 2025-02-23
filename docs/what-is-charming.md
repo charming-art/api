@@ -30,7 +30,14 @@ const app = cm.render({
   height: 100,
   draw: [
     SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-    SVG.circle({cx: 50, cy: 50, r: 40, fill: "white"}),
+    SVG.circle({
+      cx: 50,
+      cy: 50,
+      r: 40,
+      fill: "white",
+      styleCursor: "pointer",
+      onClick: () => alert("clicked"),
+    }),
   ],
 });
 
