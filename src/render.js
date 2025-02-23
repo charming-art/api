@@ -17,7 +17,10 @@ function patch(node, prev, current) {
       const child = svg ? document.createElementNS("http://www.w3.org/2000/svg", tag) : document.createElement(tag);
       const {decorators = [], ...props} = options;
       const nodeProps = {};
-      for (const [k, v] of Object.entries(props)) nodeProps[k] = isFunction(v) ? v(d, i, data) : v;
+      for (const [k, v] of Object.entries(props)) {
+        if (k.startsWith("on")) nodeProps[k] = (e) => v(e, d, i, data);
+        else nodeProps[k] = isFunction(v) ? v(d, i, data) : v;
+      }
       const nodeChildren = children.flatMap((c) => (isFunction(c) ? c(d, i, data) : c));
       set(child, nodeProps);
       for (const decorator of decorators) {
