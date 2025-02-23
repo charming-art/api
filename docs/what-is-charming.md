@@ -6,15 +6,16 @@
 const app = cm.render({
   width: 200,
   height: 50,
-  draw: () => {
-    return SVG.circle({
+  loop: true,
+  draw: () => [
+    SVG.circle({
       cx: Math.abs(Math.sin(Date.now() / 1000) * 200),
       cy: 25,
       r: 20,
       stroke: "red",
       strokeWidth: 4,
-    });
-  },
+    }),
+  ],
 });
 
 document.body.append(app.node());
@@ -28,7 +29,7 @@ Charming provides a tagged template literal for building SVG with interpolated a
 const app = cm.render({
   width: 100,
   height: 100,
-  draw: [
+  draw: () => [
     SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     SVG.circle({
       cx: 50,
@@ -58,7 +59,7 @@ play = Inputs.button("Replay");
 const app = cm.render({
   width: 100,
   height: 100,
-  draw: [
+  draw: () => [
     SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     SVG.circle({
       cx: 50,
@@ -94,12 +95,13 @@ let y = height / 2;
 const app = cm.render({
   width: 600,
   height: 150,
+  loop: true,
   draw: () => {
     x += cm.random(-1, 1);
     y += cm.random(-1, 1);
     x = cm.constrain(x, 0, width);
     y = cm.constrain(y, 0, height);
-    return SVG.circle({cx: x, cy: y, fill: "black", r: 20});
+    return [SVG.circle({cx: x, cy: y, fill: "black", r: 20})];
   },
 });
 
