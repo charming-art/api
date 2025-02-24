@@ -12,7 +12,7 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      {text: "Home", link: "/"},
+      {text: "Docs", link: "/docs/what-is-charming"},
       {
         text: "Examples",
         link: "https://observablehq.com/d/18b3d6f3affff5bb",
