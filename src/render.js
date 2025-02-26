@@ -55,7 +55,7 @@ export function render(options) {
 
   let prev = null;
   const next = (options) => {
-    const current = draw(options);
+    const current = isFunction(draw) ? draw(options) : draw;
     patch(node, prev, current);
     prev = current;
   };
