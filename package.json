@@ -1,6 +1,6 @@
 {
   "name": "charmingjs",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "The JavaScript library for generative art based on SVG",
   "author": {
     "name": "Bairui SU",
@@ -44,9 +44,9 @@
     "eslint-config-prettier": "^9.1.0",
     "genji-theme-vitepress": "^0.2.6",
     "jsdom": "^26.0.0",
-    "prettier": "^3.5.2",
-    "rollup": "^4.34.8",
-    "vite": "^6.1.1",
+    "prettier": "^3.5.3",
+    "rollup": "^4.34.9",
+    "vite": "^6.2.0",
     "vitepress": "^1.6.3",
     "vitest": "^3.0.7"
   },
