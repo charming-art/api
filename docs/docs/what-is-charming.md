@@ -38,7 +38,7 @@ const app = cm.render({
 document.body.append(app.node());
 ```
 
-Please refer to [Charming Render](/docs/charming-render) for more information.
+Please refer to [Charming Collection](/docs/charming-collection) for more information.
 
 ## Fluid Transition
 
@@ -129,9 +129,8 @@ document.body.append(app.node());
 
 Charming provides a set of modular tools that you can use together or independently. For example,
 
-- [Charming Render](/docs/charming-render) - Creating SVG and HTML with pure function calls.
+- [Charming Collection](/docs/charming-collection) - Creating SVG and HTML with pure function calls.
 - [Charming Vector](/docs/charming-vector) - Manipulating Euclidean vector.
-- [Charming Transition](/docs/charming-transition) - Applying transition to elements.
 - ...
 
 ## Built on and learn with D3

@@ -1,4 +1,4 @@
-# Charming Render
+# Charming Collection
 
 ## _cm_.**render** {#render}
 

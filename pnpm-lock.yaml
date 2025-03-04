@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       charmingjs-vector:
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
       d3-timer:
         specifier: ^3.0.1
         version: 3.0.1
@@ -945,8 +945,8 @@ packages:
   character-entities-legacy@3.0.0:
     resolution: {integrity: sha512-RpPp0asT/6ufRm//AJVwpViZbGM/MkjQFxJccQRHmISF/22NBtsHqAWmL+/pmkPWoIUJdWyeVleTl1wydHATVQ==}
 
-  charmingjs-vector@0.0.2:
-    resolution: {integrity: sha512-OhMXiFlog2HDg43WUu+QLAjT1OVcTKPzUocflcqo+1C9G2n2Lzl+YuVnZXgWEDJDkR8SOjgfG0uB1NUyNpZ0dg==}
+  charmingjs-vector@0.0.3:
+    resolution: {integrity: sha512-7nvY6XOgjErbj5M0hJzNCdjkFCF5JfWNp6wFyqVYPAGrK2hd78hr5GL8bHAUsZomH+eE9Co2AgBw24cwwQu+bg==}
 
   check-error@2.1.1:
     resolution: {integrity: sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw==}
@@ -2691,7 +2691,7 @@ snapshots:
 
   character-entities-legacy@3.0.0: {}
 
-  charmingjs-vector@0.0.2: {}
+  charmingjs-vector@0.0.3: {}
 
   check-error@2.1.1: {}
 
