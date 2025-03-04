@@ -55,6 +55,7 @@ const svgCamelCaseAttributes = new Set([
   "tableValues",
   "targetX",
   "targetY",
+  "textContent", // For text elements.
   "textLength",
   "viewBox",
   "viewTarget",
