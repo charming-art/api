@@ -6,6 +6,7 @@ const isFunction = (x) => typeof x === "function";
 // TODO: Diffing algorithm
 function patch(node, prev, current) {
   const childList = [];
+
   for (const collection of current) {
     const svg = collection._svg;
     const tag = collection._tag;
@@ -31,7 +32,9 @@ function patch(node, prev, current) {
       patch(child, null, nodeChildren);
     }
   }
-  node.replaceChildren(...childList);
+
+  // Text node without children should not be replaced, because it will lose its textContent.
+  if (node.nodeName !== "text" || childList.length) node.replaceChildren(...childList);
 }
 
 export const drawRef = {current: null};
