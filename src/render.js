@@ -8,14 +8,13 @@ function patch(node, prev, current) {
   const childList = [];
 
   for (const collection of current) {
-    const svg = collection._svg;
     const tag = collection._tag;
     const data = collection._data;
     const options = collection._options;
     const children = collection._children;
     for (let i = 0; i < data.length; i++) {
       const d = data[i];
-      const child = svg ? document.createElementNS("http://www.w3.org/2000/svg", tag) : document.createElement(tag);
+      const child = document.createElementNS("http://www.w3.org/2000/svg", tag);
       const {decorators = [], ...props} = options;
       const nodeProps = {};
       for (const [k, v] of Object.entries(props)) {

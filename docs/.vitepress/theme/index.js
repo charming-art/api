@@ -35,7 +35,7 @@ const extended = {
 // More props: https://genji-md.dev/reference/props
 const props = {
   Theme: DefaultTheme,
-  library: {cm: {...cm, ...extended}, SVG: cm.SVG, HTML: cm.HTML},
+  library: {cm: {...cm, ...extended}},
   transform: {
     module(code) {
       let newCode = code

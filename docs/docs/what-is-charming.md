@@ -8,7 +8,7 @@ const app = cm.render({
   height: 50,
   loop: true,
   draw: () => [
-    SVG.circle({
+    cm.svg("circle", {
       cx: Math.abs(Math.sin(Date.now() / 1000) * 200),
       cy: 25,
       r: 20,
@@ -30,8 +30,8 @@ const app = cm.render({
   width: 100,
   height: 100,
   draw: [
-    SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-    SVG.circle({cx: 50, cy: 50, r: 40, fill: "white"}),
+    cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
+    cm.svg("circle", {cx: 50, cy: 50, r: 40, fill: "white"}),
   ],
 });
 
@@ -53,8 +53,8 @@ const app = cm.render({
   width: 100,
   height: 100,
   draw: [
-    SVG.rect({x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-    SVG.circle({
+    cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
+    cm.svg("circle", {
       cx: 50,
       cy: 50,
       r: 40,
@@ -94,7 +94,7 @@ const app = cm.render({
     y += cm.random(-1, 1);
     x = cm.constrain(x, 0, width);
     y = cm.constrain(y, 0, height);
-    return [SVG.circle({cx: x, cy: y, fill: "black", r: 20})];
+    return [cm.svg("circle", {cx: x, cy: y, fill: "black", r: 20})];
   },
 });
 
@@ -111,7 +111,7 @@ const app = cm.render({
   height: 100,
   styleBackground: "black",
   draw: () => [
-    SVG.circle({
+    cm.svg("circle", {
       cx: 50,
       cy: 50,
       r: 40,
