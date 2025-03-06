@@ -48,11 +48,11 @@ In vanilla HTML, Charming can be imported as an ES module, say from jsDelivr:
 <script type="module">
   import * as cm from "https://cdn.jsdelivr.net/npm/charmingjs/+esm";
 
-  const node = cm.render({
+  const app = cm.render({
     // ...
   });
 
-  document.body.append(node);
+  document.body.append(app.node());
 </script>
 ```
 
@@ -63,10 +63,10 @@ Charming is also available as a UMD bundle for legacy browsers.
 ```html
 <script src="https://cdn.jsdelivr.net/npm/charmingjs"></script>
 <script>
-  const node = cm.render({
+  const app = cm.render({
     // ...
   });
 
-  document.body.append(node);
+  document.body.append(app.node());
 </script>
 ```
