@@ -11,6 +11,7 @@ The JavaScript library for generative art based on SVG.
 cm.render({
   width: 100,
   height: 100,
+  container: "#root",
   draw: [
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {cx: 50, cy: 50, r: 40, fill: "white"}),
