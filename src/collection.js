@@ -15,18 +15,6 @@ const create = (svg, name, data, options) => {
   return new Collection(svg, name, data, rest, children);
 };
 
-// Exclude for Observable Notebook.
-// @see https://github.com/observablehq/runtime/issues/375
-const proxy = (creator) => {
-  const excludes = ["then", "next", "return"];
-  return new Proxy(Object.create(null), {
-    get: (_, name) => {
-      if (excludes.includes(name)) return;
-      return (data, options) => creator(name, data, options);
-    },
-  });
-};
+export const svg = create.bind(null, true);
 
-export const SVG = proxy(create.bind(null, true));
-
-export const HTML = proxy(create.bind(null, false));
+export const html = create.bind(null, false);

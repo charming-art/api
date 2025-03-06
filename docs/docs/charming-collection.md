@@ -2,6 +2,6 @@
 
 ## _cm_.**render** {#render}
 
-## _cm_.**SVG** {#svg}
+## _cm_.**svg** {#svg}
 
-## _cm_.**HTML** {#html}
+## _cm_.**html** {#html}
