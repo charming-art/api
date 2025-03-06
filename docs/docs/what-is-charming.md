@@ -3,9 +3,10 @@
 **Charming** (or **Charming.js**) is a free, open-source JavaScript library that creates animated and interactive SVG. Charming lets you create dynamic and expressive generative art and visualizations effortlessly. Here's a quick example that give you a sense of Charming:
 
 ```js eval t=module
-const app = cm.render({
+cm.render({
   width: 200,
   height: 50,
+  container: "#root",
   loop: true,
   draw: () => [
     cm.svg("circle", {
@@ -17,25 +18,22 @@ const app = cm.render({
     }),
   ],
 });
-
-document.body.append(app.node());
 ```
 
 ## Based on SVG
 
-Charming provides a tagged template literal for building SVG with interpolated attributes. For example, to create a white circle on a black background:
+Charming provides a _svg_ function for creating SVG elements. For example, to create a white circle on a black background:
 
 ```js eval t=module
-const app = cm.render({
+cm.render({
   width: 100,
   height: 100,
+  container: "#root",
   draw: [
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {cx: 50, cy: 50, r: 40, fill: "white"}),
   ],
 });
-
-document.body.append(app.node());
 ```
 
 Please refer to [Charming Collection](/docs/charming-collection) for more information.
@@ -49,9 +47,10 @@ play = Inputs.button("Replay");
 ```
 
 ```js eval t=module,replayable
-const app = cm.render({
+cm.render({
   width: 100,
   height: 100,
+  container: "#root",
   draw: [
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {
@@ -63,16 +62,14 @@ const app = cm.render({
         {
           type: cm.transition,
           keyframes: [
-            {attr: {fill: "#E5B442", r: 0}, duration: 1000},
-            {attr: {fill: "#EE7A64", r: 40}, duration: 2000},
+            {fill: "#E5B442", r: 0, duration: 1000},
+            {fill: "#EE7A64", r: 40, duration: 2000},
           ],
         },
       ],
     }),
   ],
 });
-
-document.body.append(app.node());
 ```
 
 ## Incremental Updates
@@ -85,9 +82,10 @@ const height = 150;
 let x = width / 2;
 let y = height / 2;
 
-const app = cm.render({
+cm.render({
   width: 600,
   height: 150,
+  container: "#root",
   loop: true,
   draw: () => {
     x += cm.random(-1, 1);
@@ -97,8 +95,6 @@ const app = cm.render({
     return [cm.svg("circle", {cx: x, cy: y, fill: "black", r: 20})];
   },
 });
-
-document.body.append(app.node());
 ```
 
 ## Reactivity for Interaction
@@ -106,9 +102,10 @@ document.body.append(app.node());
 ```js eval t=module
 const state = cm.state({clicked: false});
 
-const app = cm.render({
+cm.render({
   width: 100,
   height: 100,
+  container: "#root",
   styleBackground: "black",
   draw: () => [
     cm.svg("circle", {
@@ -121,8 +118,6 @@ const app = cm.render({
     }),
   ],
 });
-
-document.body.append(app.node());
 ```
 
 ## A Collection of Tools

@@ -18,14 +18,18 @@ const extended = {
     const selection = selectAll([node]);
     let transition = selection;
 
-    for (const {attr = {}, style = {}, duration, ease, delay} of keyframes) {
+    for (const {duration, ease, delay, ...attr} of keyframes) {
       transition = transition.transition();
       transition
         .duration(duration)
         .call((t) => ease && t.ease(ease))
         .call((t) => delay && t.delay(delay));
-      for (const key in attr) transition.attr(key, attr[key]);
-      for (const key in style) transition.style(key, style[key]);
+      for (const key in attr) {
+        if (key.startsWith("style")) {
+          const style = key.slice(5).toLowerCase();
+          transition.style(style, attr[key]);
+        } else transition.attr(key, attr[key]);
+      }
     }
 
     return node;
@@ -41,8 +45,12 @@ const props = {
       let newCode = code
         .replace("import {", "const {")
         .replace(`from "charmingjs"`, "= cm")
-        .replace(`document.body.append(app.node());`, "return app.node();");
-      return `(() => {${newCode}})()`;
+        .replace(`container: "#root"`, `container: _root`);
+      return `(() => {
+        const _root = document.createElement("div");
+        ${newCode}
+        return _root;
+      })()`;
     },
     replayable(code) {
       return `(() => {
