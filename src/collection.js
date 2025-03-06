@@ -1,6 +1,5 @@
 class Collection {
-  constructor(svg, tag, data, options, children) {
-    this._svg = svg;
+  constructor(tag, data, options, children) {
     this._tag = tag;
     this._data = data;
     this._options = options;
@@ -9,12 +8,8 @@ class Collection {
   }
 }
 
-const create = (svg, name, data, options) => {
+export const svg = (name, data, options) => {
   if (options === undefined) (options = data), (data = [0]);
   const {children = [], ...rest} = options;
-  return new Collection(svg, name, data, rest, children);
+  return new Collection(name, data, rest, children);
 };
-
-export const svg = create.bind(null, true);
-
-export const html = create.bind(null, false);
