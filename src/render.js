@@ -7,22 +7,20 @@ const isFunction = (x) => typeof x === "function";
 function patch(node, prev, current) {
   const childList = [];
 
-  for (const collection of current) {
-    const tag = collection._tag;
-    const data = collection._data;
-    const options = collection._options;
-    const children = collection._children;
+  for (const graphic of current) {
+    const data = graphic._data;
+    const options = graphic._options;
+    const children = graphic._children;
     for (let i = 0; i < data.length; i++) {
       const d = data[i];
-      const child = document.createElementNS("http://www.w3.org/2000/svg", tag);
       const {decorators = [], ...props} = options;
       const nodeProps = {};
       for (const [k, v] of Object.entries(props)) {
         if (k.startsWith("on")) nodeProps[k] = (e) => v(e, d, i, data);
         else nodeProps[k] = isFunction(v) ? v(d, i, data) : v;
       }
+      const child = graphic.draw(nodeProps);
       const nodeChildren = children.flatMap((c) => (isFunction(c) ? c(d, i, data) : c));
-      set(child, nodeProps);
       for (const decorator of decorators) {
         const {type, ...decoratorProps} = isFunction(decorator) ? decorator(d, i, data) : decorator;
         type(child, decoratorProps);
