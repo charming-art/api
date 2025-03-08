@@ -36,7 +36,7 @@ cm.render({
 });
 ```
 
-Please refer to [Charming Collection](/docs/charming-collection) for more information.
+Please refer to [Charming Graphic](/docs/charming-graphic) for more information.
 
 ## Fluid Transition
 
@@ -124,7 +124,7 @@ cm.render({
 
 Charming provides a set of modular tools that you can use together or independently. For example,
 
-- [Charming Collection](/docs/charming-collection) - Creating SVG and HTML with pure function calls.
+- [Charming Graphic](/docs/charming-graphic) - Creating SVG and HTML with pure function calls.
 - [Charming Vector](/docs/charming-vector) - Manipulating Euclidean vector.
 - ...
 
