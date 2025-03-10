@@ -31,7 +31,7 @@ export default defineConfig({
         {
           text: "Reference",
           items: [
-            {text: "Charming Graphic", link: "/docs/charming-graphic"},
+            {text: "Charming Mark", link: "/docs/charming-mark"},
             {text: "Charming Vector", link: "/docs/charming-vector"},
           ],
         },

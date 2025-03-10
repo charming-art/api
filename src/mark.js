@@ -1,4 +1,4 @@
-export class Graphic {
+export class Mark {
   constructor(data, options, children) {
     this._data = data;
     this._options = options;
