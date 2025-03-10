@@ -1,12 +1,12 @@
 import {set} from "./set.js";
-import {Graphic} from "./graphic.js";
+import {Mark} from "./mark.js";
 
-class SVG extends Graphic {
+class SVG extends Mark {
   constructor(tag, data, options, children) {
     super(data, options, children);
     this._tag = tag;
   }
-  draw(props) {
+  create(props) {
     const tag = this._tag;
     const child = document.createElementNS("http://www.w3.org/2000/svg", tag);
     set(child, props);

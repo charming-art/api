@@ -1,4 +1,4 @@
-# Charming Graphic
+# Charming Mark
 
 ## _cm_.**render** {#render}
 
