@@ -9,7 +9,7 @@ function event(type, callback, options = {}) {
 function animate(callback, {frameRate} = {}) {
   let frameCount = 0;
   const delay = frameRate ? 1000 / frameRate : undefined;
-  const timer = interval((elapsed) => callback({elapsed, frameCount: ++frameCount}), delay);
+  const timer = interval((elapsed) => callback({time: elapsed, frameCount: ++frameCount}), delay);
   return () => timer.stop();
 }
 
