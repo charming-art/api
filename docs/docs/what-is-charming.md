@@ -3,7 +3,7 @@
 **Charming** (or **Charming.js**) is a free, open-source JavaScript library that creates animated and interactive SVG. Charming lets you create dynamic and expressive generative art and visualizations effortlessly. Here's a quick example that give you a sense of Charming:
 
 ```js eval t=module
-cm.render({
+cm.app({
   width: 200,
   height: 50,
   container: "#root",
@@ -17,7 +17,7 @@ cm.render({
       strokeWidth: 4,
     }),
   ],
-});
+}).render();
 ```
 
 ## Based on SVG
@@ -25,7 +25,7 @@ cm.render({
 Charming provides a _svg_ function for creating SVG elements. For example, to create a white circle on a black background:
 
 ```js eval t=module
-cm.render({
+cm.app({
   width: 100,
   height: 100,
   container: "#root",
@@ -33,7 +33,7 @@ cm.render({
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {cx: 50, cy: 50, r: 40, fill: "white"}),
   ],
-});
+}).render();
 ```
 
 Please refer to [Charming Mark](/docs/charming-mark) for more information.
@@ -47,7 +47,7 @@ play = Inputs.button("Replay");
 ```
 
 ```js eval t=module,replayable
-cm.render({
+cm.app({
   width: 100,
   height: 100,
   container: "#root",
@@ -69,7 +69,7 @@ cm.render({
       ],
     }),
   ],
-});
+}).render();
 ```
 
 ## Incremental Updates
@@ -82,7 +82,7 @@ const height = 150;
 let x = width / 2;
 let y = height / 2;
 
-cm.render({
+cm.app({
   width: 600,
   height: 150,
   container: "#root",
@@ -94,7 +94,7 @@ cm.render({
     y = cm.constrain(y, 0, height);
     return [cm.svg("circle", {cx: x, cy: y, fill: "black", r: 20})];
   },
-});
+}).render();
 ```
 
 ## Reactivity for Interaction
@@ -102,7 +102,7 @@ cm.render({
 ```js eval t=module
 const state = cm.state({clicked: false});
 
-cm.render({
+cm.app({
   width: 100,
   height: 100,
   container: "#root",
@@ -117,7 +117,7 @@ cm.render({
       onClick: () => (state.clicked = !state.clicked),
     }),
   ],
-});
+}).render();
 ```
 
 ## A Collection of Tools

@@ -73,8 +73,5 @@ export function render(options) {
     el.appendChild(node);
   }
 
-  return {
-    dispose: () => tick.dispose(),
-    node: () => node,
-  };
+  return {node, disposer: () => tick.dispose()};
 }
