@@ -43,6 +43,7 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "genji-theme-vitepress": "^0.2.8",
+    "js-beautify": "^1.15.4",
     "jsdom": "^26.0.0",
     "prettier": "^3.5.3",
     "rollup": "^4.35.0",

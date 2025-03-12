@@ -1,0 +1,75 @@
+<style>
+  select {
+    display: block;
+    margin-bottom: 1em;
+  }
+</style>
+<script type="module">
+  import * as apps from "./apps";
+
+  const select = createSelect(() => {
+    const {value} = select;
+    history.pushState({value}, "", `?name=${value}`);
+    render();
+  });
+  const options = Object.keys(apps).map(createOption);
+  select.append(...options);
+  document.body.append(select);
+
+  const initialValue = new URL(location).searchParams.get("name");
+  if (apps[initialValue]) select.value = initialValue;
+
+  let preClear = null;
+  let preNode = null;
+  render();
+
+  function createSelect(onchange) {
+    const select = document.createElement("select");
+    select.style.height = "20px";
+    select.onchange = onchange;
+    document.onkeydown = (event) => {
+      if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
+        return;
+      }
+      switch (event.key) {
+        case "ArrowLeft": {
+          if (select.selectedIndex > 0) {
+            select.selectedIndex--;
+            select.onchange();
+          } else alert("This is the first test case.");
+          break;
+        }
+        case "ArrowRight": {
+          if (select.selectedIndex < select.options.length - 1) {
+            select.selectedIndex++;
+            select.onchange();
+          } else alert("This is the last test case.");
+          break;
+        }
+      }
+    };
+
+    return select;
+  }
+
+  function createOption(key) {
+    const option = document.createElement("option");
+    option.value = key;
+    option.textContent = key;
+    return option;
+  }
+
+  async function render() {
+    if (typeof preClear === "function") preClear();
+    if (isNode(preNode)) preNode.remove();
+    preNode = await apps[select.value]();
+    if (isNode(preNode)) {
+      document.body.appendChild(preNode);
+      preClear = preNode.clear;
+    }
+  }
+
+  function isNode(node) {
+    return node instanceof HTMLElement || node instanceof SVGElement;
+  }
+</script>
