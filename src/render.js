@@ -1,44 +1,26 @@
-import {set} from "./set.js";
+import {setAttribute} from "./set.js";
 import {ticker} from "./ticker.js";
+
+export const drawRef = {current: null};
 
 const isFunction = (x) => typeof x === "function";
 
-// TODO: Diffing algorithm
-function patch(node, prev, current) {
-  const childList = [];
+const noSVG = (current) => current.length !== 1 || current[0]._tag !== "svg";
 
-  for (const mark of current) {
-    const data = mark._data;
-    const options = mark._options;
-    const children = mark._children;
-    for (let i = 0; i < data.length; i++) {
-      const d = data[i];
-      const {decorators = [], ...props} = options;
-      const nodeProps = {};
-      for (const [k, v] of Object.entries(props)) {
-        if (k.startsWith("on")) nodeProps[k] = (e) => v(e, d, i, data);
-        else nodeProps[k] = isFunction(v) ? v(d, i, data) : v;
-      }
-      const child = mark.create(nodeProps);
-      const nodeChildren = children.flatMap((c) => (isFunction(c) ? c(d, i, data) : c));
-      for (const decorator of decorators) {
-        const {type, ...decoratorProps} = isFunction(decorator) ? decorator(d, i, data) : decorator;
-        type(child, decoratorProps);
-      }
-      childList.push(child);
-      patch(child, null, nodeChildren);
+// Assume the structure is not going to change for now.
+function patch(parent, prev, current) {
+  let mark;
+  const m = current.length;
+  const next = new Array(m);
+  for (let i = 0; i < m; i++) {
+    next[i] = (mark = prev[i]) ? ((mark._update = current[i]), mark) : (mark = current[i]);
+    const [parents, prevNodes, childNodes] = mark.render(parent);
+    for (let j = 0; j < parents.length; j++) {
+      patch(parents[j], prevNodes[j], childNodes[j]);
     }
   }
-
-  // Text node without children should not be replaced, because it will lose its textContent.
-  if (node.nodeName !== "text" || childList.length) node.replaceChildren(...childList);
+  return next;
 }
-
-function noSVG(current) {
-  return current.length !== 1 || current[0]._tag !== "svg";
-}
-
-export const drawRef = {current: null};
 
 export function render(options) {
   const {draw, loop = false, frameRate, ...rest} = options;
@@ -54,22 +36,22 @@ export function render(options) {
 
   for (const key in handler) tick.on(key.slice(8).toLowerCase(), handler[key]);
 
-  let prev, node;
+  let node;
+  let prev = [];
   const next = (options) => {
     const current = isFunction(draw) ? draw(options) : draw;
     if (!node) {
       node = noSVG(current)
         ? document.createElementNS("http://www.w3.org/2000/svg", "svg")
         : document.createElement("span");
-      set(node, style);
+      for (const [k, v] of Object.entries(style)) setAttribute(node, k, v);
     }
-    patch(node, prev, current);
-    prev = current;
+    prev = patch(node, prev, current);
   };
 
   if (!loop) {
     drawRef.current = next;
-    next({frameCount: 1, time: 0});
+    next();
     drawRef.current = null;
   } else {
     next({frameCount: 1, time: 0});

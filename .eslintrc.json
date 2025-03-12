@@ -9,5 +9,7 @@
     "sourceType": "module",
     "ecmaVersion": "latest"
   },
-  "ignorePatterns": ["src/wasm/*"]
+  "rules": {
+    "no-cond-assign": "off"
+  }
 }
