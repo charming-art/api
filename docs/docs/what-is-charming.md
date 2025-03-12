@@ -6,7 +6,6 @@
 cm.app({
   width: 200,
   height: 50,
-  container: "#root",
   loop: true,
   draw: () => [
     cm.svg("circle", {
@@ -17,7 +16,7 @@ cm.app({
       strokeWidth: 4,
     }),
   ],
-}).render();
+}).render("#root");
 ```
 
 ## Based on SVG
@@ -28,12 +27,11 @@ Charming provides a _svg_ function for creating SVG elements. For example, to cr
 cm.app({
   width: 100,
   height: 100,
-  container: "#root",
   draw: [
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {cx: 50, cy: 50, r: 40, fill: "white"}),
   ],
-}).render();
+}).render("#root");
 ```
 
 Please refer to [Charming Mark](/docs/charming-mark) for more information.
@@ -50,7 +48,6 @@ play = Inputs.button("Replay");
 cm.app({
   width: 100,
   height: 100,
-  container: "#root",
   draw: [
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {
@@ -69,7 +66,7 @@ cm.app({
       ],
     }),
   ],
-}).render();
+}).render("#root");
 ```
 
 ## Incremental Updates
@@ -85,7 +82,6 @@ let y = height / 2;
 cm.app({
   width: 600,
   height: 150,
-  container: "#root",
   loop: true,
   draw: () => {
     x += cm.random(-1, 1);
@@ -94,7 +90,7 @@ cm.app({
     y = cm.constrain(y, 0, height);
     return [cm.svg("circle", {cx: x, cy: y, fill: "black", r: 20})];
   },
-}).render();
+}).render("#root");
 ```
 
 ## Reactivity for Interaction
@@ -105,7 +101,6 @@ const state = cm.state({clicked: false});
 cm.app({
   width: 100,
   height: 100,
-  container: "#root",
   styleBackground: "black",
   draw: () => [
     cm.svg("circle", {
@@ -117,7 +112,7 @@ cm.app({
       onClick: () => (state.clicked = !state.clicked),
     }),
   ],
-}).render();
+}).render("#root");
 ```
 
 ## A Collection of Tools

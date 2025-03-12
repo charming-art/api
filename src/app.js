@@ -12,8 +12,14 @@ class App {
   dispose() {
     this._disposer?.();
   }
-  render() {
+  render(container) {
     const {node, dispose} = render(this._options);
+
+    if (container) {
+      const el = typeof container === "string" ? document.querySelector(container) : container;
+      el.appendChild(node);
+    }
+
     this._node = node;
     this._disposer = dispose;
     return node;

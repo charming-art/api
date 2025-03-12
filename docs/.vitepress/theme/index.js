@@ -45,7 +45,7 @@ const props = {
       let newCode = code
         .replace("import {", "const {")
         .replace(`from "charmingjs"`, "= cm")
-        .replace(`container: "#root"`, `container: _root`);
+        .replace(`.render("#root")`, `.render(_root)`);
       return `(() => {
         const _root = document.createElement("div");
         ${newCode}

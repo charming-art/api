@@ -37,7 +37,7 @@ function patch(node, prev, current) {
 export const drawRef = {current: null};
 
 export function render(options) {
-  const {draw, container, loop = false, frameRate, ...rest} = options;
+  const {draw, loop = false, frameRate, ...rest} = options;
 
   const tick = ticker();
   const style = {};
@@ -66,11 +66,6 @@ export function render(options) {
     drawRef.current = null;
   } else {
     tick.on("animate", (options) => next(options), {frameRate});
-  }
-
-  if (container) {
-    const el = typeof container === "string" ? document.querySelector(container) : container;
-    el.appendChild(node);
   }
 
   return {node, disposer: () => tick.dispose()};
