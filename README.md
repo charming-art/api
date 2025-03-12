@@ -8,7 +8,7 @@
 The JavaScript library for generative art based on SVG.
 
 ```js
-cm.render({
+cm.app({
   width: 100,
   height: 100,
   container: "#root",
@@ -16,7 +16,7 @@ cm.render({
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {cx: 50, cy: 50, r: 40, fill: "white"}),
   ],
-});
+}).render();
 ```
 
 ## Resources 📚

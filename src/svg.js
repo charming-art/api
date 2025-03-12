@@ -1,10 +1,12 @@
 import {set} from "./set.js";
-import {Mark} from "./mark.js";
 
-class SVG extends Mark {
+class SVG {
   constructor(tag, data, options, children) {
-    super(data, options, children);
     this._tag = tag;
+    this._data = data;
+    this._options = options;
+    this._nodes = [];
+    this._children = children;
   }
   create(props) {
     const tag = this._tag;
