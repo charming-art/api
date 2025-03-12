@@ -36,7 +36,7 @@ test("ticker.on(animate, callback) should have expected params", async () => {
   const wait = new Promise((resolve) => (next = resolve));
   const ticker = cm.ticker().on("animate", (event) => next(event));
   const e = await wait;
-  expect(e.elapsed).toBeGreaterThan(0);
+  expect(e.time).toBeGreaterThan(0);
   expect(e.frameCount).toBe(1);
   ticker.dispose();
 });

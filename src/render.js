@@ -34,6 +34,10 @@ function patch(node, prev, current) {
   if (node.nodeName !== "text" || childList.length) node.replaceChildren(...childList);
 }
 
+function noSVG(current) {
+  return current.length !== 1 || current[0]._tag !== "svg";
+}
+
 export const drawRef = {current: null};
 
 export function render(options) {
@@ -44,27 +48,31 @@ export function render(options) {
   const handler = {};
 
   for (const [key, value] of Object.entries(rest)) {
-    if (key.startsWith("on")) handler[key] = value;
+    if (key.startsWith("onGlobal")) handler[key] = value;
     else style[key] = value;
   }
 
-  for (const key in handler) tick.on(key.slice(2).toLowerCase(), handler[key]);
+  for (const key in handler) tick.on(key.slice(8).toLowerCase(), handler[key]);
 
-  const node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  set(node, style);
-
-  let prev = null;
+  let prev, node;
   const next = (options) => {
     const current = isFunction(draw) ? draw(options) : draw;
+    if (!node) {
+      node = noSVG(current)
+        ? document.createElementNS("http://www.w3.org/2000/svg", "svg")
+        : document.createElement("span");
+      set(node, style);
+    }
     patch(node, prev, current);
     prev = current;
   };
 
   if (!loop) {
     drawRef.current = next;
-    next({});
+    next({frameCount: 1, time: 0});
     drawRef.current = null;
   } else {
+    next({frameCount: 1, time: 0});
     tick.on("animate", (options) => next(options), {frameRate});
   }
 
