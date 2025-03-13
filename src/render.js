@@ -11,15 +11,18 @@ const noSVG = (current) => current.length !== 1 || current[0]._tag !== "svg";
 function patch(parent, prev, current) {
   let mark;
   const m = current.length;
-  const next = new Array(m);
+  const update = new Array(m);
   for (let i = 0; i < m; i++) {
-    next[i] = (mark = prev[i]) ? ((mark._update = current[i]), mark) : (mark = current[i]);
+    update[i] = (mark = prev[i]) ? ((mark._update = current[i]), mark) : (mark = current[i]);
+    mark._next = prev[i + 1] || null;
     const [parents, prevNodes, childNodes] = mark.render(parent);
     for (let j = 0; j < parents.length; j++) {
-      patch(parents[j], prevNodes[j], childNodes[j]);
+      const prev = patch(parents[j], prevNodes[j] || [], childNodes[j]);
+      prevNodes[j] = prev;
     }
+    mark._nodesChildren = prevNodes;
   }
-  return next;
+  return update;
 }
 
 export function render(options) {
@@ -39,7 +42,7 @@ export function render(options) {
   let node;
   let prev = [];
   const next = (options) => {
-    const current = isFunction(draw) ? draw(options) : draw;
+    const current = [isFunction(draw) ? draw(options) : draw].flat();
     if (!node) {
       node = noSVG(current)
         ? document.createElementNS("http://www.w3.org/2000/svg", "svg")

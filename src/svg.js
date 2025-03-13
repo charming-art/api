@@ -25,18 +25,24 @@ function addEventListener(node, k, handler) {
 
 class SVG {
   constructor(tag, data, options, children) {
+    const {ref, ...rest} = options;
     this._tag = tag;
     this._data = data;
-    this._options = options;
+    this._options = rest;
     this._children = children;
     this._update = null;
     this._nodes = null;
+    this._next = null;
     this._nodesChildren = null;
+    if (ref) (this._ref = ref), (ref.current = this);
   }
   render(parent) {
     const data = this._update?._data || this._data;
     const options = this._update?._options || this._options;
     const children = this._update?._children || this._children;
+    const nextNode = this._next?._nodes?.[0] || null;
+    if (this._update?._ref) this._update._ref.current = this;
+
     const tag = this._tag;
     const nodes = this._nodes || [];
     const prevNodesChildren = this._nodesChildren || [];
@@ -78,7 +84,7 @@ class SVG {
       if ((previous = enter[i0])) {
         if (i0 >= i1) i1 = i0 + 1;
         while (!(next = update[i1]) && ++i1 < nodeLength);
-        previous.next = next || null;
+        previous.next = next || nextNode;
       }
     }
 
@@ -100,6 +106,9 @@ class SVG {
     for (let i = 0; i < nodeLength; i++) if ((current = exit[i])) current.remove();
 
     return [(this._nodes = newNodes), prevNodesChildren, (this._nodesChildren = newNodesChildren)];
+  }
+  nodes() {
+    return this._nodes;
   }
 }
 
