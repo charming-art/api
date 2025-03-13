@@ -1,6 +1,6 @@
 {
   "name": "charmingjs",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "The JavaScript library for generative art based on SVG",
   "author": {
     "name": "Bairui SU",
