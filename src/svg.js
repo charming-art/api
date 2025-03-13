@@ -17,6 +17,12 @@ function bindIndex(data, nodes, enter, update, exit) {
   for (; i < nodeLength; i++) exit[i] = nodes[i];
 }
 
+function addEventListener(node, k, handler) {
+  const key = "__" + k + "__";
+  if (!node[key]) node.addEventListener(k.slice(2).toLowerCase(), (event) => node[key](event));
+  node[key] = handler;
+}
+
 class SVG {
   constructor(tag, data, options, children) {
     this._tag = tag;
@@ -43,22 +49,26 @@ class SVG {
     const newNodesChildren = new Array(dataLength);
 
     const updateAttributes = (i, datum, node) => {
-      for (const [k, v] of Object.entries(options)) {
+      const {decorators = [], ...props} = options;
+
+      for (const [k, v] of Object.entries(props)) {
         if (k.startsWith("on")) {
           const handler = (event) => v(event, datum, i, data);
-          const key = "_" + k;
-          if (!node[key]) node.addEventListener(k.slice(2).toLowerCase(), (event) => node[key](event));
-          node[key] = handler;
+          addEventListener(node, k, handler);
         } else {
           const value = isFunction(v) ? v(datum, i, data) : v;
           setAttribute(node, k, value);
         }
       }
 
-      newNodes[i] = node;
+      for (const decorator of decorators) {
+        const {type, ...decoratorProps} = isFunction(decorator) ? decorator(datum, i, data) : decorator;
+        type(node, decoratorProps);
+      }
 
       const nodeChildren = children.flatMap((c) => (isFunction(c) ? c(datum, i, data) : c));
       newNodesChildren[i] = nodeChildren;
+      newNodes[i] = node;
     };
 
     bindIndex(data, nodes, enter, update, exit);

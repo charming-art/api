@@ -36,7 +36,7 @@ cm.app({
 
 Please refer to [Charming Mark](/docs/charming-mark) for more information.
 
-<!-- ## Fluid Transition
+## Fluid Transition
 
 Charming makes it easier than ever to create fluid transitions. The exported _transition_ decorators lets you apply transitions declaratively to child nodes, whether SVG or HTML. For example, you can create a circle that smoothly change colors and radius over time.
 
@@ -67,7 +67,7 @@ cm.app({
     }),
   ],
 }).render("#root");
-``` -->
+```
 
 ## Incremental Updates
 
