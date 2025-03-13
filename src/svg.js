@@ -55,9 +55,9 @@ class SVG {
     const newNodesChildren = new Array(dataLength);
 
     const updateAttributes = (i, datum, node) => {
-      const {decorators = [], ...props} = options;
+      const {decorators = [], attrs = () => ({}), ...props} = options;
 
-      for (const [k, v] of Object.entries(props)) {
+      for (const [k, v] of Object.entries({...attrs(datum, i, data), ...props})) {
         if (k.startsWith("on")) {
           const handler = (event) => v(event, datum, i, data);
           addEventListener(node, k, handler);
