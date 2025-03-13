@@ -72,7 +72,7 @@ class SVG {
         type(node, decoratorProps);
       }
 
-      const nodeChildren = children.flatMap((c) => (isFunction(c) ? c(datum, i, data) : c));
+      const nodeChildren = children.flatMap((c) => (isFunction(c) ? c(datum, i, data) : c.clone()));
       newNodesChildren[i] = nodeChildren;
       newNodes[i] = node;
     };
@@ -106,6 +106,9 @@ class SVG {
     for (let i = 0; i < nodeLength; i++) if ((current = exit[i])) current.remove();
 
     return [(this._nodes = newNodes), prevNodesChildren, (this._nodesChildren = newNodesChildren)];
+  }
+  clone() {
+    return new SVG(this._tag, this._data, this._options, this._children);
   }
   nodes() {
     return this._nodes;

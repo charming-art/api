@@ -1,0 +1,17 @@
+<svg width="180" height="40" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(30, 20)">
+    <circle r="10" fill="black"></circle>
+  </g>
+  <g transform="translate(60, 20)">
+    <circle r="10" fill="black"></circle>
+  </g>
+  <g transform="translate(90, 20)">
+    <circle r="10" fill="black"></circle>
+  </g>
+  <g transform="translate(120, 20)">
+    <circle r="10" fill="black"></circle>
+  </g>
+  <g transform="translate(150, 20)">
+    <circle r="10" fill="black"></circle>
+  </g>
+</svg>
