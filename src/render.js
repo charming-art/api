@@ -25,9 +25,7 @@ function patch(parent, prev, current) {
   return update;
 }
 
-export function render(options) {
-  const {draw, loop = false, frameRate, ...rest} = options;
-
+export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
   const tick = ticker();
   const style = {};
   const handler = {};

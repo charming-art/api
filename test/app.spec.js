@@ -1,6 +1,16 @@
 import {app, svg} from "../src/index.js";
 import {test, expect} from "vitest";
 
+test("cm.app() should draw without options.", () => {
+  const node = app().render();
+  expect(node.nodeName).toBe("svg");
+});
+
+test("cm.app(options) should draw without draw option.", () => {
+  const node = app({}).render();
+  expect(node.nodeName).toBe("svg");
+});
+
 test("cm.app(options) should return span element if contains only one svg element.", () => {
   const node = app({draw: [svg("svg", {})]}).render();
   expect(node.nodeName).toBe("SPAN");
