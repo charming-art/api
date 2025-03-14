@@ -23,6 +23,27 @@ function addEventListener(node, k, handler) {
   node[key] = handler;
 }
 
+function updateAttributes(i, datum, node, data, options, children) {
+  const {decorators = [], attrs = () => ({}), ...props} = options;
+
+  for (const [k, v] of Object.entries({...attrs(datum, i, data), ...props})) {
+    if (k.startsWith("on")) {
+      const handler = (event) => v(event, datum, i, data);
+      addEventListener(node, k, handler);
+    } else {
+      const value = isFunction(v) ? v(datum, i, data) : v;
+      setAttribute(node, k, value);
+    }
+  }
+
+  for (const decorator of decorators) {
+    const {type, ...decoratorProps} = isFunction(decorator) ? decorator(datum, i, data) : decorator;
+    type(node, decoratorProps);
+  }
+
+  return children.flatMap((c) => (isFunction(c) ? c(datum, i, data) : c.clone()));
+}
+
 class SVG {
   constructor(tag, data, options, children) {
     const {ref, ...rest} = options;
@@ -54,29 +75,6 @@ class SVG {
     const newNodes = new Array(dataLength);
     const newNodesChildren = new Array(dataLength);
 
-    const updateAttributes = (i, datum, node) => {
-      const {decorators = [], attrs = () => ({}), ...props} = options;
-
-      for (const [k, v] of Object.entries({...attrs(datum, i, data), ...props})) {
-        if (k.startsWith("on")) {
-          const handler = (event) => v(event, datum, i, data);
-          addEventListener(node, k, handler);
-        } else {
-          const value = isFunction(v) ? v(datum, i, data) : v;
-          setAttribute(node, k, value);
-        }
-      }
-
-      for (const decorator of decorators) {
-        const {type, ...decoratorProps} = isFunction(decorator) ? decorator(datum, i, data) : decorator;
-        type(node, decoratorProps);
-      }
-
-      const nodeChildren = children.flatMap((c) => (isFunction(c) ? c(datum, i, data) : c.clone()));
-      newNodesChildren[i] = nodeChildren;
-      newNodes[i] = node;
-    };
-
     bindIndex(data, nodes, enter, update, exit);
 
     let previous, next;
@@ -95,12 +93,16 @@ class SVG {
         const {datum, next} = current;
         const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
         parent.insertBefore(node, next);
-        updateAttributes(i, datum, node);
+        newNodesChildren[i] = updateAttributes(i, datum, node, data, options, children);
+        newNodes[i] = node;
       }
     }
 
     for (let i = 0; i < nodeLength; i++) {
-      if ((current = update[i])) updateAttributes(i, data[i], current);
+      if ((current = update[i])) {
+        newNodesChildren[i] = updateAttributes(i, data[i], current, data, options, children);
+        newNodes[i] = current;
+      }
     }
 
     for (let i = 0; i < nodeLength; i++) if ((current = exit[i])) current.remove();
