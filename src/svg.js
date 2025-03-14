@@ -41,28 +41,25 @@ function updateAttributes(i, datum, node, data, options, children) {
     type(node, decoratorProps);
   }
 
-  return children.flatMap((c) => (isFunction(c) ? c(datum, i, data) : c.clone()));
+  return children.flatMap((c) => (isFunction(c) ? c(datum, i, data) : [c].flat().map((d) => d.clone())));
 }
 
 class SVG {
   constructor(tag, data, options, children) {
-    const {ref, ...rest} = options;
     this._tag = tag;
     this._data = data;
-    this._options = rest;
+    this._options = options;
     this._children = children;
     this._update = null;
     this._nodes = null;
     this._next = null;
     this._nodesChildren = null;
-    if (ref) (this._ref = ref), (ref.current = this);
   }
   render(parent) {
     const data = this._update?._data || this._data;
     const options = this._update?._options || this._options;
     const children = this._update?._children || this._children;
     const nextNode = this._next?._nodes?.[0] || null;
-    if (this._update?._ref) this._update._ref.current = this;
 
     const tag = this._tag;
     const nodes = this._nodes || [];
@@ -110,7 +107,9 @@ class SVG {
     return [(this._nodes = newNodes), prevNodesChildren, (this._nodesChildren = newNodesChildren)];
   }
   clone() {
-    return new SVG(this._tag, this._data, this._options, this._children);
+    const cloned = new SVG(this._tag, this._data, this._options, this._children);
+    cloned._ref = this._ref;
+    return cloned;
   }
   nodes() {
     return this._nodes;
