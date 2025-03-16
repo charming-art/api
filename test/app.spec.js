@@ -31,3 +31,17 @@ test("cm.app(options) should stop timer when dispose() is called.", async () => 
   await new Promise((resolve) => setTimeout(resolve, 100));
   expect(circle.getAttribute("r")).toBe(r);
 });
+
+test("cm.app(options) should pass time and frameCount for draw callback when loop is false.", () => {
+  let t;
+  let f;
+  app({
+    draw: ({time, frameCount}) => {
+      t = time;
+      f = frameCount;
+      return [];
+    },
+  }).render();
+  expect(t).toBe(0);
+  expect(f).toBe(1);
+});

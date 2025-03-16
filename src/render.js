@@ -52,7 +52,7 @@ export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
 
   if (!loop) {
     drawRef.current = next;
-    next();
+    next({frameCount: 1, time: 0});
     drawRef.current = null;
   } else {
     next({frameCount: 1, time: 0});
