@@ -59,5 +59,5 @@ export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
     tick.on("animate", (options) => next(options), {frameRate});
   }
 
-  return {node, disposer: () => tick.dispose()};
+  return {node, dispose: () => tick.dispose()};
 }
