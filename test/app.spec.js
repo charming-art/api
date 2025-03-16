@@ -21,3 +21,13 @@ test("cm.app(options) should set textContent for SVG text element corretly.", ()
   const text = node.querySelector("text");
   expect(text.textContent).toBe("hello world");
 });
+
+test("cm.app(options) should stop timer when dispose() is called.", async () => {
+  const app0 = app({loop: true, draw: ({time}) => [svg("circle", {id: "circle", r: time})]});
+  const node = app0.render();
+  const circle = node.querySelector("#circle");
+  const r = circle.getAttribute("r");
+  app0.dispose();
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  expect(circle.getAttribute("r")).toBe(r);
+});
