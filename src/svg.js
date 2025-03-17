@@ -107,9 +107,7 @@ class SVG {
     return [(this._nodes = newNodes), prevNodesChildren, (this._nodesChildren = newNodesChildren)];
   }
   clone() {
-    const cloned = new SVG(this._tag, this._data, this._options, this._children);
-    cloned._ref = this._ref;
-    return cloned;
+    return new SVG(this._tag, this._data, this._options, this._children);
   }
   nodes() {
     return this._nodes;
