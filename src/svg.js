@@ -1,4 +1,5 @@
 import {setAttribute} from "./set.js";
+import {Mark} from "./mark.js";
 
 const isFunction = (x) => typeof x === "function";
 
@@ -44,16 +45,12 @@ function updateAttributes(i, datum, node, data, options, children) {
   return children.flatMap((c) => (isFunction(c) ? c(datum, i, data) : [c].flat().map((d) => d.clone())));
 }
 
-class SVG {
+class SVG extends Mark {
   constructor(tag, data, options, children) {
+    super(children);
     this._tag = tag;
     this._data = data;
     this._options = options;
-    this._children = children;
-    this._update = null;
-    this._nodes = null;
-    this._next = null;
-    this._nodesChildren = null;
   }
   render(parent) {
     const data = this._update?._data || this._data;
