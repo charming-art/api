@@ -5,7 +5,7 @@ export const drawRef = {current: null};
 
 const isFunction = (x) => typeof x === "function";
 
-const noSVG = (current) => current.length !== 1 || current[0]._tag !== "svg";
+const noSVG = (current) => current.length !== 1 || current[0]._tag !== "svg:svg";
 
 // Assume the structure is not going to change for now.
 function patch(parent, prev, current) {
@@ -15,7 +15,7 @@ function patch(parent, prev, current) {
   for (let i = 0; i < m; i++) {
     update[i] = (mark = prev[i]) ? ((mark._update = current[i]), mark) : (mark = current[i]);
     mark._next = prev[i + 1] || null;
-    const [parents, prevNodes, childNodes] = mark.render(parent);
+    const [parents, prevNodes, childNodes] = mark.patch(parent);
     for (let j = 0; j < parents.length; j++) {
       const prev = patch(parents[j], prevNodes[j] || [], childNodes[j]);
       prevNodes[j] = prev;
@@ -31,11 +31,11 @@ export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
   const handler = {};
 
   for (const [key, value] of Object.entries(rest)) {
-    if (key.startsWith("onGlobal")) handler[key] = value;
+    if (key.startsWith("on")) handler[key] = value;
     else style[key] = value;
   }
 
-  for (const key in handler) tick.on(key.slice(8).toLowerCase(), handler[key]);
+  for (const key in handler) tick.on(key.slice(2).toLowerCase(), handler[key]);
 
   let node;
   let prev = [];
