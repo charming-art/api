@@ -11,14 +11,14 @@ const wrapSVG = (current) => {
 };
 
 // Assume the structure is not going to change for now.
-function patch(parent, prev, current) {
+function patch(parent, prev, current, context) {
   let mark;
   const m = current.length;
   const update = new Array(m);
   for (let i = 0; i < m; i++) {
     update[i] = (mark = prev[i]) ? ((mark._update = current[i]), mark) : (mark = current[i]);
     mark._next = prev[i + 1] || null;
-    const [parents, prevNodes, childNodes] = mark.patch(parent);
+    const [parents, prevNodes, childNodes] = mark.patch(parent, context);
     for (let j = 0; j < parents.length; j++) {
       const prev = patch(parents[j], prevNodes[j] || [], childNodes[j]);
       prevNodes[j] = prev;
@@ -30,8 +30,8 @@ function patch(parent, prev, current) {
 
 export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
   const tick = ticker();
-  const style = {};
   const handler = {};
+  const style = {};
 
   for (const [key, value] of Object.entries(rest)) {
     if (key.startsWith("on")) handler[key] = value;
@@ -42,6 +42,7 @@ export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
 
   let node;
   let prev = [];
+  const context = {width: rest.width, height: rest.height};
   const next = (options) => {
     const current = [isFunction(draw) ? draw(options) : draw].flat();
     if (!node) {
@@ -50,7 +51,7 @@ export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
         : document.createElement("span");
       for (const [k, v] of Object.entries(style)) setAttribute(node, k, v);
     }
-    prev = patch(node, prev, current);
+    prev = patch(node, prev, current, context);
   };
 
   if (!loop) {

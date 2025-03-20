@@ -74,7 +74,7 @@ export class Mark {
       : current;
     return applyAttributes(node, options, datum, i, data);
   }
-  patch(parent) {
+  patch(parent, context) {
     const data = this._update?._data || this._data;
     const options = this._update?._options || this._options;
     const children = this._update?._children || this._children;
@@ -107,7 +107,7 @@ export class Mark {
     for (let i = 0; i < dataLength; i++) {
       if ((current = enter[i])) {
         const {datum, next} = current;
-        const node = this.render(tag, options, {datum, i, data});
+        const node = this.render(tag, options, {datum, i, data}, context);
         parent.insertBefore(node, next);
         newNodes[i] = node;
         newNodesChildren[i] = children.flatMap((c) =>
@@ -119,7 +119,7 @@ export class Mark {
     for (let i = 0; i < nodeLength; i++) {
       if ((current = update[i])) {
         const datum = data[i];
-        newNodes[i] = this.render(current, options, {datum, i, data});
+        newNodes[i] = this.render(current, options, {datum, i, data}, context);
         newNodesChildren[i] = children.flatMap((c) =>
           isFunction(c) ? c(datum, i, data) : [c].flat().map((d) => d.clone()),
         );
