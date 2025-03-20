@@ -54,3 +54,20 @@ test("cm.app(options) should pass time and frameCount for draw callback when loo
   expect(t).toBe(0);
   expect(f).toBe(1);
 });
+
+test("cm.app({use}) should define decorators for makrs.", () => {
+  const color = (node, color) => {
+    node.setAttribute("fill", color);
+    node.setAttribute("stroke", color);
+    return node;
+  };
+
+  const node = app({
+    use: {color},
+    draw: [svg("circle", {r: 10, color: "red"})],
+  }).render();
+
+  const circle = node.querySelector("circle");
+  expect(circle.getAttribute("fill")).toBe("red");
+  expect(circle.getAttribute("stroke")).toBe("red");
+});

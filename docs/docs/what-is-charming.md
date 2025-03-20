@@ -48,6 +48,7 @@ play = Inputs.button("Replay");
 cm.app({
   width: 100,
   height: 100,
+  use: {transition: cm.transition},
   draw: [
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {
@@ -55,15 +56,12 @@ cm.app({
       cy: 50,
       r: 40,
       fill: "#4B68C9",
-      decorators: [
-        {
-          type: cm.transition,
-          keyframes: [
-            {fill: "#E5B442", r: 0, duration: 1000},
-            {fill: "#EE7A64", r: 40, duration: 2000},
-          ],
-        },
-      ],
+      transition: {
+        keyframes: [
+          {fill: "#E5B442", r: 0, duration: 1000},
+          {fill: "#EE7A64", r: 40, duration: 2000},
+        ],
+      },
     }),
   ],
 }).render("#root");
