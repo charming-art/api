@@ -4,6 +4,8 @@ const isFunction = (x) => typeof x === "function";
 
 const isStr = (x) => typeof x === "string";
 
+const isDefined = (x) => x !== undefined && x !== null;
+
 const namespaces = {
   svg: "http://www.w3.org/2000/svg",
 };
@@ -14,10 +16,20 @@ function addEventListener(node, k, handler) {
   node[key] = handler;
 }
 
-function applyAttributes(node, options, datum, i, data) {
-  const {decorators = [], attrs = () => ({}), ...props} = options;
+function applyAttributes(node, options, values, context) {
+  const {use} = context;
+  const decorators = [];
+  const props = {};
 
-  for (const [k, v] of Object.entries({...attrs(datum, i, data), ...props})) {
+  for (const [k, v] of Object.entries(options)) {
+    if (k in use && isDefined(v)) decorators.push([use[k], v]);
+    else props[k] = v;
+  }
+
+  const {attrs = () => ({}), ...rest} = options;
+  const {datum, i, data} = values;
+
+  for (const [k, v] of Object.entries({...attrs(datum, i, data), ...rest})) {
     if (k.startsWith("on")) {
       const handler = (event) => v(event, datum, i, data);
       addEventListener(node, k, handler);
@@ -27,9 +39,9 @@ function applyAttributes(node, options, datum, i, data) {
     }
   }
 
-  for (const decorator of decorators) {
-    const {type, ...decoratorProps} = isFunction(decorator) ? decorator(datum, i, data) : decorator;
-    type(node, decoratorProps);
+  for (const [type, decorator] of decorators) {
+    const options = isFunction(decorator) ? decorator(datum, i, data) : decorator;
+    type(node, options);
   }
 
   return node;
@@ -64,15 +76,14 @@ export class Mark {
     this._next = null;
     this._nodesChildren = null;
   }
-  render(current, options, values) {
+  render(current, options, values, context) {
     let namespace;
-    const {datum, i, data} = values;
     const node = isStr(current)
       ? (namespace = namespaces[current.split(":")[0]])
         ? document.createElementNS(namespace, current.split(":")[1])
         : document.createElement(current)
       : current;
-    return applyAttributes(node, options, datum, i, data);
+    return applyAttributes(node, options, values, context);
   }
   patch(parent, context) {
     const data = this._update?._data || this._data;

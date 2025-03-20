@@ -20,7 +20,7 @@ function patch(parent, prev, current, context) {
     mark._next = prev[i + 1] || null;
     const [parents, prevNodes, childNodes] = mark.patch(parent, context);
     for (let j = 0; j < parents.length; j++) {
-      const prev = patch(parents[j], prevNodes[j] || [], childNodes[j]);
+      const prev = patch(parents[j], prevNodes[j] || [], childNodes[j], context);
       prevNodes[j] = prev;
     }
     mark._nodesChildren = prevNodes;
@@ -28,7 +28,7 @@ function patch(parent, prev, current, context) {
   return update;
 }
 
-export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
+export function render({draw = [], loop = false, frameRate, use = {}, ...rest} = {}) {
   const tick = ticker();
   const handler = {};
   const style = {};
@@ -42,7 +42,7 @@ export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
 
   let node;
   let prev = [];
-  const context = {width: rest.width, height: rest.height};
+  const context = {width: rest.width, height: rest.height, use};
   const next = (options) => {
     const current = [isFunction(draw) ? draw(options) : draw].flat();
     if (!node) {
