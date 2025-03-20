@@ -5,7 +5,8 @@ test("Mark should have expected defaults.", () => {
   const mark = new Mark();
   expect(mark._children).toEqual([]);
   expect(mark._data).toEqual([0]);
-  expect(mark._options).toEqual({});
+  expect(mark._options).toEqual(undefined);
+  expect(mark._props).toEqual({});
   expect(mark._tag).toBe(undefined);
   expect(mark._update).toBe(null);
   expect(mark._nodes).toBe(null);

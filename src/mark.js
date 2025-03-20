@@ -26,7 +26,7 @@ function applyAttributes(node, options, values, context) {
     else props[k] = v;
   }
 
-  const {attrs = () => ({}), ...rest} = options;
+  const {attrs = () => ({}), ...rest} = props;
   const {datum, i, data} = values;
 
   for (const [k, v] of Object.entries({...attrs(datum, i, data), ...rest})) {
@@ -65,11 +65,12 @@ function bindIndex(data, nodes, enter, update, exit) {
 export class Mark {
   constructor(tag, data, options) {
     if (options === undefined) (options = data), (data = [0]);
-    const {children = [], ...rest} = options ?? {};
+    const {children = [], ...props} = options ?? {};
 
     this._tag = tag;
     this._data = data;
-    this._options = rest;
+    this._options = options;
+    this._props = props;
     this._children = children;
     this._update = null;
     this._nodes = null;
@@ -87,7 +88,7 @@ export class Mark {
   }
   patch(parent, context) {
     const data = this._update?._data || this._data;
-    const options = this._update?._options || this._options;
+    const props = this._update?._props || this._props;
     const children = this._update?._children || this._children;
     const nextNode = this._next?._nodes?.[0] || null;
 
@@ -118,7 +119,7 @@ export class Mark {
     for (let i = 0; i < dataLength; i++) {
       if ((current = enter[i])) {
         const {datum, next} = current;
-        const node = this.render(tag, options, {datum, i, data}, context);
+        const node = this.render(tag, props, {datum, i, data}, context);
         parent.insertBefore(node, next);
         newNodes[i] = node;
         newNodesChildren[i] = children.flatMap((c) =>
@@ -130,7 +131,7 @@ export class Mark {
     for (let i = 0; i < nodeLength; i++) {
       if ((current = update[i])) {
         const datum = data[i];
-        newNodes[i] = this.render(current, options, {datum, i, data}, context);
+        newNodes[i] = this.render(current, props, {datum, i, data}, context);
         newNodesChildren[i] = children.flatMap((c) =>
           isFunction(c) ? c(datum, i, data) : [c].flat().map((d) => d.clone()),
         );
@@ -145,7 +146,7 @@ export class Mark {
     return this._nodes;
   }
   clone() {
-    return new this.constructor(this._tag, this._data, this._options, this._children);
+    return new this.constructor(this._tag, this._data, this._options);
   }
 }
 

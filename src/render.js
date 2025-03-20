@@ -60,7 +60,7 @@ export function render({draw = [], loop = false, frameRate, use = {}, ...rest} =
     drawRef.current = null;
   } else {
     next({frameCount: 1, time: 0});
-    tick.on("animate", (options) => next(options), {frameRate});
+    tick.on("animate", next, {frameRate});
   }
 
   return {node, dispose: () => tick.dispose()};
