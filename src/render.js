@@ -5,7 +5,10 @@ export const drawRef = {current: null};
 
 const isFunction = (x) => typeof x === "function";
 
-const noSVG = (current) => current.length !== 1 || current[0]._tag !== "svg:svg";
+const wrapSVG = (current) => {
+  if (current.length === 1 && current[0]._tag === "svg:svg") return false;
+  return current.every((mark) => mark._tag.startsWith("svg:"));
+};
 
 // Assume the structure is not going to change for now.
 function patch(parent, prev, current) {
@@ -42,7 +45,7 @@ export function render({draw = [], loop = false, frameRate, ...rest} = {}) {
   const next = (options) => {
     const current = [isFunction(draw) ? draw(options) : draw].flat();
     if (!node) {
-      node = noSVG(current)
+      node = wrapSVG(current)
         ? document.createElementNS("http://www.w3.org/2000/svg", "svg")
         : document.createElement("span");
       for (const [k, v] of Object.entries(style)) setAttribute(node, k, v);
