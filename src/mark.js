@@ -16,13 +16,13 @@ function addEventListener(node, k, handler) {
   node[key] = handler;
 }
 
-function applyAttributes(node, options, values, context) {
+function applyAttributes(node, options, values, context = {}) {
   const {use} = context;
   const decorators = [];
   const props = {};
 
   for (const [k, v] of Object.entries(options)) {
-    if (k in use && isDefined(v)) decorators.push([use[k], v]);
+    if (use && k in use && isDefined(v)) decorators.push([use[k], v]);
     else props[k] = v;
   }
 
@@ -41,7 +41,7 @@ function applyAttributes(node, options, values, context) {
 
   for (const [type, decorator] of decorators) {
     const options = isFunction(decorator) ? decorator(datum, i, data) : decorator;
-    type(node, options);
+    type(node, options, context);
   }
 
   return node;
@@ -120,7 +120,7 @@ export class Mark {
       if ((current = enter[i])) {
         const {datum, next} = current;
         const node = this.render(tag, props, {datum, i, data}, context);
-        parent.insertBefore(node, next);
+        parent?.insertBefore(node, next);
         newNodes[i] = node;
         newNodesChildren[i] = children.flatMap((c) =>
           isFunction(c) ? c(datum, i, data) : [c].flat().map((d) => d.clone()),
@@ -143,7 +143,14 @@ export class Mark {
     return [(this._nodes = newNodes), prevNodesChildren, (this._nodesChildren = newNodesChildren)];
   }
   nodes() {
+    if (!this._nodes) {
+      const [nodes, , children] = this.patch();
+      for (let i = 0; i < nodes.length; i++) for (const mark of children[i]) mark.patch(nodes[i]);
+    }
     return this._nodes;
+  }
+  node() {
+    return this.nodes()[0] || null;
   }
   clone() {
     return new this.constructor(this._tag, this._data, this._options);

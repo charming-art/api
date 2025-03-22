@@ -42,7 +42,7 @@ export function render({draw = [], loop = false, frameRate, use = {}, ...rest} =
 
   let node;
   let prev = [];
-  const context = {width: rest.width, height: rest.height, use};
+  const context = {width: rest.width, height: rest.height, use, root: () => node};
   const next = (options) => {
     const current = [isFunction(draw) ? draw(options) : draw].flat();
     if (!node) {
