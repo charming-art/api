@@ -1,7 +1,6 @@
 import {interval} from "d3-timer";
 
-function event(type, callback, options = {}) {
-  if (typeof options === "boolean") options = {capture: options};
+function event(type, callback, options) {
   window.addEventListener(type, callback, options);
   return () => window.removeEventListener(type, callback, options);
 }
