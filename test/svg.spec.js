@@ -16,3 +16,25 @@ test("svg(tag, data, options) should return a SVG mark with expcted attributes",
   expect(s._options).toEqual({cx: 0, cy: 0, r: 10});
   expect(s._children).toEqual([]);
 });
+
+test("svg.node() should return the first node of the SVG mark", () => {
+  const s = svg("circle", {cx: 0, cy: 0, r: 10});
+  const node = s.node();
+  expect(node.tagName).toBe("circle");
+  expect(node.getAttribute("cx")).toBe("0");
+  expect(node.getAttribute("cy")).toBe("0");
+  expect(node.getAttribute("r")).toBe("10");
+});
+
+test("svg.node() should return the first node of the SVG mark with children", () => {
+  const s = svg("g", {
+    children: [svg("circle", {cx: 0, cy: 0, r: 10})],
+  });
+  const node = s.node();
+  expect(node.tagName).toBe("g");
+  expect(node.children.length).toBe(1);
+  expect(node.children[0].tagName).toBe("circle");
+  expect(node.children[0].getAttribute("cx")).toBe("0");
+  expect(node.children[0].getAttribute("cy")).toBe("0");
+  expect(node.children[0].getAttribute("r")).toBe("10");
+});
