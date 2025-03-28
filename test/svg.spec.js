@@ -1,4 +1,4 @@
-import {svg} from "../src/index.js";
+import {svg, html} from "../src/index.js";
 import {test, expect} from "vitest";
 
 test("svg(tag, options) should return a SVG mark with expcted attributes", () => {
@@ -6,6 +6,14 @@ test("svg(tag, options) should return a SVG mark with expcted attributes", () =>
   expect(s._tag).toBe("svg:circle");
   expect(s._data).toEqual([0]);
   expect(s._options).toEqual({cx: 0, cy: 0, r: 10});
+  expect(s._children).toEqual([]);
+});
+
+test("html(tag, options) should return a HTML mark with expcted attributes", () => {
+  const s = html("div", {class: "test"});
+  expect(s._tag).toBe("div");
+  expect(s._data).toEqual([0]);
+  expect(s._options).toEqual({class: "test"});
   expect(s._children).toEqual([]);
 });
 
