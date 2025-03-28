@@ -158,3 +158,5 @@ export class Mark {
 }
 
 export const svg = (tag, data, options) => new Mark(`svg:${tag}`, data, options);
+
+export const html = (tag, data, options) => new Mark(tag, data, options);
