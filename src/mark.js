@@ -1,4 +1,4 @@
-import {setAttribute} from "./set.js";
+import {Renderer} from "./renderer.js";
 
 const isFunction = (x) => typeof x === "function";
 
@@ -6,18 +6,8 @@ const isStr = (x) => typeof x === "string";
 
 const isDefined = (x) => x !== undefined && x !== null;
 
-const namespaces = {
-  svg: "http://www.w3.org/2000/svg",
-};
-
-function addEventListener(node, k, handler) {
-  const key = "__" + k + "__";
-  if (!node[key]) node.addEventListener(k.slice(2).toLowerCase(), (event) => node[key](event));
-  node[key] = handler;
-}
-
 function applyAttributes(node, options, values, context = {}) {
-  const {use} = context;
+  const {use, renderer} = context;
   const decorators = [];
   const props = {};
 
@@ -28,16 +18,14 @@ function applyAttributes(node, options, values, context = {}) {
 
   const {attrs = () => ({}), ...rest} = props;
   const {datum, i, data} = values;
-
+  const eventValues = {};
+  const attrValues = {};
   for (const [k, v] of Object.entries({...attrs(datum, i, data), ...rest})) {
-    if (k.startsWith("on")) {
-      const handler = (event) => v(event, datum, i, data);
-      addEventListener(node, k, handler);
-    } else {
-      const value = isFunction(v) ? v(datum, i, data) : v;
-      setAttribute(node, k, value);
-    }
+    if (k.startsWith("on")) eventValues[k] = (event) => v(event, datum, i, data);
+    else attrValues[k] = isFunction(v) ? v(datum, i, data) : v;
   }
+  renderer.events(node, eventValues);
+  renderer.attrs(node, attrValues);
 
   for (const [type, decorator] of decorators) {
     const options = isFunction(decorator) ? decorator(datum, i, data) : decorator;
@@ -78,13 +66,9 @@ export class Mark {
     this._nodesChildren = null;
   }
   render(current, options, values, context) {
-    let namespace;
-    const node = isStr(current)
-      ? (namespace = namespaces[current.split(":")[0]])
-        ? document.createElementNS(namespace, current.split(":")[1])
-        : document.createElement(current)
-      : current;
-    return applyAttributes(node, options, values, context);
+    const {renderer = new Renderer(), ...rest} = context || {};
+    const node = isStr(current) ? renderer.create(current) : current;
+    return applyAttributes(node, options, values, {...rest, renderer});
   }
   patch(parent, context) {
     const data = this._update?._data || this._data;
