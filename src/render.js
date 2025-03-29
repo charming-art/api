@@ -56,10 +56,10 @@ export function render({draw = [], loop = false, frameRate, use = {}, ...rest} =
 
   if (!loop) {
     drawRef.current = next;
-    next({frameCount: 1, time: 0});
+    next({frameCount: 0, time: 0});
     drawRef.current = null;
   } else {
-    next({frameCount: 1, time: 0});
+    next({frameCount: 0, time: 0});
     tick.on("animate", next, {frameRate});
   }
 
