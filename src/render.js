@@ -18,12 +18,9 @@ function patch(parent, prev, current, context) {
   for (let i = 0; i < m; i++) {
     update[i] = (mark = prev[i]) ? ((mark._update = current[i]), mark) : (mark = current[i]);
     mark._next = prev[i + 1] || null;
-    const [parents, prevNodes, childNodes] = mark.patch(parent, context);
-    for (let j = 0; j < parents.length; j++) {
-      const prev = patch(parents[j], prevNodes[j] || [], childNodes[j], context);
-      prevNodes[j] = prev;
-    }
-    mark._nodesChildren = prevNodes;
+    const [parents, nodes] = mark.patch(parent, context);
+    const dataChildren = patch(parents, mark._dataChildren ?? [], nodes, context);
+    mark._dataChildren = dataChildren;
   }
   return update;
 }

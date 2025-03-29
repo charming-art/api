@@ -12,7 +12,14 @@ export function groupCircles() {
       }),
       cm.svg("g", data, {
         transform: (i) => `translate(${(i + 1) * 30}, 50)`,
-        children: [[cm.svg("circle", {r: 10, fill: "black"}), cm.svg("circle", {r: 5, fill: "white"})]],
+        children: [
+          cm.svg("g", {
+            children: [
+              [cm.svg("circle", {r: (i) => (i + 1) * 2, fill: "black"})],
+              cm.svg("circle", {r: (i) => (i + 1) * 1, fill: "white"}),
+            ],
+          }),
+        ],
       }),
     ],
   });

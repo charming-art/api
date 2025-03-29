@@ -75,7 +75,7 @@ export class Mark {
     this._update = null;
     this._nodes = null;
     this._next = null;
-    this._nodesChildren = null;
+    this._dataChildren = null;
   }
   render(current, options, values, context) {
     let namespace;
@@ -94,14 +94,12 @@ export class Mark {
 
     const tag = this._tag;
     const nodes = this._nodes || [];
-    const prevNodesChildren = this._nodesChildren || [];
     const dataLength = data.length;
     const nodeLength = nodes.length;
     const enter = new Array(dataLength);
     const update = new Array(dataLength);
     const exit = new Array(nodeLength);
-    const newNodes = new Array(dataLength);
-    const newNodesChildren = new Array(dataLength);
+    const newNodes = (this._nodes = new Array(dataLength));
 
     bindIndex(data, nodes, enter, update, exit);
 
@@ -120,11 +118,9 @@ export class Mark {
       if ((current = enter[i])) {
         const {datum, next} = current;
         const node = this.render(tag, props, {datum, i, data}, context);
-        parent?.insertBefore(node, next);
+        const p = Array.isArray(parent) ? parent[i] : parent;
+        p?.insertBefore(node, next);
         newNodes[i] = node;
-        newNodesChildren[i] = children.flatMap((c) =>
-          isFunction(c) ? c(datum, i, data) : [c].flat().map((d) => d.clone()),
-        );
       }
     }
 
@@ -132,28 +128,25 @@ export class Mark {
       if ((current = update[i])) {
         const datum = data[i];
         newNodes[i] = this.render(current, props, {datum, i, data}, context);
-        newNodesChildren[i] = children.flatMap((c) =>
-          isFunction(c) ? c(datum, i, data) : [c].flat().map((d) => d.clone()),
-        );
       }
     }
 
     for (let i = 0; i < nodeLength; i++) if ((current = exit[i])) current.remove();
 
-    return [(this._nodes = newNodes), prevNodesChildren, (this._nodesChildren = newNodesChildren)];
+    return [newNodes, children.flatMap((c) => [c].flat(Infinity).map((d) => d.clone(data)))];
   }
   nodes() {
     if (!this._nodes) {
-      const [nodes, , children] = this.patch();
-      for (let i = 0; i < nodes.length; i++) for (const mark of children[i]) mark.patch(nodes[i]);
+      const [parents, children] = this.patch();
+      for (const mark of children) mark.patch(parents);
     }
     return this._nodes;
   }
   node() {
     return this.nodes()[0] || null;
   }
-  clone() {
-    return new this.constructor(this._tag, this._data, this._options);
+  clone(data = this._data) {
+    return new this.constructor(this._tag, data, this._options);
   }
 }
 

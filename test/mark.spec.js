@@ -11,7 +11,7 @@ test("Mark should have expected defaults.", () => {
   expect(mark._update).toBe(null);
   expect(mark._nodes).toBe(null);
   expect(mark._next).toBe(null);
-  expect(mark._nodesChildren).toBe(null);
+  expect(mark._dataChildren).toBe(null);
 });
 
 test("Mark.clone should return a new Mark with the same properties", () => {

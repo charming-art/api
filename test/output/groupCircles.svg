@@ -15,23 +15,33 @@
     <circle r="10" fill="black"></circle>
   </g>
   <g transform="translate(30, 50)">
-    <circle r="10" fill="black"></circle>
-    <circle r="5" fill="white"></circle>
+    <g>
+      <circle r="2" fill="black"></circle>
+      <circle r="1" fill="white"></circle>
+    </g>
   </g>
   <g transform="translate(60, 50)">
-    <circle r="10" fill="black"></circle>
-    <circle r="5" fill="white"></circle>
+    <g>
+      <circle r="4" fill="black"></circle>
+      <circle r="2" fill="white"></circle>
+    </g>
   </g>
   <g transform="translate(90, 50)">
-    <circle r="10" fill="black"></circle>
-    <circle r="5" fill="white"></circle>
+    <g>
+      <circle r="6" fill="black"></circle>
+      <circle r="3" fill="white"></circle>
+    </g>
   </g>
   <g transform="translate(120, 50)">
-    <circle r="10" fill="black"></circle>
-    <circle r="5" fill="white"></circle>
+    <g>
+      <circle r="8" fill="black"></circle>
+      <circle r="4" fill="white"></circle>
+    </g>
   </g>
   <g transform="translate(150, 50)">
-    <circle r="10" fill="black"></circle>
-    <circle r="5" fill="white"></circle>
+    <g>
+      <circle r="10" fill="black"></circle>
+      <circle r="5" fill="white"></circle>
+    </g>
   </g>
 </svg>
