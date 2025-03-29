@@ -52,7 +52,7 @@ test("cm.app(options) should pass time and frameCount for draw callback when loo
     },
   }).render();
   expect(t).toBe(0);
-  expect(f).toBe(1);
+  expect(f).toBe(0);
 });
 
 test("cm.app({use}) should define decorators for makrs.", () => {
