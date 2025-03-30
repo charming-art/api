@@ -1,5 +1,6 @@
 import {setAttribute} from "./set.js";
 import {ticker} from "./ticker.js";
+import {Renderer} from "./renderer.js";
 
 export const drawRef = {current: null};
 
@@ -29,7 +30,7 @@ function patch(parent, prev, current, context) {
   return update;
 }
 
-export function render({draw = [], loop = false, frameRate, use = {}, ...rest} = {}) {
+export function render({draw = [], loop = false, frameRate, use = {}, renderer = new Renderer(), ...rest} = {}) {
   const tick = ticker();
   const handler = {};
   const style = {};
@@ -43,7 +44,7 @@ export function render({draw = [], loop = false, frameRate, use = {}, ...rest} =
 
   let node;
   let prev = [];
-  const context = {width: rest.width, height: rest.height, use, root: () => node};
+  const context = {width: rest.width, height: rest.height, use, renderer, root: () => node};
   const next = (options) => {
     const current = [isFunction(draw) ? draw(options) : draw].flat();
     if (!node) {

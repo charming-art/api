@@ -1,4 +1,4 @@
-import {Mark, app} from "../src/index.js";
+import {Mark, app, Renderer} from "../src/index.js";
 import {test, expect} from "vitest";
 
 test("Mark should have expected defaults.", () => {
@@ -30,9 +30,10 @@ test("app should pass expected params to Mark.render", () => {
       expect(tag).toBe("svg:circle");
       expect(options).toEqual({cx: 0, cy: 0, r: 10});
       expect(values).toEqual({datum: 0, i: 0, data: [0]});
-      const {root, ...rest} = context;
+      const {root, renderer, ...rest} = context;
       expect(rest).toEqual({width: 100, height: 200, use: {}});
       expect(root()).toBeInstanceOf(SVGSVGElement);
+      expect(renderer).toBeInstanceOf(Renderer);
       return super.render(tag, options, values, context);
     }
   }
