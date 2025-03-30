@@ -1,6 +1,6 @@
 # Charming
 
-<img src="./img/logo.svg" width="256" alt="logo">
+<a href="https://observablehq.com/d/18b3d6f3affff5bb"><img src="./img/examples.png"  alt="examples"></a>
 
 > [!NOTE]
 > The current next branch is implementing the new proposal API for production use. Please refer to the [main branch](https://github.com/charming-art/charming/tree/main) for the current release.
@@ -22,6 +22,7 @@ cm.app({
 
 - Documentation - https://charmingjs.org/
 - Features - https://charmingjs.org/what-is-charming
+- Examples - https://observablehq.com/d/18b3d6f3affff5bb
 
 ## License 📄
 
