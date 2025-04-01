@@ -45,11 +45,11 @@ const props = {
       let newCode = code
         .replace("import {", "const {")
         .replace(`from "charmingjs"`, "= cm")
-        .replace(`.render("#root")`, `.render(_root)`);
+        .replace(`"#root"`, `__root__`);
       return `(() => {
-        const _root = document.createElement("div");
+        const __root__ = document.createElement("div");
         ${newCode}
-        return _root;
+        return __root__;
       })()`;
     },
     replayable(code) {

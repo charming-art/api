@@ -1,4 +1,4 @@
-import {app, Renderer, svg} from "../src/index.js";
+import {create, Renderer, svg} from "../src/index.js";
 import {test, expect} from "vitest";
 
 class TestRenderer extends Renderer {
@@ -15,7 +15,7 @@ class TestRenderer extends Renderer {
 
 test("Renderer should create elements with expected tag names.", () => {
   const renderer = new TestRenderer();
-  const root = app({renderer, draw: [svg("div", {x: 10, onTap: () => {}})]}).render();
+  const root = create({renderer}).render([svg("div", {x: 10, onTap: () => {}})]);
   const div = root.querySelector("div");
   expect(div).not.toBeNull();
   expect(div.__attrs__).toEqual({x: 10});

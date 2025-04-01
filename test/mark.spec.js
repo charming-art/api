@@ -1,4 +1,4 @@
-import {Mark, app, Renderer} from "../src/index.js";
+import {Mark, create, Renderer} from "../src/index.js";
 import {test, expect} from "vitest";
 
 test("Mark should have expected defaults.", () => {
@@ -24,7 +24,7 @@ test("Mark.clone should return a new Mark with the same properties", () => {
   expect(cloned._children).toEqual([]);
 });
 
-test("app should pass expected params to Mark.render", () => {
+test("root should pass expected params to Mark.render", () => {
   class Test extends Mark {
     render(tag, options, values, context) {
       expect(tag).toBe("svg:circle");
@@ -38,5 +38,5 @@ test("app should pass expected params to Mark.render", () => {
     }
   }
 
-  app({draw: [new Test("svg:circle", {cx: 0, cy: 0, r: 10})], width: 100, height: 200}).render();
+  create({width: 100, height: 200}).render(new Test("svg:circle", {cx: 0, cy: 0, r: 10}));
 });
