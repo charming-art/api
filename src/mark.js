@@ -1,4 +1,7 @@
+import {interval} from "d3-timer";
 import {Renderer} from "./renderer.js";
+
+export const drawRef = {current: null};
 
 const isFunction = (x) => typeof x === "function";
 
@@ -7,7 +10,7 @@ const isStr = (x) => typeof x === "string";
 const isDefined = (x) => x !== undefined && x !== null;
 
 function applyAttributes(node, options, values, context = {}) {
-  const {use, renderer} = context;
+  const {use} = context;
   const decorators = [];
   const props = {};
 
@@ -16,7 +19,7 @@ function applyAttributes(node, options, values, context = {}) {
     else props[k] = v;
   }
 
-  const {attrs = () => ({}), ...rest} = props;
+  const {attrs = () => ({}), renderer, ...rest} = props;
   const {datum, i, data} = values;
   const eventValues = {};
   const attrValues = {};
@@ -50,6 +53,145 @@ function bindIndex(data, nodes, enter, update, exit) {
   for (; i < nodeLength; i++) exit[i] = nodes[i];
 }
 
+function addTimer(parent, key, timer) {
+  const timers = parent.__timers__ ?? new Map();
+  parent.__timers__ = timers;
+  timers.set(key, timer);
+}
+
+function removeTimer(parent, key) {
+  const timers = parent.__timers__ ?? new Map();
+  parent.__timers__ = timers;
+  if (timers.has(key)) {
+    const timer = timers.get(key);
+    timer.stop();
+    timers.delete(key);
+    return timer;
+  }
+  return null;
+}
+
+function markof(group) {
+  if (!group) return [];
+  const {children, datum, i, data} = group;
+  return (isFunction(children) ? children(datum, i, data) : children).flat(Infinity).map((d) => d.clone());
+}
+
+function patchMark(parent, mark, context) {
+  const data = mark._update?._data ?? mark._data;
+  const props = mark._update?._props ?? mark._props;
+  const children = mark._update?._children ?? mark._children;
+  const nextNode = mark._next?._nodes?.[0] ?? null;
+  const {loop, ...attrs} = props;
+
+  const tag = mark._tag;
+  const nodes = mark._nodes ?? [];
+  const dataLength = data.length;
+  const nodeLength = nodes.length;
+  const enter = new Array(dataLength);
+  const update = new Array(dataLength);
+  const exit = new Array(nodeLength);
+  const newNodes = (mark._nodes = new Array(dataLength));
+  const newGroups = new Array(dataLength);
+
+  bindIndex(data, nodes, enter, update, exit);
+
+  let previous, next;
+  for (let i0 = 0, i1 = 0; i0 < dataLength; i0++) {
+    if ((previous = enter[i0])) {
+      if (i0 >= i1) i1 = i0 + 1;
+      while (!(next = update[i1]) && ++i1 < nodeLength);
+      previous.next = next ?? nextNode;
+    }
+  }
+
+  let current;
+
+  for (let i = 0; i < dataLength; i++) {
+    if ((current = enter[i])) {
+      const {datum, next} = current;
+      const node = mark.create(tag, attrs, {datum, i, data}, context);
+      parent?.insertBefore(node, next);
+      newNodes[i] = node;
+      newGroups[i] = {children, datum, i, data, loop};
+    }
+  }
+
+  for (let i = 0; i < nodeLength; i++) {
+    if ((current = update[i])) {
+      const datum = data[i];
+      newNodes[i] = mark.create(current, attrs, {datum, i, data}, context);
+      newGroups[i] = {children, datum, i, data, loop};
+    }
+  }
+
+  for (let i = 0; i < nodeLength; i++) if ((current = exit[i])) current.remove();
+
+  return [newNodes, newGroups];
+}
+
+// Assume the structure is not going to change for now.
+function patch(parent, prev, current, context, timers) {
+  let mark;
+  const m = current.length;
+  const update = new Array(m);
+
+  for (let i = 0; i < m; i++) {
+    update[i] = (mark = prev[i]) ? ((mark._update = current[i]), mark) : (mark = current[i]);
+    mark._next = prev[i + 1] ?? null;
+    const [parents, childGroups] = patchMark(parent, mark, context);
+    const groups = mark._groups ?? [];
+
+    for (let j = 0; j < parents.length; j++) {
+      const groupParent = parents[j];
+      const oldChildren = groups[j] ?? null;
+      const newChildren = childGroups[j];
+      const newLoop = newChildren?.loop ?? false;
+      const isCallback = isFunction(newChildren?.children);
+
+      // Remove old timer if exists.
+      const oldTimer = removeTimer(groupParent, oldChildren);
+      if (oldTimer) timers.delete(oldTimer);
+
+      if (newLoop || isCallback) {
+        const templateChildren = {...newChildren};
+
+        // Rerender the children.
+        let oldMarks = markof(oldChildren);
+        const frame = (options) => {
+          const {children} = templateChildren;
+          const newMarks = markof({...templateChildren, children: children(options)});
+          const prev = (oldMarks = patch(groupParent, oldMarks, newMarks, context));
+          newChildren.children = prev;
+        };
+
+        // Call frame and make it reactive.
+        let frameCount = 0;
+        drawRef.current = frame;
+        frame({time: 0, frameCount});
+        drawRef.current = null;
+
+        // Add new timer.
+        if (newLoop) {
+          const {frameRate} = newLoop;
+          const delay = frameRate ? 1000 / frameRate : undefined;
+          const timer = interval((time) => frame({time, frameCount: ++frameCount}), delay);
+          addTimer(groupParent, newChildren, timer);
+          timers.add(timer);
+        }
+      } else {
+        const prev = patch(groupParent, markof(oldChildren), markof(newChildren), context);
+        newChildren.children = prev;
+      }
+
+      groups[j] = newChildren;
+    }
+    mark._groups = groups;
+  }
+
+  return update;
+}
+
 export class Mark {
   constructor(tag, data, options) {
     if (options === undefined) (options = data), (data = [0]);
@@ -63,77 +205,34 @@ export class Mark {
     this._update = null;
     this._nodes = null;
     this._next = null;
-    this._nodesChildren = null;
+    this._groups = null;
+    this._timers = new Set();
   }
-  render(current, options, values, context) {
-    const {renderer = new Renderer(), ...rest} = context || {};
+  create(current, options, values, context) {
+    const renderer = options?.renderer ?? context?.renderer ?? new Renderer();
     const node = isStr(current) ? renderer.create(current) : current;
-    return applyAttributes(node, options, values, {...rest, renderer});
+    return applyAttributes(node, {...options, renderer}, values, context);
   }
-  patch(parent, context) {
-    const data = this._update?._data || this._data;
-    const props = this._update?._props || this._props;
-    const children = this._update?._children || this._children;
-    const nextNode = this._next?._nodes?.[0] || null;
-
-    const tag = this._tag;
-    const nodes = this._nodes || [];
-    const dataLength = data.length;
-    const nodeLength = nodes.length;
-    const enter = new Array(dataLength);
-    const update = new Array(dataLength);
-    const exit = new Array(nodeLength);
-    const newNodes = (this._nodes = new Array(dataLength));
-    const newNodesChildren = new Array(dataLength);
-
-    bindIndex(data, nodes, enter, update, exit);
-
-    let previous, next;
-    for (let i0 = 0, i1 = 0; i0 < dataLength; i0++) {
-      if ((previous = enter[i0])) {
-        if (i0 >= i1) i1 = i0 + 1;
-        while (!(next = update[i1]) && ++i1 < nodeLength);
-        previous.next = next || nextNode;
-      }
-    }
-
-    let current;
-
-    for (let i = 0; i < dataLength; i++) {
-      if ((current = enter[i])) {
-        const {datum, next} = current;
-        const node = this.render(tag, props, {datum, i, data}, context);
-        parent?.insertBefore(node, next);
-        newNodes[i] = node;
-        newNodesChildren[i] = (isFunction(children) ? children(datum, i, data) : children)
-          .flat(Infinity)
-          .map((d) => d.clone());
-      }
-    }
-
-    for (let i = 0; i < nodeLength; i++) {
-      if ((current = update[i])) {
-        const datum = data[i];
-        newNodes[i] = this.render(current, props, {datum, i, data}, context);
-        newNodesChildren[i] = (isFunction(children) ? children(datum, i, data) : children)
-          .flat(Infinity)
-          .map((d) => d.clone());
-      }
-    }
-
-    for (let i = 0; i < nodeLength; i++) if ((current = exit[i])) current.remove();
-
-    return [newNodes, newNodesChildren];
+  render(parent = document.createDocumentFragment()) {
+    const root = () => {
+      if (parent.nodeName !== "#document-fragment") return parent;
+      return this._nodes?.[0] ?? null;
+    };
+    const context = {...this._props, root};
+    patch(parent, [], [this], context, this._timers);
+    return parent;
+  }
+  unmount() {
+    const nodes = this._nodes ?? [];
+    const timers = this._timers;
+    for (const node of nodes) node.remove();
+    for (const timer of timers) timer.stop();
   }
   nodes() {
-    if (!this._nodes) {
-      const [nodes, children] = this.patch();
-      for (let i = 0; i < nodes.length; i++) for (const mark of children[i]) mark.patch(nodes[i]);
-    }
     return this._nodes;
   }
   node() {
-    return this.nodes()[0] || null;
+    return this._nodes?.[0] ?? null;
   }
   clone() {
     return new this.constructor(this._tag, this._data, this._options);
