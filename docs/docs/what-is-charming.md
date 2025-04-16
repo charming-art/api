@@ -3,11 +3,11 @@
 **Charming** (or **Charming.js**) is a free, open-source JavaScript library that creates animated and interactive SVG. Charming lets you create dynamic and expressive generative art and visualizations effortlessly. Here's a quick example that give you a sense of Charming:
 
 ```js eval t=module
-cm.app({
+const svg = cm.svg("svg", {
   width: 200,
   height: 50,
   loop: true,
-  draw: () => [
+  children: () => [
     cm.svg("circle", {
       cx: Math.abs(Math.sin(Date.now() / 1000) * 200),
       cy: 25,
@@ -16,7 +16,9 @@ cm.app({
       strokeWidth: 4,
     }),
   ],
-}).render("#root");
+});
+
+svg.render("#root");
 ```
 
 ## Based on SVG
@@ -24,14 +26,16 @@ cm.app({
 Charming provides a _svg_ function for creating SVG elements. For example, to create a white circle on a black background:
 
 ```js eval t=module
-cm.app({
+const svg = cm.svg("svg", {
   width: 100,
   height: 100,
-  draw: [
+  children: [
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {cx: 50, cy: 50, r: 40, fill: "white"}),
   ],
-}).render("#root");
+});
+
+svg.render("#root");
 ```
 
 Please refer to [Charming Mark](/docs/charming-mark) for more information.
@@ -45,11 +49,11 @@ play = Inputs.button("Replay");
 ```
 
 ```js eval t=module,replayable
-cm.app({
+const svg = cm.svg("svg", {
   width: 100,
   height: 100,
   use: {transition: cm.transition},
-  draw: [
+  children: [
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {
       cx: 50,
@@ -64,7 +68,9 @@ cm.app({
       },
     }),
   ],
-}).render("#root");
+});
+
+svg.render("#root");
 ```
 
 ## Incremental Updates
@@ -77,18 +83,20 @@ const height = 150;
 let x = width / 2;
 let y = height / 2;
 
-cm.app({
+const svg = cm.svg("svg", {
   width: 600,
   height: 150,
   loop: true,
-  draw: () => {
+  children: () => {
     x += cm.random(-1, 1);
     y += cm.random(-1, 1);
     x = cm.constrain(x, 0, width);
     y = cm.constrain(y, 0, height);
     return [cm.svg("circle", {cx: x, cy: y, fill: "black", r: 20})];
   },
-}).render("#root");
+});
+
+svg.render("#root");
 ```
 
 ## Reactivity for Interaction
@@ -96,11 +104,11 @@ cm.app({
 ```js eval t=module
 const state = cm.state({clicked: false});
 
-cm.app({
+const svg = cm.svg("svg", {
   width: 100,
   height: 100,
   styleBackground: "black",
-  draw: () => [
+  children: () => [
     cm.svg("circle", {
       cx: 50,
       cy: 50,
@@ -110,7 +118,9 @@ cm.app({
       onClick: () => (state.clicked = !state.clicked),
     }),
   ],
-}).render("#root");
+});
+
+svg.render("#root");
 ```
 
 ## A Collection of Tools
