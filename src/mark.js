@@ -74,7 +74,7 @@ function removeTimer(parent, key) {
 function markof(group) {
   if (!group) return [];
   const {children, datum, i, data} = group;
-  return (isFunction(children) ? children(datum, i, data) : children).flat(Infinity).map((d) => d.clone());
+  return [isFunction(children) ? children(datum, i, data) : children].flat(Infinity).map((d) => d.clone());
 }
 
 function patchMark(parent, mark, context) {
