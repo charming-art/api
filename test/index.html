@@ -16,6 +16,9 @@
   select.append(...options);
   document.body.append(select);
 
+  const root = document.createElement("div");
+  document.body.append(root);
+
   const initialValue = new URL(location).searchParams.get("name");
   if (apps[initialValue]) select.value = initialValue;
 
@@ -61,12 +64,10 @@
 
   async function render() {
     if (typeof preClear === "function") preClear();
-    if (isNode(preNode)) preNode.remove();
+    root.innerHTML = "";
     preNode = await apps[select.value]();
-    if (isNode(preNode)) {
-      document.body.appendChild(preNode);
-      preClear = preNode.clear;
-    }
+    root.appendChild(preNode);
+    preClear = preNode.clear;
   }
 
   function isNode(node) {

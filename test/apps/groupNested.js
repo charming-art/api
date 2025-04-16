@@ -1,8 +1,8 @@
 import * as cm from "../../src/index.js";
 
 export function groupNested() {
-  const app = cm.app({
-    draw: [
+  const svg = cm.svg("svg", {
+    children: [
       cm.svg("g", {
         children: [
           cm.svg("g", {
@@ -12,5 +12,5 @@ export function groupNested() {
       }),
     ],
   });
-  return app.render();
+  return svg.render();
 }

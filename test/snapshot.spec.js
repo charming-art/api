@@ -21,7 +21,8 @@ function withJsdom(run) {
 
 async function screenshot(path, app) {
   const renderSSR = withJsdom(app);
-  const root = await renderSSR();
+  const documentFragment = await renderSSR();
+  const root = documentFragment.firstChild;
   root.setAttribute("xmlns", "http://www.w3.org/2000/svg");
   const string = beautify.html(root.outerHTML, {
     indent_size: 2,
@@ -55,7 +56,7 @@ async function expectMatchSnapshot(name, app) {
 }
 
 describe("Snapshots", () => {
-  for (const [name, app] of Object.entries(apps)) {
+  for (const [name, app] of Object.entries(apps).filter(([, app]) => app.skip !== true)) {
     test(name, async () => expectMatchSnapshot(name, app));
   }
 });

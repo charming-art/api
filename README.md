@@ -8,14 +8,18 @@
 The JavaScript library for generative art based on SVG.
 
 ```js
-cm.app({
+import * as cm from "charmingjs";
+
+const svg = cm.svg("svg", {
   width: 100,
   height: 100,
-  draw: [
+  children: [
     cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
     cm.svg("circle", {cx: 50, cy: 50, r: 40, fill: "white"}),
   ],
-}).render("#root");
+});
+
+document.body.appendChild(svg.render());
 ```
 
 ## Resources 📚

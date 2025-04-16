@@ -2,10 +2,10 @@ import * as cm from "../../src/index.js";
 
 export function circles() {
   const data = Array.from({length: 5}, (_, i) => i);
-  const app = cm.app({
+  const svg = cm.svg("svg", {
     width: 30 * (data.length + 1),
     height: 40,
-    draw: [
+    children: [
       cm.svg("circle", data, {
         cy: 20,
         r: 10,
@@ -14,5 +14,5 @@ export function circles() {
       }),
     ],
   });
-  return app.render();
+  return svg.render();
 }

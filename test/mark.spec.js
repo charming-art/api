@@ -1,4 +1,4 @@
-import {Mark, app, Renderer} from "../src/index.js";
+import {Mark, svg} from "../src/index.js";
 import {test, expect} from "vitest";
 
 test("Mark should have expected defaults.", () => {
@@ -11,7 +11,7 @@ test("Mark should have expected defaults.", () => {
   expect(mark._update).toBe(null);
   expect(mark._nodes).toBe(null);
   expect(mark._next).toBe(null);
-  expect(mark._nodesChildren).toBe(null);
+  expect(mark._groups).toBe(null);
 });
 
 test("Mark.clone should return a new Mark with the same properties", () => {
@@ -24,19 +24,24 @@ test("Mark.clone should return a new Mark with the same properties", () => {
   expect(cloned._children).toEqual([]);
 });
 
-test("app should pass expected params to Mark.render", () => {
+test("Mark should pass expected params to Mark.render", () => {
   class Test extends Mark {
-    render(tag, options, values, context) {
+    create(tag, options, values, context) {
       expect(tag).toBe("svg:circle");
       expect(options).toEqual({cx: 0, cy: 0, r: 10});
       expect(values).toEqual({datum: 0, i: 0, data: [0]});
-      const {root, renderer, ...rest} = context;
-      expect(rest).toEqual({width: 100, height: 200, use: {}});
+      const {root, ...rest} = context;
+      expect(rest).toEqual({width: 100, height: 200});
       expect(root()).toBeInstanceOf(SVGSVGElement);
-      expect(renderer).toBeInstanceOf(Renderer);
-      return super.render(tag, options, values, context);
+      return super.create(tag, options, values, context);
     }
   }
 
-  app({draw: [new Test("svg:circle", {cx: 0, cy: 0, r: 10})], width: 100, height: 200}).render();
+  const root = svg("svg", {
+    width: 100,
+    height: 200,
+    children: [new Test("svg:circle", {cx: 0, cy: 0, r: 10})],
+  });
+
+  root.render();
 });
