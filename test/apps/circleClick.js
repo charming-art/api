@@ -7,7 +7,7 @@ export function circleClick() {
     width: 100,
     height: 100,
     styleBackground: "black",
-    children: () => [
+    children: () =>
       cm.svg("circle", {
         cx: 50,
         cy: 50,
@@ -16,10 +16,7 @@ export function circleClick() {
         styleCursor: "pointer",
         onClick: () => (state.clicked = !state.clicked),
       }),
-    ],
   });
 
   return svg.render();
 }
-
-circleClick.skip = true;
