@@ -3,20 +3,17 @@ import {test, expect} from "vitest";
 
 test("svg(svg) should draw without options.", () => {
   const root = svg("svg");
-  root.render();
-  expect(root.node().nodeName).toBe("svg");
+  expect(root.render().nodeName).toBe("svg");
 });
 
 test("svg(svg) should draw without children option.", () => {
   const root = svg("svg", {});
-  root.render();
-  expect(root.node().nodeName).toBe("svg");
+  expect(root.render().nodeName).toBe("svg");
 });
 
 test("svg(text, options) should set textContent for SVG text element correctly.", () => {
   const root = svg("svg", {children: [svg("text", {textContent: "hello world"})]});
-  root.render();
-  const text = root.node().querySelector("text");
+  const text = root.render().querySelector("text");
   expect(text.textContent).toBe("hello world");
 });
 
@@ -28,12 +25,32 @@ test("svg(tag, options) should return a SVG mark with expected attributes", () =
   expect(s._children).toEqual([]);
 });
 
+test("svg(tag, options) should return specified element", () => {
+  const circle = svg("circle", {cx: 0, cy: 0, r: 10}).render();
+  expect(circle.nodeName).toBe("circle");
+});
+
+test("svg(tag, data, options) should wrap elements in a group", () => {
+  const g = svg("circle", [1, 2, 3], {cx: 0, cy: 0, r: 10}).render();
+  expect(g.nodeName).toBe("g");
+});
+
 test("html(tag, options) should return a HTML mark with expected attributes", () => {
   const s = html("div", {class: "test"});
   expect(s._tag).toBe("div");
   expect(s._data).toEqual([0]);
   expect(s._options).toEqual({class: "test"});
   expect(s._children).toEqual([]);
+});
+
+test("html(tag, options) should return specified element", () => {
+  const div = html("div", {class: "test"}).render();
+  expect(div.nodeName).toBe("DIV");
+});
+
+test("html(tag, data, options) should wrap elements in a span element", () => {
+  const span = html("div", [1, 2, 3], {class: "test"}).render();
+  expect(span.nodeName).toBe("SPAN");
 });
 
 test("svg(tag, data, options) should return a SVG mark with expected attributes", () => {
@@ -73,8 +90,7 @@ test("svg(svg, {loop: true}) should stop timer when unmount() is called.", async
     loop: true,
     children: ({time}) => [svg("circle", {id: "circle", r: time})],
   });
-  root.render();
-  const node = root.node();
+  const node = root.render();
   const circle = node.querySelector("#circle");
   const r = circle.getAttribute("r");
   root.unmount();
