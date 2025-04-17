@@ -15,7 +15,7 @@ export class Renderer {
     const [key, name] = tag.split(":");
     const namespace = namespaces[key];
     if (namespace) return document.createElementNS(namespace, name);
-    return document.createElement(name);
+    return document.createElement(key);
   }
   events(node, events) {
     for (const [k, v] of Object.entries(events)) addEventListener(node, k, v);

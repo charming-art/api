@@ -77,6 +77,23 @@ function markof(group) {
   return [isFunction(children) ? children(datum, i, data) : children].flat(Infinity).map((d) => d.clone());
 }
 
+function isDocumentFragment(node) {
+  return node.nodeName === "#document-fragment";
+}
+
+function postprocess(node) {
+  if (!isDocumentFragment(node)) return node;
+  if (node.childNodes.length === 1) return node.firstChild;
+
+  const root =
+    node.firstChild instanceof SVGElement
+      ? document.createElementNS("http://www.w3.org/2000/svg", "g")
+      : document.createElement("span");
+
+  root.append(node);
+  return root;
+}
+
 function patchMark(parent, mark, context) {
   const data = mark._update?._data ?? mark._data;
   const props = mark._update?._props ?? mark._props;
@@ -214,13 +231,10 @@ export class Mark {
     return applyAttributes(node, {...options, renderer}, values, context);
   }
   render(parent = document.createDocumentFragment()) {
-    const root = () => {
-      if (parent.nodeName !== "#document-fragment") return parent;
-      return this._nodes?.[0] ?? null;
-    };
+    const root = () => (parent = postprocess(parent));
     const context = {...this._props, root};
     patch(parent, [], [this], context, this._timers);
-    return parent;
+    return postprocess(parent);
   }
   unmount() {
     const nodes = this._nodes ?? [];

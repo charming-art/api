@@ -21,8 +21,7 @@ function withJsdom(run) {
 
 async function screenshot(path, app) {
   const renderSSR = withJsdom(app);
-  const documentFragment = await renderSSR();
-  const root = documentFragment.firstChild;
+  const root = await renderSSR();
   root.setAttribute("xmlns", "http://www.w3.org/2000/svg");
   const string = beautify.html(root.outerHTML, {
     indent_size: 2,
