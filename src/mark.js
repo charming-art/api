@@ -98,6 +98,7 @@ function patchMark(parent, mark, context) {
   const data = mark._update?._data ?? mark._data;
   const props = mark._update?._props ?? mark._props;
   const children = mark._update?._children ?? mark._children;
+  const isStatic = mark._update?._static ?? mark._static;
   const nextNode = mark._next?._nodes?.[0] ?? null;
   const {loop, ...attrs} = props;
 
@@ -144,7 +145,7 @@ function patchMark(parent, mark, context) {
 
   for (let i = 0; i < nodeLength; i++) if ((current = exit[i])) current.remove();
 
-  return [newNodes, newGroups];
+  return [newNodes, newGroups, isStatic];
 }
 
 // Assume the structure is not going to change for now.
@@ -156,7 +157,7 @@ function patch(parent, prev, current, context, timers) {
   for (let i = 0; i < m; i++) {
     update[i] = (mark = prev[i]) ? ((mark._update = current[i]), mark) : (mark = current[i]);
     mark._next = prev[i + 1] ?? null;
-    const [parents, childGroups] = patchMark(parent, mark, context);
+    const [parents, childGroups, isStatic] = patchMark(parent, mark, context);
     const groups = mark._groups ?? [];
 
     for (let j = 0; j < parents.length; j++) {
@@ -170,7 +171,8 @@ function patch(parent, prev, current, context, timers) {
       const oldTimer = removeTimer(groupParent, oldChildren);
       if (oldTimer) timers.delete(oldTimer);
 
-      if (newLoop || isCallback) {
+      // Only static marks can be animated and interactive.
+      if (isStatic && (newLoop || isCallback)) {
         const templateChildren = {...newChildren};
 
         // Rerender the children.
@@ -211,10 +213,12 @@ function patch(parent, prev, current, context, timers) {
 
 export class Mark {
   constructor(tag, data, options) {
-    if (options === undefined) (options = data), (data = [0]);
+    const isStatic = options === undefined;
+    if (isStatic) (options = data), (data = [0]);
     const {children = [], ...props} = options ?? {};
 
     this._tag = tag;
+    this._static = isStatic;
     this._data = data;
     this._options = options;
     this._props = props;
