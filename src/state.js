@@ -3,11 +3,11 @@ import {drawRef} from "./mark.js";
 let active;
 
 function schedule(deps) {
-  if (active) active.add(deps);
+  if (active) deps.forEach((d) => active.add(d));
   else {
-    active = new Set([deps]);
+    active = new Set(deps);
     setTimeout(() => {
-      active.forEach((dep) => dep.forEach((fn) => fn()));
+      active.forEach((d) => d());
       active = null;
     });
   }
@@ -22,6 +22,8 @@ export function state(data) {
       return target[key];
     },
     set(target, key, value) {
+      const oldValue = target[key];
+      if (oldValue === value) return true;
       if (depsByKey.has(key)) schedule(depsByKey.get(key));
       target[key] = value;
       return true;

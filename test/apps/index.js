@@ -5,3 +5,4 @@ export {groupCircles} from "./groupCircles.js";
 export {groupNested} from "./groupNested.js";
 export {circleClick} from "./circleClick.js";
 export {circlesMoving} from "./circlesMoving.js";
+export {textState} from "./textState.js";
