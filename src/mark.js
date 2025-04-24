@@ -16,7 +16,7 @@ function applyAttributes(node, options, values, context = {}) {
 
   for (const [k, v] of Object.entries(options)) {
     if (use && k in use && isDefined(v)) decorators.push([use[k], v]);
-    else props[k] = v;
+    else if (k !== "use") props[k] = v;
   }
 
   const {attrs = () => ({}), renderer, ...rest} = props;
@@ -176,7 +176,7 @@ function patch(parent, prev, current, context, timers) {
         const templateChildren = {...newChildren};
 
         // Rerender the children.
-        let oldMarks = markof(oldChildren);
+        let oldMarks = oldChildren?.children ?? [];
         const frame = (options) => {
           const {children} = templateChildren;
           const newMarks = markof({...templateChildren, children: children(options)});
@@ -199,7 +199,7 @@ function patch(parent, prev, current, context, timers) {
           timers.add(timer);
         }
       } else {
-        const prev = patch(groupParent, markof(oldChildren), markof(newChildren), context);
+        const prev = patch(groupParent, oldChildren?.children ?? [], markof(newChildren), context);
         newChildren.children = prev;
       }
 
