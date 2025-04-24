@@ -253,7 +253,9 @@ export class Mark {
     return this._nodes?.[0] ?? null;
   }
   clone() {
-    return new this.constructor(this._tag, this._data, this._options);
+    const mark = new this.constructor(this._tag, this._data, this._options);
+    mark._static = this._static;
+    return mark;
   }
 }
 

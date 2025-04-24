@@ -60,11 +60,11 @@ const svgCamelCaseAttributes = new Set([
   "zoomAndPan",
 ]);
 
-const directAttributes = new Set(["textContent", "innerHTML", "className"]);
+const directAttributes = new Set(["textContent", "innerHTML", "className", "innerText"]);
 
 const toKebabCase = (str) => str.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
 
-const svgKeyof = (key) => (svgCamelCaseAttributes.has(key) ? key : toKebabCase(key));
+const svgKeyof = (key) => (svgCamelCaseAttributes.has(key) || directAttributes.has(key) ? key : toKebabCase(key));
 
 const lowerFirst = (str) => str.charAt(0).toLowerCase() + str.slice(1);
 
@@ -73,7 +73,7 @@ export function setAttribute(dom, k, v) {
   if (k.startsWith("style")) return dom.style.setProperty(lowerFirst(k.slice(5)), v);
   k = svgKeyof(k);
   const [set, get] = directAttributes.has(k)
-    ? [(dom[k] = v), () => dom[k]]
+    ? [() => (dom[k] = v), () => dom[k]]
     : [dom.setAttribute.bind(dom, k), dom.getAttribute.bind(dom, k)];
   if (get() === v + "") return; // get() returns a string, such as stroke-width.
   set(v);
