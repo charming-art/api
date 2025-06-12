@@ -127,7 +127,7 @@ export function setDataDrivenChildren() {
     width: 100,
     height: 100,
     children: [
-      svg("g", [1, 2, 3]).children([
+      svg("g", [1, 2, 3]).with([
         svg("circle", {
           cx: (d) => d * 20,
           cy: 50,
@@ -151,8 +151,8 @@ export function setNestedChildren() {
     width: 100,
     height: 100,
     children: [
-      svg("g", [1, 2, 3]).children([
-        svg("g").children([
+      svg("g", [1, 2, 3]).with([
+        svg("g").with([
           svg("circle", {
             cx: (d) => d * 20,
             cy: 50,
@@ -169,8 +169,8 @@ export function setNestedDataDrivenChildren() {
     width: 100,
     height: 100,
     children: [
-      svg("g", [1, 2, 3]).children([
-        svg("g", [4, 5]).children([
+      svg("g", [1, 2, 3]).with([
+        svg("g", [4, 5]).with([
           svg("circle", {
             cx: (d) => d * 5,
             cy: 50,
@@ -190,8 +190,8 @@ export function setTable() {
     [1013, 990, 940, 6907],
   ];
   return renderMark(
-    html("table").children([
-      html("tr", table).children([
+    html("table").with([
+      html("tr", table).with([
         html("td", (row) => row, {
           textContent: (d) => d,
         }),
@@ -205,8 +205,8 @@ export function setNestedCallbackDataDrivenChildren() {
     width: 100,
     height: 100,
     children: [
-      svg("g", [1, 2, 3]).children([
-        svg("g", (d) => Array.from({length: d}, (_, i) => i)).children([
+      svg("g", [1, 2, 3]).with([
+        svg("g", (d) => Array.from({length: d}, (_, i) => i)).with([
           svg("circle", {
             cx: (d) => d * 5,
             cy: 50,
@@ -225,7 +225,7 @@ export function cloneDataDrivenChildren() {
     children: [
       svg("g", [1, 2, 3], {
         transform: (d) => `translate(${d * 20}, 50)`,
-      }).children([
+      }).with([
         svg("circle", {
           r: 10,
         }),
@@ -265,9 +265,9 @@ export function htmlAttributes() {
 export function mathXL() {
   const math = tag.bind(null, "http://www.w3.org/1998/Math/MathML");
   return renderMark(
-    math("math").children([
-      math("mrow").children([
-        math("mrow").children([
+    math("math").with([
+      math("mrow").with([
+        math("mrow").with([
           math("mi", {textContent: "x"}),
           math("mo", {textContent: "∗"}),
           math("mn", {textContent: "2"}),

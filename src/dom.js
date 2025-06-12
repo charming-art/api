@@ -43,7 +43,7 @@ class Mark {
   clone() {
     return new Mark(this._ns, this._tag, this._data, this._options);
   }
-  children(children) {
+  with(children) {
     this._options = {...this._options, children};
     return this;
   }
