@@ -1,2 +1,1 @@
-export {svg, html} from "./dom.js";
-export * from "charmingjs-vector";
+export {svg, html, tag, render, renderMark} from "./dom.js";

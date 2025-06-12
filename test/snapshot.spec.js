@@ -1,8 +1,8 @@
 import {test, expect} from "vitest";
 import * as snapshots from "./snapshots.js";
 
-test("snapshots", async () => {
-  for (const [name, fn] of Object.entries(snapshots)) {
+for (const [name, fn] of Object.entries(snapshots)) {
+  test(`${name} should match snapshot`, async () => {
     await expect(fn()).toMatchFileSnapshot(`./output/${name}.html`);
-  }
-});
+  });
+}

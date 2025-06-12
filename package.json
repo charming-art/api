@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "update": "vitest --update",
+    "test:update": "vitest --update",
     "test": "npm run test:js && npm run test:lint && npm run test:format",
     "test:js": "vitest",
     "test:lint": "eslint src test",
@@ -31,9 +31,6 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "prepublishOnly": "rm -rf dist && rollup -c"
-  },
-  "dependencies": {
-    "charmingjs-vector": "^0.0.3"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.3.1",
@@ -46,10 +43,10 @@
     "js-beautify": "^1.15.4",
     "jsdom": "^26.1.0",
     "prettier": "^3.5.3",
-    "rollup": "^4.42.0",
+    "rollup": "^4.43.0",
     "vite": "^6.3.5",
     "vitepress": "^1.6.3",
-    "vitest": "^3.2.2"
+    "vitest": "^3.2.3"
   },
   "publishConfig": {
     "access": "public"

@@ -1,74 +1,87 @@
-import {svg, html} from "../src/index.js";
+import {html, tag, svg, render, renderMark} from "../src/index.js";
 
 export function strictNull() {
-  return svg();
+  return renderMark(svg());
 }
 
 export function strictString() {
-  return svg(1);
+  return renderMark(svg(1));
 }
 
 export function setAttributes() {
-  return svg("svg", {
+  return render({
     width: 100,
     height: 200,
   });
 }
 
 export function setSnakeCaseAttributes() {
-  return svg("svg", {
+  return render({
     font_size: 100,
     stroke_width: 2,
   });
 }
 
 export function setKebabCaseAttributes() {
-  return svg("svg", {
+  return render({
     "font-size": 100,
     "stroke-width": 2,
   });
 }
 
 export function setTextContent() {
-  return svg("svg", {
+  return render({
     textContent: "hello",
   });
 }
 
 export function setInnerHTML() {
-  return svg("svg", {
-    innerHTML: `<g><text>hello</text></g>`,
+  return render({
+    innerHTML: "<g><text>hello</text></g>",
   });
 }
 
 export function setStyle() {
-  return svg("svg", {
+  return render({
     style_font_size: "100px",
     style_stroke_width: 2,
   });
 }
 
 export function setFunctionAttributes() {
-  return svg("svg", {
+  return render({
     width: () => 100,
     height: () => 200,
   });
 }
 
 export function setChildren() {
-  return svg("svg", {children: [svg("g"), svg("text", {textContent: "hello"})]});
+  return render({
+    children: [
+      svg("g"),
+      svg("text", {
+        textContent: "hello",
+      }),
+    ],
+  });
 }
 
 export function setFalsyChildren() {
-  return svg("svg", {children: [svg("g"), null, false, undefined, svg("text", {textContent: "hello"})]});
-}
-
-export function setFunctionChildren() {
-  return svg("svg", {children: () => [svg("g"), svg("text", {textContent: "hello"})]});
+  return render({
+    children: [
+      svg("g"),
+      null,
+      false,
+      undefined,
+      svg("text", {
+        textContent: "hello",
+      }),
+    ],
+  });
 }
 
 export function setDataDrivenAttributes() {
-  return svg("svg", {
+  return render({
     width: 100,
     height: 100,
     children: [
@@ -81,57 +94,187 @@ export function setDataDrivenAttributes() {
   });
 }
 
-export function setDataDrivenChildren() {
-  return svg("svg", {
+export function setListChildren() {
+  return render({
     width: 100,
     height: 100,
     children: [
-      svg("g", [1, 2, 3], {
-        children: (d) => [
+      [1, 2, 3].map((d) =>
+        svg("circle", {
+          r: d,
+        }),
+      ),
+    ],
+  });
+}
+
+export function setNestedListChildren() {
+  return render({
+    width: 100,
+    height: 100,
+    children: [
+      [1, 2, 3].map((d) =>
+        svg("circle", {
+          r: d,
+        }),
+      ),
+    ],
+  });
+}
+
+export function setDataDrivenChildren() {
+  return render({
+    width: 100,
+    height: 100,
+    children: [
+      svg("g", [1, 2, 3]).children([
+        svg("circle", {
+          cx: (d) => d * 20,
+          cy: 50,
+          r: 10,
+        }),
+      ]),
+    ],
+  });
+}
+
+export function setDataDrivenChildrenWithoutOptions() {
+  return render({
+    width: 100,
+    height: 100,
+    children: [svg("g", [1, 2, 3])],
+  });
+}
+
+export function setNestedChildren() {
+  return render({
+    width: 100,
+    height: 100,
+    children: [
+      svg("g", [1, 2, 3]).children([
+        svg("g").children([
           svg("circle", {
-            cx: d * 20,
+            cx: (d) => d * 20,
             cy: 50,
             r: 10,
           }),
-        ],
-      }),
+        ]),
+      ]),
+    ],
+  });
+}
+
+export function setNestedDataDrivenChildren() {
+  return render({
+    width: 100,
+    height: 100,
+    children: [
+      svg("g", [1, 2, 3]).children([
+        svg("g", [4, 5]).children([
+          svg("circle", {
+            cx: (d) => d * 5,
+            cy: 50,
+            r: 10,
+          }),
+        ]),
+      ]),
+    ],
+  });
+}
+
+export function setTable() {
+  const table = [
+    [11975, 5871, 8916, 2868],
+    [1951, 10048, 2060, 6171],
+    [8010, 16145, 8090, 8045],
+    [1013, 990, 940, 6907],
+  ];
+  return renderMark(
+    html("table").children([
+      html("tr", table).children([
+        html("td", (row) => row, {
+          textContent: (d) => d,
+        }),
+      ]),
+    ]),
+  );
+}
+
+export function setNestedCallbackDataDrivenChildren() {
+  return render({
+    width: 100,
+    height: 100,
+    children: [
+      svg("g", [1, 2, 3]).children([
+        svg("g", (d) => Array.from({length: d}, (_, i) => i)).children([
+          svg("circle", {
+            cx: (d) => d * 5,
+            cy: 50,
+            r: 10,
+          }),
+        ]),
+      ]),
     ],
   });
 }
 
 export function cloneDataDrivenChildren() {
-  return svg("svg", {
+  return render({
     width: 100,
     height: 100,
     children: [
       svg("g", [1, 2, 3], {
         transform: (d) => `translate(${d * 20}, 50)`,
-        children: [svg("circle", {r: 10})],
-      }),
+      }).children([
+        svg("circle", {
+          r: 10,
+        }),
+      ]),
     ],
   });
 }
 
 export function fragmentRoot() {
-  return svg("circle", [1, 2, 3], {
-    cx: (d) => d * 20,
-    cy: 50,
-    r: 10,
-  });
+  return renderMark(
+    svg("circle", [1, 2, 3], {
+      cx: (d) => d * 20,
+      cy: 50,
+      r: 10,
+    }),
+  );
 }
 
 export function htmlAttributes() {
-  return html("div", {
-    className: "hello",
-    disabled: true,
-    checked: true,
-    selected: true,
-    readOnly: true,
-    hidden: true,
-    placeholder: "hello",
-    title: "hello",
-    alt: "hello",
-    href: "https://charmingjs.org",
-    src: "https://charmingjs.org",
-  });
+  return renderMark(
+    html("div", {
+      className: "hello",
+      disabled: true,
+      checked: true,
+      selected: true,
+      readOnly: true,
+      hidden: true,
+      placeholder: "hello",
+      title: "hello",
+      alt: "hello",
+      href: "https://charmingjs.org",
+      src: "https://charmingjs.org",
+    }),
+  );
+}
+
+export function mathXL() {
+  const math = tag.bind(null, "http://www.w3.org/1998/Math/MathML");
+  return renderMark(
+    math("math").children([
+      math("mrow").children([
+        math("mrow").children([
+          math("mi", {textContent: "x"}),
+          math("mo", {textContent: "∗"}),
+          math("mn", {textContent: "2"}),
+        ]),
+        math("mo", {textContent: "+"}),
+        math("mi", {textContent: "y"}),
+      ]),
+    ]),
+  );
 }

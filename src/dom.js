@@ -6,8 +6,13 @@ const isFunc = (x) => typeof x === "function";
 
 const isStr = (x) => typeof x === "string";
 
-function postprocess(fragment) {
-  if (fragment.firstChild === fragment.lastChild) return fragment.firstChild;
+const isObjectLiteral = (x) => Object.prototype.toString.call(x) === "[object Object]";
+
+function postprocess(nodes) {
+  if (!nodes) return null;
+  if (nodes.length === 1) return nodes[0];
+  const fragment = document.createDocumentFragment();
+  fragment.append(...nodes);
   return fragment;
 }
 
@@ -27,38 +32,61 @@ function set(dom, k, v) {
   setter(v);
 }
 
-export function tag(ns, tag, data, options) {
+class Mark {
+  constructor(ns, tag, data, options) {
+    if (isObjectLiteral(data)) (options = data), (data = undefined);
+    this._ns = ns;
+    this._tag = tag;
+    this._data = data;
+    this._options = options;
+  }
+  clone() {
+    return new Mark(this._ns, this._tag, this._data, this._options);
+  }
+  children(children) {
+    this._options = {...this._options, children};
+    return this;
+  }
+}
+
+function renderNodes(mark) {
+  const {_ns: ns, _tag: tag, _data: data = [undefined], _options: options = {}} = mark;
   if (!isStr(tag)) return null;
-  if (options === undefined) (options = data), (data = [0]);
-  const root = document.createDocumentFragment();
-  const {children = [], ...attrs} = options ?? {};
+  const {children = [], ...attrs} = options;
   const nodes = data.map((d, i, array) => {
     const dom = ns ? document.createElementNS(ns, tag) : document.createElement(tag);
     for (const [k, v] of Object.entries(attrs)) {
       const val = k.startsWith("on") ? (e) => v(e, d, i, array) : isFunc(v) ? v(d, i, array) : v;
       set(dom, k, val);
     }
-    const childNodes = isFunc(children)
-      ? children(d, i, array).filter(Boolean)
-      : children.filter(Boolean).map((child) => child.cloneNode(true));
-    dom.append(...childNodes);
     return dom;
   });
-  root.append(...nodes);
-  return postprocess(root);
+  for (const child of children.filter(Boolean).flat(Infinity)) {
+    if (child._data) {
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        const datum = data[i];
+        const childData = child._data;
+        const clonedChild = child.clone();
+        clonedChild._data = isFunc(childData) ? childData(datum, i, data) : childData;
+        const childNodes = renderNodes(clonedChild);
+        node.append(...childNodes);
+      }
+    } else {
+      const clonedChild = child.clone();
+      clonedChild._data = data;
+      const childNodes = renderNodes(clonedChild);
+      for (let i = 0; i < nodes.length; i++) nodes[i].append(childNodes[i]);
+    }
+  }
+  return nodes;
 }
 
-export function use(component, data, options) {
-  if (options === undefined) (options = data), (data = [0]);
-  const root = document.createDocumentFragment();
-  const nodes = data.map((d, i, array) => {
-    const props = {};
-    for (const [k, v] of Object.entries(options)) props[k] = isFunc(v) ? v(d, i, array) : v;
-    return component(props);
-  });
-  root.append(...nodes);
-  return postprocess(root);
-}
+export const renderMark = (mark) => postprocess(renderNodes(mark));
+
+export const render = (options) => renderMark(svg("svg", options));
+
+export const tag = (ns, tag, data, options) => new Mark(ns, tag, data, options);
 
 export const svg = tag.bind(null, "http://www.w3.org/2000/svg");
 
