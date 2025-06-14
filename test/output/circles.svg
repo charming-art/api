@@ -1,7 +1,0 @@
-<svg width="180" height="40" xmlns="http://www.w3.org/2000/svg">
-  <circle fill="orange" cx="30" cy="20" r="10"></circle>
-  <circle fill="steelblue" cx="60" cy="20" r="10"></circle>
-  <circle fill="orange" cx="90" cy="20" r="10"></circle>
-  <circle fill="steelblue" cx="120" cy="20" r="10"></circle>
-  <circle fill="orange" cx="150" cy="20" r="10"></circle>
-</svg>

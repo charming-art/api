@@ -28,13 +28,13 @@ export default defineConfig({
             {text: "API Index", link: "/docs/api-index"},
           ],
         },
-        {
-          text: "Reference",
-          items: [
-            {text: "Charming Mark", link: "/docs/charming-mark"},
-            {text: "Charming Vector", link: "/docs/charming-vector"},
-          ],
-        },
+        // {
+        //   text: "Reference",
+        //   items: [
+        //     {text: "Charming Mark", link: "/docs/charming-mark"},
+        //     {text: "Charming Vector", link: "/docs/charming-vector"},
+        //   ],
+        // },
       ],
     },
     socialLinks: [{icon: "github", link: "https://github.com/charming-art/charming"}],

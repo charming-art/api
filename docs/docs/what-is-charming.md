@@ -1,136 +1,43 @@
 # What is Charming?
 
-**Charming** (or **Charming.js**) is a free, open-source JavaScript library that creates animated and interactive SVG. Charming lets you create dynamic and expressive generative art and visualizations effortlessly. Here's a quick example that give you a sense of Charming:
+**Charming** is a JavaScript library for data-driven generative art that allows artists, designers, educators, and engineers to create expressive, accessible SVG graphics.
 
-```js eval t=module
-const svg = cm.svg("svg", {
-  width: 200,
-  height: 50,
-  loop: true,
-  children: () => [
-    cm.svg("circle", {
-      cx: Math.abs(Math.sin(Date.now() / 1000) * 200),
-      cy: 25,
-      r: 20,
-      stroke: "red",
-      strokeWidth: 4,
+Charming’s API is inspired by data visualization grammar — systems like [AntV G2](https://g2.antv.antgroup.com/), [Observable Plot](https://observablehq.com/plot/) and [Vega-Lite](https://vega.github.io/vega-lite/) — where visuals are built from meaningful, composable units. By combining declarative structure with the power of SVG, Charming encourages a more thoughtful, expressive, inspectable and accessible approach to generative art.
+
+For example, let's first define a function to generate circles recursively:
+
+```js eval inspector=false
+function circles(x, y, r, data = []) {
+  if (r < 16) return;
+  data.push({x, y, r});
+  circles(x - r / 2, y, r * 0.5, data);
+  circles(x + r / 2, y, r * 0.5, data);
+  circles(x, y - r / 2, r * 0.5, data);
+  circles(x, y + r / 2, r * 0.5, data);
+  return data;
+}
+```
+
+Then call the function to generate circles:
+
+```js eval
+const data = circles(240, 240, 200);
+```
+
+Finally draw or visualize the data with Charming's declarative API:
+
+```js eval
+cm.render({
+  width: 480,
+  height: 480,
+  marks: [
+    cm.svg("circle", data, {
+      cx: (d) => d.x,
+      cy: (d) => d.y,
+      r: (d) => d.r,
+      stroke: "black",
+      fill: "transparent",
     }),
   ],
 });
-
-svg.render("#root");
 ```
-
-## Based on SVG
-
-Charming provides a _svg_ function for creating SVG elements. For example, to create a white circle on a black background:
-
-```js eval t=module
-const svg = cm.svg("svg", {
-  width: 100,
-  height: 100,
-  children: [
-    cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-    cm.svg("circle", {cx: 50, cy: 50, r: 40, fill: "white"}),
-  ],
-});
-
-svg.render("#root");
-```
-
-Please refer to [Charming Mark](/docs/charming-mark) for more information.
-
-## Fluid Transition
-
-Charming makes it easier than ever to create fluid transitions. The exported _transition_ decorators lets you apply transitions declaratively to child nodes, whether SVG or HTML. For example, you can create a circle that smoothly change colors and radius over time.
-
-```js eval code=false
-play = Inputs.button("Replay");
-```
-
-```js eval t=module,replayable
-const svg = cm.svg("svg", {
-  width: 100,
-  height: 100,
-  use: {transition: cm.transition},
-  children: [
-    cm.svg("rect", {x: 0, y: 0, width: 100, height: 100, fill: "black"}),
-    cm.svg("circle", {
-      cx: 50,
-      cy: 50,
-      r: 40,
-      fill: "#4B68C9",
-      transition: {
-        keyframes: [
-          {fill: "#E5B442", r: 0, duration: 1000},
-          {fill: "#EE7A64", r: 40, duration: 2000},
-        ],
-      },
-    }),
-  ],
-});
-
-svg.render("#root");
-```
-
-## Incremental Updates
-
-Work in progress.
-
-```js eval t=module
-const width = 600;
-const height = 150;
-let x = width / 2;
-let y = height / 2;
-
-const svg = cm.svg("svg", {
-  width: 600,
-  height: 150,
-  loop: true,
-  children: () => {
-    x += cm.random(-1, 1);
-    y += cm.random(-1, 1);
-    x = cm.constrain(x, 0, width);
-    y = cm.constrain(y, 0, height);
-    return [cm.svg("circle", {cx: x, cy: y, fill: "black", r: 20})];
-  },
-});
-
-svg.render("#root");
-```
-
-## Reactivity for Interaction
-
-```js eval t=module
-const state = cm.state({clicked: false});
-
-const svg = cm.svg("svg", {
-  width: 100,
-  height: 100,
-  styleBackground: "black",
-  children: () => [
-    cm.svg("circle", {
-      cx: 50,
-      cy: 50,
-      r: 40,
-      fill: state.clicked ? "red" : "white",
-      styleCursor: "pointer",
-      onClick: () => (state.clicked = !state.clicked),
-    }),
-  ],
-});
-
-svg.render("#root");
-```
-
-## A Collection of Tools
-
-Charming provides a set of modular tools that you can use together or independently. For example,
-
-- [Charming Mark](/docs/charming-mark) - Creating SVG and HTML with pure function calls.
-- [Charming Vector](/docs/charming-vector) - Manipulating Euclidean vector.
-- ...
-
-## Built on and learn with D3
-
-Charming is built with D3 and integrates seamlessly with it. It simplifies D3's complexity, making it more accessible and easier to learn.
