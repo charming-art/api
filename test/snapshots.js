@@ -66,6 +66,10 @@ export function setChildren() {
   });
 }
 
+export function setZeroChildren() {
+  return renderMark(html("div").with([0]));
+}
+
 export function setFalsyChildren() {
   return render({
     marks: [
@@ -78,6 +82,27 @@ export function setFalsyChildren() {
       }),
     ],
   });
+}
+
+export function setNonMarkChildren() {
+  return renderMark(
+    html("div").with([
+      "hello",
+      html("span").with(["world"]), // Similar to textContent
+      Date("2025-01-01"),
+      {key: "foo"},
+    ]),
+  );
+}
+
+export function setDataDrivenNonMarkChildren() {
+  return renderMark(
+    html("div").with([
+      svg("span", [1, 2, 3]).with([
+        (d, i) => `${i}-${d}`, // Data-driven textContent
+      ]),
+    ]),
+  );
 }
 
 export function setDataDrivenAttributes() {

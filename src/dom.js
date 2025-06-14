@@ -8,7 +8,17 @@ const isStr = (x) => typeof x === "string";
 
 const isObjectLiteral = (x) => Object.prototype.toString.call(x) === "[object Object]";
 
-const rename = (obj, oldKey, newKey) => (oldKey in obj ? ((obj[newKey] = obj[oldKey]), delete obj[oldKey], obj) : obj);
+const isMark = (x) => x instanceof Mark;
+
+const isTruthy = (x) => x != null && x !== false;
+
+function preprocess(options) {
+  if (options.marks) {
+    options.children = options.marks;
+    delete options.marks;
+  }
+  return options;
+}
 
 function postprocess(nodes) {
   if (!nodes) return null;
@@ -63,9 +73,17 @@ function renderNodes(mark) {
     }
     return dom;
   });
-  for (const child of children.filter(Boolean).flat(Infinity)) {
-    if (child._data) {
-      for (let i = 0; i < nodes.length; i++) {
+  for (const child of children.filter(isTruthy).flat(Infinity)) {
+    const n = nodes.length;
+    if (!isMark(child)) {
+      for (let i = 0; i < n; i++) {
+        const node = nodes[i];
+        const datum = data[i];
+        const text = isFunc(child) ? child(datum, i, data) : child;
+        node.append(document.createTextNode(text));
+      }
+    } else if (child._data) {
+      for (let i = 0; i < n; i++) {
         const node = nodes[i];
         const datum = data[i];
         const childData = child._data;
@@ -78,7 +96,7 @@ function renderNodes(mark) {
       const clonedChild = child.clone();
       clonedChild._data = data;
       const childNodes = renderNodes(clonedChild);
-      for (let i = 0; i < nodes.length; i++) nodes[i].append(childNodes[i]);
+      for (let i = 0; i < n; i++) nodes[i].append(childNodes[i]);
     }
   }
   return nodes;
@@ -86,7 +104,7 @@ function renderNodes(mark) {
 
 export const renderMark = (mark) => postprocess(renderNodes(mark));
 
-export const render = (options) => renderMark(svg("svg", rename(options, "marks", "children")));
+export const render = (options) => renderMark(svg("svg", preprocess(options)));
 
 export const tag = (ns) => (tag, data, options) => new Mark(ns, tag, data, options);
 
