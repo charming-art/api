@@ -13,7 +13,7 @@ import * as cm from "charmingjs";
 
 function circles(x, y, r, data = []) {
   if (r < 16) return;
-  data.push({x, y, r, depth});
+  data.push({x, y, r});
   circles(x - r / 2, y, r * 0.5, data);
   circles(x + r / 2, y, r * 0.5, data);
   circles(x, y - r / 2, r * 0.5, data);
