@@ -1,12 +1,12 @@
 # Charming
 
-<a href="https://observablehq.com/d/18b3d6f3affff5bb"><img src="./img/examples.png"  alt="examples"></a>
-
 Charming is a JavaScript library for data-driven generative art that allows artists, designers, educators, and engineers to create expressive, accessible SVG graphics.
 
 Charming’s API is inspired by data visualization grammar — systems like [AntV G2](https://g2.antv.antgroup.com/), [Observable Plot](https://observablehq.com/plot/) and [Vega-Lite](https://vega.github.io/vega-lite/) — where visuals are built from meaningful, composable units. By combining declarative structure with the power of SVG, Charming encourages a more thoughtful, expressive, inspectable and accessible approach to generative art.
 
-<img src="./img/circles.png"  alt="circles" width=492>
+<a href="https://observablehq.com/d/18b3d6f3affff5bb"><img src="./img/examples.png"  alt="examples"></a>
+
+## A Quick Example
 
 ```js
 import * as cm from "charmingjs";
@@ -37,6 +37,8 @@ const svg = cm.render({
 
 document.body.appendChild(svg);
 ```
+
+<img src="./img/example.png"  alt="circles" width=492>
 
 ## Resources 📚
 
