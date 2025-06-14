@@ -6,9 +6,9 @@ npm install charmingjs
 
 There are several way to using Charming.
 
-## Try Online
+<!-- ## Try Online
 
-Charming uses [Observable Notebook](https://observablehq.com/platform/notebooks) as its playground, try this [starter notebook](https://observablehq.com/d/7b4e552feea11ed3)!
+Charming uses [Observable Notebook](https://observablehq.com/platform/notebooks) as its playground, try this [starter notebook](https://observablehq.com/d/7b4e552feea11ed3)! -->
 
 ## Installing from Package Manager
 
@@ -48,11 +48,11 @@ In vanilla HTML, Charming can be imported as an ES module, say from jsDelivr:
 <script type="module">
   import * as cm from "https://cdn.jsdelivr.net/npm/charmingjs/+esm";
 
-  const app = cm.render({
+  const svg = cm.render({
     // ...
   });
 
-  document.body.append(app.node());
+  document.body.append(svg);
 </script>
 ```
 
@@ -67,6 +67,6 @@ Charming is also available as a UMD bundle for legacy browsers.
     // ...
   });
 
-  document.body.append(app.node());
+  document.body.append(svg);
 </script>
 ```

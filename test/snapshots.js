@@ -57,7 +57,7 @@ export function setFunctionAttributes() {
 
 export function setChildren() {
   return render({
-    children: [
+    marks: [
       svg("g"),
       svg("text", {
         textContent: "hello",
@@ -68,7 +68,7 @@ export function setChildren() {
 
 export function setFalsyChildren() {
   return render({
-    children: [
+    marks: [
       svg("g"),
       null,
       false,
@@ -84,7 +84,7 @@ export function setDataDrivenAttributes() {
   return render({
     width: 100,
     height: 100,
-    children: [
+    marks: [
       svg("circle", [1, 2, 3], {
         cx: (d) => d * 20,
         cy: 50,
@@ -98,7 +98,7 @@ export function setListChildren() {
   return render({
     width: 100,
     height: 100,
-    children: [
+    marks: [
       [1, 2, 3].map((d) =>
         svg("circle", {
           r: d,
@@ -112,7 +112,7 @@ export function setNestedListChildren() {
   return render({
     width: 100,
     height: 100,
-    children: [
+    marks: [
       [1, 2, 3].map((d) =>
         svg("circle", {
           r: d,
@@ -126,7 +126,7 @@ export function setDataDrivenChildren() {
   return render({
     width: 100,
     height: 100,
-    children: [
+    marks: [
       svg("g", [1, 2, 3]).with([
         svg("circle", {
           cx: (d) => d * 20,
@@ -142,7 +142,7 @@ export function setDataDrivenChildrenWithoutOptions() {
   return render({
     width: 100,
     height: 100,
-    children: [svg("g", [1, 2, 3])],
+    marks: [svg("g", [1, 2, 3])],
   });
 }
 
@@ -150,7 +150,7 @@ export function setNestedChildren() {
   return render({
     width: 100,
     height: 100,
-    children: [
+    marks: [
       svg("g", [1, 2, 3]).with([
         svg("g").with([
           svg("circle", {
@@ -168,7 +168,7 @@ export function setNestedDataDrivenChildren() {
   return render({
     width: 100,
     height: 100,
-    children: [
+    marks: [
       svg("g", [1, 2, 3]).with([
         svg("g", [4, 5]).with([
           svg("circle", {
@@ -204,7 +204,7 @@ export function setNestedCallbackDataDrivenChildren() {
   return render({
     width: 100,
     height: 100,
-    children: [
+    marks: [
       svg("g", [1, 2, 3]).with([
         svg("g", (d) => Array.from({length: d}, (_, i) => i)).with([
           svg("circle", {
@@ -222,7 +222,7 @@ export function cloneDataDrivenChildren() {
   return render({
     width: 100,
     height: 100,
-    children: [
+    marks: [
       svg("g", [1, 2, 3], {
         transform: (d) => `translate(${d * 20}, 50)`,
       }).with([
@@ -263,7 +263,7 @@ export function htmlAttributes() {
 }
 
 export function mathXL() {
-  const math = tag.bind(null, "http://www.w3.org/1998/Math/MathML");
+  const math = tag("http://www.w3.org/1998/Math/MathML");
   return renderMark(
     math("math").with([
       math("mrow").with([

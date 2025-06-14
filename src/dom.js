@@ -8,6 +8,8 @@ const isStr = (x) => typeof x === "string";
 
 const isObjectLiteral = (x) => Object.prototype.toString.call(x) === "[object Object]";
 
+const rename = (obj, oldKey, newKey) => (oldKey in obj ? ((obj[newKey] = obj[oldKey]), delete obj[oldKey], obj) : obj);
+
 function postprocess(nodes) {
   if (!nodes) return null;
   if (nodes.length === 1) return nodes[0];
@@ -84,10 +86,10 @@ function renderNodes(mark) {
 
 export const renderMark = (mark) => postprocess(renderNodes(mark));
 
-export const render = (options) => renderMark(svg("svg", options));
+export const render = (options) => renderMark(svg("svg", rename(options, "marks", "children")));
 
-export const tag = (ns, tag, data, options) => new Mark(ns, tag, data, options);
+export const tag = (ns) => (tag, data, options) => new Mark(ns, tag, data, options);
 
-export const svg = tag.bind(null, "http://www.w3.org/2000/svg");
+export const svg = tag("http://www.w3.org/2000/svg");
 
-export const html = tag.bind(null, null);
+export const html = tag(null);

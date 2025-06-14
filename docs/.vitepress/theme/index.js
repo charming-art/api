@@ -6,57 +6,17 @@ import "d3-transition";
 import * as cm from "../../../src/index.js";
 import "./custom.css";
 
-const extended = {
-  random(min, max) {
-    return Math.random() * (max - min) + min;
-  },
-  constrain(x, min, max) {
-    return Math.min(Math.max(x, min), max);
-  },
-  transition(node, props) {
-    const {keyframes} = props;
-    const selection = selectAll([node]);
-    let transition = selection;
-
-    for (const {duration, ease, delay, ...attr} of keyframes) {
-      transition = transition.transition();
-      transition
-        .duration(duration)
-        .call((t) => ease && t.ease(ease))
-        .call((t) => delay && t.delay(delay));
-      for (const key in attr) {
-        if (key.startsWith("style")) {
-          const style = key.slice(5).toLowerCase();
-          transition.style(style, attr[key]);
-        } else transition.attr(key, attr[key]);
-      }
-    }
-
-    return node;
-  },
-};
-
 // More props: https://genji-md.dev/reference/props
 const props = {
   Theme: DefaultTheme,
-  library: {cm: {...cm, ...extended}},
+  library: {cm},
   transform: {
     module(code) {
-      let newCode = code
-        .replace("import {", "const {")
-        .replace(`from "charmingjs"`, "= cm")
-        .replace(`.render("#root")`, `.render(_root)`);
-      return `(() => {
-        const _root = document.createElement("div");
+      const newCode = code.replace(`cm.render`, `return cm.render`);
+      const result = `(() => {
         ${newCode}
-        return _root;
       })()`;
-    },
-    replayable(code) {
-      return `(() => {
-        play;
-        return ${code};
-      })()`;
+      return result;
     },
   },
 };
