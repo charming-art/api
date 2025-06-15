@@ -1,4 +1,4 @@
-import {html, tag, svg, render, renderMark} from "../src/index.js";
+import {html, tag, svg, mark, render, renderMark} from "../src/index.js";
 
 export function strictNull() {
   return renderMark(svg());
@@ -298,6 +298,84 @@ export function mathXL() {
         ]),
         math("mo", {textContent: "+"}),
         math("mi", {textContent: "y"}),
+      ]),
+    ]),
+  );
+}
+
+export function basicComponent() {
+  const redCircle = (props) => svg("g").with([svg("circle", {fill: "red", ...props})]);
+  return render({
+    width: 100,
+    height: 100,
+    marks: [mark(redCircle, {r: 10})],
+  });
+}
+
+export function nullComponent() {
+  const nullComponent = () => null;
+  return render({
+    width: 100,
+    height: 100,
+    marks: [mark(nullComponent, {r: 10})],
+  });
+}
+
+export function nullsComponent() {
+  const nullComponent = () => [null, null, null];
+  return render({
+    width: 100,
+    height: 100,
+    marks: [mark(nullComponent, {r: 10})],
+  });
+}
+
+export function basicComponentWithMultipleNodes() {
+  const ring = ({cx, cy}) => [
+    svg("circle", {cx, cy, fill: "red", r: 20}),
+    svg("circle", {cx, cy, fill: "blue", r: 10}),
+  ];
+  return render({
+    width: 100,
+    height: 100,
+    marks: [mark(ring, {cx: 50, cy: 50})],
+  });
+}
+
+export function dataDrivenComponent() {
+  const redCircle = (props) => svg("g").with([svg("circle", {fill: "red", ...props})]);
+  return render({
+    width: 100,
+    height: 100,
+    marks: [mark(redCircle, [1, 2, 3], {r: (d) => d * 10})],
+  });
+}
+
+export function componentWithChildren() {
+  const withTitle = ({title, children}) => html("div").with([html("h1", {textContent: title}), ...children]);
+  return renderMark(
+    html("div").with([
+      mark(withTitle, {
+        title: "Hello",
+      }).with([
+        html("p", {
+          textContent: "World",
+        }),
+      ]),
+    ]),
+  );
+}
+
+export function componentWidthDataDrivenChildren() {
+  const withTitle = ({title, children}) => html("div").with([html("h1", {textContent: title}), ...children]);
+  return renderMark(
+    html("div").with([
+      mark(withTitle, [1, 2, 3], {
+        title: (d) => `Hello ${d}`,
+      }).with([
+        html("p", {
+          textContent: (d) => `World ${d}`,
+        }),
       ]),
     ]),
   );

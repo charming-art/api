@@ -6,6 +6,8 @@ const isFunc = (x) => typeof x === "function";
 
 const isStr = (x) => typeof x === "string";
 
+const isNode = (x) => x instanceof Node;
+
 const isObjectLiteral = (x) => Object.prototype.toString.call(x) === "[object Object]";
 
 const isMark = (x) => x instanceof Mark;
@@ -32,6 +34,10 @@ function snake2kebab(str) {
   return str.replace(/_/g, "-");
 }
 
+function markify(node) {
+  return new Mark(null, node);
+}
+
 // Ref: https://github.com/vanjs-org/van/blob/d09cfd1e1e3b5ea7cf8d0a9b5deacca4c0946fb4/src/van.js#L99
 function set(dom, k, v) {
   k = snake2kebab(k);
@@ -42,6 +48,32 @@ function set(dom, k, v) {
   const propSetter = (propSetterCache[cacheKey] ??= get(protoOf(dom))?.set ?? 0);
   const setter = propSetter ? propSetter.bind(dom) : dom.setAttribute.bind(dom, k);
   setter(v);
+}
+
+function createComponent(_, tag, attrs, d, i, array) {
+  const children = [];
+  const props = {};
+  for (const [k, v] of Object.entries(attrs)) props[k] = isFunc(v) ? v(d, i, array) : v;
+  return {
+    append: (...nodes) => {
+      for (const node of nodes) children.push(markify(node));
+    },
+    render: () => {
+      const nodes = [tag({...props, children})].flat();
+      const fragment = document.createDocumentFragment();
+      for (const child of nodes) if (child) fragment.append(renderMark(child));
+      return fragment;
+    },
+  };
+}
+
+function createDOM(ns, tag, attrs, d, i, array) {
+  const dom = ns ? document.createElementNS(ns, tag) : document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    const val = k.startsWith("on") ? (e) => v(e, d, i, array) : isFunc(v) ? v(d, i, array) : v;
+    set(dom, k, val);
+  }
+  return dom;
 }
 
 class Mark {
@@ -63,16 +95,12 @@ class Mark {
 
 function renderNodes(mark) {
   const {_ns: ns, _tag: tag, _data: data = [undefined], _options: options = {}} = mark;
-  if (!isStr(tag)) return null;
+  const isComponent = isFunc(tag);
+  if (isNode(tag)) return [tag];
+  if (!isStr(tag) && !isComponent) return null;
   const {children = [], ...attrs} = options;
-  const nodes = data.map((d, i, array) => {
-    const dom = ns ? document.createElementNS(ns, tag) : document.createElement(tag);
-    for (const [k, v] of Object.entries(attrs)) {
-      const val = k.startsWith("on") ? (e) => v(e, d, i, array) : isFunc(v) ? v(d, i, array) : v;
-      set(dom, k, val);
-    }
-    return dom;
-  });
+  const creator = (isComponent ? createComponent : createDOM).bind(null, ns, tag, attrs);
+  const nodes = data.map(creator);
   for (const child of children.filter(isTruthy).flat(Infinity)) {
     const n = nodes.length;
     if (!isMark(child)) {
@@ -99,7 +127,7 @@ function renderNodes(mark) {
       for (let i = 0; i < n; i++) nodes[i].append(childNodes[i]);
     }
   }
-  return nodes;
+  return isComponent ? nodes.map((d) => d.render()) : nodes;
 }
 
 export const renderMark = (mark) => postprocess(renderNodes(mark));
@@ -108,6 +136,8 @@ export const render = (options) => renderMark(svg("svg", preprocess(options)));
 
 export const tag = (ns) => (tag, data, options) => new Mark(ns, tag, data, options);
 
+export const mark = tag(null);
+
 export const svg = tag("http://www.w3.org/2000/svg");
 
-export const html = tag(null);
+export const html = mark;
