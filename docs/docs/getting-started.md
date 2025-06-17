@@ -6,9 +6,11 @@ npm install charmingjs
 
 There are several way to using Charming.
 
-<!-- ## Try Online
+## Try Charming Online
 
-Charming uses [Observable Notebook](https://observablehq.com/platform/notebooks) as its playground, try this [starter notebook](https://observablehq.com/d/7b4e552feea11ed3)! -->
+The fastest way to get started with Charming is on [p5.js Web Editor](https://editor.p5js.org/Charming.js/sketches/aR6--CqLp)! Open this sketch and play around. Then go to File > Duplicate to fork it!
+
+![p5.js-editor-example](/p5.js-editor-example.png)
 
 ## Installing from Package Manager
 
