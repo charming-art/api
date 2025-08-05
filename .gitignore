@@ -2,6 +2,7 @@
 node_modules
 yarn.lock
 package-lock.json
-**/target
-src/wasm
 dist
+cache
+docs/.vitepress/lib
+**-actual.svg

@@ -1,16 +1,12 @@
-# Charming
+# What is Charming?
 
-Charming is a JavaScript library for data-driven generative art that allows artists, designers, educators, and engineers to create expressive, accessible SVG graphics.
+**Charming** is a JavaScript library for data-driven generative art that allows artists, designers, educators, and engineers to create expressive, accessible SVG graphics.
 
 Charming’s API is inspired by data visualization grammar — systems like [AntV G2](https://g2.antv.antgroup.com/), [Observable Plot](https://observablehq.com/plot/) and [Vega-Lite](https://vega.github.io/vega-lite/) — where visuals are built from meaningful, composable units. By combining declarative structure with the power of SVG, Charming encourages a more thoughtful, expressive, inspectable and accessible approach to generative art.
 
-<a href="https://observablehq.com/d/18b3d6f3affff5bb"><img src="./img/examples.png"  alt="examples"></a>
+For example, let's first define a function to generate circles recursively:
 
-## A Quick Example
-
-```js
-import * as cm from "charmingjs";
-
+```js eval inspector=false
 function circles(x, y, r, data = []) {
   if (r < 16) return;
   data.push({x, y, r});
@@ -20,12 +16,22 @@ function circles(x, y, r, data = []) {
   circles(x, y + r / 2, r * 0.5, data);
   return data;
 }
+```
 
-const svg = cm.render({
+Then call the function to generate circles:
+
+```js eval
+const data = circles(240, 240, 200);
+```
+
+Finally draw or visualize the data with Charming's declarative API:
+
+```js eval
+cm.render({
   width: 480,
   height: 480,
   marks: [
-    cm.svg("circle", circles(240, 240, 200), {
+    cm.svg("circle", data, {
       cx: (d) => d.x,
       cy: (d) => d.y,
       r: (d) => d.r,
@@ -34,18 +40,4 @@ const svg = cm.render({
     }),
   ],
 });
-
-document.body.appendChild(svg);
 ```
-
-<img src="./img/example.png"  alt="circles" width=492>
-
-## Resources 📚
-
-- Documentation - https://charmingjs.org/
-- Features - https://charmingjs.org/what-is-charming
-- Examples - https://observablehq.com/d/18b3d6f3affff5bb
-
-## License 📄
-
-MIT@Bairui SU

@@ -9,9 +9,7 @@
     "sourceType": "module",
     "ecmaVersion": "latest"
   },
-  "ignorePatterns": ["src/backend/*"],
   "rules": {
-    "no-dupe-keys": "off",
-    "no-constant-condition": "off"
+    "no-cond-assign": "off"
   }
 }

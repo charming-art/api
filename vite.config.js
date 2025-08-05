@@ -1,14 +1,7 @@
-import path from "path";
-import { defineConfig } from "vite";
+import {defineConfig} from "vitest/config";
 
 export default defineConfig({
-  root: "./test",
-  resolve: {
-    alias: {
-      "../backend/index_bg.wasm": "../backend/index_bg.wasm?url",
-    },
+  test: {
+    environment: "jsdom",
   },
-  server: { port: "8080" },
-  build: { outDir: "../" },
-  test: { globalSetup: path.resolve("./server.js") },
 });
