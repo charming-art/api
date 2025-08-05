@@ -59,6 +59,9 @@ class Mark {
     this._options = {...this._options, children};
     return this;
   }
+  render() {
+    return postprocess(renderNodes(this));
+  }
 }
 
 function renderNodes(mark) {
@@ -102,9 +105,7 @@ function renderNodes(mark) {
   return nodes;
 }
 
-export const renderMark = (mark) => postprocess(renderNodes(mark));
-
-export const render = (options) => renderMark(svg("svg", preprocess(options)));
+export const render = (options) => svg("svg", preprocess(options)).render();
 
 export const tag = (ns) => (tag, data, options) => new Mark(ns, tag, data, options);
 

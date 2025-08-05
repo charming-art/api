@@ -1,11 +1,11 @@
 # API Reference
 
 - [_cm_.**render**](/docs/api-index#cm-render) - render a SVG element.
-- [_cm_.**renderMark**](/docs/api-index#cm-renderMark) - render a mark.
 - [_cm_.**svg**](/docs/api-index#cm-svg) - create a SVG mark.
 - [_cm_.**html**](/docs/api-index#cm-html) - create a HTML mark.
 - [_cm_.**tag**](/docs/api-index#cm-tag) - create a new mark factory.
 - [_mark_.**with**](/docs/api-index#mark-with) - append children to mark.
+- [_mark_.**render**](/docs/api-index#mark-render) - render a mark.
 
 ## _cm_.render(_options_) {#cm-render}
 
@@ -25,15 +25,13 @@ cm.render({
 });
 ```
 
-## _cm_.renderMark(_mark_) {#cm-renderMark}
+## _mark_.render() {#mark-render}
 
 ```js eval t=module
-cm.renderMark(
-  cm.html("span", {
-    textContent: "Hello Charming.js",
-    style_color: "red",
-  }),
-);
+cm.html("span", {
+  textContent: "Hello Charming.js",
+  style_color: "red",
+}).render();
 ```
 
 ## _cm_.svg(_tag[, data[, options]]_) {#cm-svg}
@@ -62,15 +60,13 @@ const table = [
   [1013, 990, 940, 6907],
 ];
 
-cm.renderMark(
-  cm.html("table").with([
-    cm.html("tr", table).with([
-      cm.html("td", (row) => row, {
-        textContent: (d) => d,
-      }),
-    ]),
+cm.html("table").with([
+  cm.html("tr", table).with([
+    cm.html("td", (row) => row, {
+      textContent: (d) => d,
+    }),
   ]),
-);
+]).render();
 ```
 
 ## _cm_.tag(_namespace_) {#cm-tag}
@@ -78,19 +74,17 @@ cm.renderMark(
 ```js eval t=module
 const math = cm.tag("http://www.w3.org/1998/Math/MathML");
 
-cm.renderMark(
-  math("math").with([
+math("math").with([
+  math("mrow").with([
     math("mrow").with([
-      math("mrow").with([
-        math("mi", {textContent: "x"}),
-        math("mo", {textContent: "∗"}),
-        math("mn", {textContent: "2"}),
-      ]),
-      math("mo", {textContent: "+"}),
-      math("mi", {textContent: "y"}),
+      math("mi", {textContent: "x"}),
+      math("mo", {textContent: "∗"}),
+      math("mn", {textContent: "2"}),
     ]),
+    math("mo", {textContent: "+"}),
+    math("mi", {textContent: "y"}),
   ]),
-);
+]).render();
 ```
 
 ## _mark_.with(_children_) {#mark-with}
