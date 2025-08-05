@@ -1,11 +1,11 @@
-import {html, tag, svg, render, renderMark} from "../src/index.js";
+import {html, tag, svg, render} from "../src/index.js";
 
 export function strictNull() {
-  return renderMark(svg());
+  return svg().render();
 }
 
 export function strictString() {
-  return renderMark(svg(1));
+  return svg(1).render();
 }
 
 export function setAttributes() {
@@ -67,7 +67,7 @@ export function setChildren() {
 }
 
 export function setZeroChildren() {
-  return renderMark(html("div").with([0]));
+  return html("div").with([0]).render();
 }
 
 export function setFalsyChildren() {
@@ -85,23 +85,23 @@ export function setFalsyChildren() {
 }
 
 export function setNonMarkChildren() {
-  return renderMark(
-    html("div").with([
+  return html("div")
+    .with([
       "hello",
       html("span").with(["world"]), // Similar to textContent
       {key: "foo"},
-    ]),
-  );
+    ])
+    .render();
 }
 
 export function setDataDrivenNonMarkChildren() {
-  return renderMark(
-    html("div").with([
+  return html("div")
+    .with([
       svg("span", [1, 2, 3]).with([
         (d, i) => `${i}-${d}`, // Data-driven textContent
       ]),
-    ]),
-  );
+    ])
+    .render();
 }
 
 export function setDataDrivenAttributes() {
@@ -213,15 +213,15 @@ export function setTable() {
     [8010, 16145, 8090, 8045],
     [1013, 990, 940, 6907],
   ];
-  return renderMark(
-    html("table").with([
+  return html("table")
+    .with([
       html("tr", table).with([
         html("td", (row) => row, {
           textContent: (d) => d,
         }),
       ]),
-    ]),
-  );
+    ])
+    .render();
 }
 
 export function setNestedCallbackDataDrivenChildren() {
@@ -259,37 +259,33 @@ export function cloneDataDrivenChildren() {
 }
 
 export function fragmentRoot() {
-  return renderMark(
-    svg("circle", [1, 2, 3], {
-      cx: (d) => d * 20,
-      cy: 50,
-      r: 10,
-    }),
-  );
+  return svg("circle", [1, 2, 3], {
+    cx: (d) => d * 20,
+    cy: 50,
+    r: 10,
+  }).render();
 }
 
 export function htmlAttributes() {
-  return renderMark(
-    html("div", {
-      className: "hello",
-      disabled: true,
-      checked: true,
-      selected: true,
-      readOnly: true,
-      hidden: true,
-      placeholder: "hello",
-      title: "hello",
-      alt: "hello",
-      href: "https://charmingjs.org",
-      src: "https://charmingjs.org",
-    }),
-  );
+  return html("div", {
+    className: "hello",
+    disabled: true,
+    checked: true,
+    selected: true,
+    readOnly: true,
+    hidden: true,
+    placeholder: "hello",
+    title: "hello",
+    alt: "hello",
+    href: "https://charmingjs.org",
+    src: "https://charmingjs.org",
+  }).render();
 }
 
 export function mathXL() {
   const math = tag("http://www.w3.org/1998/Math/MathML");
-  return renderMark(
-    math("math").with([
+  return math("math")
+    .with([
       math("mrow").with([
         math("mrow").with([
           math("mi", {textContent: "x"}),
@@ -299,6 +295,6 @@ export function mathXL() {
         math("mo", {textContent: "+"}),
         math("mi", {textContent: "y"}),
       ]),
-    ]),
-  );
+    ])
+    .render();
 }

@@ -1,1 +1,1 @@
-export {svg, html, tag, render, renderMark} from "./dom.js";
+export {svg, html, tag, render} from "./dom.js";
