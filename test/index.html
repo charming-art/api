@@ -1,0 +1,42 @@
+<html>
+  <body>
+    <div class="cell" id="cell0"></div>
+    <div class="cell" id="cell1"></div>
+    <div class="cell" id="cell2"></div>
+    <div class="cell" id="cell3"></div>
+  </body>
+  <style>
+    .cell {
+      margin: 10px;
+    }
+
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+  <script type="module">
+    import * as cm from "../src/index.js";
+
+    // cm.context2d should create a canvas element
+    const ctx1 = cm.context2d({width: 200, height: 200});
+    ctx1.fillStyle = "red";
+    ctx1.fillRect(0, 0, 100, 100);
+    document.getElementById("cell0").appendChild(ctx1.canvas);
+
+    // cm.context2d should specify the dpr
+    const ctx2 = cm.context2d({width: 200, height: 200, dpr: 1});
+    ctx2.fillStyle = "blue";
+    ctx2.fillRect(0, 0, 100, 100);
+    document.getElementById("cell1").appendChild(ctx2.canvas);
+
+    // cm.context2d should specify string container
+    const ctx3 = cm.context2d({width: 200, height: 200, container: "#cell2"});
+    ctx3.fillStyle = "green";
+    ctx3.fillRect(0, 0, 100, 100);
+
+    // cm.context2d should specify DOM container
+    const ctx4 = cm.context2d({width: 200, height: 200, container: document.getElementById("cell3")});
+    ctx4.fillStyle = "yellow";
+    ctx4.fillRect(0, 0, 100, 100);
+  </script>
+</html>

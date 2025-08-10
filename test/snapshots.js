@@ -1,63 +1,72 @@
-import {html, tag, svg, render} from "../src/index.js";
+import {html, tag, svg, attr} from "../src/index.js";
 
 export function strictNull() {
-  return svg().render();
+  return svg();
 }
 
 export function strictString() {
-  return svg(1).render();
+  return svg(1);
+}
+
+export function setAttr() {
+  const node = svg("svg");
+  attr(node, "width", 100);
+  attr(node, "height", 200);
+  attr(node, "style-font-size", "100px");
+  attr(node, "style-stroke-width", 2);
+  return node;
 }
 
 export function setAttributes() {
-  return render({
+  return svg("svg", {
     width: 100,
     height: 200,
   });
 }
 
 export function setSnakeCaseAttributes() {
-  return render({
+  return svg("svg", {
     font_size: 100,
     stroke_width: 2,
   });
 }
 
 export function setKebabCaseAttributes() {
-  return render({
+  return svg("svg", {
     "font-size": 100,
     "stroke-width": 2,
   });
 }
 
 export function setTextContent() {
-  return render({
+  return svg("svg", {
     textContent: "hello",
   });
 }
 
 export function setInnerHTML() {
-  return render({
+  return svg("svg", {
     innerHTML: "<g><text>hello</text></g>",
   });
 }
 
 export function setStyle() {
-  return render({
+  return svg("svg", {
     style_font_size: "100px",
     style_stroke_width: 2,
   });
 }
 
 export function setFunctionAttributes() {
-  return render({
+  return svg("svg", {
     width: () => 100,
     height: () => 200,
   });
 }
 
 export function setChildren() {
-  return render({
-    marks: [
+  return svg("svg", {
+    children: [
       svg("g"),
       svg("text", {
         textContent: "hello",
@@ -67,49 +76,43 @@ export function setChildren() {
 }
 
 export function setZeroChildren() {
-  return html("div").with([0]).render();
-}
-
-export function setFalsyChildren() {
-  return render({
-    marks: [
-      svg("g"),
-      null,
-      false,
-      undefined,
-      svg("text", {
-        textContent: "hello",
-      }),
-    ],
+  return html("div", {
+    children: [0],
   });
 }
 
+export function setFalsyChildren() {
+  return svg("svg", [
+    svg("g"),
+    null,
+    false,
+    undefined,
+    svg("text", {
+      textContent: "hello",
+    }),
+  ]);
+}
+
 export function setNonMarkChildren() {
-  return html("div")
-    .with([
-      "hello",
-      html("span").with(["world"]), // Similar to textContent
-      {key: "foo"},
-    ])
-    .render();
+  return html("div", ["hello", html("span", ["world"]), {key: "foo"}]);
 }
 
 export function setDataDrivenNonMarkChildren() {
-  return html("div")
-    .with([
-      svg("span", [1, 2, 3]).with([
-        (d, i) => `${i}-${d}`, // Data-driven textContent
-      ]),
-    ])
-    .render();
+  return html("div", [
+    svg("span", {
+      data: [1, 2, 3],
+      textContent: (d, i) => `${i}-${d}`,
+    }),
+  ]);
 }
 
 export function setDataDrivenAttributes() {
-  return render({
+  return svg("svg", {
     width: 100,
     height: 100,
-    marks: [
-      svg("circle", [1, 2, 3], {
+    children: [
+      svg("circle", {
+        data: [1, 2, 3],
         cx: (d) => d * 20,
         cy: 50,
         r: 10,
@@ -119,89 +122,91 @@ export function setDataDrivenAttributes() {
 }
 
 export function setListChildren() {
-  return render({
+  return svg("svg", {
     width: 100,
     height: 100,
-    marks: [
-      [1, 2, 3].map((d) =>
-        svg("circle", {
-          r: d,
-        }),
-      ),
-    ],
+    children: [1, 2, 3].map((d) => svg("circle", {r: d})),
   });
 }
 
 export function setNestedListChildren() {
-  return render({
+  return svg("svg", {
     width: 100,
     height: 100,
-    marks: [
-      [1, 2, 3].map((d) =>
-        svg("circle", {
-          r: d,
-        }),
-      ),
-    ],
+    children: [[1, 2, 3].map((d) => svg("circle", {r: d}))],
   });
 }
 
 export function setDataDrivenChildren() {
-  return render({
+  return svg("svg", {
     width: 100,
     height: 100,
-    marks: [
-      svg("g", [1, 2, 3]).with([
-        svg("circle", {
-          cx: (d) => d * 20,
-          cy: 50,
-          r: 10,
-        }),
-      ]),
-    ],
-  });
-}
-
-export function setDataDrivenChildrenWithoutOptions() {
-  return render({
-    width: 100,
-    height: 100,
-    marks: [svg("g", [1, 2, 3])],
-  });
-}
-
-export function setNestedChildren() {
-  return render({
-    width: 100,
-    height: 100,
-    marks: [
-      svg("g", [1, 2, 3]).with([
-        svg("g").with([
+    children: [
+      svg("g", {
+        data: [1, 2, 3],
+        children: [
           svg("circle", {
             cx: (d) => d * 20,
             cy: 50,
             r: 10,
           }),
-        ]),
-      ]),
+        ],
+      }),
+    ],
+  });
+}
+
+export function setDataDrivenChildrenWithoutOptions() {
+  return svg("svg", {
+    width: 100,
+    height: 100,
+    children: [svg("g", {data: [1, 2, 3]})],
+  });
+}
+
+export function setNestedChildren() {
+  return svg("svg", {
+    width: 100,
+    height: 100,
+    children: [
+      svg("g", {
+        data: [1, 2, 3],
+        children: [
+          svg("g", {
+            children: [
+              svg("circle", {
+                cx: (d) => d * 20,
+                cy: 50,
+                r: 10,
+              }),
+            ],
+          }),
+        ],
+      }),
     ],
   });
 }
 
 export function setNestedDataDrivenChildren() {
-  return render({
+  return svg("svg", {
     width: 100,
     height: 100,
-    marks: [
-      svg("g", [1, 2, 3]).with([
-        svg("g", [4, 5]).with([
-          svg("circle", {
-            cx: (d) => d * 5,
-            cy: 50,
-            r: 10,
+    children: [
+      svg("g", {
+        data: [1, 2, 3],
+        children: [
+          svg("g", {
+            data: [4, 5],
+            children: [
+              svg("circle", {
+                cx: (d) => d * 5,
+                cy: 50,
+                r: 10,
+              }),
+            ],
           }),
-        ]),
-      ]),
+        ],
+      }),
     ],
   });
 }
@@ -213,57 +218,62 @@ export function setTable() {
     [8010, 16145, 8090, 8045],
     [1013, 990, 940, 6907],
   ];
-  return html("table")
-    .with([
-      html("tr", table).with([
-        html("td", (row) => row, {
+  return html("table", [
+    html("tr", {
+      data: table,
+      children: [
+        html("td", {
+          data: (row) => row,
           textContent: (d) => d,
         }),
-      ]),
-    ])
-    .render();
+      ],
+    }),
+  ]);
 }
 
 export function setNestedCallbackDataDrivenChildren() {
-  return render({
+  return svg("svg", {
     width: 100,
     height: 100,
-    marks: [
-      svg("g", [1, 2, 3]).with([
-        svg("g", (d) => Array.from({length: d}, (_, i) => i)).with([
-          svg("circle", {
-            cx: (d) => d * 5,
-            cy: 50,
-            r: 10,
+    children: [
+      svg("g", {
+        data: [1, 2, 3],
+        children: [
+          svg("g", {
+            data: (d) => Array.from({length: d}, (_, i) => i),
+            children: [svg("circle", {r: 10, cx: (d) => d * 5, cy: 50})],
           }),
-        ]),
-      ]),
+        ],
+      }),
     ],
   });
 }
 
 export function cloneDataDrivenChildren() {
-  return render({
+  return svg("svg", {
     width: 100,
     height: 100,
-    marks: [
-      svg("g", [1, 2, 3], {
+    children: [
+      svg("g", {
+        data: [1, 2, 3],
         transform: (d) => `translate(${d * 20}, 50)`,
-      }).with([
-        svg("circle", {
-          r: 10,
-        }),
-      ]),
+        children: [
+          svg("circle", {
+            r: 10,
+          }),
+        ],
+      }),
     ],
   });
 }
 
 export function fragmentRoot() {
-  return svg("circle", [1, 2, 3], {
+  return svg("circle", {
+    data: [1, 2, 3],
     cx: (d) => d * 20,
     cy: 50,
     r: 10,
-  }).render();
+  });
 }
 
 export function htmlAttributes() {
@@ -279,22 +289,50 @@ export function htmlAttributes() {
     alt: "hello",
     href: "https://charmingjs.org",
     src: "https://charmingjs.org",
-  }).render();
+  });
 }
 
 export function mathXL() {
   const math = tag("http://www.w3.org/1998/Math/MathML");
-  return math("math")
-    .with([
-      math("mrow").with([
-        math("mrow").with([
-          math("mi", {textContent: "x"}),
-          math("mo", {textContent: "∗"}),
-          math("mn", {textContent: "2"}),
-        ]),
-        math("mo", {textContent: "+"}),
-        math("mi", {textContent: "y"}),
-      ]),
-    ])
-    .render();
+  return math("math", {
+    children: [
+      math("mrow", {
+        children: [
+          math("mrow", [
+            math("mi", {textContent: "x"}),
+            math("mo", {textContent: "∗"}),
+            math("mn", {textContent: "2"}),
+          ]),
+          math("mo", {textContent: "+"}),
+          math("mi", {textContent: "y"}),
+        ],
+      }),
+    ],
+  });
+}
+
+export function setCallbackChildren() {
+  return svg("g", {
+    data: [0, 1, 2],
+    transform: (d) => `translate(${(d + 1) * 50}, 0)`,
+    children: [
+      (d, i, data) => {
+        const a = d + i + data.length;
+        return svg("circle", {
+          r: 20,
+          cy: 30,
+          fill: `rgb(${a}, ${a}, ${a})`,
+        });
+      },
+    ],
+  });
+}
+
+export function setDataChildrenStringNodes() {
+  return svg("svg", [
+    svg("g", {
+      data: [1, 2, 3],
+      children: ["hello"],
+    }),
+  ]);
 }
