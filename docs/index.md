@@ -297,7 +297,7 @@ If _options.data_ is specified, for each _child_ in _options.children_, if it is
 (() => {
   const g = cm.svg("g", {
     data: [0, 1, 2],
-    transform: (d) => `translate(${(d + 1) * 50}, 0)`,
+    transform: (d) => `translate(${d * 50 + 30}, 0)`,
     children: [
       (d, i, data) => {
         const a = i * 100;
@@ -589,7 +589,7 @@ context.fill();
 
 ### _cm_.attr(_node_, _key_[, _value_]) {#cm-attr}
 
-If the _value_ is not specified, gets the current value of the specified key of the specified node attributes.
+If _value_ is not specified, gets the current value of the specified key of the specified node attributes.
 
 ```js eval inspector=false
 const svg = cm.svg("svg", {
@@ -606,7 +606,7 @@ svg.getAttribute("height");
 cm.attr(svg, "style_background");
 ```
 
-If the _value_ is specified, sets the specified _attribute_ with the specified _value_ to the specified _node_.
+If _value_ is specified, sets the specified _attribute_ with the specified _value_ to the specified _node_.
 
 ```js eval code=false
 (() => {
@@ -635,6 +635,15 @@ cm.attr(svg, "onclick", (event, {node}) => {
   const next = current === "steelblue" ? "orange" : "steelblue";
   cm.attr(node, "style-background", next);
 });
+```
+
+If _value_ is specified as null, remove that attribute.
+
+```js
+cm.attr(input, "checked", null);
+cm.attr(div, "class", null);
+cm.attr(div, "style-color", null);
+cm.attr(span, "textContent", null);
 ```
 
 If an event listener is specified as _null_, removes that event listener. Otherwise, removes the older one if exists and adds the new one.
