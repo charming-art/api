@@ -156,7 +156,7 @@ Charming is also available as a UMD bundle for legacy browsers.
 
 - [_cm_.**svg**](#cm-svg) - creates an SVG element.
 - [_cm_.**html**](#cm-html) - creates an HTML element.
-- [_cm_.**tag**](/docs/api-index#cm-tag) - creates a new element factory.
+- [_cm_.**tag**](#cm-tag) - creates a new element factory.
 - [_cm_.**context2d**](#cm-context2d) - creates a 2D Canvas drawing context.
 - [_cm_.**attr**](#cm-attr) - sets or gets attributes for HTML or SVG elements.
 
