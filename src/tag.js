@@ -1,4 +1,4 @@
-import {attr} from "./attr.js";
+import {set} from "./attr.js";
 
 const isFunc = (x) => typeof x === "function";
 
@@ -28,7 +28,10 @@ export const tag = (ns) => (name, options) => {
   // Non data driven node.
   if (!data) {
     const {children = [], ...attrs} = rest;
-    for (const [k, v] of Object.entries(attrs)) attr(node, k, isFunc(v) ? v() : v);
+    for (const [k, v] of Object.entries(attrs)) {
+      const val = k.startsWith("on") ? v : isFunc(v) ? v() : v;
+      set(node, k, val);
+    }
     for (const c of children.filter(isTruthy).flat(Infinity)) {
       const child = isNode(c) ? c : document.createTextNode("" + c);
       node.append(child);
@@ -41,15 +44,21 @@ export const tag = (ns) => (name, options) => {
   const nodes = data.map((d, i, array) => {
     const node = ns ? document.createElementNS(ns, name) : document.createElement(name);
     for (const [k, v] of Object.entries(attrs)) {
-      const val = k.startsWith("on") ? (e) => v(e, {d, i, data: array, node}) : isFunc(v) ? v(d, i, array) : v;
-      attr(node, k, val);
+      if (k.startsWith("on")) {
+        const [l, o] = Array.isArray(v) ? v : [v];
+        const val = (e, {node}) => l(e, {d, i, data: array, node});
+        set(node, k, [val, o]);
+      } else {
+        const val = isFunc(v) ? v(d, i, array) : v;
+        set(node, k, val);
+      }
     }
     return node;
   });
 
   for (const c of children.filter(isTruthy).flat(Infinity)) {
     const n = nodes.length;
-    const __data__ = c.__options__.data;
+    const __data__ = c?.__options__?.data;
     if (isFunc(c)) {
       // Data driven children, evaluate on parent data.
       for (let i = 0; i < n; i++) {
@@ -68,11 +77,14 @@ export const tag = (ns) => (name, options) => {
       }
     } else {
       // Appended groups, evaluate on parent data.
-      const fragment = tag(ns)(c.__name__, {...c.__options__, data});
-      if (fragment) {
-        const childeNodes = Array.from(fragment.childNodes);
-        for (let i = 0; i < n; i++) nodes[i].append(childeNodes[i]);
+      let childNodes = [];
+      if (isNode(c)) {
+        const fragment = tag(ns)(c.__name__, {...c.__options__, data});
+        if (fragment) childNodes = Array.from(fragment.childNodes);
+      } else {
+        childNodes = data.map(() => document.createTextNode("" + c));
       }
+      for (let i = 0; i < n; i++) nodes[i].append(childNodes[i]);
     }
   }
 

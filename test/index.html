@@ -23,8 +23,8 @@
     ctx1.fillRect(0, 0, 100, 100);
     document.getElementById("cell0").appendChild(ctx1.canvas);
 
-    // cm.context2d should specify the dpi
-    const ctx2 = cm.context2d({width: 200, height: 200, dpi: 1});
+    // cm.context2d should specify the dpr
+    const ctx2 = cm.context2d({width: 200, height: 200, dpr: 1});
     ctx2.fillStyle = "blue";
     ctx2.fillRect(0, 0, 100, 100);
     document.getElementById("cell1").appendChild(ctx2.canvas);

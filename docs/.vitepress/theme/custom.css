@@ -8,3 +8,7 @@
   --vp-c-indigo-2: #00797f;
   --vp-c-indigo-3: #00adb5;
 }
+
+.language-js {
+  margin-top: 0px !important;
+}
