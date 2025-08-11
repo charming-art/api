@@ -9,6 +9,7 @@ Charming is a free, open-source, lightweight JavaScript library for creative cod
 SVG and Canvas are two powerful technologies for creating rich visual content in web applications. However, it's not easy to working with native SVG and Canvas APIs. For SVG, you must always specify the namespace:
 
 ```js
+const ns = "http://www.w3.org/2000/svg";
 const svg = document.createElementNS(ns, "svg");
 svg.setAttribute("viewBox", "0 0 200 100");
 svg.setAttribute("width", "300");
@@ -18,7 +19,7 @@ svg.setAttribute("height", "150");
 For Canvas, you need to handle *devicePixelRatio* to ensure crisp rendering across different display densities:
 
 ```js
-const ns = "http://www.w3.org/2000/svg";
+
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = 300 * devicePixelRatio;
