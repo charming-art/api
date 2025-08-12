@@ -19,7 +19,6 @@ svg.setAttribute("height", "150");
 For Canvas, you need to handle *devicePixelRatio* to ensure crisp rendering across different display densities:
 
 ```js
-
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = 300 * devicePixelRatio;
