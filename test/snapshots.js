@@ -64,6 +64,20 @@ export function setFunctionAttributes() {
   });
 }
 
+export function setFunctionAttributesWithNode() {
+  return svg("svg", {
+    width: ({node}) => node.clientWidth,
+    height: ({node}) => node.clientHeight,
+  });
+}
+
+export function setDataDrivenFunctionWithNode() {
+  return svg("circle", {
+    data: [1, 2, 3],
+    r: ({node, i}) => node.clientWidth * i,
+  });
+}
+
 export function setChildren() {
   return svg("svg", {
     children: [
