@@ -463,8 +463,9 @@ cm.svg("g", {
 
 #### Handling Events
 
-If an attribute starts with "on", adds a _listener_ to the created element for the specified event _typename_. When a specified event is dispatched on the created element, the specified _listener_ will be evaluated for the element, being passed the current event (_event_) and the context (_context_). The _context_ is an object with the following attributes:
+If an attribute starts with "on", adds a _listener_ to the created element for the specified event _typename_. When a specified event is dispatched on the created element, the specified _listener_ will be evaluated for the element, being passed a context object with the following attributes:
 
+- **event**: the current event,
 - **node**: the current node,
 - **d**: the current data, if the _options.data_ is specified,
 - **i**: the current index, if the _options.data_ is specified,
@@ -472,7 +473,7 @@ If an attribute starts with "on", adds a _listener_ to the created element for t
 
 ```js eval code=false
 (() => {
-  const onclick = (event, {node}) => {
+  const onclick = ({event, node}) => {
     const current = cm.attr(node, "style-background");
     const next = current === "steelblue" ? "orange" : "steelblue";
     cm.attr(node, "style-background", next);
@@ -489,7 +490,7 @@ If an attribute starts with "on", adds a _listener_ to the created element for t
 ```
 
 ```js
-const onclick = (event, {node}) => {
+const onclick = ({event, node}) => {
   const current = cm.attr(node, "style-background");
   const next = current === "steelblue" ? "orange" : "steelblue";
   cm.attr(node, "style-background", next);
@@ -615,7 +616,7 @@ If _value_ is specified, sets the specified _attribute_ with the specified _valu
   cm.attr(svg, "height", 100);
   cm.attr(svg, "style-background", "steelblue");
   cm.attr(svg, "style-cursor", "pointer");
-  cm.attr(svg, "onclick", (event, {node}) => {
+  cm.attr(svg, "onclick", ({event, node}) => {
     const current = cm.attr(node, "style-background");
     const next = current === "steelblue" ? "orange" : "steelblue";
     cm.attr(node, "style-background", next);
@@ -630,7 +631,7 @@ cm.attr(svg, "width", 100);
 cm.attr(svg, "height", 100);
 cm.attr(svg, "style-background", "steelblue");
 cm.attr(svg, "style-cursor", "pointer");
-cm.attr(svg, "onclick", (event, {node}) => {
+cm.attr(svg, "onclick", ({event, node}) => {
   const current = cm.attr(node, "style-background");
   const next = current === "steelblue" ? "orange" : "steelblue";
   cm.attr(node, "style-background", next);

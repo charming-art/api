@@ -46,7 +46,7 @@ export const tag = (ns) => (name, options) => {
     for (const [k, v] of Object.entries(attrs)) {
       if (k.startsWith("on")) {
         const [l, o] = Array.isArray(v) ? v : [v];
-        const val = (e, {node}) => l(e, {d, i, data: array, node});
+        const val = ({event, node}) => l({event, d, i, data: array, node});
         set(node, k, [val, o]);
       } else {
         const val = isFunc(v) ? v({d, i, data: array, node}) : v;
