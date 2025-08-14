@@ -28,7 +28,7 @@ test("attr(dom, event, value) should set event", () => {
   const click = vi.fn();
   attr(div, "onclick", click);
   div.dispatchEvent(new Event("click"));
-  expect(click).toHaveBeenCalledWith(new Event("click"), {node: div});
+  expect(click).toHaveBeenCalledWith({event: expect.any(Event), node: div});
 });
 
 test("attr(dom, key, null) should remove attribute", () => {

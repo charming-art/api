@@ -21,7 +21,7 @@ export function set(dom, k, v) {
     if (prev) dom.removeEventListener(k, prev);
     if (v !== null) {
       const [l, o] = Array.isArray(v) ? v : [v];
-      dom.addEventListener(k, (events[k] = (e) => l(e, {node: dom})), o);
+      dom.addEventListener(k, (events[k] = (e) => l({event: e, node: dom})), o);
     }
     return eventsByDOM.set(dom, events);
   }
