@@ -101,7 +101,7 @@ export function setDataDrivenNonMarkChildren() {
   return html("div", [
     svg("span", {
       data: [1, 2, 3],
-      textContent: (d, i) => `${i}-${d}`,
+      textContent: ({d, i}) => `${i}-${d}`,
     }),
   ]);
 }
@@ -113,7 +113,7 @@ export function setDataDrivenAttributes() {
     children: [
       svg("circle", {
         data: [1, 2, 3],
-        cx: (d) => d * 20,
+        cx: ({d}) => d * 20,
         cy: 50,
         r: 10,
       }),
@@ -146,7 +146,7 @@ export function setDataDrivenChildren() {
         data: [1, 2, 3],
         children: [
           svg("circle", {
-            cx: (d) => d * 20,
+            cx: ({d}) => d * 20,
             cy: 50,
             r: 10,
           }),
@@ -175,7 +175,7 @@ export function setNestedChildren() {
           svg("g", {
             children: [
               svg("circle", {
-                cx: (d) => d * 20,
+                cx: ({d}) => d * 20,
                 cy: 50,
                 r: 10,
               }),
@@ -199,7 +199,7 @@ export function setNestedDataDrivenChildren() {
             data: [4, 5],
             children: [
               svg("circle", {
-                cx: (d) => d * 5,
+                cx: ({d}) => d * 5,
                 cy: 50,
                 r: 10,
               }),
@@ -223,8 +223,8 @@ export function setTable() {
       data: table,
       children: [
         html("td", {
-          data: (row) => row,
-          textContent: (d) => d,
+          data: ({d}) => d,
+          textContent: ({d}) => d,
         }),
       ],
     }),
@@ -240,8 +240,8 @@ export function setNestedCallbackDataDrivenChildren() {
         data: [1, 2, 3],
         children: [
           svg("g", {
-            data: (d) => Array.from({length: d}, (_, i) => i),
-            children: [svg("circle", {r: 10, cx: (d) => d * 5, cy: 50})],
+            data: ({d}) => Array.from({length: d}, (_, i) => i),
+            children: [svg("circle", {r: 10, cx: ({d}) => d * 5, cy: 50})],
           }),
         ],
       }),
@@ -256,7 +256,7 @@ export function cloneDataDrivenChildren() {
     children: [
       svg("g", {
         data: [1, 2, 3],
-        transform: (d) => `translate(${d * 20}, 50)`,
+        transform: ({d}) => `translate(${d * 20}, 50)`,
         children: [
           svg("circle", {
             r: 10,
@@ -270,7 +270,7 @@ export function cloneDataDrivenChildren() {
 export function fragmentRoot() {
   return svg("circle", {
     data: [1, 2, 3],
-    cx: (d) => d * 20,
+    cx: ({d}) => d * 20,
     cy: 50,
     r: 10,
   });
@@ -314,9 +314,9 @@ export function mathXL() {
 export function setCallbackChildren() {
   return svg("g", {
     data: [0, 1, 2],
-    transform: (d) => `translate(${(d + 1) * 50}, 0)`,
+    transform: ({d}) => `translate(${(d + 1) * 50}, 0)`,
     children: [
-      (d, i, data) => {
+      ({d, i, data}) => {
         const a = d + i + data.length;
         return svg("circle", {
           r: 20,

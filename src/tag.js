@@ -29,7 +29,7 @@ export const tag = (ns) => (name, options) => {
   if (!data) {
     const {children = [], ...attrs} = rest;
     for (const [k, v] of Object.entries(attrs)) {
-      const val = k.startsWith("on") ? v : isFunc(v) ? v() : v;
+      const val = k.startsWith("on") ? v : isFunc(v) ? v({node}) : v;
       set(node, k, val);
     }
     for (const c of children.filter(isTruthy).flat(Infinity)) {
@@ -49,7 +49,7 @@ export const tag = (ns) => (name, options) => {
         const val = (e, {node}) => l(e, {d, i, data: array, node});
         set(node, k, [val, o]);
       } else {
-        const val = isFunc(v) ? v(d, i, array) : v;
+        const val = isFunc(v) ? v({d, i, data: array, node}) : v;
         set(node, k, val);
       }
     }
@@ -62,7 +62,7 @@ export const tag = (ns) => (name, options) => {
     if (isFunc(c)) {
       // Data driven children, evaluate on parent data.
       for (let i = 0; i < n; i++) {
-        let child = c(data[i], i, data);
+        let child = c({d: data[i], i, data, node: nodes[i]});
         if (isTruthy(child)) {
           child = isNode(child) ? child : document.createTextNode("" + child);
           nodes[i].append(child);
@@ -71,7 +71,7 @@ export const tag = (ns) => (name, options) => {
     } else if (__data__) {
       // Nested groups, evaluate on derived data from parent data.
       for (let i = 0; i < n; i++) {
-        const childData = isFunc(__data__) ? __data__(data[i], i, data) : __data__;
+        const childData = isFunc(__data__) ? __data__({d: data[i], i, data, node: nodes[i]}) : __data__;
         const childNode = tag(ns)(c.__name__, {...c.__options__, data: childData});
         if (childNode) nodes[i].append(childNode);
       }
