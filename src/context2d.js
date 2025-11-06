@@ -1,4 +1,4 @@
-export function context2d({width, height, dpr = devicePixelRatio, container}) {
+export function context2d({width = 300, height = 150, dpr = devicePixelRatio, container} = {}) {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   canvas.width = width * dpr;
