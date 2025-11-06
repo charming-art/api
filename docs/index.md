@@ -562,8 +562,8 @@ const node = math("math", [
 
 Creates a pixel-perfect 2D Canvas drawing context with the specified options. The following options are supported:
 
-- **width**: the width for the Canvas element, required.
-- **height**: the height for the Canvas element, required.
+- **width**: the width for the Canvas element, defaults to 300.
+- **height**: the height for the Canvas element, defaults to 150.
 - **dpr**: the _devicePixelRatio_, defaults to `window.devicePixelRatio`.
 - **container**: the parent node of the Canvas element. If it is not specified, the Canvas doesn't append to the document. If a string is specified, use it as a selector to query the parent element and append the Canvas to it. If an HTML node is specified, append the node directly.
 
