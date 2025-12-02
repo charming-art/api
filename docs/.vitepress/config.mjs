@@ -18,7 +18,7 @@ export default defineConfig({
       },
     ],
     sidebar: {},
-    socialLinks: [{icon: "github", link: "https://github.com/charming-art/charming"}],
+    socialLinks: [{icon: "github", link: "https://github.com/charming-art/api"}],
     logo: "/logo.svg",
     outline: "deep",
   },
