@@ -51,7 +51,7 @@ cm.svg("text", {
 });
 ```
 
-If _options.data_ is specified, maps the data to a list of SVG elements and wraps them with a fragment element. If an attribute _value_ is a constant, all the elements are given the same attribute value; otherwise, if an attribute _value_ is a function, it is evaluated for each created element, in order, being passed a context object with the current datum (_d_), the current index (_i_), the current data (_data_), and the current node (_node_). The function's return value is then used to set each element's attribute.
+If _options.data_ is specified, maps the data to a list of SVG elements and wraps them with a fragment element. If an attribute _value_ is a constant, all the elements are given the same attribute value; otherwise, if an attribute _value_ is a function, it is evaluated for each created element, in order, being passed the current datum (_d_), the current index (_i_), the current data (_data_), and the current node (_node_) as positional parameters. The function's return value is then used to set each element's attribute.
 
 ```js eval code=false
 (() => {
@@ -63,8 +63,8 @@ If _options.data_ is specified, maps the data to a list of SVG elements and wrap
         data: [20, 70, 120],
         r: 20,
         cy: 30,
-        cx: ({d}) => d,
-        fill: ({i}) => `rgb(${i * 100}, ${i * 100}, ${i * 100})`,
+        cx: (d) => d,
+        fill: (d, i) => `rgb(${i * 100}, ${i * 100}, ${i * 100})`,
       }),
     ],
   });
@@ -76,8 +76,8 @@ cm.svg("circle", {
   data: [50, 100, 150],
   r: 20,
   cy: 30,
-  cx: ({d}) => d,
-  fill: ({i}) => {
+  cx: (d) => d,
+  fill: (d, i) => {
     const b = i * 100;
     return `rgb(${b}, ${b}, ${b})`;
   },
@@ -131,15 +131,15 @@ If _options_ is specified as an array, it's a convenient shorthand for _{childre
 cm.svg("svg", [cm.svg("circle"), cm.svg("rect")]);
 ```
 
-If _options.data_ is specified, for each _child_ in _options.children_, if it is a function, it is evaluated for each created element, in order, being passed a context object with the current datum (_d_), the current index (_i_), the current data (_data_), and the current node (_node_). The function's return value is then appended to the created element.
+If _options.data_ is specified, for each _child_ in _options.children_, if it is a function, it is evaluated for each created element, in order, being passed the current datum (_d_), the current index (_i_), the current data (_data_), and the current node (_node_) as positional parameters. The function's return value is then appended to the created element.
 
 ```js eval code=false
 (() => {
   const g = cm.svg("g", {
     data: [0, 1, 2],
-    transform: ({d}) => `translate(${d * 50 + 30}, 0)`,
+    transform: (d) => `translate(${d * 50 + 30}, 0)`,
     children: [
-      ({d, i, data}) => {
+      (d, i) => {
         const a = i * 100;
         return cm.svg("circle", {
           r: 20,
@@ -156,9 +156,9 @@ If _options.data_ is specified, for each _child_ in _options.children_, if it is
 ```js
 cm.svg("g", {
   data: [0, 1, 2],
-  transform: ({d}) => `translate(${(d + 1) * 50}, 0)`,
+  transform: (d) => `translate(${(d + 1) * 50}, 0)`,
   children: [
-    ({d, i, data}) => {
+    (d, i) => {
       const a = i * 100;
       return cm.svg("circle", {
         r: 20,
@@ -176,12 +176,12 @@ If the _child_ is a constant and the _childOptions.data_ is specified, creates a
 (() => {
   const g = cm.svg("g", {
     data: [0, 1, 2],
-    transform: ({d}) => `translate(${d * 50 + 30}, 0)`,
+    transform: (d) => `translate(${d * 50 + 30}, 0)`,
     children: [
       cm.svg("circle", {
         r: 20,
         cy: 30,
-        fill: ({d, i, data}) => {
+        fill: (d, i) => {
           const a = i * 100;
           return `rgb(${a}, ${a}, ${a})`;
         },
@@ -195,12 +195,12 @@ If the _child_ is a constant and the _childOptions.data_ is specified, creates a
 ```js
 cm.svg("g", {
   data: [0, 1, 2],
-  transform: ({d}) => `translate(${d * 50 + 30}, 0)`,
+  transform: (d) => `translate(${d * 50 + 30}, 0)`,
   children: [
     cm.svg("circle", {
       r: 20,
       cy: 30,
-      fill: ({d, i, data}) => {
+      fill: (d, i) => {
         const a = i * 100;
         return `rgb(${a}, ${a}, ${a})`;
       },
@@ -215,14 +215,14 @@ If the _child_ is a constant and the _childOptions.data_ is specified as a const
 (() => {
   const g = cm.svg("g", {
     data: [0, 1],
-    transform: ({d}) => `translate(30, ${d * 50})`,
+    transform: (d) => `translate(30, ${d * 50})`,
     children: [
       cm.svg("circle", {
         data: [0, 1, 2],
         r: 20,
         cy: 30,
-        cx: ({d}) => d * 50,
-        fill: ({d, i, data}) => {
+        cx: (d) => d * 50,
+        fill: (d, i) => {
           const a = i * 100;
           return `rgb(${a}, ${a}, ${a})`;
         },
@@ -236,14 +236,14 @@ If the _child_ is a constant and the _childOptions.data_ is specified as a const
 ```js
 cm.svg("g", {
   data: [0, 1],
-  transform: ({d}) => `translate(30, ${d * 50})`,
+  transform: (d) => `translate(30, ${d * 50})`,
   children: [
     cm.svg("circle", {
       data: [0, 1, 2],
       r: 20,
       cy: 30,
-      cx: ({d}) => d * 50,
-      fill: ({d, i, data}) => {
+      cx: (d) => d * 50,
+      fill: (d, i) => {
         const a = i * 100;
         return `rgb(${a}, ${a}, ${a})`;
       },
@@ -252,7 +252,7 @@ cm.svg("g", {
 });
 ```
 
-If the _child_ is a constant and the _childOptions.data_ is specified as a function, it is evaluated for each parent element, in order, being passed a context object with the current datum (_d_), the current index (_i_), the current data (_data_), and the current node (_node_). The function's return value is then used to create a list of child elements and append to the current parent element.
+If the _child_ is a constant and the _childOptions.data_ is specified as a function, it is evaluated for each parent element, in order, being passed the current datum (_d_), the current index (_i_), the current data (_data_), and the current node (_node_) as positional parameters. The function's return value is then used to create a list of child elements and append to the current parent element.
 
 ```js eval code=false
 (() => {
@@ -261,14 +261,14 @@ If the _child_ is a constant and the _childOptions.data_ is specified as a funct
       [0, 1, 2],
       [3, 4, 5],
     ],
-    transform: ({d, i}) => `translate(30, ${i * 50})`,
+    transform: (d, i) => `translate(30, ${i * 50})`,
     children: [
       cm.svg("circle", {
-        data: ({d}) => d,
+        data: (d) => d,
         r: 20,
         cy: 30,
-        cx: ({d, i}) => i * 50,
-        fill: ({d, i, data}) => {
+        cx: (d, i) => i * 50,
+        fill: (d, i) => {
           const a = d * 40;
           return `rgb(${a}, ${a}, ${a})`;
         },
@@ -285,14 +285,14 @@ cm.svg("g", {
     [0, 1, 2],
     [3, 4, 5],
   ],
-  transform: ({d, i}) => `translate(30, ${i * 50})`,
+  transform: (d, i) => `translate(30, ${i * 50})`,
   children: [
     cm.svg("circle", {
-      data: ({d}) => d,
+      data: (d) => d,
       r: 20,
       cy: 30,
-      cx: ({d, i}) => i * 50,
-      fill: ({d, i, data}) => {
+      cx: (d, i) => i * 50,
+      fill: (d, i) => {
         const a = d * 40;
         return `rgb(${a}, ${a}, ${a})`;
       },
@@ -303,17 +303,19 @@ cm.svg("g", {
 
 ### Handling Events
 
-If an attribute starts with "on", adds a _listener_ to the created element for the specified event _typename_. When a specified event is dispatched on the created element, the specified _listener_ will be evaluated for the element, being passed a context object with the following attributes:
+If an attribute starts with "on", adds a _listener_ to the created element for the specified event _typename_. When a specified event is dispatched on the created element, the specified _listener_ will be evaluated for the element, being passed the following positional parameters:
 
-- **event**: the current event,
+- **event** (or **e**): the current event,
 - **node**: the current node,
-- **d**: the current data, if the _options.data_ is specified,
-- **i**: the current index, if the _options.data_ is specified,
-- **data**: the current data, if the _options.data_ is specified.
+- **d**: the current data (if the _options.data_ is specified, otherwise `undefined`),
+- **i**: the current index (if the _options.data_ is specified, otherwise `undefined`),
+- **array**: the current data array (if the _options.data_ is specified, otherwise `undefined`).
+
+For all events, the listener receives _(event, node, d, i, array)_. For non-data-driven elements, `d`, `i`, and `array` will be `undefined`.
 
 ```js eval code=false
 (() => {
-  const onclick = ({event, node}) => {
+  const onclick = (event, node) => {
     const current = cm.attr(node, "style-background");
     const next = current === "steelblue" ? "orange" : "steelblue";
     cm.attr(node, "style-background", next);
@@ -330,7 +332,7 @@ If an attribute starts with "on", adds a _listener_ to the created element for t
 ```
 
 ```js
-const onclick = ({event, node}) => {
+const onclick = (event, node) => {
   const current = cm.attr(node, "style-background");
   const next = current === "steelblue" ? "orange" : "steelblue";
   cm.attr(node, "style-background", next);
@@ -426,7 +428,7 @@ If _value_ is specified, sets the specified _attribute_ with the specified _valu
   cm.attr(svg, "height", 100);
   cm.attr(svg, "style-background", "steelblue");
   cm.attr(svg, "style-cursor", "pointer");
-  cm.attr(svg, "onclick", ({event, node}) => {
+  cm.attr(svg, "onclick", (event, node) => {
     const current = cm.attr(node, "style-background");
     const next = current === "steelblue" ? "orange" : "steelblue";
     cm.attr(node, "style-background", next);
@@ -441,7 +443,7 @@ cm.attr(svg, "width", 100);
 cm.attr(svg, "height", 100);
 cm.attr(svg, "style-background", "steelblue");
 cm.attr(svg, "style-cursor", "pointer");
-cm.attr(svg, "onclick", ({event, node}) => {
+cm.attr(svg, "onclick", (event, node) => {
   const current = cm.attr(node, "style-background");
   const next = current === "steelblue" ? "orange" : "steelblue";
   cm.attr(node, "style-background", next);

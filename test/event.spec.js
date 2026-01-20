@@ -6,7 +6,7 @@ test("svg(tag, options) should set events", () => {
   const root = svg("svg", {onclick: click});
   const event = new Event("click");
   root.dispatchEvent(event);
-  expect(click).toHaveBeenCalledWith({event, node: root});
+  expect(click).toHaveBeenCalledWith(event, root, undefined, undefined, undefined);
 });
 
 test("svg(tag, options) should pass datum to event handler", () => {
@@ -15,5 +15,5 @@ test("svg(tag, options) should pass datum to event handler", () => {
   const el = root.children[0];
   const event = new Event("click");
   el.dispatchEvent(event);
-  expect(click).toHaveBeenCalledWith({event, d: 1, i: 0, data: [1, 2, 3], node: el});
+  expect(click).toHaveBeenCalledWith(event, el, 1, 0, [1, 2, 3]);
 });
