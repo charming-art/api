@@ -53,9 +53,9 @@ Oh, one more thing. Since most SVG creations are data-driven, Charming also has 
     children: [
       cm.svg("circle", {
         data: circles(240, 240, 200),
-        cx: ({d}) => d.x,
-        cy: ({d}) => d.y,
-        r: ({d}) => d.r,
+        cx: (d) => d.x,
+        cy: (d) => d.y,
+        r: (d) => d.r,
         stroke: "black",
         fill: "transparent",
       }),
@@ -83,9 +83,9 @@ const svg = cm.svg("svg", {
   children: [
     cm.svg("circle", {
       data: circles(240, 240, 200),
-      cx: ({d}) => d.x,
-      cy: ({d}) => d.y,
-      r: ({d}) => d.r,
+      cx: (d) => d.x,
+      cy: (d) => d.y,
+      r: (d) => d.r,
       stroke: "black",
       fill: "transparent",
     }),
