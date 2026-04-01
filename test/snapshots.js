@@ -329,6 +329,8 @@ export function fragmentRoot() {
   }}/>`;
 }
 
+fragmentRoot.only = true;
+
 export function htmlAttributes() {
   // return html("div", {
   //   className: "hello",

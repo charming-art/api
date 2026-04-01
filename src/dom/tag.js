@@ -16,7 +16,10 @@ function postprocess(node) {
   if (node.firstChild === node.lastChild) {
     return node.firstChild;
   }
-  return node;
+  const root = document.createDocumentFragment();
+  const childNodes = Array.from(node.childNodes);
+  root.append(...childNodes);
+  return root;
 }
 
 function cloneNode(node) {
