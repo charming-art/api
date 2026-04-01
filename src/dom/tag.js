@@ -78,7 +78,7 @@ function hydrate(node, value) {
         const val = (e) => l(e, cloned, d, i, array);
         set(cloned, k, [val, o]);
       } else {
-        const val = isFunc(v) ? v(d, i, array, node) : v;
+        const val = isFunc(v) ? v(d, i, array, cloned) : v;
         set(cloned, k, val);
       }
     }
