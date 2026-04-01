@@ -43,8 +43,8 @@ export default defineConfig({
         text: "Features",
         items: [
           {
-            text: "Charming SVG",
-            link: "/svg",
+            text: "Charming DOM",
+            link: "/dom",
           },
           {
             text: "Charming Canvas",

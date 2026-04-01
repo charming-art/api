@@ -1,49 +1,63 @@
 import {set} from "./attr.js";
 
+const TYPE_NODE = 1;
+
+const TYPE_TEXT = 3;
+
 const isFunc = (x) => typeof x === "function";
-
-const isTruthy = (x) => x != null && x !== false;
-
-const isString = (x) => typeof x === "string";
 
 const isNode = (x) => x?.nodeType;
 
-export const tag = (ns) => (name, options) => {
-  if (!isString(name)) return null;
+const isArray = Array.isArray;
 
-  // Normalize arguments.
-  if (Array.isArray(options)) options = {children: options};
-  if (options === undefined) options = {};
+const isPlainObject = (x) => typeof x === "object" && x !== null && !Array.isArray(x);
 
-  // Create node and store parameters.
-  const node = ns ? document.createElementNS(ns, name) : document.createElement(name);
-  node.__options__ = options;
-  node.__name__ = name;
+const isFalsy = (x) => x === null || x === undefined || x === false;
 
-  const {data, ...rest} = options;
+function postprocess(node) {
+  if (node.firstChild === node.lastChild) {
+    return node.firstChild;
+  }
+  const root = document.createDocumentFragment();
+  const childNodes = Array.from(node.childNodes);
+  root.append(...childNodes);
+  return root;
+}
 
-  // Nested groups.
-  if (isFunc(data)) return node;
+function cloneNode(node) {
+  const cloned = node.cloneNode(true);
+  cloned.__context__ = node.__context__;
+  return cloned;
+}
+
+function contextOf(node) {
+  let p = node.parentNode;
+  while (p) {
+    if (p.__context__) return p.__context__;
+    p = p.parentNode;
+  }
+  return null;
+}
+
+function hydrate(node, value) {
+  if (!isPlainObject(value)) return;
+
+  const {data, ...attrs} = value;
+  const context = contextOf(node);
 
   // Non data driven node.
-  if (!data) {
-    const {children = [], ...attrs} = rest;
+  if (!data && !context) {
     for (const [k, v] of Object.entries(attrs)) {
-      const val = k.startsWith("on") ? v : isFunc(v) ? v(undefined, undefined, undefined, node) : v;
+      const val = k.startsWith("on") ? v : isFunc(v) ? v(node) : v;
       set(node, k, val);
     }
-    for (const c of children.filter(isTruthy).flat(Infinity)) {
-      const child = isNode(c) ? c : document.createTextNode("" + c);
-      node.append(child);
-    }
-    return node;
+    return;
   }
 
-  // Data driven node.
-  const {children = [], ...attrs} = rest;
-  const nodes = data.map((d, i, array) => {
-    const node = ns ? document.createElementNS(ns, name) : document.createElement(name);
+  // Non data driven node in a data driven parent.
+  if (!data && context) {
     for (const [k, v] of Object.entries(attrs)) {
+      const [d, i, array] = context;
       if (k.startsWith("on")) {
         const [l, o] = Array.isArray(v) ? v : [v];
         const val = (e) => l(e, node, d, i, array);
@@ -53,44 +67,90 @@ export const tag = (ns) => (name, options) => {
         set(node, k, val);
       }
     }
-    return node;
-  });
-
-  for (const c of children.filter(isTruthy).flat(Infinity)) {
-    const n = nodes.length;
-    const __data__ = c?.__options__?.data;
-    if (isFunc(c)) {
-      // Data driven children, evaluate on parent data.
-      for (let i = 0; i < n; i++) {
-        let child = c(data[i], i, data, nodes[i]);
-        if (isTruthy(child)) {
-          child = isNode(child) ? child : document.createTextNode("" + child);
-          nodes[i].append(child);
-        }
-      }
-    } else if (__data__) {
-      // Nested groups, evaluate on derived data from parent data.
-      for (let i = 0; i < n; i++) {
-        const childData = isFunc(__data__) ? __data__(data[i], i, data, nodes[i]) : __data__;
-        const childNode = tag(ns)(c.__name__, {...c.__options__, data: childData});
-        if (childNode) nodes[i].append(childNode);
-      }
-    } else {
-      // Appended groups, evaluate on parent data.
-      let childNodes = [];
-      if (isNode(c)) {
-        const fragment = tag(ns)(c.__name__, {...c.__options__, data});
-        if (fragment) childNodes = Array.from(fragment.childNodes);
-      } else {
-        childNodes = data.map(() => document.createTextNode("" + c));
-      }
-      for (let i = 0; i < n; i++) nodes[i].append(childNodes[i]);
-    }
+    return;
   }
 
-  const root = document.createDocumentFragment();
-  root.append(...nodes);
-  root.__options__ = options;
-  root.__name__ = name;
-  return root;
-};
+  // Data driven node.
+  const nodeData = context && isFunc(data) ? data(context[0], context[1], context[2], node) : data;
+  const nodes = nodeData.map((d, i, array) => {
+    const cloned = cloneNode(node);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k.startsWith("on")) {
+        const [l, o] = Array.isArray(v) ? v : [v];
+        const val = (e) => l(e, cloned, d, i, array);
+        set(cloned, k, [val, o]);
+      } else {
+        const val = isFunc(v) ? v(d, i, array, cloned) : v;
+        set(cloned, k, val);
+      }
+    }
+    cloned.__context__ = [d, i, array, cloned];
+    return cloned;
+  });
+  const temp = document.createDocumentFragment();
+  temp.append(...nodes);
+  node.parentNode.insertBefore(temp, node.nextSibling);
+
+  return node;
+}
+
+function append(node, value) {
+  const children = [isArray(value) ? value : [value]].flat(Infinity);
+  const temp = document.createDocumentFragment();
+  const c = contextOf(node);
+  for (const child of children) {
+    const isDataDriven = isFunc(child) && c;
+    const n = isDataDriven ? child(c[0], c[1], c[2]) : child;
+    if (isFalsy(n)) continue;
+    temp.append(isNode(n) ? (isDataDriven ? n : cloneNode(n)) : document.createTextNode(String(n)));
+  }
+  node.parentNode.insertBefore(temp, node);
+}
+
+export function tag(render) {
+  return function ({raw: strings}) {
+    let string = "";
+    for (let j = 0, m = strings.length; j < m; j++) {
+      const input = strings[j];
+      if (j > 0) string += "::" + j;
+      string += input;
+    }
+    const root = render(string);
+    const walker = document.createTreeWalker(root); // DFS walker.
+    const removeNodes = [];
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      switch (node.nodeType) {
+        case TYPE_NODE: {
+          const attributes = node.attributes;
+          for (let i = attributes.length - 1; i >= 0; i--) {
+            const {name} = attributes[i];
+            if (/^::/.test(name)) {
+              const value = arguments[+name.slice(2)];
+              node.removeAttribute(name);
+              const removed = hydrate(node, value);
+              if (removed) {
+                removeNodes.push(removed);
+                walker.nextSibling(); // Skip the children of the removed node.
+              }
+            }
+          }
+          break;
+        }
+        case TYPE_TEXT: {
+          const data = node.data.trim();
+          if (/^::/.test(data)) {
+            const value = arguments[+data.slice(2)];
+            append(node, value);
+            removeNodes.push(node);
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    }
+    for (const node of removeNodes) node.remove();
+    return postprocess(root);
+  };
+}

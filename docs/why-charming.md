@@ -27,7 +27,12 @@ While numerous tools exist in the ecosystem to simplify these workflows, they of
 For those who want to access Canvas and SVG directly without writing too much boilerplate code, introducing Charming:
 
 ```js
-const svg = cm.svg("svg", {width: 300, height: 150, viewBox: "0 0 200 100"});
+const svg = cm.svg`<svg ${{
+  width: 300,
+  height: 150,
+  viewBox: "0 0 200 100",
+}}></svg>`;
+
 const ctx = cm.context2d({width: 300, height: 150});
 ```
 
@@ -47,20 +52,16 @@ Oh, one more thing. Since most SVG creations are data-driven, Charming also has 
     return data;
   }
 
-  const svg = cm.svg("svg", {
-    width: 480,
-    height: 480,
-    children: [
-      cm.svg("circle", {
-        data: circles(240, 240, 200),
-        cx: (d) => d.x,
-        cy: (d) => d.y,
-        r: (d) => d.r,
-        stroke: "black",
-        fill: "transparent",
-      }),
-    ],
-  });
+  const svg = cm.svg`<svg ${{width: 480, height: 480}}>
+    <circle ${{
+      data: circles(240, 240, 200),
+      cx: (d) => d.x,
+      cy: (d) => d.y,
+      r: (d) => d.r,
+      stroke: "black",
+      fill: "transparent",
+    }}/>
+  </svg>`;
 
   return svg;
 })();
@@ -77,20 +78,19 @@ function circles(x, y, r, data = []) {
   return data;
 }
 
-const svg = cm.svg("svg", {
+const svg = cm.svg`<svg ${{
   width: 480,
   height: 480,
-  children: [
-    cm.svg("circle", {
-      data: circles(240, 240, 200),
-      cx: (d) => d.x,
-      cy: (d) => d.y,
-      r: (d) => d.r,
-      stroke: "black",
-      fill: "transparent",
-    }),
-  ],
-});
+}}>
+  <circle ${{
+    data: circles(240, 240, 200),
+    cx: (d) => d.x,
+    cy: (d) => d.y,
+    r: (d) => d.r,
+    stroke: "black",
+    fill: "transparent",
+  }}/>
+</svg>`;
 
 document.body.appendChild(svg);
 ```
