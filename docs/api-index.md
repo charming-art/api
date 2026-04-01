@@ -1,6 +1,6 @@
 # API Index
 
-- [_cm_.**svg**](/dom#cm-svg) - creates and SVG element by template literal.
-- [_cm_.**html**](/dom#cm-html) - creates an HTML element by template literal.
-- [_cm_.**attr**](/dom#cm-attr) - sets or gets attributes for HTML or SVG elements.
-- [_cm_.**context2d**](/canvas#cm-context2d) - creates a 2D Canvas drawing context.
+- [_cm_.**svg**](/dom#cm-svg) — SVG via tagged template literal.
+- [_cm_.**html**](/dom#cm-html) — HTML via tagged template literal.
+- [_cm_.**attr**](/dom#cm-attr) — get, set, or remove attributes (including styles and events) on a node.
+- [_cm_.**context2d**](/canvas#cm-context2d) — 2D canvas rendering context.

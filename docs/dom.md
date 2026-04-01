@@ -1,6 +1,6 @@
 # Charming DOM
 
-**Charming DOM** provides a set of functions to create and manipulate DOM elements. The core feature of this module is data-driven, tagged template literal for HTML and SVG elements, which make the relationship between data and DOM elements more explicit and easier to understand.
+**Charming DOM** helps you create and manipulate DOM elements. Its focus is data-driven tagged template literals for HTML and SVG, so data, markup and mapping stay clearly connected in one place.
 
 ```js
 const svg = cm.svg`<svg ${{width: 200, height: 100}}>
@@ -13,17 +13,25 @@ const svg = cm.svg`<svg ${{width: 200, height: 100}}>
 </svg>`;
 ```
 
-The syntax is inspired by [D3.js](https://d3js.org/). The major difference is that D3.js is excels at describing dynamical data-driven DOM elements with a more fancy API, while Charming is good at describing static data-driven DOM elements with a intuitive syntax. So if you're creating a static visualization of generative art, feel free to use Charming.
+The style is inspired by [D3.js](https://d3js.org/). D3.js excels at dynamic, data-driven DOM updates with a rich API; Charming is aimed at static, data-driven markup with a lighter template syntax. It works well for small UIs, static visualizations and generative art.
 
 ## Creating Elements
 
-Charming DOM provides two tagged template literal for creating HTML and SVG elements: `cm.html` and `cm.svg`.
+Charming DOM provides two tagged template literals for creating HTML and SVG elements: `cm.html` and `cm.svg`.
 
 ```js
 cm.html`<h1>Hello, Charming!</h1>`;
 ```
 
 If multiple top-level nodes are given, the nodes are implicitly wrapped in a [document fragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment).
+
+```js
+cm.html`
+  <h1>Hello A</h1>
+  <h1>Hello B</h1>
+  <h1>Hello C</h1>
+`;
+```
 
 ## Setting Attributes
 
@@ -36,7 +44,7 @@ cm.html`<h1 ${{id: "title", className: "heading1"}}></h1>`;
 Kebab-case attributes are typically specified in snake_case:
 
 ```js
-cm.html`<button ${{aria_label="Close", aria_expanded="false"}}></button>`;
+cm.html`<button ${{aria_label: "Close", aria_expanded: "false"}}></button>`;
 ```
 
 But you can also specify them in kebab-case if you prefer:
@@ -74,13 +82,13 @@ cm.html`<button ${{onclick: () => alert("Hello, Charming!")}}>Click me!</button>
 The event object and the node are passed as the first and second arguments to the listener.
 
 ```js
-html`<span${{
+cm.html`<span ${{
   onmouseover: (event, node) => (node.style.background = "yellow"),
   onmousedown: (event, node) => (node.style.background = "red"),
   onmouseup: (event, node) => (node.style.background = "yellow"),
   onmouseout: (event, node) => (node.style.background = ""),
 }}>
-  hover me
+  hover me!
 </span>`;
 ```
 
@@ -125,7 +133,7 @@ cm.svg`<svg>
     data: items,
     r: 10, // constant value
     fill: (d) => d, // function value
-    cx: (d) => i * 100,
+    cx: (d, i) => i * 100,
     cy: 50,
   }}/>
 </svg>`;
@@ -175,7 +183,6 @@ cm.svg`<svg>
     data: items,
     transform: (d, i) => `translate(0, ${i * 100})`,
   }}>
-    // A function child
     ${(d, i) => cm.svg`<circle ${{r: 10, fill: d}}/>`}
   </g>
 </svg>`;
@@ -202,7 +209,7 @@ cm.html`<table>
 </table>`;
 ```
 
-If a data is specified and an attribute starts with "on", adds a _listener_ to the created element for the specified event _typename_. When a specified event is dispatched on the created element, the specified _listener_ will be evaluated for the element, being passed the the current event(or **e**), the current node(or **node**), the current data(or **d**), the current index(or **i**), and the current data array(or **array**).
+If data is specified and an attribute starts with "on", it adds a _listener_ for that event. When the event fires, the _listener_ receives the current event (**e**), the current node (**node**), the current datum (**d**), the index (**i**), and the data array (**array**).
 
 For all events, the listener receives _(event, node, d, i, array)_. For non-data-driven elements, `d`, `i`, and `array` will be `undefined`.
 
@@ -221,7 +228,7 @@ cm.svg`<svg>
 </svg>`;
 ```
 
-## _cm_.html {#cm-html}
+## _cm_.html\`\<markup\>\` {#cm-html}
 
 Renders the specified markup as an HTML element and returns it. For more details, please refer to [Creating Elements](#creating-elements).
 
@@ -229,7 +236,7 @@ Renders the specified markup as an HTML element and returns it. For more details
 const html = cm.html`<h1>Hello, Charming!</h1>`;
 ```
 
-## _cm_.svg {#cm-svg}
+## _cm_.svg\`\<markup\>\` {#cm-svg}
 
 Renders the specified markup as an SVG element and returns it. For more details, please refer to [Creating Elements](#creating-elements).
 
@@ -251,7 +258,7 @@ cm.attr(div, "style-background"); // "red"
 If _value_ is specified, sets the specified _attribute_ with the specified _value_ to the specified _node_.
 
 ```js
-const svg = cm.svg`<svg></svg`;
+const svg = cm.svg`<svg></svg>`;
 
 // Set attributes
 cm.attr(svg, "width", 100);
