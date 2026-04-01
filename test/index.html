@@ -1,42 +1,72 @@
-<html>
-  <body>
-    <div class="cell" id="cell0"></div>
-    <div class="cell" id="cell1"></div>
-    <div class="cell" id="cell2"></div>
-    <div class="cell" id="cell3"></div>
-  </body>
-  <style>
-    .cell {
-      margin: 10px;
-    }
+<script type="module">
+  import * as examples from "./examples/index.js";
 
-    canvas {
-      border: 1px solid black;
-    }
-  </style>
-  <script type="module">
-    import * as cm from "../src/index.js";
+  // Tool
+  const tool = document.createElement("div");
+  tool.id = "tool";
+  tool.style.display = "flex";
+  tool.style.margin = "1em 0px";
+  document.body.append(tool);
 
-    // cm.context2d should create a canvas element
-    const ctx1 = cm.context2d({width: 200, height: 200});
-    ctx1.fillStyle = "red";
-    ctx1.fillRect(0, 0, 100, 100);
-    document.getElementById("cell0").appendChild(ctx1.canvas);
+  // Select
+  const select = createSelect(() => {
+    const {value} = select;
+    history.pushState({value}, "", `?name=${value}`);
+    render();
+  });
+  const options = Object.keys(examples).map(createOption);
+  tool.append(select);
+  select.append(...options);
 
-    // cm.context2d should specify the dpr
-    const ctx2 = cm.context2d({width: 200, height: 200, dpr: 1});
-    ctx2.fillStyle = "blue";
-    ctx2.fillRect(0, 0, 100, 100);
-    document.getElementById("cell1").appendChild(ctx2.canvas);
+  const container = document.createElement("div");
+  container.id = "container";
+  document.body.append(container);
 
-    // cm.context2d should specify string container
-    const ctx3 = cm.context2d({width: 200, height: 200, container: "#cell2"});
-    ctx3.fillStyle = "green";
-    ctx3.fillRect(0, 0, 100, 100);
+  // Init app name.
+  const initialValue = new URL(location).searchParams.get("name");
+  if (examples[initialValue]) select.value = initialValue;
+  render();
 
-    // cm.context2d should specify DOM container
-    const ctx4 = cm.context2d({width: 200, height: 200, container: document.getElementById("cell3")});
-    ctx4.fillStyle = "yellow";
-    ctx4.fillRect(0, 0, 100, 100);
-  </script>
-</html>
+  function createSelect(onchange) {
+    const select = document.createElement("select");
+    select.style.height = "20px";
+    select.onchange = onchange;
+    document.onkeydown = (event) => {
+      if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
+        return;
+      }
+      switch (event.key) {
+        case "ArrowLeft": {
+          if (select.selectedIndex > 0) {
+            select.selectedIndex--;
+            select.onchange();
+          } else alert("This is the first test case.");
+          break;
+        }
+        case "ArrowRight": {
+          if (select.selectedIndex < select.options.length - 1) {
+            select.selectedIndex++;
+            select.onchange();
+          } else alert("This is the last test case.");
+          break;
+        }
+      }
+    };
+
+    return select;
+  }
+
+  function createOption(key) {
+    const option = document.createElement("option");
+    option.value = key;
+    option.textContent = key;
+    return option;
+  }
+
+  function render() {
+    container.innerHTML = "";
+    const fn = examples[select.value];
+    const node = fn();
+    container.append(node);
+  }
+</script>
