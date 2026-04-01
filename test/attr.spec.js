@@ -1,5 +1,5 @@
 import {test, expect, vi} from "vitest";
-import {attr} from "../src/attr.js";
+import {attr} from "../src/index.js";
 
 test("attr(dom, key, value) should set attribute", () => {
   const div = document.createElement("div");
