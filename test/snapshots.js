@@ -156,26 +156,6 @@ export function setDataDrivenChildrenWithoutOptions() {
 }
 
 export function setNestedChildren() {
-  // return svg("svg", {
-  //   width: 100,
-  //   height: 100,
-  //   children: [
-  //     svg("g", {
-  //       data: [1, 2, 3],
-  //       children: [
-  //         svg("g", {
-  //           children: [
-  //             svg("circle", {
-  //               cx: (d) => d * 20,
-  //               cy: 50,
-  //               r: 10,
-  //             }),
-  //           ],
-  //         }),
-  //       ],
-  //     }),
-  //   ],
-  // });
   return cm.svg`<svg ${{
     width: 100,
     height: 100,
@@ -193,27 +173,6 @@ export function setNestedChildren() {
 }
 
 export function setNestedDataDrivenChildren() {
-  // return svg("svg", {
-  //   width: 100,
-  //   height: 100,
-  //   children: [
-  //     svg("g", {
-  //       data: [1, 2, 3],
-  //       children: [
-  //         svg("g", {
-  //           data: [4, 5],
-  //           children: [
-  //             svg("circle", {
-  //               cx: (d) => d * 5,
-  //               cy: 50,
-  //               r: 10,
-  //             }),
-  //           ],
-  //         }),
-  //       ],
-  //     }),
-  //   ],
-  // });
   return cm.svg`<svg ${{
     width: 100,
     height: 100,
@@ -237,17 +196,6 @@ export function setTable() {
     [8010, 16145, 8090, 8045],
     [1013, 990, 940, 6907],
   ];
-  // return html("table", [
-  //   html("tr", {
-  //     data: table,
-  //     children: [
-  //       html("td", {
-  //         data: (d) => d,
-  //         textContent: (d) => d,
-  //       }),
-  //     ],
-  //   }),
-  // ]);
   return cm.html`<table>
     <tbody>
       <tr ${{data: table}}>
@@ -258,21 +206,6 @@ export function setTable() {
 }
 
 export function setNestedCallbackDataDrivenChildren() {
-  // return svg("svg", {
-  //   width: 100,
-  //   height: 100,
-  //   children: [
-  //     svg("g", {
-  //       data: [1, 2, 3],
-  //       children: [
-  //         svg("g", {
-  //           data: (d) => Array.from({length: d}, (_, i) => i),
-  //           children: [svg("circle", {r: 10, cx: (d) => d * 5, cy: 50})],
-  //         }),
-  //       ],
-  //     }),
-  //   ],
-  // });
   return cm.svg`<svg ${{
     width: 100,
     height: 100,
@@ -286,21 +219,6 @@ export function setNestedCallbackDataDrivenChildren() {
 }
 
 export function cloneDataDrivenChildren() {
-  // return svg("svg", {
-  //   width: 100,
-  //   height: 100,
-  //   children: [
-  //     svg("g", {
-  //       data: [1, 2, 3],
-  //       transform: (d) => `translate(${d * 20}, 50)`,
-  //       children: [
-  //         svg("circle", {
-  //           r: 10,
-  //         }),
-  //       ],
-  //     }),
-  //   ],
-  // });
   return cm.svg`<svg ${{
     width: 100,
     height: 100,
@@ -315,12 +233,6 @@ export function cloneDataDrivenChildren() {
 }
 
 export function fragmentRoot() {
-  // return svg("circle", {
-  //   data: [1, 2, 3],
-  //   cx: (d) => d * 20,
-  //   cy: 50,
-  //   r: 10,
-  // });
   return cm.svg`<circle ${{
     data: [1, 2, 3],
     cx: (d) => d * 20,
@@ -332,19 +244,6 @@ export function fragmentRoot() {
 fragmentRoot.only = true;
 
 export function htmlAttributes() {
-  // return html("div", {
-  //   className: "hello",
-  //   disabled: true,
-  //   checked: true,
-  //   selected: true,
-  //   readOnly: true,
-  //   hidden: true,
-  //   placeholder: "hello",
-  //   title: "hello",
-  //   alt: "hello",
-  //   href: "https://charmingjs.org",
-  //   src: "https://charmingjs.org",
-  // });
   return cm.html`<div ${{
     className: "hello",
     disabled: true,
@@ -361,20 +260,6 @@ export function htmlAttributes() {
 }
 
 export function setCallbackChildren() {
-  // return svg("g", {
-  //   data: [0, 1, 2],
-  //   transform: (d) => `translate(${(d + 1) * 50}, 0)`,
-  //   children: [
-  //     (d, i, data) => {
-  //       const a = d + i + data.length;
-  //       return svg("circle", {
-  //         r: 20,
-  //         cy: 30,
-  //         fill: `rgb(${a}, ${a}, ${a})`,
-  //       });
-  //     },
-  //   ],
-  // });
   return cm.svg`<g ${{
     data: [0, 1, 2],
     transform: (d) => `translate(${(d + 1) * 50}, 0)`,
@@ -391,12 +276,6 @@ export function setCallbackChildren() {
 }
 
 export function setDataChildrenStringNodes() {
-  // return svg("svg", [
-  //   svg("g", {
-  //     data: [1, 2, 3],
-  //     children: ["hello"],
-  //   }),
-  // ]);
   return cm.svg`<svg>
     <g ${{data: [1, 2, 3]}}>
       hello
