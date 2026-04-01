@@ -41,7 +41,7 @@ cm.strokeLine(context, 10, 10, 90, 90);
 
 ## _cm_.context2d(_options_) {#cm-context2d}
 
-Returns a **pixel-aligned** 2D context: backing store size uses `width × height × dpr`, CSS size uses `width` and `height`, and the context is scaled so you draw in CSS pixels.
+Returns a **pixel-aligned** 2D context: the canvas backing store is sized to `width * dpr` by `height * dpr`, CSS size uses `width` and `height`, and the context is scaled so you draw in CSS pixels.
 
 Options:
 
