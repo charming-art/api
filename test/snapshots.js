@@ -241,8 +241,6 @@ export function fragmentRoot() {
   }}/>`;
 }
 
-fragmentRoot.only = true;
-
 export function htmlAttributes() {
   return cm.html`<div ${{
     className: "hello",
@@ -280,5 +278,11 @@ export function setDataChildrenStringNodes() {
     <g ${{data: [1, 2, 3]}}>
       hello
     </g>
+  </svg>`;
+}
+
+export function interpolateChildren() {
+  return cm.svg`<svg>
+    ${["hello", null, false, 1, {text: "world"}]}
   </svg>`;
 }

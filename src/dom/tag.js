@@ -12,6 +12,8 @@ const isArray = Array.isArray;
 
 const isPlainObject = (x) => typeof x === "object" && x !== null && !Array.isArray(x);
 
+const isFalsy = (x) => x === null || x === undefined || x === false;
+
 function postprocess(node) {
   if (node.firstChild === node.lastChild) {
     return node.firstChild;
@@ -98,7 +100,8 @@ function append(node, value) {
   const c = contextOf(node);
   for (const child of children) {
     const n = isFunc(child) && c ? child(c[0], c[1], c[2]) : child;
-    if (isNode(n)) temp.append(n);
+    if (isFalsy(n)) continue;
+    temp.append(isNode(n) ? n : document.createTextNode(String(n)));
   }
   node.parentNode.insertBefore(temp, node);
 }
