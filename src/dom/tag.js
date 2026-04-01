@@ -123,7 +123,7 @@ export function tag(render) {
       switch (node.nodeType) {
         case TYPE_NODE: {
           const attributes = node.attributes;
-          for (let i = 0, n = attributes.length; i < n; i++) {
+          for (let i = attributes.length - 1; i >= 0; i--) {
             const {name} = attributes[i];
             if (/^::/.test(name)) {
               const value = arguments[+name.slice(2)];
