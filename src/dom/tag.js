@@ -99,9 +99,10 @@ function append(node, value) {
   const temp = document.createDocumentFragment();
   const c = contextOf(node);
   for (const child of children) {
-    const n = isFunc(child) && c ? child(c[0], c[1], c[2]) : child;
+    const isDataDriven = isFunc(child) && c;
+    const n = isDataDriven ? child(c[0], c[1], c[2]) : child;
     if (isFalsy(n)) continue;
-    temp.append(isNode(n) ? n : document.createTextNode(String(n)));
+    temp.append(isNode(n) ? (isDataDriven ? n : cloneNode(n)) : document.createTextNode(String(n)));
   }
   node.parentNode.insertBefore(temp, node);
 }
