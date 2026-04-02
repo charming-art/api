@@ -1,0 +1,6 @@
+scale, 1, 1
+fillRect, 0, 0, 100, 100
+fillStyle, white
+beginPath
+arc, 50, 50, 25, 0, 6.283185307179586
+fill

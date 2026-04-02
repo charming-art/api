@@ -1,0 +1,7 @@
+scale, 1, 1
+strokeStyle, #111
+lineWidth, 2
+beginPath
+moveTo, 20, 20
+lineTo, 180, 180
+stroke
