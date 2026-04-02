@@ -29,6 +29,10 @@ export function fillEllipse(context, cx, cy, rx, ry) {
   context.fill();
 }
 
+function px(n) {
+  return typeof n === "number" ? `${n}px` : n;
+}
+
 export function cssFont({
   fontStyle = "normal",
   fontVariant = "normal",
@@ -36,7 +40,7 @@ export function cssFont({
   fontSize = 10,
   fontFamily = "sans-serif",
 } = {}) {
-  return `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}px ${fontFamily}`.replace(/\s+/g, " ").trim();
+  return `${fontStyle} ${fontVariant} ${fontWeight} ${px(fontSize)} ${fontFamily}`.replace(/\s+/g, " ").trim();
 }
 
 export function context2d({width = 300, height = 150, dpr = devicePixelRatio, container} = {}) {

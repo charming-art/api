@@ -18,6 +18,15 @@ describe("cssFont", () => {
     ).toBe("italic normal 700 16px Georgia, serif");
   });
 
+  test("accepts fontSize as a string with units (e.g. 16px)", () => {
+    expect(
+      cm.cssFont({
+        fontSize: "16px",
+        fontFamily: "serif",
+      }),
+    ).toBe("normal normal normal 16px serif");
+  });
+
   test("ignores unknown keys on the options object", () => {
     expect(
       cm.cssFont({
