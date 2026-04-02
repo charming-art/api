@@ -1,4 +1,4 @@
-import { defineConfig } from "vitepress";
+import {defineConfig} from "vitepress";
 import config from "genji-theme-vitepress/config";
 
 // https://vitepress.dev/reference/site-config
@@ -7,7 +7,12 @@ export default defineConfig({
   description: "The JavaScript library for expressive creative coding",
   cleanUrls: true,
   extends: config,
-  head: [["link", { rel: "icon", type: "image/png", href: "/logo.png" }]],
+  vite: {
+    ssr: {
+      noExternal: ["points-on-path"],
+    },
+  },
+  head: [["link", {rel: "icon", type: "image/png", href: "/logo.png"}]],
   appearance: false,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -37,7 +42,7 @@ export default defineConfig({
             text: "API Index",
             link: "/api-index",
           },
-        ]
+        ],
       },
       {
         text: "Features",
@@ -50,10 +55,10 @@ export default defineConfig({
             text: "Charming Canvas",
             link: "/canvas",
           },
-        ]
-      }
+        ],
+      },
     ],
-    socialLinks: [{ icon: "github", link: "https://github.com/charming-art/api" }],
+    socialLinks: [{icon: "github", link: "https://github.com/charming-art/api"}],
     logo: "/logo.svg",
     outline: "deep",
   },
