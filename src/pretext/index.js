@@ -47,6 +47,7 @@ export function layoutTextInPath({
 }) {
   const points = pointsOnPath(path);
   const lines = hachureLines(points, Math.round(lineHeight), angle);
+  const space = prepared.discretionaryHyphenWidth;
 
   let cursor = {segmentIndex: 0, graphemeIndex: 0};
 
@@ -57,6 +58,8 @@ export function layoutTextInPath({
     let currentWidth = 0;
     while (currentWidth < width) {
       const diffW = width - currentWidth;
+      // One space for the text, one space for the space between text.
+      if (diffW < space * 2) break;
       let text = layoutNextLine(prepared, cursor, diffW);
       if (text === null) {
         cursor = {segmentIndex: 0, graphemeIndex: 0};
@@ -70,7 +73,7 @@ export function layoutTextInPath({
       text.angle = rotate;
       text.lineHeight = lineHeight;
       texts.push(text);
-      currentWidth += text.width + prepared.discretionaryHyphenWidth;
+      currentWidth += text.width + space;
     }
   }
 
