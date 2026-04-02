@@ -1,14 +1,14 @@
 import {describe, expect, test} from "vitest";
-import {cssFont} from "../src/canvas/index.js";
+import * as cm from "../src/index.js";
 
 describe("cssFont", () => {
   test("uses defaults when called with no arguments", () => {
-    expect(cssFont()).toBe("normal normal normal 10px sans-serif");
+    expect(cm.cssFont()).toBe("normal normal normal 10px sans-serif");
   });
 
   test("builds CSS font shorthand from options", () => {
     expect(
-      cssFont({
+      cm.cssFont({
         fontStyle: "italic",
         fontVariant: "normal",
         fontWeight: "700",
@@ -20,7 +20,7 @@ describe("cssFont", () => {
 
   test("ignores unknown keys on the options object", () => {
     expect(
-      cssFont({
+      cm.cssFont({
         fontSize: 12,
         fontFamily: "serif",
         lineHeight: 32,
@@ -29,7 +29,7 @@ describe("cssFont", () => {
   });
 
   test("collapses extra whitespace in the result", () => {
-    expect(cssFont({fontStyle: "italic  ", fontWeight: "  bold", fontSize: 10, fontFamily: "  A  "})).toBe(
+    expect(cm.cssFont({fontStyle: "italic  ", fontWeight: "  bold", fontSize: 10, fontFamily: "  A  "})).toBe(
       "italic normal bold 10px A",
     );
   });
