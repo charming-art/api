@@ -1,5 +1,5 @@
 import * as cm from "../../src/index.js";
-import {renderPretext} from "./helper.js";
+import {renderPretext} from "../helpers.js";
 
 export function pretextCirclePath() {
   const layout = cm.layoutTextInPath({
