@@ -1,0 +1,5 @@
+scale, 1, 1
+fillStyle, coral
+beginPath
+arc, 100, 100, 60, 0, 6.283185307179586
+fill

@@ -1,6 +1,6 @@
 import "./install-canvas-mock.js";
 import {afterEach, describe, expect, test} from "vitest";
-import {clearPrepareCache, _prepareMemo} from "../src/pretext/index.js";
+import {_prepareMemo} from "../src/pretext/index.js";
 import * as cm from "../src/index.js";
 
 const defaultLayoutFont = {
@@ -12,7 +12,7 @@ const defaultLayoutFont = {
 };
 
 afterEach(() => {
-  clearPrepareCache();
+  cm.clearPrepareCache();
 });
 
 describe("prepare", () => {
@@ -50,7 +50,7 @@ describe("prepareMemo cache (_prepareMemo)", () => {
 
   test("clearPrepareCache invalidates the memo (next call is a new object)", () => {
     const a = _prepareMemo("cache-key", defaultLayoutFont);
-    clearPrepareCache();
+    cm.clearPrepareCache();
     const b = _prepareMemo("cache-key", defaultLayoutFont);
     expect(b).not.toBe(a);
   });
@@ -65,8 +65,8 @@ describe("clearPrepareCache", () => {
 
   test("is safe to call multiple times", () => {
     expect(() => {
-      clearPrepareCache();
-      clearPrepareCache();
+      cm.clearPrepareCache();
+      cm.clearPrepareCache();
     }).not.toThrow();
   });
 });

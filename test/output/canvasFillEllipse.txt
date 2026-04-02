@@ -1,0 +1,5 @@
+scale, 1, 1
+fillStyle, skyblue
+beginPath
+ellipse, 100, 100, 85, 50, 0, 0, 6.283185307179586
+fill

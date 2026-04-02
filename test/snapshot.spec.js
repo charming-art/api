@@ -1,5 +1,6 @@
+import "./install-canvas-mock.js";
 import {test, expect} from "vitest";
-import * as snapshots from "./snapshots.js";
+import * as snapshots from "./cases/index.js";
 
 const hasOnly = Object.values(snapshots).some((fn) => fn.only);
 const filtered = hasOnly ? Object.fromEntries(Object.entries(snapshots).filter(([, fn]) => fn.only)) : snapshots;
@@ -26,8 +27,15 @@ function cleanWhitespace(root) {
   return root;
 }
 
+function isCanvas(node) {
+  return node instanceof HTMLCanvasElement;
+}
+
 for (const [name, fn] of Object.entries(filtered)) {
   test(`${name} should match snapshot`, async () => {
-    await expect(cleanWhitespace(fn())).toMatchFileSnapshot(`./output/${name}.html`);
+    const node = fn();
+    const value = isCanvas(node) ? node.toString() : cleanWhitespace(node);
+    const ext = isCanvas(node) ? "txt" : "html";
+    await expect(value).toMatchFileSnapshot(`./output/${name}.${ext}`);
   });
 }
