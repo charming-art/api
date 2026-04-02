@@ -30,6 +30,9 @@ function useMemo(fn) {
 
 const [prepareMemo, clearPrepareMemo] = useMemo((text, opts) => prepare(text, opts));
 
+/** Memoized `prepare` for `layoutTextInPath`; exposed as `_prepareMemo` for tests only. */
+export {prepareMemo as _prepareMemo};
+
 export function layoutTextInPath({
   text,
   fontSize = 16,

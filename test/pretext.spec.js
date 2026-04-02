@@ -1,10 +1,18 @@
 import "./install-canvas-mock.js";
-
 import {afterEach, describe, expect, test} from "vitest";
+import {clearPrepareCache, _prepareMemo} from "../src/pretext/index.js";
 import * as cm from "../src/index.js";
 
+const defaultLayoutFont = {
+  fontSize: 16,
+  fontFamily: "Inter",
+  fontStyle: "normal",
+  fontVariant: "normal",
+  fontWeight: "normal",
+};
+
 afterEach(() => {
-  cm.clearPrepareCache();
+  clearPrepareCache();
 });
 
 describe("prepare", () => {
@@ -30,6 +38,36 @@ describe("prepare", () => {
     expect(p.fontStyle).toBe("normal");
     expect(p.fontVariant).toBe("normal");
     expect(p.fontWeight).toBe("normal");
+  });
+});
+
+describe("prepareMemo cache (_prepareMemo)", () => {
+  test("same text and font options return the same prepared object", () => {
+    const a = _prepareMemo("cache-key", defaultLayoutFont);
+    const b = _prepareMemo("cache-key", defaultLayoutFont);
+    expect(a).toBe(b);
+  });
+
+  test("clearPrepareCache invalidates the memo (next call is a new object)", () => {
+    const a = _prepareMemo("cache-key", defaultLayoutFont);
+    clearPrepareCache();
+    const b = _prepareMemo("cache-key", defaultLayoutFont);
+    expect(b).not.toBe(a);
+  });
+});
+
+describe("clearPrepareCache", () => {
+  test("standalone prepare is not memoized (always new references)", () => {
+    const a = cm.prepare("x");
+    const b = cm.prepare("x");
+    expect(a).not.toBe(b);
+  });
+
+  test("is safe to call multiple times", () => {
+    expect(() => {
+      clearPrepareCache();
+      clearPrepareCache();
+    }).not.toThrow();
   });
 });
 
