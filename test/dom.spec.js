@@ -105,3 +105,30 @@ describe("event", () => {
     expect(click).toHaveBeenCalledWith(event, el, 1, 0, [1, 2, 3]);
   });
 });
+
+describe("tag append (text interpolation)", () => {
+  test("non-node values become text nodes (String coercion)", () => {
+    expect(cm.html`<span>${"hello"}</span>`.textContent).toBe("hello");
+    expect(cm.html`<span>${42}</span>`.textContent).toBe("42");
+  });
+
+  test("without data context, a Node child is inserted by reference", () => {
+    const span = document.createElement("span");
+    span.id = "appended-by-ref";
+    const root = cm.html`<div>${span}</div>`;
+    expect(root.querySelector("#appended-by-ref")).toBe(span);
+  });
+
+  test("under data context, a Node child is cloned once per datum", () => {
+    const circleTpl = cm.svg`<circle ${{r: 10}}/>`;
+    const root = cm.svg`<svg>
+      <g ${{data: [1, 2, 3]}}>
+        ${circleTpl}
+      </g>
+    </svg>`;
+    const circles = root.querySelectorAll("circle");
+    expect(circles).toHaveLength(3);
+    expect(circles[0]).not.toBe(circles[1]);
+    expect(circles[1]).not.toBe(circles[2]);
+  });
+});
