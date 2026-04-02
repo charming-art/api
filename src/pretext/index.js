@@ -11,6 +11,10 @@ function degToRad(deg) {
   return (deg * Math.PI) / 180;
 }
 
+function px(n) {
+  return typeof n === "number" ? `${n}px` : n;
+}
+
 function useMemo(fn) {
   const cache = new Map();
   const memoized = (...args) => {
@@ -85,7 +89,7 @@ export function prepare(
     ...rest
   } = {},
 ) {
-  const font = `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}px ${fontFamily}`.replace(/\s+/g, " ").trim();
+  const font = `${fontStyle} ${fontVariant} ${fontWeight} ${px(fontSize)} ${fontFamily}`.replace(/\s+/g, " ").trim();
   const prepared = prepareWithSegments(text, font, rest);
   prepared.fontSize = fontSize;
   prepared.fontFamily = fontFamily;
