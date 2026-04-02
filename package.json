@@ -48,5 +48,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@chenglou/pretext": "^0.0.4",
+    "hachure-fill": "^0.5.2",
+    "points-on-path": "^0.2.1"
   }
 }
