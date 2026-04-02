@@ -30,6 +30,7 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
+    "example:dev": "pnpm --filter ./example dev",
     "prepublishOnly": "rm -rf dist && rollup -c"
   },
   "devDependencies": {
