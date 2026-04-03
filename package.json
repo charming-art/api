@@ -41,9 +41,9 @@
     "genji-theme-vitepress": "^0.2.8",
     "js-beautify": "^1.15.4",
     "jsdom": "^26.1.0",
-    "prettier": "^3.6.2",
-    "rollup": "^4.46.2",
-    "vite": "^6.3.5",
+    "prettier": "^3.8.1",
+    "rollup": "^4.60.1",
+    "vite": "^6.4.1",
     "vitepress": "^1.6.4",
     "vitest": "^3.2.4"
   },
