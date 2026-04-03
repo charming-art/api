@@ -61,12 +61,14 @@ function main() {
     const darkLayout = cm.layoutTextInPath({
       text: yinDescription.repeat(24),
       path: yinRotated,
+      repeat: false,
       ...font,
     });
 
     const lightLayout = cm.layoutTextInPath({
       text: yangDescription.repeat(22),
       path: yangRotated,
+      repeat: false,
       ...font,
     });
 

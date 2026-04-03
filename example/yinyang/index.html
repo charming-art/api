@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yin Yang</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <div class="shell__copy">
+        <h1>YIN YANG</h1>
+        <p>
+          Yin Yang is an idea from Chinese philosophy that explains how opposite things are connected and need each
+          other. Yin stands for things like dark, quiet, and calm, while Yang stands for light, active, and energetic.
+          Instead of fighting, they work together and keep everything in balance.
+        </p>
+        <p>
+          <strong>Read along.</strong> Drag the slider for phase, or pause to freeze. Yin on the
+          <strong>black</strong> lobe; yang on the <strong>white</strong>.
+        </p>
+        <div class="shell__controls">
+          <button type="button" id="play-pause" class="play-pause-btn is-playing" aria-label="Pause animation">
+            <svg class="icon icon--play" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <svg class="icon icon--pause" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+            </svg>
+          </button>
+          <input type="range" min="-0.5" max="0.5" step="0.001" value="0" id="phase-offset" aria-label="Animation phase" />
+        </div>
+      </div>
+      <div id="stage" class="stage">
+        <div class="stage__inner"></div>
+      </div>
+    </div>
+    <script src="index.js" type="module"></script>
+  </body>
+</html>

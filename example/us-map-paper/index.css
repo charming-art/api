@@ -1,0 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #f5f0e7;
+}
+
+#stage {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.stage__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.map-page-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 1rem 1.25rem 1rem;
+  max-width: min(100%, 32rem);
+  pointer-events: none;
+}
+
+.map-page-title {
+  margin: 0;
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #3a342c;
+  text-shadow: 0 10px 0 rgba(255, 253, 248, 0.9);
+}
+
+.map-page-subtitle {
+  margin: 0.5rem 0 0;
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  font-weight: 400;
+  line-height: 1.35;
+  color: #5c5348;
+  /*
+   * Text-shaped “plate”: outline the glyphs with the page background (not a rectangle).
+   * Stacked offsets follow letter shapes; soft drop-shadow helps on busy map areas.
+   */
+  text-shadow:
+    0 1px 0 #f5f0e7,
+    0 -1px 0 #f5f0e7,
+    1px 0 0 #f5f0e7,
+    -1px 0 0 #f5f0e7,
+    1px 1px 0 #f5f0e7,
+    -1px -1px 0 #f5f0e7,
+    1px -1px 0 #f5f0e7,
+    -1px 1px 0 #f5f0e7,
+    0 2px 0 #f5f0e7,
+    0 -2px 0 #f5f0e7,
+    2px 0 0 #f5f0e7,
+    -2px 0 0 #f5f0e7,
+    2px 2px 0 #f5f0e7,
+    -2px -2px 0 #f5f0e7,
+    2px -2px 0 #f5f0e7,
+    -2px 2px 0 #f5f0e7,
+    0 3px 0 #f5f0e7,
+    0 -3px 0 #f5f0e7,
+    3px 0 0 #f5f0e7,
+    -3px 0 0 #f5f0e7;
+  filter: drop-shadow(0 0 4px rgba(245, 240, 231, 0.95)) drop-shadow(0 0 10px rgba(245, 240, 231, 0.65));
+}

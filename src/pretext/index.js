@@ -44,6 +44,7 @@ export function layoutTextInPath({
   angle = 0,
   prepared = prepareMemo(text, {fontSize, fontFamily, fontStyle, fontVariant, fontWeight}),
   lineHeight = parseFloat(fontSize) * 1.25,
+  repeat = true,
 }) {
   const points = pointsOnPath(path);
   const lines = hachureLines(points, Math.round(lineHeight), angle);
@@ -52,7 +53,8 @@ export function layoutTextInPath({
   let cursor = {segmentIndex: 0, graphemeIndex: 0};
 
   const texts = [];
-  for (const link of lines) {
+
+  place: for (const link of lines) {
     const width = dist(link);
     if (!width) continue;
     let currentWidth = 0;
@@ -62,6 +64,7 @@ export function layoutTextInPath({
       if (diffW < space * 2) break;
       let text = layoutNextLine(prepared, cursor, diffW);
       if (text === null) {
+        if (!repeat) break place;
         cursor = {segmentIndex: 0, graphemeIndex: 0};
         text = layoutNextLine(prepared, cursor, diffW);
       }
