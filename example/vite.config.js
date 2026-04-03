@@ -2,6 +2,6 @@ import {defineConfig} from "vite";
 
 export default defineConfig({
   optimizeDeps: {
-    include: ["ml5", "@tensorflow/tfjs"],
+    include: ["ml5"],
   },
 });
