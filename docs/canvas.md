@@ -71,6 +71,44 @@ context.arc(50, 50, 25, 0, Math.PI * 2);
 context.fill();
 ```
 
+## _cm_.cssFont(_options_) {#cm-css-font}
+
+Returns a **CSS `font` shorthand** string suitable for `CanvasRenderingContext2D#font`, DOM `element.style.font`, or libraries that accept a font string (for example D3’s `.style("font", …)`).
+
+Options (all optional):
+
+- **fontStyle** — default `"normal"`.
+- **fontVariant** — default `"normal"`.
+- **fontWeight** — default `"normal"`.
+- **fontSize** — default `10`; may be a number (interpreted as pixels) or a string with units, e.g. `"1.2rem"`.
+- **fontFamily** — default `"sans-serif"`.
+
+Extra keys on the options object are ignored. The result has normalized spacing.
+
+```js eval code=false
+(() => {
+  const context = cm.context2d({width: 220, height: 56});
+  context.fillStyle = "orange";
+  context.fillRect(0, 0, 220, 56);
+  context.fillStyle = "#222";
+  context.font = cm.cssFont({fontSize: 22, fontFamily: "Georgia, serif"});
+  context.textBaseline = "middle";
+  context.fillText("Hello Canvas!", 12, 28);
+  return context.canvas;
+})();
+```
+
+```js
+const context = cm.context2d({width: 220, height: 56});
+context.font = cm.cssFont({
+  fontStyle: "italic",
+  fontWeight: "700",
+  fontSize: 18,
+  fontFamily: "system-ui, sans-serif",
+});
+context.fillText("Hello Canvas!", 10, 30);
+```
+
 ## _cm_.strokeLine(_context_, _x1_, _y1_, _x2_, _y2_) {#cm-stroke-line}
 
 Strokes from (_x1_, _y1_) to (_x2_, _y2_) using the current stroke style and line width.
