@@ -2,11 +2,9 @@
   "name": "example",
   "private": true,
   "dependencies": {
-    "@chenglou/pretext": "^0.0.4",
     "charmingjs": "workspace:*",
     "clipper-lib": "^6.4.2",
     "d3": "^7.9.0",
-    "hachure-fill": "^0.5.2",
     "points-on-path": "^0.2.1",
     "svgpath": "^2.6.0",
     "topojson-client": "^3.1.0",

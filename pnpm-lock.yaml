@@ -57,9 +57,6 @@ importers:
 
   example:
     dependencies:
-      '@chenglou/pretext':
-        specifier: ^0.0.4
-        version: 0.0.4
       charmingjs:
         specifier: workspace:*
         version: link:..
@@ -69,9 +66,6 @@ importers:
       d3:
         specifier: ^7.9.0
         version: 7.9.0
-      hachure-fill:
-        specifier: ^0.5.2
-        version: 0.5.2
       points-on-path:
         specifier: ^0.2.1
         version: 0.2.1
