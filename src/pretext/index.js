@@ -43,7 +43,7 @@ export function layoutTextInPath({
   path,
   angle = 0,
   prepared = prepareMemo(text, {fontSize, fontFamily, fontStyle, fontVariant, fontWeight}),
-  lineHeight = parseFloat(fontSize) * 1.25,
+  lineHeight = parseFloat(fontSize) * 1.5,
   repeat = true,
 }) {
   const points = pointsOnPath(path);
