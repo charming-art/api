@@ -1,12 +1,18 @@
 # API Index
 
+Charming offers a set of utilities for working with SVG and Canvas, which can be used either together or independently.
+
 ## [Charming DOM](/dom)
+
+Create and manipulate DOM elements.
 
 - [_cm_.**svg**](/dom#cm-svg) — SVG via tagged template literal.
 - [_cm_.**html**](/dom#cm-html) — HTML via tagged template literal.
 - [_cm_.**attr**](/dom#cm-attr) — get, set, or remove attributes (including styles and events) on a node.
 
 ## [Charming Canvas](/canvas)
+
+Set up a 2D canvas and draw shapes.
 
 - [_cm_.**context2d**](/canvas#cm-context2d) — create a 2D canvas rendering context (size, DPR, optional container).
 - [_cm_.**cssFont**](/canvas#cm-css-font) — build a CSS `font` shorthand string (canvas, DOM, or D3).
@@ -17,6 +23,8 @@
 - [_cm_.**fillEllipse**](/canvas#cm-fill-ellipse) — fill an axis-aligned ellipse.
 
 ## [Charming Path](/path)
+
+Build SVG path strings for common shapes.
 
 - [_cm_.**pathLine**](/path#cm-path-line) — open segment `M` … `L` …
 - [_cm_.**pathCircle**](/path#cm-path-circle) — closed circle.
