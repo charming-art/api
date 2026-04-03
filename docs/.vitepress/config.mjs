@@ -55,6 +55,10 @@ export default defineConfig({
             text: "Charming Canvas",
             link: "/canvas",
           },
+          {
+            text: "Charming Path",
+            link: "/path",
+          },
         ],
       },
     ],

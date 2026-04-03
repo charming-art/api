@@ -15,3 +15,11 @@
 - [_cm_.**strokeCircle**](/canvas#cm-stroke-circle) — stroke a circle.
 - [_cm_.**strokeEllipse**](/canvas#cm-stroke-ellipse) — stroke an axis-aligned ellipse.
 - [_cm_.**fillEllipse**](/canvas#cm-fill-ellipse) — fill an axis-aligned ellipse.
+
+## [Charming Path](/path)
+
+- [_cm_.**pathLine**](/path#cm-path-line) — open segment `M` … `L` …
+- [_cm_.**pathCircle**](/path#cm-path-circle) — closed circle.
+- [_cm_.**pathRect**](/path#cm-path-rect) — closed rectangle.
+- [_cm_.**pathEllipse**](/path#cm-path-ellipse) — closed axis-aligned ellipse.
+- [_cm_.**pathPolygon**](/path#cm-path-polygon) — closed path through `[x, y]` points.
