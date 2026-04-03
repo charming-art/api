@@ -1,8 +1,13 @@
 # API Index
 
+## [Charming DOM](/dom)
+
 - [_cm_.**svg**](/dom#cm-svg) — SVG via tagged template literal.
 - [_cm_.**html**](/dom#cm-html) — HTML via tagged template literal.
 - [_cm_.**attr**](/dom#cm-attr) — get, set, or remove attributes (including styles and events) on a node.
+
+## [Charming Canvas](/canvas)
+
 - [_cm_.**context2d**](/canvas#cm-context2d) — create a 2D canvas rendering context (size, DPR, optional container).
 - [_cm_.**cssFont**](/canvas#cm-css-font) — build a CSS `font` shorthand string (canvas, DOM, or D3).
 - [_cm_.**strokeLine**](/canvas#cm-stroke-line) — stroke a line between two points.
