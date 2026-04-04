@@ -32,10 +32,10 @@ Build SVG path strings for common shapes.
 - [_cm_.**pathEllipse**](/path#cm-path-ellipse) — closed axis-aligned ellipse.
 - [_cm_.**pathPolygon**](/path#cm-path-polygon) — closed path through `[x, y]` points.
 
-## [Charming Pretext](/charming-pretext)
+## [Charming Pretext](/pretext)
 
 Text measurement and path-bound layout on top of [Pretext](https://github.com/chenglou/pretext).
 
-- [_cm_.**prepare**](/charming-pretext#cm-prepare) — prepare a string with font options for Pretext.
-- [_cm_.**layoutTextInPath**](/charming-pretext#cm-layout-text-in-path) — flow prepared text through a closed SVG path.
-- [_cm_.**clearPrepareCache**](/charming-pretext#cm-clear-prepare-cache) — clear memoized prepare and Pretext caches.
+- [_cm_.**prepare**](/pretext#cm-prepare) — prepare a string with font options for Pretext.
+- [_cm_.**layoutTextInPath**](/pretext#cm-layout-text-in-path) — flow prepared text through a closed SVG path.
+- [_cm_.**clearPrepareCache**](/pretext#cm-clear-prepare-cache) — clear memoized prepare and Pretext caches.

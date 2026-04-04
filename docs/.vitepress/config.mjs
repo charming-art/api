@@ -70,7 +70,7 @@ export default defineConfig({
           },
           {
             text: "Charming Pretext",
-            link: "/charming-pretext",
+            link: "/pretext",
           },
         ],
       },
