@@ -86,7 +86,7 @@ function main() {
     fontStyle: "normal",
     fontVariant: "normal",
     fontWeight: "normal",
-    fontSize: 18,
+    fontSize: 16,
   };
 
   const layer = document.querySelector("#stage .stage__inner");
