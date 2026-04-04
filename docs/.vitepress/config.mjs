@@ -21,6 +21,15 @@ export default defineConfig({
         text: "Examples",
         link: "https://observablehq.com/d/18b3d6f3affff5bb",
       },
+      {
+        text: "Demos",
+        items: [
+          {
+            text: "Pretext",
+            link: "https://pretext.charmingjs.org/",
+          },
+        ],
+      },
     ],
     sidebar: [
       {
@@ -58,6 +67,10 @@ export default defineConfig({
           {
             text: "Charming Path",
             link: "/path",
+          },
+          {
+            text: "Charming Pretext",
+            link: "/charming-pretext",
           },
         ],
       },
