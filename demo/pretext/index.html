@@ -21,6 +21,7 @@
         --docs-brand: #00adb5;
         --focus: color-mix(in oklab, #2563eb 70%, canvastext);
         --pad: clamp(1.25rem, 4vw, 2.5rem);
+        --pad-top: clamp(3rem, 10vw, 4.75rem);
         --max: 32rem;
         font-family:
           system-ui,
@@ -44,7 +45,7 @@
       }
       main {
         margin-inline: auto;
-        padding: var(--pad);
+        padding: var(--pad-top) var(--pad) var(--pad);
         max-width: var(--max);
       }
       .brand {
