@@ -1,6 +1,6 @@
 {
   "name": "charmingjs",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "The JavaScript library for generative art based on SVG",
   "author": {
     "name": "Bairui SU",
@@ -14,7 +14,7 @@
   "unpkg": "dist/charming.umd.min.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/charming-art/charming.git"
+    "url": "git+https://github.com/charming-art/api.git"
   },
   "files": [
     "dist",
