@@ -55,14 +55,14 @@ importers:
         specifier: ^3.2.4
         version: 3.2.4(@types/debug@4.1.12)(@types/node@25.5.2)(jsdom@26.1.0)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.0)
 
-  demo:
+  demo/pretext:
     dependencies:
       '@chenglou/pretext':
         specifier: ^0.0.4
         version: 0.0.4
       charmingjs:
         specifier: workspace:*
-        version: link:..
+        version: link:../..
       clipper-lib:
         specifier: ^6.4.2
         version: 6.4.2

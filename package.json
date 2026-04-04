@@ -30,8 +30,10 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "demo:dev": "pnpm --filter ./demo dev",
-    "prepublishOnly": "rm -rf dist && rollup -c"
+    "prepublishOnly": "rm -rf dist && rollup -c",
+    "demo:pretext:dev": "pnpm --filter ./demo/pretext dev",
+    "demo:pretext:build": "pnpm --filter ./demo/pretext build",
+    "demo:pretext:preview": "pnpm --filter ./demo/pretext preview"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.3.1",

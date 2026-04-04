@@ -13,7 +13,9 @@
     "us-atlas": "^3.0.1"
   },
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "patch-package": "^8.0.1",
