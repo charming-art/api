@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Charming Pretext Demos: prepare type once, then flow it along SVG paths or wrap to a width—map labels, yin–yang fills, and masked air-text."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0f1419" />
+    <title>Charming Pretext Demos</title>
+    <link rel="icon" href="logo.svg" type="image/svg+xml" sizes="any" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: canvas;
+        --fg: canvastext;
+        --muted: color-mix(in oklab, canvastext 68%, canvas);
+        /* Match docs/.vitepress/theme/custom.css --vp-c-indigo-3 */
+        --docs-brand: #00adb5;
+        --focus: color-mix(in oklab, #2563eb 70%, canvastext);
+        --pad: clamp(1.25rem, 4vw, 2.5rem);
+        --pad-top: clamp(1.75rem, 5vw, 3rem);
+        --max: 32rem;
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          sans-serif;
+        line-height: 1.5;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        background: var(--bg);
+        color: var(--fg);
+      }
+      main {
+        margin-inline: auto;
+        padding: var(--pad-top) var(--pad) var(--pad);
+        max-width: var(--max);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5em;
+      }
+      .brand__logo-link {
+        flex-shrink: 0;
+        line-height: 0;
+        border-radius: 4px;
+        text-decoration: none;
+        color: inherit;
+      }
+      .brand__logo-link:focus-visible {
+        outline: 2px solid var(--docs-brand);
+        outline-offset: 3px;
+      }
+      .brand__logo {
+        width: 2.25rem;
+        height: 2.25rem;
+        display: block;
+      }
+      .brand h1 {
+        margin: 0;
+        font-size: clamp(1.35rem, 3vw, 1.6rem);
+        font-weight: 650;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+      }
+      .brand__link {
+        color: var(--docs-brand);
+        text-decoration: underline;
+        text-underline-offset: 0.12em;
+        font-weight: inherit;
+      }
+      .brand__link:visited {
+        color: var(--docs-brand);
+      }
+      .brand__link:focus-visible {
+        outline: 2px solid var(--docs-brand);
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+      .intro {
+        margin: 0 0 1.25em;
+        max-width: 42em;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.55;
+      }
+      nav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 1rem;
+      }
+      .card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        padding: 0.75rem 0.9rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: inherit;
+        border: 1px solid color-mix(in oklab, canvastext 12%, transparent);
+        background: color-mix(in oklab, canvastext 4%, canvas);
+        transition:
+          background 0.12s ease,
+          border-color 0.12s ease;
+      }
+      .card:hover {
+        background: color-mix(in oklab, canvastext 8%, canvas);
+        border-color: color-mix(in oklab, canvastext 18%, transparent);
+      }
+      .card:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+      .card__title {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.3;
+      }
+      .card__desc {
+        margin: 0;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="brand">
+        <a class="brand__logo-link" href="https://charmingjs.org/" aria-label="Charming home">
+          <img class="brand__logo" src="/logo.svg" width="36" height="36" alt="" decoding="async" />
+        </a>
+        <h1>Charming Pretext</h1>
+      </div>
+      <p class="intro">
+        Demos built with
+        <a class="brand__link" href="https://charmingjs.org/pretext">Charming Pretext</a>
+        — pure-arithmetic text measurement for text-based data visualization and generative art. A fast, intuitive, and
+        fixable API on top of
+        <a class="brand__link" href="https://github.com/chenglou/pretext">Pretext</a>.
+      </p>
+      <nav aria-label="Charming Pretext demos">
+        <ul>
+          <li>
+            <a class="card" href="./us-map-paper/">
+              <span class="card__title">U.S. Map Paper</span>
+              <p class="card__desc">An interactive U.S. map with notes for each state.</p>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="./yin-yang/">
+              <span class="card__title">Yin Yang</span>
+              <p class="card__desc">An animated Yin Yang symbol filled with descriptions.</p>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="./air-text/">
+              <span class="card__title">Air Text</span>
+              <p class="card__desc">Interact with a screen of text using your body.</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </main>
+  </body>
+</html>

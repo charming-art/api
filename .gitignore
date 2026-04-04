@@ -2,7 +2,7 @@
 node_modules
 yarn.lock
 package-lock.json
-demo/pnpm-lock.yaml
+demo/pretext/pnpm-lock.yaml
 dist
 cache
 docs/.vitepress/lib
