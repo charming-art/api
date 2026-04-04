@@ -2,8 +2,7 @@
 node_modules
 yarn.lock
 package-lock.json
-# Workspace uses root pnpm-lock.yaml only; ignore if generated under example/
-example/pnpm-lock.yaml
+demo/pnpm-lock.yaml
 dist
 cache
 docs/.vitepress/lib
